@@ -3,7 +3,14 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: ['standard-with-typescript', 'plugin:react/recommended', 'prettier'],
+  extends: [
+    'eslint:recommended',
+    'standard-with-typescript',
+    'plugin:react/recommended',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
+    'prettier',
+  ],
   overrides: [
     {
       env: {
@@ -19,13 +26,40 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['react'],
+  plugins: ['react', 'import'],
   rules: {
     'react/react-in-jsx-scope': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/naming-convention': 'off',
     '@typescript-eslint/no-floating-promises': 'off',
     '@typescript-eslint/strict-boolean-expressions': 'off',
+    'import/order': [
+      'error',
+      {
+        groups: [
+          'builtin',
+          'external',
+          'internal',
+          ['parent', 'sibling', 'index'],
+          'object',
+          'type',
+        ],
+        pathGroups: [
+          { pattern: 'react', group: 'builtin', position: 'before' },
+        ],
+        pathGroupsExcludedImportTypes: ['react'],
+        'newlines-between': 'never',
+      },
+    ],
   },
   ignorePatterns: ['node_modules/', '*.js', '*.d.ts'],
+  settings: {
+    react: {
+      version: 'detect',
+    },
+    'import/resolver': {
+      typescript: true,
+      node: true,
+    },
+  },
 };

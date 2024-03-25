@@ -1,6 +1,5 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Tabs } from 'expo-router';
-
 import { useClientOnlyValue } from '@/hooks/useClientOnlyValue';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import Colors from '@/constants/Colors';
