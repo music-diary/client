@@ -4,7 +4,6 @@ import { useClientOnlyValue } from '@/hooks/useClientOnlyValue';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import Colors from '@/constants/Colors';
 
-// You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name'];
   color: string;
@@ -19,23 +18,43 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        // Disable the static render of the header on web
-        // to prevent a hydration error in React Navigation v6.
         headerShown: useClientOnlyValue(false, true),
       }}
     >
+      <Tabs.Screen name="index" options={{ href: null }} />
       <Tabs.Screen
-        name="index"
+        name="home"
         options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'Home',
+          headerShown: false,
+          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="archive"
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: '아카이브',
+          tabBarLabel: 'Explore',
+          headerShown: false,
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="archive" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="letter"
+        options={{
+          title: 'letter',
+          headerShown: false,
+          tabBarIcon: ({ color }) => <TabBarIcon name="inbox" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="mypage"
+        options={{
+          title: 'mypage',
+          headerShown: false,
+          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
         }}
       />
     </Tabs>
