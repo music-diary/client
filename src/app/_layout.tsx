@@ -8,6 +8,7 @@ import { useFonts } from 'expo-font';
 import { Stack, router } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { useAppStore } from '@/store/useAppStore';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -48,16 +49,20 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
+  const { isFirstLaunch } = useAppStore();
+
   const colorScheme = useColorScheme();
-  const [isLogin] = useState(true);
 
   useEffect(() => {
-    isLogin ? router.navigate('(main)') : router.navigate('(auth)');
+    if (isFirstLaunch) {
+      router.navigate('intro');
+    }
   }, []);
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
+        <Stack.Screen name="intro" options={{ headerShown: false }} />
         <Stack.Screen name="(main)" options={{ headerShown: false }} />
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="(modals)" options={{ headerShown: false }} />
