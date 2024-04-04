@@ -1,12 +1,12 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Appearance } from 'react-native';
+// import { Appearance } from 'react-native';
 
-interface User {
-  id: string;
-  name: string;
-}
+// interface User {
+//   id: string;
+//   name: string;
+// }
 
 interface AppState {
   // 인증 상태
