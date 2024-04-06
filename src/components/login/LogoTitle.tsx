@@ -1,0 +1,28 @@
+import { StyleSheet, Text, View, Image } from 'react-native';
+import Colors from '@/constants/Colors';
+
+const LogoTitle = () => {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>App Name.</Text>
+      <Image source={require('assets/images/logo.png')} />
+    </View>
+  );
+};
+
+export default LogoTitle;
+
+const styles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    gap: 10,
+  },
+  title: {
+    color: Colors.white,
+    fontFamily: 'pret-b',
+    fontSize: 24,
+  },
+});

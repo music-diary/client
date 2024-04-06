@@ -8,8 +8,8 @@ import { useFonts } from 'expo-font';
 import { Stack, router } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { useColorScheme } from '@/hooks/useColorScheme';
 // import { useAppStore } from '@/store/useAppStore';
+import { useColorScheme } from '@/hooks/useColorScheme';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -60,7 +60,7 @@ function RootLayoutNav() {
     //   router.navigate('intro');
     // }
     if (!isLogin) {
-      router.navigate('/login');
+      router.navigate('(login)');
     }
   }, []);
 
@@ -69,7 +69,7 @@ function RootLayoutNav() {
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack>
           <Stack.Screen name="(main)" options={{ headerShown: false }} />
-          <Stack.Screen name="login" options={{ headerShown: false }} />
+          <Stack.Screen name="(login)" options={{ headerShown: false }} />
           <Stack.Screen name="intro" options={{ headerShown: false }} />
           <Stack.Screen name="(modals)" options={{ headerShown: false }} />
         </Stack>
