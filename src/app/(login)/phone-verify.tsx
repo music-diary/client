@@ -18,8 +18,9 @@ import Fonts from '@/constants/Fonts';
 const PhoneVerifyScreen = () => {
   const { phoneNumber } = useLocalSearchParams();
   const [verifyNumber, setVerifyNumber] = useState('');
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  // const [allChecked, setAllChecked] = useState(false); // 전체 동의 체크 여부 상태
 
   const [checkAll, setCheckAll] = useState(false);
   const [check1, setCheck1] = useState(false);
@@ -53,62 +54,96 @@ const PhoneVerifyScreen = () => {
     // 에러가 있으면 에러메시지 표시
   };
 
+  const handleCheckAll = () => {
+    setCheckAll(!checkAll);
+    setCheck1(!checkAll);
+    setCheck2(!checkAll);
+    setCheck3(!checkAll);
+    setCheck4(!checkAll);
+    setCheck5(!checkAll);
+  };
+
   const handleNext = () => {};
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.container}
-    >
+    <View style={styles.container}>
       <View style={styles.infoContainer}>
         <Text style={styles.infoTitle}>전화번호 가입</Text>
         <Text style={styles.infoDescription}>
           음계일기를 시작하기 위해 전화번호 인증이 필요해요.
         </Text>
       </View>
-      <View style={styles.verifyContainer}>
-        <Text style={styles.inputLabel}>인증번호</Text>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.inputVerifyNumber}
-            autoFocus={true}
-            placeholder="인증번호 6자리를 입력해주세요."
-            placeholderTextColor={Colors.contents_light}
-            value={verifyNumber}
-            onChangeText={handleVerifyNumberChange}
-            keyboardType="phone-pad"
-            inputAccessoryViewID="verifyNumber"
-          />
-          <TouchableOpacity
-            style={styles.verifyResendButton}
-            onPress={() => {}}
-          >
-            <Text style={styles.verifyResendText}>재전송</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.validityContainer}>
-          <Text style={styles.validityInfoText}>
-            인증번호가 발송되었어요. 유효시간 3:00
-          </Text>
-          <TouchableOpacity style={styles.validityQnAButton} onPress={() => {}}>
-            <Text style={styles.validityQnAText}>인증번호가 오지 않나요?</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-      <InputAccessoryView
-        nativeID="verifyNumber"
-        backgroundColor={
-          isButtonDisabled ? Colors.contents_light : Colors.purple
-        }
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.keyboardAvoidingContainer}
       >
-        <TouchableOpacity
-          style={styles.verifyButton}
-          onPress={handleVerify}
-          disabled={isButtonDisabled}
-        >
-          <Text style={styles.verifyText}>인증하기</Text>
-        </TouchableOpacity>
-      </InputAccessoryView>
+        <View style={styles.verifyContainer}>
+          <Text style={styles.inputLabel}>인증번호</Text>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.inputVerifyNumber}
+              autoFocus={true}
+              placeholder="인증번호 6자리를 입력해주세요."
+              placeholderTextColor={Colors.contents_light}
+              value={verifyNumber}
+              onChangeText={handleVerifyNumberChange}
+              keyboardType="phone-pad"
+              inputAccessoryViewID="verifyNumber"
+            />
+            <TouchableOpacity
+              style={styles.verifyResendButton}
+              onPress={() => {}}
+            >
+              <Text style={styles.verifyResendText}>재전송</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.validityContainer}>
+            <Text style={styles.validityInfoText}>
+              인증번호가 발송되었어요. 유효시간 3:00
+            </Text>
+            <TouchableOpacity
+              style={styles.validityQnAButton}
+              onPress={() => {}}
+            >
+              <Text style={styles.validityQnAText}>
+                인증번호가 오지 않나요?
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        {Platform.OS === 'ios' ? (
+          <InputAccessoryView
+            nativeID="verifyNumber"
+            backgroundColor={
+              isButtonDisabled ? Colors.contents_light : Colors.purple
+            }
+          >
+            <TouchableOpacity
+              style={styles.verifyButton}
+              onPress={handleVerify}
+              disabled={isButtonDisabled}
+            >
+              <Text style={styles.verifyText}>인증하기</Text>
+            </TouchableOpacity>
+          </InputAccessoryView>
+        ) : (
+          <TouchableOpacity
+            style={[
+              styles.verifyButton,
+              {
+                backgroundColor: isButtonDisabled
+                  ? Colors.contents_light
+                  : Colors.purple,
+              },
+            ]}
+            onPress={handleVerify}
+            disabled={isButtonDisabled}
+          >
+            <Text style={styles.verifyText}>인증하기</Text>
+          </TouchableOpacity>
+        )}
+      </KeyboardAvoidingView>
+
       <Modal animationType="slide" visible={modalVisible} transparent={true}>
         <View style={styles.modalContainer}>
           <View style={styles.termsContainer}>
@@ -116,7 +151,7 @@ const PhoneVerifyScreen = () => {
               <Text style={styles.termsTitleText}>서비스 이용 동의</Text>
               <TermsCheckbox
                 value={checkAll}
-                setValue={setCheckAll}
+                setValue={handleCheckAll}
                 title="약관 전체동의"
                 type="all"
               />
@@ -158,7 +193,7 @@ const PhoneVerifyScreen = () => {
           </TouchableOpacity>
         </View>
       </Modal>
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 
@@ -167,15 +202,15 @@ export default PhoneVerifyScreen;
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    paddingHorizontal: 16,
     gap: 60,
     backgroundColor: Colors.black,
-    height: '100%',
+    flex: 1,
   },
   infoContainer: {
     display: 'flex',
     gap: 6,
     marginTop: 60,
+    paddingHorizontal: 16,
   },
   infoTitle: {
     color: Colors.white,
@@ -186,9 +221,14 @@ const styles = StyleSheet.create({
     opacity: 0.7,
     ...Fonts.btn,
   },
+  keyboardAvoidingContainer: {
+    flex: 1,
+    justifyContent: 'space-between',
+  },
   verifyContainer: {
     display: 'flex',
     gap: 12,
+    paddingHorizontal: 16,
   },
   inputContainer: {
     display: 'flex',
@@ -251,11 +291,11 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     paddingTop: 32,
     width: '100%',
-    height: '52%',
+    height: '50%',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     position: 'absolute',
-    bottom: 0,
+    bottom: 50,
   },
   termsContainer: {
     paddingHorizontal: 24,
@@ -274,7 +314,7 @@ const styles = StyleSheet.create({
   modalNextButton: {
     alignItems: 'center',
     justifyContent: 'center',
-    height: 90,
+    height: 78,
     backgroundColor: Colors.purple,
   },
   checkboxContainer: {
@@ -287,5 +327,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     gap: 20,
     paddingTop: 24,
+    paddingBottom: 24,
   },
 });

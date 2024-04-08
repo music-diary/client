@@ -15,7 +15,7 @@ import Fonts from '@/constants/Fonts';
 
 const SignUpScreen = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const validatePhoneNumber = (number: string) => {
     const phoneNumberPattern = /^\d{10,11}$/;
@@ -32,44 +32,63 @@ const SignUpScreen = () => {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.container}
-    >
+    <View style={styles.container}>
       <View style={styles.infoContainer}>
         <Text style={styles.infoTitle}>전화번호 가입</Text>
         <Text style={styles.infoDescription}>
           음계일기를 시작하기 위해 전화번호 인증이 필요해요.
         </Text>
       </View>
-      <View style={styles.inputContainer}>
-        <Text style={styles.inputLabel}>전화번호</Text>
-        <TextInput
-          style={styles.inputPhoneNumber}
-          autoFocus={true}
-          placeholder="-를 제외한 번호를 입력해주세요."
-          placeholderTextColor={Colors.contents_light}
-          value={phoneNumber}
-          onChangeText={handlePhoneNumberChange}
-          keyboardType="phone-pad"
-          inputAccessoryViewID="phoneNumber"
-        />
-      </View>
-      <InputAccessoryView
-        nativeID="phoneNumber"
-        backgroundColor={
-          isButtonDisabled ? Colors.contents_light : Colors.purple
-        }
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.keyboardAvoidingContainer}
       >
-        <TouchableOpacity
-          style={[styles.verifyButton]}
-          onPress={handleVerifyPhoneNumber}
-          disabled={isButtonDisabled}
-        >
-          <Text style={[styles.verifyText]}>인증번호 받기</Text>
-        </TouchableOpacity>
-      </InputAccessoryView>
-    </KeyboardAvoidingView>
+        <View style={styles.inputContainer}>
+          <Text style={styles.inputLabel}>전화번호</Text>
+          <TextInput
+            style={styles.inputPhoneNumber}
+            autoFocus={true}
+            placeholder="-를 제외한 번호를 입력해주세요."
+            placeholderTextColor={Colors.contents_light}
+            value={phoneNumber}
+            onChangeText={handlePhoneNumberChange}
+            keyboardType="phone-pad"
+            inputAccessoryViewID="phoneNumber"
+          />
+        </View>
+        {Platform.OS === 'ios' ? (
+          <InputAccessoryView
+            nativeID="phoneNumber"
+            backgroundColor={
+              isButtonDisabled ? Colors.contents_light : Colors.purple
+            }
+          >
+            <TouchableOpacity
+              style={styles.verifyButton}
+              onPress={handleVerifyPhoneNumber}
+              disabled={isButtonDisabled}
+            >
+              <Text style={styles.verifyText}>인증번호 받기</Text>
+            </TouchableOpacity>
+          </InputAccessoryView>
+        ) : (
+          <TouchableOpacity
+            style={[
+              styles.verifyButton,
+              {
+                backgroundColor: isButtonDisabled
+                  ? Colors.contents_light
+                  : Colors.purple,
+              },
+            ]}
+            onPress={handleVerifyPhoneNumber}
+            disabled={isButtonDisabled}
+          >
+            <Text style={styles.verifyText}>인증번호 받기</Text>
+          </TouchableOpacity>
+        )}
+      </KeyboardAvoidingView>
+    </View>
   );
 };
 
@@ -78,15 +97,15 @@ export default SignUpScreen;
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    paddingHorizontal: 16,
     gap: 60,
     backgroundColor: Colors.black,
-    height: '100%',
+    flex: 1,
   },
   infoContainer: {
     display: 'flex',
     gap: 6,
     marginTop: 60,
+    paddingHorizontal: 16,
   },
   infoTitle: {
     color: Colors.white,
@@ -97,9 +116,14 @@ const styles = StyleSheet.create({
     opacity: 0.7,
     ...Fonts.btn,
   },
+  keyboardAvoidingContainer: {
+    flex: 1,
+    justifyContent: 'space-between',
+  },
   inputContainer: {
     display: 'flex',
     gap: 12,
+    paddingHorizontal: 16,
   },
   inputLabel: {
     color: Colors.white,
