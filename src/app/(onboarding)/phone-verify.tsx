@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import {
   InputAccessoryView,
   KeyboardAvoidingView,
@@ -34,7 +34,7 @@ const PhoneVerifyScreen = () => {
     // 인증번호 요청 api 호출
     // 에러가 없으면 인증번호 발송
     // 에러가 있으면 에러메시지 표시
-    console.log('여기 진입하나? ::: ', phoneNumber);
+    // console.log('여기 진입하나? ::: ', phoneNumber);
   }, []);
 
   const validateVerifyNumber = (number: string) => {
@@ -63,7 +63,10 @@ const PhoneVerifyScreen = () => {
     setCheck5(!checkAll);
   };
 
-  const handleNext = () => {};
+  const handleNext = () => {
+    setModalVisible(false);
+    router.push('/user-info');
+  };
 
   return (
     <View style={styles.container}>
@@ -134,6 +137,7 @@ const PhoneVerifyScreen = () => {
                 backgroundColor: isButtonDisabled
                   ? Colors.contents_light
                   : Colors.purple,
+                height: Platform.OS === 'android' ? 78 : null,
               },
             ]}
             onPress={handleVerify}

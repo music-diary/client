@@ -19,6 +19,15 @@ const LoginLayout = () => {
         name="phone-verify"
         options={{
           headerBackVisible: true,
+          animation: 'fade',
+        }}
+      />
+      <Stack.Screen name="user-info" />
+      <Stack.Screen
+        name="music-info"
+        options={{
+          headerBackVisible: true,
+          animation: 'fade',
         }}
       />
     </Stack>

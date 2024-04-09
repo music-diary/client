@@ -60,7 +60,7 @@ function RootLayoutNav() {
     //   router.navigate('intro');
     // }
     if (!isLogin) {
-      router.navigate('(login)');
+      router.navigate('(onboarding)');
     }
   }, []);
 
@@ -69,7 +69,7 @@ function RootLayoutNav() {
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack>
           <Stack.Screen name="(main)" options={{ headerShown: false }} />
-          <Stack.Screen name="(login)" options={{ headerShown: false }} />
+          <Stack.Screen name="(onboarding)" options={{ headerShown: false }} />
           <Stack.Screen name="intro" options={{ headerShown: false }} />
           <Stack.Screen name="(modals)" options={{ headerShown: false }} />
         </Stack>
