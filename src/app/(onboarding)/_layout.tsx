@@ -30,6 +30,12 @@ const LoginLayout = () => {
           animation: 'fade',
         }}
       />
+      <Stack.Screen
+        name="complete"
+        options={{
+          animation: 'fade',
+        }}
+      />
     </Stack>
   );
 };

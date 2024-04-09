@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import Colors from '@/constants/Colors';
@@ -121,32 +122,35 @@ const MusicInfoScreen = () => {
           <Text style={styles.verifyText}>완료</Text>
         </TouchableOpacity>
       </View>
-
-      <Modal animationType="slide" visible={modalVisible} transparent={true}>
-        <View style={styles.modalContainer}>
-          <View style={styles.modalInfoContainer}>
-            <Text style={styles.modalTitle}>
-              선택한 장르와 다른 느낌의 곡들도 추천할까요?
-            </Text>
-            <Text style={styles.modalDescription}>
-              언제든지 마이페이지에서 변경 가능해요.
-            </Text>
+      <Modal animationType="fade" visible={modalVisible} transparent={true}>
+        <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+          <View style={styles.modalOverlay}>
+            <View style={styles.modalContainer}>
+              <View style={styles.modalInfoContainer}>
+                <Text style={styles.modalTitle}>
+                  선택한 장르와 다른 느낌의 곡들도 추천할까요?
+                </Text>
+                <Text style={styles.modalDescription}>
+                  언제든지 마이페이지에서 변경 가능해요.
+                </Text>
+              </View>
+              <View style={styles.modalButtonContainer}>
+                <TouchableOpacity
+                  onPress={() => handleFinish('N')}
+                  style={styles.modalCancelButton}
+                >
+                  <Text style={styles.modalCancelText}>관심없어요</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => handleFinish('Y')}
+                  style={styles.modalConfirmButton}
+                >
+                  <Text style={styles.modalConfirmText}>다양하게 추천받기</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
           </View>
-          <View style={styles.modalButtonContainer}>
-            <TouchableOpacity
-              onPress={() => handleFinish('N')}
-              style={styles.modalCancelButton}
-            >
-              <Text style={styles.modalCancelText}>관심없어요</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => handleFinish('Y')}
-              style={styles.modalConfirmButton}
-            >
-              <Text style={styles.modalConfirmText}>다양하게 추천받기</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+        </TouchableWithoutFeedback>
       </Modal>
     </View>
   );
@@ -270,6 +274,12 @@ const styles = StyleSheet.create({
     height: 2,
     width: 45,
   },
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
   modalContainer: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -279,8 +289,6 @@ const styles = StyleSheet.create({
     width: '100%',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    position: 'absolute',
-    bottom: 0,
     gap: 32,
   },
   modalInfoContainer: {
