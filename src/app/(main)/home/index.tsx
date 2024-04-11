@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Fontisto } from '@expo/vector-icons';
 import WeekCalendar from '@/components/home/WeekCalender';
 import MontlyMusicList from '@/components/home/MontlyMusicList';
@@ -15,10 +8,15 @@ import CharacterAnimation from '@/components/home/CharacterAnimation';
 import Fonts from '@/constants/Fonts';
 import Colors from '@/constants/Colors';
 import TopDescription from '@/components/home/TopDescription';
+import NewUserDescription from '@/components/home/NewUserDescription';
 
 const HomeScreen = () => {
   // 월간 작성 개수 -> dummy data
-  const submissionCount = 0;
+  const diaryCount = 3;
+  // 이름 -> dummy data
+  const name = 'Miya';
+  // 편지 개수
+  const letterCount = 0;
 
   return (
     <>
@@ -31,7 +29,7 @@ const HomeScreen = () => {
               <Text style={styles.logoText}>Logo</Text>
               <Fontisto name="bell" size={20} color="white" />
             </View>
-            <TopDescription />
+            <TopDescription count={diaryCount} name={name} />
           </View>
 
           {/* 바디 부분 */}
@@ -44,24 +42,33 @@ const HomeScreen = () => {
               <WeekCalendar />
             </View>
             <View style={{ marginTop: 40 }}>
-              <Text style={styles.bodyMent}>
-                이번달 Miya님은{'\n'}
-                <Text style={{ color: Colors.green }}>긍정적인</Text> 감정의
-                노래를 가장 많이 들었어요
-              </Text>
-              <TouchableOpacity style={styles.showAll}>
-                <Text style={styles.showAllText}>전체보기</Text>
-              </TouchableOpacity>
+              {diaryCount > 0 ? (
+                <Text style={styles.bodyMent}>
+                  이번달 Miya님은{'\n'}
+                  <Text style={{ color: Colors.green }}>긍정적인</Text> 감정의
+                  노래를 가장 많이 들었어요
+                </Text>
+              ) : (
+                <Text style={styles.bodyMent}>
+                  이번달 Miya님은{'\n'}
+                  아직 일기를 작성하지 않았어요
+                </Text>
+              )}
             </View>
-            <MontlyMusicList />
+            {diaryCount > 0 ? (
+              <MontlyMusicList />
+            ) : (
+              <NewUserDescription description="아직 작성한 일기가 없어요" />
+            )}
             <View style={{ marginTop: 40 }}>
               <Text style={styles.bodyMent}>
                 이번달 Miya님께{'\n'}9통의 음악편지가 도착했어요
               </Text>
-              <TouchableOpacity style={styles.showAll}>
-                <Text style={styles.showAllText}>전체보기</Text>
-              </TouchableOpacity>
-              <MontlyLetterList />
+              {letterCount > 0 ? (
+                <MontlyLetterList />
+              ) : (
+                <NewUserDescription description="친구에게 먼저 노래를 선물해볼까요?" />
+              )}
             </View>
           </View>
 
@@ -122,11 +129,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 16,
     top: 28,
-  },
-  showAllText: {
-    color: Colors.white,
-    textDecorationLine: 'underline',
-    ...Fonts.btn,
   },
 });
 
