@@ -1,62 +1,143 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Tabs } from 'expo-router';
+import { BlurView } from 'expo-blur';
+import { StyleSheet } from 'react-native';
+import {
+  Foundation,
+  Feather,
+  FontAwesome6,
+  Fontisto,
+} from '@expo/vector-icons';
 import { useClientOnlyValue } from '@/hooks/useClientOnlyValue';
-// import { useColorScheme } from '@/hooks/useColorScheme';
-// import Colors from '@/constants/Colors';
-
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
-  color: string;
-}) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
-}
+import Colors from '@/constants/Colors';
 
 export default function TabLayout() {
-  // const colorScheme = useColorScheme();
-
   return (
     <Tabs
       screenOptions={{
-        // tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: Colors.purple,
+        tabBarActiveBackgroundColor: Colors.white,
+        tabBarInactiveTintColor: Colors.white,
         headerShown: useClientOnlyValue(false, true),
+        tabBarStyle: styles.tabBarStyle,
+        headerTransparent: true,
+
+        tabBarBackground: () => (
+          <BlurView tint="light" intensity={10} style={styles.absoluteFill} />
+        ),
       }}
     >
       <Tabs.Screen name="index" options={{ href: null }} />
       <Tabs.Screen
         name="home"
         options={{
-          title: 'Home',
+          title: '홈',
           headerShown: false,
-          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <Foundation name="home" size={21} color={color} />
+          ),
+          tabBarItemStyle: styles.item,
+          tabBarLabelStyle: {
+            fontFamily: 'pret-sb',
+            fontSize: 10,
+          },
+        }}
+      />
+      <Tabs.Screen
+        name="diary"
+        options={{
+          title: '일기쓰기',
+          headerShown: false,
+          tabBarIcon: ({ color }) => (
+            <FontAwesome6 name="pen-nib" size={17} color={color} />
+          ),
+          tabBarItemStyle: styles.item,
+          tabBarLabelStyle: {
+            fontFamily: 'pret-sb',
+            fontSize: 10,
+          },
         }}
       />
       <Tabs.Screen
         name="archive"
         options={{
           title: '아카이브',
-          tabBarLabel: 'Explore',
           headerShown: false,
           tabBarIcon: ({ color }) => (
-            <TabBarIcon name="archive" color={color} />
+            <Feather name="archive" size={18} color={color} />
           ),
+          tabBarItemStyle: styles.item,
+          tabBarLabelStyle: {
+            fontFamily: 'pret-sb',
+            fontSize: 10,
+          },
         }}
       />
       <Tabs.Screen
         name="letter"
         options={{
-          title: 'letter',
+          title: '우편함',
           headerShown: false,
-          tabBarIcon: ({ color }) => <TabBarIcon name="inbox" color={color} />,
+          // tabBarStyle: { display: "none" },  // 탭 바 숨기기
+          tabBarIcon: ({ color }) => (
+            <Fontisto name="email" size={22} color={color} />
+          ),
+          tabBarItemStyle: styles.item,
+          tabBarLabelStyle: {
+            fontFamily: 'pret-sb',
+            fontSize: 10,
+          },
         }}
       />
       <Tabs.Screen
         name="mypage"
         options={{
-          title: 'mypage',
+          title: '마이페이지',
           headerShown: false,
-          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <FontAwesome name="user-o" size={18} color={color} />
+          ),
+          tabBarItemStyle: styles.item,
+          tabBarLabelStyle: {
+            fontFamily: 'pret-sb',
+            fontSize: 10,
+          },
         }}
       />
     </Tabs>
   );
 }
+
+const styles = StyleSheet.create({
+  tabBarStyle: {
+    flex: 1,
+    justifyContent: 'space-between',
+    position: 'absolute',
+    marginBottom: 34,
+    paddingBottom: 8,
+    paddingTop: 8,
+    paddingHorizontal: 9,
+    height: 60,
+    marginHorizontal: 16,
+    borderRadius: 43,
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(255, 255, 255, 0.3)',
+    borderColor: 'rgba(255, 255, 255, 0.3)',
+    borderWidth: 1,
+    backgroundColor: 'rgba(29, 29, 29, 0.2)',
+  },
+  absoluteFill: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: 58,
+    borderRadius: 43,
+    overflow: 'hidden',
+  },
+  item: {
+    borderRadius: 46,
+    paddingBottom: 4,
+  },
+});

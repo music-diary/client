@@ -16,13 +16,9 @@ import Fonts from '@/constants/Fonts';
 import Colors from '@/constants/Colors';
 import TopDescription from '@/components/home/TopDescription';
 
-
-
 const HomeScreen = () => {
-
   // 월간 작성 개수 -> dummy data
   const submissionCount = 0;
-
 
   return (
     <>
@@ -65,10 +61,12 @@ const HomeScreen = () => {
               <TouchableOpacity style={styles.showAll}>
                 <Text style={styles.showAllText}>전체보기</Text>
               </TouchableOpacity>
-
               <MontlyLetterList />
             </View>
           </View>
+
+          {/* 하단 부분 */}
+          <View style={{ height: 63 }} />
         </ScrollView>
       </SafeAreaView>
     </>
