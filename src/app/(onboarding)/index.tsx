@@ -40,8 +40,9 @@ const SignUpScreen = () => {
         </Text>
       </View>
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.keyboardAvoidingContainer}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Platform.OS === 'android' ? 78 : 0}
       >
         <View style={styles.inputContainer}>
           <Text style={styles.inputLabel}>전화번호</Text>
@@ -131,7 +132,7 @@ const styles = StyleSheet.create({
   },
   inputPhoneNumber: {
     color: Colors.white,
-    borderBottomColor: Colors.white,
+    borderBottomColor: '#C7C7C7',
     borderBottomWidth: 1,
     paddingBottom: 8,
     ...Fonts.b2_sb,

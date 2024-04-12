@@ -9,6 +9,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import TermsCheckbox from '@/components/login/TermsCheckbox';
@@ -77,42 +78,37 @@ const PhoneVerifyScreen = () => {
         </Text>
       </View>
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.keyboardAvoidingContainer}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Platform.OS === 'android' ? 78 : 0}
       >
         <View style={styles.verifyContainer}>
           <Text style={styles.inputLabel}>인증번호</Text>
           <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.inputVerifyNumber}
-              autoFocus={true}
-              placeholder="인증번호 6자리를 입력해주세요."
-              placeholderTextColor={Colors.contents_light}
-              value={verifyNumber}
-              onChangeText={handleVerifyNumberChange}
-              keyboardType="phone-pad"
-              inputAccessoryViewID="verifyNumber"
-            />
+            <View style={styles.inputSubContainer}>
+              <TextInput
+                style={styles.inputVerifyNumber}
+                autoFocus={true}
+                placeholder="인증번호 6자리를 입력해주세요."
+                placeholderTextColor={Colors.contents_light}
+                value={verifyNumber}
+                onChangeText={handleVerifyNumberChange}
+                keyboardType="phone-pad"
+                inputAccessoryViewID="verifyNumber"
+              />
+              <Text style={styles.verifyTimer}>3:00</Text>
+            </View>
             <TouchableOpacity
               style={styles.verifyResendButton}
               onPress={() => {}}
             >
-              <Text style={styles.verifyResendText}>재전송</Text>
+              <Text style={styles.verifyResendText}>재요청</Text>
             </TouchableOpacity>
           </View>
-          <View style={styles.validityContainer}>
-            <Text style={styles.validityInfoText}>
-              인증번호가 발송되었어요. 유효시간 3:00
-            </Text>
-            <TouchableOpacity
-              style={styles.validityQnAButton}
-              onPress={() => {}}
-            >
-              <Text style={styles.validityQnAText}>
-                인증번호가 오지 않나요?
-              </Text>
-            </TouchableOpacity>
-          </View>
+          <Text style={styles.validityInfoText}>인증번호가 발송되었어요.</Text>
+          <TouchableOpacity style={styles.validityQnAButton}>
+            <Text style={styles.validityQnAText}>인증번호가 오지 않나요?</Text>
+          </TouchableOpacity>
         </View>
         {Platform.OS === 'ios' ? (
           <InputAccessoryView
@@ -148,54 +144,58 @@ const PhoneVerifyScreen = () => {
         )}
       </KeyboardAvoidingView>
 
-      <Modal animationType="slide" visible={modalVisible} transparent={true}>
-        <View style={styles.modalContainer}>
-          <View style={styles.termsContainer}>
-            <View style={styles.termsTitleContainer}>
-              <Text style={styles.termsTitleText}>서비스 이용 동의</Text>
-              <TermsCheckbox
-                value={checkAll}
-                setValue={handleCheckAll}
-                title="약관 전체동의"
-                type="all"
-              />
-            </View>
-            <View style={styles.termsCheckboxContainer}>
-              <TermsCheckbox
-                value={check1}
-                setValue={setCheck1}
-                title="(필수) 만 14세 이상입니다."
-              />
-              <TermsCheckbox
-                value={check2}
-                setValue={setCheck2}
-                title="(필수) 서비스 이용약관"
-              />
-              <TermsCheckbox
-                value={check3}
-                setValue={setCheck3}
-                title="(필수) 개인정보 수집 및 이용 동의"
-              />
-              <TermsCheckbox
-                value={check4}
-                setValue={setCheck4}
-                title="(필수) 서비스 개인정보 제3자 제공 동의"
-              />
-              <TermsCheckbox
-                value={check5}
-                setValue={setCheck5}
-                title="(선택) 마케팅 활용 개인정보 제3자 제공 동의"
-              />
+      <Modal animationType="fade" visible={modalVisible} transparent={true}>
+        <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+          <View style={styles.modalOverlay}>
+            <View style={styles.modalContainer}>
+              <View style={styles.termsContainer}>
+                <View style={styles.termsTitleContainer}>
+                  <Text style={styles.termsTitleText}>서비스 이용 동의</Text>
+                  <TermsCheckbox
+                    value={checkAll}
+                    setValue={handleCheckAll}
+                    title="약관 전체동의"
+                    type="all"
+                  />
+                </View>
+                <View style={styles.termsCheckboxContainer}>
+                  <TermsCheckbox
+                    value={check1}
+                    setValue={setCheck1}
+                    title="(필수) 만 14세 이상입니다."
+                  />
+                  <TermsCheckbox
+                    value={check2}
+                    setValue={setCheck2}
+                    title="(필수) 서비스 이용약관"
+                  />
+                  <TermsCheckbox
+                    value={check3}
+                    setValue={setCheck3}
+                    title="(필수) 개인정보 수집 및 이용 동의"
+                  />
+                  <TermsCheckbox
+                    value={check4}
+                    setValue={setCheck4}
+                    title="(필수) 서비스 개인정보 제3자 제공 동의"
+                  />
+                  <TermsCheckbox
+                    value={check5}
+                    setValue={setCheck5}
+                    title="(선택) 마케팅 활용 개인정보 제3자 제공 동의"
+                  />
+                </View>
+              </View>
+              <TouchableOpacity
+                style={styles.modalNextButton}
+                onPress={handleNext}
+                disabled={isButtonDisabled}
+              >
+                <Text style={styles.verifyText}>모두 동의하고 다음으로</Text>
+              </TouchableOpacity>
             </View>
           </View>
-          <TouchableOpacity
-            style={styles.modalNextButton}
-            onPress={handleNext}
-            disabled={isButtonDisabled}
-          >
-            <Text style={styles.verifyText}>모두 동의하고 다음으로</Text>
-          </TouchableOpacity>
-        </View>
+        </TouchableWithoutFeedback>
       </Modal>
     </View>
   );
@@ -231,35 +231,52 @@ const styles = StyleSheet.create({
   },
   verifyContainer: {
     display: 'flex',
-    gap: 12,
     paddingHorizontal: 16,
   },
   inputContainer: {
     display: 'flex',
     flexDirection: 'row',
-    borderBottomColor: Colors.white,
-    borderBottomWidth: 1,
     justifyContent: 'space-between',
     paddingBottom: 8,
+    gap: 10,
+  },
+  inputSubContainer: {
+    flex: 1,
+    marginTop: 12,
+    flexDirection: 'row',
+    borderBottomColor: '#C7C7C7',
+    borderBottomWidth: 1,
+    paddingBottom: 8,
+    alignItems: 'center',
   },
   inputLabel: {
     color: Colors.white,
     ...Fonts.b2_sb,
   },
   inputVerifyNumber: {
+    flex: 1,
     color: Colors.white,
+    alignSelf: 'flex-start',
     ...Fonts.b2_sb,
+  },
+  verifyTimer: {
+    color: '#FF3333',
   },
   verifyResendButton: {
     alignItems: 'center',
     justifyContent: 'center',
-    borderBottomColor: Colors.contents_light,
-    borderBottomWidth: 1,
-    paddingBottom: 3,
+    backgroundColor: Colors.contents_light,
+    borderRadius: 2,
+    height: 21,
+    paddingHorizontal: 10,
+    marginTop: 8,
+    // borderBottomColor: Colors.contents_light,
+    // borderBottomWidth: 1,
+    // paddingBottom: 3,
   },
   verifyResendText: {
-    color: Colors.contents_light,
-    ...Fonts.b2_sb,
+    color: Colors.white,
+    ...Fonts.lb,
   },
   verifyButton: {
     alignItems: 'center',
@@ -276,10 +293,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   validityInfoText: {
+    marginBottom: 28,
     color: '#FF3333',
     ...Fonts.btn,
   },
   validityQnAButton: {
+    alignSelf: 'flex-start',
     borderBottomColor: Colors.contents_light,
     borderBottomWidth: 1,
     paddingBottom: 3,
@@ -288,6 +307,13 @@ const styles = StyleSheet.create({
     color: Colors.contents_light,
     fontFamily: 'pret-sb',
     fontSize: 12,
+    display: 'flex',
+  },
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContainer: {
     display: 'flex',

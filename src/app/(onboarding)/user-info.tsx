@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
   },
   inputText: {
     color: Colors.white,
-    borderBottomColor: Colors.white,
+    borderBottomColor: '#C7C7C7',
     borderBottomWidth: 1,
     paddingBottom: 8,
     ...Fonts.b2_sb,
