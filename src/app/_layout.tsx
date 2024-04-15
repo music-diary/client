@@ -60,7 +60,8 @@ function RootLayoutNav() {
     //   router.navigate('intro');
     // }
     if (!isLogin) {
-      router.navigate('(onboarding)');
+      router.navigate('(main)/diary');
+      // router.navigate('(onboarding)/music-info');
     }
   }, []);
 
