@@ -10,6 +10,7 @@ export default function DiaryLayout() {
         headerStyle: {
           backgroundColor: Colors.black,
         },
+        headerTintColor: Colors.white,
         headerTitle: '',
         headerLeft: () => <HeaderTitle />,
         headerRight: () => <HeaderCloseButton />,
@@ -18,6 +19,13 @@ export default function DiaryLayout() {
       <Stack.Screen
         name="index"
         options={{
+          title: '일기쓰기',
+        }}
+      />
+      <Stack.Screen
+        name="write"
+        options={{
+          headerBackVisible: true,
           title: '일기쓰기',
         }}
       />

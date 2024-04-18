@@ -4,8 +4,8 @@ import Fonts from '@/constants/Fonts';
 
 interface TopicButtonProps {
   type: string;
-  emoji?: string;
-  onPress: () => void;
+  emoji: string;
+  onPress?: () => void;
   isSelected?: boolean;
 }
 
@@ -20,9 +20,6 @@ const TopicButton = ({
       onPress={onPress}
       style={[styles.button, isSelected ? { borderColor: Colors.pink } : null]}
     >
-      <View
-        style={[styles.opacityView, isSelected ? { opacity: 0.3 } : null]}
-      />
       <View
         style={[
           styles.opacityView,
@@ -57,7 +54,6 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     justifyContent: 'center',
-    alignItems: 'center',
   },
   type: {
     color: Colors.white,

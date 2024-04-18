@@ -8,4 +8,5 @@ export default {
   contents_light: '#8F8F8F',
   bg_light: '#34323B',
   black: '#1D1D1D',
+  box: '#34323B',
 };

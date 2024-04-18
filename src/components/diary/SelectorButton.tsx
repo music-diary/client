@@ -4,7 +4,7 @@ import Fonts from '@/constants/Fonts';
 
 interface SelectorButtonProps {
   type: string;
-  onPress: () => void;
+  onPress?: () => void;
   isSelected?: boolean;
   color?: { backgroundColor: string; opacity?: number };
 }
