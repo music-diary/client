@@ -6,3 +6,9 @@ export interface CircleComponentProps {
   imageSource: ImageSourcePropType;
   diameter: number;
 }
+
+export interface ITopic {
+  id: number;
+  emoji: string;
+  name: string;
+}
