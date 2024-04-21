@@ -2,25 +2,22 @@ import { useEffect, useRef, useState } from 'react';
 import {
   Keyboard,
   KeyboardAvoidingView,
-  Modal,
   Platform,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
+import CustomModal from '@/components/common/CustomModal';
 import SelectorButton from '@/components/diary/SelectorButton';
 import TopicButton from '@/components/diary/TopicButton';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
-import { useModalStore } from '@/store/useModalStore';
 
 const WriteScreen = () => {
   const scrollViewRef = useRef<ScrollView>(null);
-  const { activeModal, closeModal } = useModalStore();
 
   const [hh] = useState(true);
 
@@ -142,38 +139,15 @@ const WriteScreen = () => {
       >
         <Text style={styles.nextText}>노래 추천받기</Text>
       </TouchableOpacity>
-      <Modal
-        animationType="fade"
-        visible={activeModal === 'write-cancel'}
-        transparent={true}
-      >
-        <TouchableWithoutFeedback onPress={closeModal}>
-          <View style={styles.modalOverlay}>
-            <View style={styles.modalContainer}>
-              <View style={styles.modalInfoContainer}>
-                <Text style={styles.modalTitle}>작성을 그만두시겠어요?</Text>
-                <Text style={styles.modalDescription}>
-                  일기 내용은 저장되지 않으며, 노래를 추천 받을 수 없어요.
-                </Text>
-              </View>
-              <View style={styles.modalButtonContainer}>
-                <TouchableOpacity
-                  onPress={() => {}}
-                  style={styles.modalLeftButton}
-                >
-                  <Text style={styles.modalLeftText}>일기 계속 작성하기</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {}}
-                  style={styles.modalRightButton}
-                >
-                  <Text style={styles.modalRightText}>그만쓰기</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        </TouchableWithoutFeedback>
-      </Modal>
+      <CustomModal
+        name="write-cancel"
+        title="작성을 그만두시겠어요?"
+        description="일기 내용은 저장되지 않으며, 노래를 추천 받을 수 없어요."
+        leftButtonText="일기 계속 작성하기"
+        rightButtonText="그만쓰기"
+        onLeftButtonPress={() => {}}
+        onRightButtonPress={() => {}}
+      />
     </>
   );
 };
@@ -245,60 +219,5 @@ const styles = StyleSheet.create({
   nextText: {
     color: Colors.white,
     ...Fonts.t1,
-  },
-  // Modal 언젠간 컴포넌트화
-  modalOverlay: {
-    flex: 1,
-    justifyContent: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    paddingHorizontal: 28,
-  },
-  modalContainer: {
-    display: 'flex',
-    backgroundColor: Colors.box,
-    padding: 22,
-    width: '100%',
-    borderRadius: 10,
-    gap: 14,
-  },
-  modalInfoContainer: {
-    gap: 14,
-  },
-  modalTitle: {
-    color: Colors.white,
-    ...Fonts.b1_sb,
-  },
-  modalDescription: {
-    color: Colors.white,
-    ...Fonts.b2,
-  },
-  modalButtonContainer: {
-    flexDirection: 'row',
-    gap: 12,
-  },
-  modalLeftButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 1,
-    borderRadius: 6,
-    borderColor: Colors.purple,
-    paddingVertical: 10,
-    flex: 1,
-  },
-  modalLeftText: {
-    color: Colors.purple,
-    ...Fonts.b2,
-  },
-  modalRightButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: Colors.purple,
-    borderRadius: 6,
-    paddingVertical: 10,
-    flex: 1,
-  },
-  modalRightText: {
-    color: Colors.white,
-    ...Fonts.b2,
   },
 });
