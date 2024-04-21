@@ -51,6 +51,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => (
             <FontAwesome6 name="pen-nib" size={17} color={color} />
           ),
+          tabBarStyle: { display: 'none' },
           tabBarItemStyle: styles.item,
           tabBarLabelStyle: {
             fontFamily: 'pret-sb',
