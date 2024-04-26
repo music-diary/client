@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
+import CustomAlert from '@/components/common/CustomAlert';
 
 interface FriendInfoProps {
   // 프로필 이미지, 이름
@@ -11,6 +12,17 @@ interface FriendInfoProps {
 }
 
 const FriendInfo = ({ profileImage, profileName }: FriendInfoProps) => {
+  const [isModalVisible, setModalVisible] = useState<boolean>(false);
+
+  const openModal = () => setModalVisible(true);
+  const closeModal = () => setModalVisible(false);
+
+  const handleConfirm = () => {
+    console.log('삭제 확인');
+    // 여기에 삭제 작업을 수행하는 코드를 추가하면 됨
+    closeModal();
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.friendInfo}>
@@ -23,8 +35,17 @@ const FriendInfo = ({ profileImage, profileName }: FriendInfoProps) => {
         )}
         <Text style={styles.name}>{profileName}</Text>
       </View>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={openModal}>
         <Feather name="minus-circle" size={20} color={Colors.contents_light} />
+        <CustomAlert
+          isVisible={isModalVisible}
+          onConfirm={handleConfirm} // 확인 버튼 눌렀을 때 실행할 함수
+          onCancel={closeModal}
+          firstLine="정말로 삭제하시겠습니까?"
+          secondLine="삭제된 친구는 다시 추가가 불가능합니다."
+          cancleMent="취소할래요"
+          confirmMent="차단할래요"
+        />
       </TouchableOpacity>
     </View>
   );
