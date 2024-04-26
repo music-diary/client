@@ -13,15 +13,17 @@ import Fonts from '@/constants/Fonts';
 import HeaderContentItem from '@/components/mypage/HeaderContentItem';
 import BodyNavigator from '@/components/mypage/BodyNavigator';
 import CustomToggle from '@/components/common/CustomToggle';
+import CustomAlert from '@/components/common/CustomAlert';
 
 const MypageScreen = () => {
+  // 장르 추천 토글
   const [isToggled, setIsToggled] = useState(false);
   const router = useRouter();
-
   const handleToggleChange = (state: boolean) => {
-    setIsToggled(state); // 토글 상태 업데이트
+    setIsToggled(state);
   };
 
+  // /* onpress시 routing 모음 /*
   // onpress시 archive로 이동
   const onPressArchive = () => {
     router.push('/(main)/archive');
@@ -34,10 +36,33 @@ const MypageScreen = () => {
   const onPressMyfriend = () => {
     router.push('/(main)/mypage/myfriend');
   };
-
   // onpress시 editprofile로 이동
   const onPressEditProfile = () => {
     router.push('/(main)/mypage/editprofile');
+  };
+  // onpress시 inquiry(문의사항)으로 이동
+  const onPressInquiry = () => {
+    router.push('/(main)/mypage/inquiry');
+  };
+  // onpress시 withdrawal(회원탈퇴)으로 이동
+  const onPressWithdrawal = () => {
+    router.push('/(main)/mypage/withdrawal');
+  };
+
+  // 로그아웃 모달
+  const [isLogoutModalVisible, setLogoutModalVisible] =
+    useState<boolean>(false);
+
+  const openLogoutModal = () => setLogoutModalVisible(true);
+  const closeLogoutModal = () => setLogoutModalVisible(false);
+
+  const handleConfirm = () => {
+    console.log(
+      '🚀 ~ file: index.tsx:56 ~ handleConfirm ~ console:',
+      '로그 아웃',
+    );
+    // 여기에 삭제 작업을 수행하는 코드를 추가하면 됨
+    closeLogoutModal();
   };
 
   return (
@@ -117,7 +142,7 @@ const MypageScreen = () => {
         <View style={styles.divider} />
         <View style={styles.body2}>
           <BodyNavigator content="서비스 소개" onPress={() => {}} />
-          <BodyNavigator content="문의 사항" onPress={() => {}} />
+          <BodyNavigator content="문의 사항" onPress={onPressInquiry} />
           <BodyNavigator content="오픈 라이센스" onPress={() => {}} />
           <BodyNavigator content="개인정보처리방침" onPress={() => {}} />
           <BodyNavigator content="이용 약관" onPress={() => {}} />
@@ -125,10 +150,18 @@ const MypageScreen = () => {
         {/* 바디3 */}
         <View style={styles.divider} />
         <View style={styles.body3}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={openLogoutModal}>
             <Text style={styles.textb2}>로그아웃</Text>
+            <CustomAlert
+              isVisible={isLogoutModalVisible}
+              onConfirm={handleConfirm} // 확인 버튼 눌렀을 때 실행할 함수
+              onCancel={closeLogoutModal}
+              firstLine="로그아웃시 어쩌고,, 라이팅 고민"
+              cancleMent="아니요, 안할래요"
+              confirmMent="네, 할래요"
+            />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={onPressWithdrawal}>
             <Text style={styles.secession}>회원탈퇴</Text>
           </TouchableOpacity>
         </View>

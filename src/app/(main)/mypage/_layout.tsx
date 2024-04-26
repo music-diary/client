@@ -46,6 +46,30 @@ export default function MypageLayout() {
           ),
         }}
       />
+      <Stack.Screen
+        name="inquiry"
+        options={{
+          title: '문의사항',
+          headerLeft: () => (
+            <View style={styles.headerContainer}>
+              <CustomBackButton />
+              <MypageHeaderTitle title="문의사항" />
+            </View>
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="withdrawal"
+        options={{
+          title: '회원탈퇴',
+          headerLeft: () => (
+            <View style={styles.headerContainer}>
+              <CustomBackButton />
+              <MypageHeaderTitle title="회원탈퇴" />
+            </View>
+          ),
+        }}
+      />
     </Stack>
   );
 }

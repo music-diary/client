@@ -14,7 +14,11 @@ import Colors from '@/constants/Colors';
 export default function TabLayout() {
   const path = usePathname();
   // 탭바 숨길 페이지 hide에 추가하면 됩니다..!
-  const hide = path === '/mypage/myfriend' || path === '/mypage/editprofile';
+  const hide =
+    path === '/mypage/myfriend' ||
+    path === '/mypage/editprofile' ||
+    path === '/mypage/inquiry' ||
+    path === '/mypage/withdrawal';
 
   return (
     <Tabs
