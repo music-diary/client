@@ -42,7 +42,6 @@ const CustomAlert = ({
     return (
       <>
         <Text style={styles.btnText}>{firstline}</Text>
-        <View style={{ height: 4 }} />
         <Text style={styles.btnText}>{secondline}</Text>
       </>
     );
@@ -114,6 +113,7 @@ const styles = StyleSheet.create({
   },
   btnText: {
     color: Colors.white,
+    lineHeight: 18,
     ...Fonts.btn,
   },
   b2PurpleText: {

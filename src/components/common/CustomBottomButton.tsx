@@ -36,12 +36,12 @@ const CustomBottomButton = ({
 
 const styles = StyleSheet.create({
   okbutton: {
-    height: 84,
+    height: 94,
     alignItems: 'center',
     justifyContent: 'center',
   },
   btnText: {
-    marginTop: -24,
+    marginTop: -18,
     ...Fonts.b1_sb,
   },
 });
