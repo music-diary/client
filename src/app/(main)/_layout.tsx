@@ -1,5 +1,5 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Tabs } from 'expo-router';
+import { Tabs, usePathname } from 'expo-router';
 import { BlurView } from 'expo-blur';
 import { StyleSheet } from 'react-native';
 import {
@@ -12,6 +12,14 @@ import { useClientOnlyValue } from '@/hooks/useClientOnlyValue';
 import Colors from '@/constants/Colors';
 
 export default function TabLayout() {
+  const path = usePathname();
+  // 탭바 숨길 페이지 hide에 추가하면 됩니다..!
+  const hide =
+    path === '/mypage/myfriend' ||
+    path === '/mypage/editprofile' ||
+    path === '/mypage/inquiry' ||
+    path === '/mypage/withdrawal';
+
   return (
     <Tabs
       screenOptions={{
@@ -19,7 +27,9 @@ export default function TabLayout() {
         tabBarActiveBackgroundColor: Colors.white,
         tabBarInactiveTintColor: Colors.white,
         headerShown: useClientOnlyValue(false, true),
-        tabBarStyle: styles.tabBarStyle,
+        tabBarStyle: hide
+          ? { display: 'none' }
+          : { display: 'flex', ...styles.tabBarStyle },
         headerTransparent: true,
 
         tabBarBackground: () => (
@@ -95,6 +105,7 @@ export default function TabLayout() {
         options={{
           title: '마이페이지',
           headerShown: false,
+
           tabBarIcon: ({ color }) => (
             <FontAwesome name="user-o" size={18} color={color} />
           ),
