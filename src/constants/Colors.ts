@@ -9,4 +9,6 @@ export default {
   bg_light: '#34323B',
   black: '#1D1D1D',
   box: '#34323B',
+  red: '#FF453A',
+  purple_box: '#9878FF',
 };

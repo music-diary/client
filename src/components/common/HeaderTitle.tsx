@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
 
-const MypageHeaderTitle = ({ title }: { title: string }) => {
+const HeaderTitle = ({ title }: { title: string }) => {
   return (
     <View>
       <Text style={styles.titleText}>{title}</Text>
@@ -10,7 +10,7 @@ const MypageHeaderTitle = ({ title }: { title: string }) => {
   );
 };
 
-export default MypageHeaderTitle;
+export default HeaderTitle;
 
 const styles = StyleSheet.create({
   titleText: {
