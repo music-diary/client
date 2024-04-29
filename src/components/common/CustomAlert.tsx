@@ -12,6 +12,7 @@ interface CustomAlertProps {
   secondLine?: string;
   cancleMent: string;
   confirmMent: string;
+  isDelete?: boolean;
 }
 
 const CustomAlert = ({
@@ -22,6 +23,7 @@ const CustomAlert = ({
   secondLine: secondline,
   cancleMent,
   confirmMent,
+  isDelete,
 }: CustomAlertProps) => {
   // 1줄만 입력시
   const firstLinestyle = ({ firstline }: { firstline: string }) => {
@@ -60,10 +62,28 @@ const CustomAlert = ({
           ? secondLinestyle({ firstline, secondline })
           : firstLinestyle({ firstline })}
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.cancelButton} onPress={onCancel}>
-            <Text style={styles.b2PurpleText}>{cancleMent}</Text>
+          <TouchableOpacity
+            style={[
+              styles.cancelButton,
+              isDelete
+                ? { borderColor: Colors.contents_light }
+                : { borderColor: Colors.purple },
+            ]}
+            onPress={onCancel}
+          >
+            <Text style={isDelete ? styles.b2lightText : styles.b2PurpleText}>
+              {cancleMent}
+            </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.confirmButton} onPress={onConfirm}>
+          <TouchableOpacity
+            style={[
+              styles.confirmButton,
+              isDelete
+                ? { backgroundColor: Colors.red }
+                : { backgroundColor: Colors.purple },
+            ]}
+            onPress={onConfirm}
+          >
             <Text style={styles.btnText}>{confirmMent}</Text>
           </TouchableOpacity>
         </View>
@@ -96,12 +116,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 6,
     borderWidth: 1,
-    borderColor: Colors.purple,
   },
   confirmButton: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: Colors.purple,
     paddingVertical: 8,
     paddingHorizontal: 20,
     borderRadius: 6,
@@ -118,6 +136,10 @@ const styles = StyleSheet.create({
   },
   b2PurpleText: {
     color: Colors.purple,
+    ...Fonts.btn,
+  },
+  b2lightText: {
+    color: Colors.contents_light,
     ...Fonts.btn,
   },
 });
