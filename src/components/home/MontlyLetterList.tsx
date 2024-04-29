@@ -1,7 +1,7 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
-import CircleAlbum from './CircleAlbum';
+import CircleAlbum from '@/components/common/CircleAlbum';
 const MontlyLetterList = () => {
   const colors = [
     'rgba(42,237,21, 0.3)',
