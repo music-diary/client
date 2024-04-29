@@ -1,6 +1,6 @@
 import { Stack } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
-import MypageHeaderTitle from '@/components/mypage/MypageHeaderTitle';
+import HeaderTitle from '@/components/common/HeaderTitle';
 import Colors from '@/constants/Colors';
 import CustomBackButton from '@/components/common/CustomBackButton';
 
@@ -13,7 +13,7 @@ export default function MypageLayout() {
         },
         headerTintColor: Colors.white,
         headerTitle: '',
-        headerLeft: () => <MypageHeaderTitle title="마이페이지" />,
+        headerLeft: () => <HeaderTitle title="마이페이지" />,
       }}
     >
       <Stack.Screen
@@ -29,7 +29,7 @@ export default function MypageLayout() {
           headerLeft: () => (
             <View style={styles.headerContainer}>
               <CustomBackButton />
-              <MypageHeaderTitle title="프로필 수정" />
+              <HeaderTitle title="프로필 수정" />
             </View>
           ),
         }}
@@ -41,7 +41,7 @@ export default function MypageLayout() {
           headerLeft: () => (
             <View style={styles.headerContainer}>
               <CustomBackButton />
-              <MypageHeaderTitle title="내 친구" />
+              <HeaderTitle title="내 친구" />
             </View>
           ),
         }}
@@ -53,7 +53,7 @@ export default function MypageLayout() {
           headerLeft: () => (
             <View style={styles.headerContainer}>
               <CustomBackButton />
-              <MypageHeaderTitle title="문의사항" />
+              <HeaderTitle title="문의사항" />
             </View>
           ),
         }}
@@ -65,7 +65,7 @@ export default function MypageLayout() {
           headerLeft: () => (
             <View style={styles.headerContainer}>
               <CustomBackButton />
-              <MypageHeaderTitle title="회원탈퇴" />
+              <HeaderTitle title="회원탈퇴" />
             </View>
           ),
         }}

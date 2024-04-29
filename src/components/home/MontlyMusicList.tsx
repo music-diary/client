@@ -1,7 +1,7 @@
 // MontlyMusicList.tsx
 import { ScrollView, StyleSheet, Image, View } from 'react-native';
 import Colors from '@/constants/Colors';
-import CircleAlbum from './CircleAlbum';
+import CircleAlbum from '../common/CircleAlbum';
 
 const MontlyMusicList = () => {
   const colors = [
@@ -26,9 +26,9 @@ const MontlyMusicList = () => {
           {Array.from({ length }).map((_, index) => (
             <View style={styles.albumList} key={index}>
               <CircleAlbum
-                order={length - index} 
+                order={length - index}
                 color={colors[index % colors.length]}
-                imageSource={require('assets/images/dummy_albumcircle.png')}
+                imageSource={'https://picsum.photos/100/100'}
                 diameter={68}
               />
             </View>
