@@ -63,7 +63,7 @@ function RootLayoutNav() {
     if (!isLogin) {
       router.navigate('(main)/diary');
       // router.navigate('(onboarding)/music-info');
-      router.navigate('(main)/archive');
+      // router.navigate('(main)/archive');
     }
   }, []);
 

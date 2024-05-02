@@ -12,6 +12,7 @@ export const useModalStore = create<ModalState>((set) => ({
   closeModal: () => set({ activeModal: null }),
 }));
 
+
 // toggle modal (archiveMoreModal)에 사용
 interface ModalToggleState {
   isModalOpen: boolean;

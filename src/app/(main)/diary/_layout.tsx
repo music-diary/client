@@ -12,7 +12,7 @@ export default function DiaryLayout() {
         },
         headerTintColor: Colors.white,
         headerTitle: '',
-        headerLeft: () => <HeaderTitle />,
+        headerLeft: () => <HeaderTitle title="일기쓰기" />,
         headerRight: () => <HeaderCloseButton />,
       }}
     >
@@ -27,6 +27,14 @@ export default function DiaryLayout() {
         options={{
           headerBackVisible: true,
           title: '일기쓰기',
+        }}
+      />
+      <Stack.Screen
+        name="template"
+        options={{
+          headerBackVisible: true,
+          title: '템플릿 사용하기',
+          headerLeft: () => <HeaderTitle title="템플릿 사용하기" />,
         }}
       />
     </Stack>
