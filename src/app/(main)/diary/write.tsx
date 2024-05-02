@@ -164,6 +164,7 @@ const WriteScreen = () => {
                 </View>
               </>
             )}
+
             <View style={styles.infoContainer}>
               <Text style={styles.infoText}>
                 일기를 어떻게 써야할지 모르겠나요?

@@ -36,7 +36,7 @@ const CircleAlbum = ({
             width: diameter / 2,
             borderRadius: diameter / 4,
           }}
-          source={imageSource}
+          source={{ uri: imageSource }}
         />
       </BlurView>
     </View>

@@ -11,3 +11,15 @@ export const useModalStore = create<ModalState>((set) => ({
   openModal: (id: string) => set({ activeModal: id }),
   closeModal: () => set({ activeModal: null }),
 }));
+
+
+// toggle modal (archiveMoreModal)에 사용
+interface ModalToggleState {
+  isModalOpen: boolean;
+  toggleModal: () => void;
+}
+
+export const useModalToggleStore = create<ModalToggleState>((set) => ({
+  isModalOpen: false,
+  toggleModal: () => set((state) => ({ isModalOpen: !state.isModalOpen })),
+}));

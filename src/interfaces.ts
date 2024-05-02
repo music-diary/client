@@ -1,9 +1,7 @@
-import { type ImageSourcePropType } from 'react-native';
-
 export interface CircleComponentProps {
-  order: number;
+  order?: number;
   color: string;
-  imageSource: ImageSourcePropType;
+  imageSource: string;
   diameter: number;
 }
 
