@@ -10,13 +10,19 @@ import {
   View,
 } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
+import { router, useLocalSearchParams } from 'expo-router';
 import CustomModal from '@/components/common/CustomModal';
 import SelectorButton from '@/components/diary/SelectorButton';
 import TopicButton from '@/components/diary/TopicButton';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
+import { useModalStore } from '@/store/useModalStore';
+import { templateList } from './template';
 
 const WriteScreen = () => {
+  const { type } = useLocalSearchParams();
+  const { closeModal } = useModalStore();
+  const template = templateList.find((t) => t.type === type);
   const scrollViewRef = useRef<ScrollView>(null);
 
   const [hh] = useState(true);
@@ -44,6 +50,19 @@ const WriteScreen = () => {
       keyboardDidHideListener.remove();
     };
   }, []);
+
+  const handleTemplate = () => {
+    router.push('/diary/template');
+  };
+
+  const handleDraft = () => {
+    closeModal();
+    router.push('/');
+  };
+
+  const handleSongRecommendation = () => {
+    console.log('노래 추천받기');
+  };
 
   return (
     <>
@@ -98,24 +117,59 @@ const WriteScreen = () => {
             </View>
           </View>
           <View style={styles.inputContainer}>
-            <TextInput
-              placeholder="일기제목"
-              style={styles.inputTitle}
-              placeholderTextColor={Colors.contents_light}
-            />
-            <TextInput
-              placeholder="오늘 하루에 대해 적어보세요"
-              maxLength={500}
-              multiline={true}
-              textAlignVertical="top"
-              style={styles.inputDiary}
-              placeholderTextColor={Colors.contents_light}
-            />
+            {type && template ? (
+              <>
+                <TextInput
+                  placeholder="일기제목"
+                  style={[styles.inputTitle, { marginBottom: 0 }]}
+                  placeholderTextColor={Colors.contents_light}
+                />
+                {Object.entries(template.preview).map(([key, value]) => (
+                  <View key={key}>
+                    <Text style={styles.previewName}>{key}</Text>
+                    <View style={styles.inputDiaryView}>
+                      <TextInput
+                        placeholder={value}
+                        maxLength={200}
+                        multiline={true}
+                        textAlignVertical="top"
+                        style={[
+                          styles.inputDiary,
+                          { height: 150, marginBottom: 0 },
+                        ]}
+                        placeholderTextColor={Colors.contents_light}
+                      />
+                      <Text style={styles.inputDiaryCount}>0/200</Text>
+                    </View>
+                  </View>
+                ))}
+              </>
+            ) : (
+              <>
+                <TextInput
+                  placeholder="일기제목"
+                  style={styles.inputTitle}
+                  placeholderTextColor={Colors.contents_light}
+                />
+                <View style={styles.inputDiaryView}>
+                  <TextInput
+                    placeholder="오늘 하루에 대해 적어보세요"
+                    maxLength={500}
+                    multiline={true}
+                    textAlignVertical="top"
+                    style={styles.inputDiary}
+                    placeholderTextColor={Colors.contents_light}
+                  />
+                  <Text style={styles.inputDiaryCount}>0/500</Text>
+                </View>
+              </>
+            )}
+
             <View style={styles.infoContainer}>
               <Text style={styles.infoText}>
                 일기를 어떻게 써야할지 모르겠나요?
               </Text>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={handleTemplate}>
                 <Text
                   style={[styles.infoText, { textDecorationLine: 'underline' }]}
                 >
@@ -134,7 +188,7 @@ const WriteScreen = () => {
             height: Platform.OS === 'android' ? 78 : 100,
           },
         ]}
-        onPress={() => {}}
+        onPress={handleSongRecommendation}
         disabled={!hh}
       >
         <Text style={styles.nextText}>노래 추천받기</Text>
@@ -144,9 +198,9 @@ const WriteScreen = () => {
         title="작성을 그만두시겠어요?"
         description="일기 내용은 저장되지 않으며, 노래를 추천 받을 수 없어요."
         leftButtonText="일기 계속 작성하기"
-        rightButtonText="그만쓰기"
-        onLeftButtonPress={() => {}}
-        onRightButtonPress={() => {}}
+        rightButtonText="임시 저장하기"
+        onLeftButtonPress={closeModal}
+        onRightButtonPress={handleDraft}
       />
     </>
   );
@@ -174,6 +228,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   inputContainer: {
+    gap: 32,
     minHeight: 300,
   },
   infoContainer: {
@@ -201,6 +256,11 @@ const styles = StyleSheet.create({
     marginBottom: 18,
     ...Fonts.b1_sb,
   },
+  inputDiaryView: {
+    flex: 1,
+    color: Colors.contents_light,
+    gap: 10,
+  },
   inputDiary: {
     flex: 1,
     paddingVertical: 14,
@@ -208,8 +268,12 @@ const styles = StyleSheet.create({
     color: Colors.contents_light,
     backgroundColor: Colors.box,
     borderRadius: 10,
-    marginBottom: 14,
     ...Fonts.b2,
+  },
+  inputDiaryCount: {
+    alignSelf: 'flex-end',
+    color: Colors.contents_light,
+    ...Fonts.lb,
   },
   nextButton: {
     alignItems: 'center',
@@ -219,5 +283,10 @@ const styles = StyleSheet.create({
   nextText: {
     color: Colors.white,
     ...Fonts.t1,
+  },
+  previewName: {
+    color: Colors.white,
+    ...Fonts.b2,
+    marginBottom: 10,
   },
 });

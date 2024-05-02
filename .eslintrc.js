@@ -35,6 +35,8 @@ module.exports = {
     '@typescript-eslint/strict-boolean-expressions': 'off', // 엄격한 boolean 표현식 사용 안 함.
     '@typescript-eslint/no-confusing-void-expression': 'off', // void 반환 표현식에 대한 규칙 무시.
     '@typescript-eslint/no-unused-vars': 'warn', // 사용되지 않는 변수 있을 시 경고.
+    '@typescript-eslint/prefer-reduce-type-parameter': 'off', // reduce 함수의 타입 파라미터를 사용하지 않아도 됨.
+    '@typescript-eslint/consistent-type-assertions': 'off', // 타입 단언을 일관되게 사용할 필요 없음.
     'import/order': [
       'error',
       {
