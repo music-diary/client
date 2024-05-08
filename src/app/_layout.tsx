@@ -64,6 +64,7 @@ function RootLayoutNav() {
       // router.navigate('(main)/diary');
       // router.navigate('(onboarding)/music-info');
       router.navigate('(main)/archive/calendar');
+
     }
   }, []);
 

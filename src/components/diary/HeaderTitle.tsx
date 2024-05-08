@@ -2,10 +2,10 @@ import { StyleSheet, Text, View } from 'react-native';
 import Fonts from '@/constants/Fonts';
 import Colors from '@/constants/Colors';
 
-const HeaderTitle = () => {
+const HeaderTitle = ({ title }: { title: string }) => {
   return (
     <View>
-      <Text style={styles.title}>일기쓰기</Text>
+      <Text style={styles.title}>{title}</Text>
     </View>
   );
 };
