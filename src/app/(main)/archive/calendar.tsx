@@ -1,76 +1,64 @@
 import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
-  ImageBackground,
   StyleSheet,
   View,
+  Text,
+  TouchableOpacity,
+  Image,
 } from 'react-native';
-import { CalendarList } from 'react-native-calendars';
+import { CalendarList, type DateData } from 'react-native-calendars';
+import { router } from 'expo-router';
 import Colors from '@/constants/Colors';
 import TempBlack from '@/components/archive/TempBlack';
+import dummyArchiveCalendar from '@/data/dummy_archive_calendar.json';
 
-interface CustomStyle {
-  container: React.CSSProperties & {
-    borderRadius: number;
-    ImageBackground: JSX.Element;
+interface customDayComponentProps {
+  date: DateData;
+  imageuri?: string;
+}
+const customDayComponent = ({ date, imageuri }: customDayComponentProps) => {
+  // datedata 형식 확인
+  const handleDateClick = (dd: any) => {
+    console.log('🚀 ~ file: calendar.tsx:22 ~ handleDateClick ~ dd:', dd);
   };
-}
 
-interface MarkedDateInfo {
-  selected?: boolean;
-  marked?: boolean;
-  selectedColor?: string;
-  customStyles?: CustomStyle;
-}
+  // temp date (임시 설정)
+  const tempdate = 'archive/day/3%EC%9B%94%202%EC%9D%BC';
+  const handleAlbumClick = (date: DateData) => {
+    console.log(
+      '🚀 ~ file: calendar.tsx:26 ~ handleAlbumClick ~ date:',
+      date.dateString,
+    );
+    router.push(tempdate as any);
+  };
 
-type MarkedDates = Record<string, MarkedDateInfo>;
+  return (
+    <View style={styles.dayContainer}>
+      {imageuri ? (
+        <TouchableOpacity
+          style={styles.albumContainer}
+          onPress={() => handleAlbumClick(date)}
+        >
+          <View style={styles.albumImageContainer}>
+            <Image source={{ uri: imageuri }} style={styles.albumImage} />
+          </View>
+          <Text style={styles.whiteText}>{date.day}</Text>
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity onPress={() => handleDateClick(date)}>
+          <Text style={styles.whiteText}>{date.day}</Text>
+        </TouchableOpacity>
+      )}
+    </View>
+  );
+};
 
 const CalendarView = () => {
-  const [selected, setSelected] = useState<string>('');
   const [isLoaded, setIsLoaded] = useState(false);
   const [showTempBlack, setShowTempBlack] = useState(false);
 
-  const markedDates: MarkedDates = {
-    '2024-04-01': {
-      selected: true,
-      customStyles: {
-        container: {
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: 50,
-          width: 50,
-          borderRadius: 25,
-          ImageBackground: (
-            <ImageBackground
-              source={{ uri: 'https://picsum.photos/200' }}
-              style={{ width: '100%', height: '100%' }}
-            />
-          ),
-        },
-      },
-    },
-    '2024-04-02': {
-      marked: true,
-      selected: true,
-      customStyles: {
-        container: {
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: 50,
-          width: 50,
-          borderRadius: 25,
-          ImageBackground: (
-            <ImageBackground
-              source={{ uri: 'https://picsum.photos/200' }}
-              style={{ width: '100%', height: '100%' }}
-            />
-          ),
-        },
-      },
-    },
-    '2024-04-03': { selected: true, marked: true, selectedColor: 'blue' },
-  };
-
+  // 로딩처리
   useEffect(() => {
     setTimeout(() => setIsLoaded(true), 1000);
   }, []);
@@ -81,6 +69,12 @@ const CalendarView = () => {
       setTimeout(() => setShowTempBlack(false), 500);
     }
   }, [isLoaded]);
+
+  const getImageUriForDate = (dateString?: string) => {
+    if (!dateString) return undefined;
+    const item = dummyArchiveCalendar.find((item) => item.date === dateString);
+    return item ? item.albumCoverUrl : undefined;
+  };
 
   return (
     <View style={styles.container}>
@@ -101,31 +95,14 @@ const CalendarView = () => {
               dayTextColor: Colors.white,
               textMonthFontFamily: 'pret-b',
             }}
-            onDayPress={(day) => {
-              setSelected(day.dateString);
-            }}
-            markedDates={{
-              '2024-05-01': {
-                selected: true,
-                marked: true,
-                // selectedColor: 'blue',
-                customStyles: {
-                  container: {
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    height: 50,
-                    width: 50,
-                    borderRadius: 25,
-                  },
-                },
-              },
-              '2024-05-02': { marked: true },
-              '2024-05-03': {
-                selected: true,
-                marked: true,
-                selectedColor: 'blue',
-              },
-            }}
+            dayComponent={({ date, state }) =>
+              customDayComponent({
+                date: date as DateData,
+                imageuri: date
+                  ? getImageUriForDate(date.dateString)
+                  : undefined,
+              })
+            }
           />
         </>
       ) : (
@@ -154,21 +131,37 @@ const styles = StyleSheet.create({
     width: '100%',
     zIndex: 10,
   },
-  calendarContainer: {},
   dayContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    height: 40,
     aspectRatio: 1,
   },
-  item: {
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
-    backgroundColor: Colors.box,
-    borderRadius: 10,
-  },
-  itemText: {
+  whiteText: {
+    textAlign: 'center',
     color: Colors.white,
+    zIndex: 1,
+    opacity: 1,
+  },
+  albumContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 40,
+    width: 40,
+    borderRadius: 20,
+    overflow: 'hidden',
+    backgroundColor: Colors.black,
+  },
+  albumImageContainer: {
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
+    opacity: 0.5, // 이미지 투명도 조절
+  },
+  albumImage: {
+    height: '100%',
+    width: '100%',
   },
 });
