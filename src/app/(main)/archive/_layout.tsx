@@ -62,6 +62,18 @@ export default function ArchiveLayout() {
           ),
         }}
       />
+      <Stack.Screen
+        name="archivegrid"
+        options={{
+          title: '아카이브 그리드',
+          headerLeft: () => (
+            <View style={styles.headerContainer}>
+              <CustomBackButton />
+              <HeaderTitle title="아카이브" />
+            </View>
+          ),
+        }}
+      />
     </Stack>
   );
 }

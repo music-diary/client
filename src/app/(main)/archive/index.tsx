@@ -1,60 +1,100 @@
-import { useEffect, useState } from 'react';
-import { View, StyleSheet, FlatList } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, ScrollView, Text, View } from 'react-native';
 import Colors from '@/constants/Colors';
-import dummy_archive_main from '@/data/dummy_archive_main.json';
-import MontlyMainArchive from '@/components/archive/MontlyMainArchive';
+import dummy_archive_month from '@/data/dummy_archive_month.json';
+import DailyMainArchive from '@/components/archive/DailyMainArchive';
+import dummy_archive_recommend from '@/data/dummy_archive_recommend.json';
+import RecommendMusic from '@/components/archive/RecommendMusic';
+import RouteSwitcher from '@/components/archive/RouteSwitcher';
 
-interface DiaryEntryData {
+interface DiaryData {
   id: string;
-  month: string;
-  mood: string;
+  date: string;
   albumCoverUrl: string;
   songTitle: string;
   artist: string;
-  diaryEntries: number;
+  diaryTitle: string;
+  emotions: string[];
 }
 
-const ArchiveScreen = () => {
-  const [entryData, setEntryData] = useState<DiaryEntryData[]>([]);
+interface RecommendData {
+  id: string;
+  albumCoverUrl: string;
+  songTitle: string;
+  artist: string;
+  emotion: string;
+}
+
+const MonthScreen = () => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth() + 1;
+  const monthDate = `${month}월 ${year}`;
+
+  const [entryData, setEntryData] = useState<DiaryData[]>([]);
+  const [recommendData, setRecommendData] = useState<RecommendData[]>([]);
+
   useEffect(() => {
-    setEntryData(dummy_archive_main);
+    setEntryData(dummy_archive_month);
+    setRecommendData(dummy_archive_recommend);
   }, []);
 
   return (
-    <FlatList
-      data={entryData}
-      keyExtractor={(item) => item.id}
-      numColumns={2}
-      columnWrapperStyle={styles.columnWrapper}
-      renderItem={({ item }) => (
-        <View style={styles.gridItem}>
-          <MontlyMainArchive {...item} />
+    <>
+      <View style={styles.header}>
+        <RouteSwitcher />
+      </View>
+      <ScrollView style={styles.container}>
+        <Text style={styles.headerText}>{monthDate}</Text>
+        <ScrollView
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          style={{ paddingTop: 11 }}
+        >
+          <View style={styles.scrollContent}>
+            {entryData.map((entry) => (
+              <DailyMainArchive key={entry.id} {...entry} />
+            ))}
+          </View>
+        </ScrollView>
+        <View style={styles.recommendContainer}>
+          <Text style={styles.headerText}>Miya님이 3월에 추천받은 음악들</Text>
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+            <View style={styles.scrollContent}>
+              {recommendData.map((entry) => (
+                <RecommendMusic key={entry.id} {...entry} />
+              ))}
+            </View>
+          </ScrollView>
         </View>
-      )}
-      contentContainerStyle={styles.contentContainer}
-      style={{ backgroundColor: Colors.black }}
-    />
+      </ScrollView>
+    </>
   );
 };
 
-export default ArchiveScreen;
+export default MonthScreen;
 
 const styles = StyleSheet.create({
-  contentContainer: {
-    paddingHorizontal: 16,
-    paddingTop: 30,
-    paddingBottom: 130,
-  },
-  flatList: {
+  container: {
+    flex: 1,
     backgroundColor: Colors.black,
+    paddingLeft: 16,
+    paddingTop: 20,
   },
-
-  columnWrapper: {
-    justifyContent: 'space-between',
+  header: {
+    height: 50,
   },
-  gridItem: {
-    marginTop: 20,
-    height: 165,
-    width: 165,
+  headerText: {
+    color: Colors.white,
+    fontFamily: 'pret-b',
+    fontSize: 18,
+  },
+  scrollContent: {
+    flexDirection: 'row',
+    gap: 10,
+  },
+  recommendContainer: {
+    paddingTop: 30,
+    paddingBottom: 150,
   },
 });

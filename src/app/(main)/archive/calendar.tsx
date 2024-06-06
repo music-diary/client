@@ -12,6 +12,7 @@ import { router } from 'expo-router';
 import Colors from '@/constants/Colors';
 import TempBlack from '@/components/archive/TempBlack';
 import dummyArchiveCalendar from '@/data/dummy_archive_calendar.json';
+import RouteSwitcher from '@/components/archive/RouteSwitcher';
 
 interface customDayComponentProps {
   date: DateData;
@@ -85,6 +86,9 @@ const CalendarView = () => {
               <TempBlack />
             </View>
           )}
+          <View style={styles.routerContainer}>
+            <RouteSwitcher />
+          </View>
           <CalendarList
             hideExtraDays
             horizontal={false}
@@ -106,7 +110,9 @@ const CalendarView = () => {
           />
         </>
       ) : (
-        <ActivityIndicator style={styles.loadingContainer} color="#793FB5" />
+        <>
+          <ActivityIndicator style={styles.loadingContainer} color="#793FB5" />
+        </>
       )}
     </View>
   );
@@ -118,6 +124,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.black,
+  },
+  routerContainer: {
+    position: 'absolute',
+    // 중앙 정렬
+    width: '100%',
+
+    top: 0,
+    left: 0,
+    zIndex: 3,
   },
   loadingContainer: {
     flex: 1,
