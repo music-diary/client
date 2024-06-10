@@ -37,6 +37,14 @@ export default function DiaryLayout() {
           headerLeft: () => <HeaderTitle title="템플릿 사용하기" />,
         }}
       />
+      <Stack.Screen
+        name="music"
+        options={{
+          headerBackVisible: true,
+          title: '음악 추천',
+          headerLeft: () => <HeaderTitle title="음악 추천" />,
+        }}
+      />
     </Stack>
   );
 }

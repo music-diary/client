@@ -60,8 +60,8 @@ const WriteScreen = () => {
     router.push('/');
   };
 
-  const handleSongRecommendation = () => {
-    console.log('노래 추천받기');
+  const handleMusicRecommendation = () => {
+    router.push('/diary/music');
   };
 
   return (
@@ -188,7 +188,7 @@ const WriteScreen = () => {
             height: Platform.OS === 'android' ? 78 : 100,
           },
         ]}
-        onPress={handleSongRecommendation}
+        onPress={handleMusicRecommendation}
         disabled={!hh}
       >
         <Text style={styles.nextText}>노래 추천받기</Text>
