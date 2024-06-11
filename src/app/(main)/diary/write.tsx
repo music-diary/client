@@ -196,9 +196,9 @@ const WriteScreen = () => {
       <CustomModal
         name="write-cancel"
         title="작성을 그만두시겠어요?"
-        description="일기 내용은 저장되지 않으며, 노래를 추천 받을 수 없어요."
+        description="지금 그만두시면, 노래를 추천 받을 수 없어요."
         leftButtonText="일기 계속 작성하기"
-        rightButtonText="임시 저장하기"
+        rightButtonText="임시저장하고 나가기"
         onLeftButtonPress={closeModal}
         onRightButtonPress={handleDraft}
       />

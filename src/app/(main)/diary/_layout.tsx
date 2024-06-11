@@ -1,7 +1,8 @@
 import { Stack } from 'expo-router';
+import HeaderRight from '@/components/diary/HeaderRight';
+import HeaderRightDraft from '@/components/diary/HeaderRightDraft';
 import HeaderTitle from '@/components/diary/HeaderTitle';
 import Colors from '@/constants/Colors';
-import HeaderCloseButton from '@/components/diary/HeaderCloseButton';
 
 export default function DiaryLayout() {
   return (
@@ -11,9 +12,8 @@ export default function DiaryLayout() {
           backgroundColor: Colors.black,
         },
         headerTintColor: Colors.white,
-        headerTitle: '',
-        headerLeft: () => <HeaderTitle title="일기쓰기" />,
-        headerRight: () => <HeaderCloseButton />,
+        headerTitle: () => <HeaderTitle title="일기쓰기" />,
+        headerRight: () => <HeaderRight />,
       }}
     >
       <Stack.Screen
@@ -25,24 +25,45 @@ export default function DiaryLayout() {
       <Stack.Screen
         name="write"
         options={{
-          headerBackVisible: true,
           title: '일기쓰기',
+          headerBackVisible: true,
+          headerBackTitleVisible: false,
         }}
       />
       <Stack.Screen
         name="template"
         options={{
-          headerBackVisible: true,
           title: '템플릿 사용하기',
-          headerLeft: () => <HeaderTitle title="템플릿 사용하기" />,
+          headerBackVisible: true,
+          headerBackTitleVisible: false,
+          headerTitle: () => <HeaderTitle title="템플릿 사용하기" />,
         }}
       />
       <Stack.Screen
         name="music"
         options={{
-          headerBackVisible: true,
           title: '음악 추천',
-          headerLeft: () => <HeaderTitle title="음악 추천" />,
+          headerBackVisible: true,
+          headerBackTitleVisible: false,
+          headerTitle: () => <HeaderTitle title="음악 추천" />,
+        }}
+      />
+      <Stack.Screen
+        name="card"
+        options={{
+          title: '일기카드',
+          headerBackVisible: true,
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="draft"
+        options={{
+          title: '저장목록',
+          headerBackVisible: true,
+          headerBackTitleVisible: false,
+          headerTitle: () => <HeaderTitle title="저장목록" />,
+          headerRight: () => <HeaderRightDraft />,
         }}
       />
     </Stack>

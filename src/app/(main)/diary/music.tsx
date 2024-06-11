@@ -16,9 +16,11 @@ import { router } from 'expo-router';
 import { ScrollView } from 'react-native-gesture-handler';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
-import { hexToRGBA } from '@/utils/colorUtils';
+import { colorWithOpacity } from '@/utils/colorUtils';
 import Tooltip from '@/components/diary/Tooltip';
 import LoadingView from '@/components/diary/LoadingView';
+import CustomModal from '@/components/common/CustomModal';
+import { useModalStore } from '@/store/useModalStore';
 
 const PAGE_WIDTH = Dimensions.get('window').width;
 const PAGE_HEIGHT = Dimensions.get('window').height;
@@ -66,6 +68,7 @@ const lyricsData = [
 
 const MusicRecommendationScreen = () => {
   const ref = useRef<ICarouselInstance>(null);
+  const { closeModal } = useModalStore();
   const [isVertical, setIsVertical] = useState(false);
   const [autoPlay, setAutoPlay] = useState(false);
   const [pagingEnabled, setPagingEnabled] = useState<boolean>(true);
@@ -91,7 +94,7 @@ const MusicRecommendationScreen = () => {
   };
 
   const handleNext = () => {
-    router.push('/diary/write');
+    router.push('/diary/card');
   };
 
   const onPressPagination = (index: number) => {
@@ -99,6 +102,11 @@ const MusicRecommendationScreen = () => {
       count: index - progress.value,
       animated: true,
     });
+  };
+
+  const handleDraft = () => {
+    closeModal();
+    router.push('/');
   };
 
   return loading ? (
@@ -193,6 +201,15 @@ const MusicRecommendationScreen = () => {
       >
         <Text style={styles.nextText}>다음</Text>
       </TouchableOpacity>
+      <CustomModal
+        name="music-cancel"
+        title="작성을 그만두시겠어요?"
+        description="일기 내용은 저장되지 않으며, 노래를 추천 받을 수 없어요."
+        leftButtonText="일기 계속 작성하기"
+        rightButtonText="임시저장하기"
+        onLeftButtonPress={closeModal}
+        onRightButtonPress={handleDraft}
+      />
     </>
   );
 };
@@ -217,7 +234,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.grey3,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: hexToRGBA(Colors.white, 0.1),
+    borderColor: colorWithOpacity(Colors.white, 0.1),
     gap: 20,
     alignItems: 'center',
     padding: 20,
