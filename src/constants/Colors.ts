@@ -11,4 +11,6 @@ export default {
   box: '#34323B',
   red: '#FF453A',
   purple_box: '#9878FF',
+  grey1: '#9691A5',
+  grey3: '#34323B',
 };

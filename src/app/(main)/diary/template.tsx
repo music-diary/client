@@ -84,7 +84,7 @@ export const templateList: ITemplate[] = [
   },
 ];
 
-const TemplateView = () => {
+const TemplateScreen = () => {
   // 동시에 열릴때 사용할 수 있는 방법
   // const [expanded, setExpanded] = useState<{ [key in TemplateType]?: boolean }>(
   //   {},
@@ -212,7 +212,7 @@ const TemplateView = () => {
   );
 };
 
-export default TemplateView;
+export default TemplateScreen;
 
 const styles = StyleSheet.create({
   container: {

@@ -7963,6 +7963,11 @@ react-native-modal@^13.0.1:
     prop-types "^15.6.2"
     react-native-animatable "1.3.3"
 
+react-native-reanimated-carousel@4.0.0-alpha.12:
+  version "4.0.0-alpha.12"
+  resolved "https://registry.yarnpkg.com/react-native-reanimated-carousel/-/react-native-reanimated-carousel-4.0.0-alpha.12.tgz#5458501e8b58429a52c8cd495a1b925a896b64d2"
+  integrity sha512-7ZCpU3lfS5NR6PvDpdcOvdHo6UApg0RvlL9/YSih4cEBKdT9sdmsIhnRsiaAJGYdJl5m03wibfPf5cYxCdk64A==
+
 react-native-reanimated@~3.6.2:
   version "3.6.3"
   resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-3.6.3.tgz#859cf2320e37c80e3a21e19db24f82c34d6d3ded"
