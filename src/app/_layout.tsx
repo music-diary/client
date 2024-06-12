@@ -62,8 +62,6 @@ function RootLayoutNav() {
     // }
     if (!isLogin) {
       router.navigate('(main)');
-      // router.navigate('(onboarding)');
-      // router.navigate('(main)/archive/calendar');
     }
   }, []);
 
