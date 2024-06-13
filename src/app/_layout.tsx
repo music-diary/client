@@ -11,6 +11,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 // import { useAppStore } from '@/store/useAppStore';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import CustomToast from '@/components/common/CustomToast';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -82,6 +83,7 @@ function RootLayoutNav() {
           </Stack>
         </ThemeProvider>
       </GestureHandlerRootView>
+      <CustomToast />
     </SafeAreaProvider>
   );
 }
