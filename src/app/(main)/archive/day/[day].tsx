@@ -11,7 +11,7 @@ import Fonts from '@/constants/Fonts';
 import { useModalToggleStore } from '@/store/useModalStore';
 import CustomAlert from '@/components/common/CustomAlert';
 
-interface DailyDiaryData {
+export interface DailyDiaryData {
   id: string;
   date: string;
   albumCoverUrl: string;
