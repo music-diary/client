@@ -9,6 +9,7 @@ import {
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
 import { useModalStore } from '@/store/useModalStore';
+import { colorWithOpacity } from '@/utils/colorUtils';
 
 // 우선 전부 옵셔널 프로퍼티로 설정 - 나중에 수정 예정
 interface CustomModalProps {
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
   overlay: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: colorWithOpacity(Colors.black, 0.7),
     paddingHorizontal: 28,
   },
   container: {
