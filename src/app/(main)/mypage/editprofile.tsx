@@ -5,32 +5,20 @@ import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import DateTimePicker, {
   type DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
+import { router } from 'expo-router';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
 import CustomCheckToggle from '@/components/common/CustomCheckToggle';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
-
-const monthNames = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
+import BottomSheetModal from '@/components/home/BottomSheetModal';
 
 const formatDate = (date: Date): string => {
-  const monthIndex = date.getMonth(); // 월 인덱스
-  const monthName = monthNames[monthIndex]; // 월 이름
-  const day = date.getDate(); // 일
-  const year = date.getFullYear(); // 연도
-  return `${monthName} ${day}, ${year}`; // "Month Day, Year" 형식으로 반환
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  const formattedMonth = String(month).padStart(2, '0'); // 한 자리 수 월을 두 자리로 변환
+  const formattedDay = String(day).padStart(2, '0');
+  return `${year}-${formattedMonth}-${formattedDay}`;
 };
 
 const editprofile = () => {
@@ -64,7 +52,9 @@ const editprofile = () => {
   const [selectedToggle, setSelectedToggle] = useState<number | null>(0);
   const initialToggle = useRef<number | null>(selectedToggle);
   const handleToggleChange = (index: number) => {
-    setSelectedToggle(selectedToggle === index ? null : index);
+    if (selectedToggle !== index) {
+      setSelectedToggle(index);
+    }
   };
 
   // 하단 버튼 활성화 조건
@@ -79,17 +69,14 @@ const editprofile = () => {
     if (isNicknameChanged || isDateChanged || isToggleChanged) {
       setButtonActive(true);
     } else {
-      setButtonActive(false); 
+      setButtonActive(false);
     }
   }, [nickname, selectedDate, selectedToggle]);
 
-  // 완료 버튼 누르면 실행 -> 추후 api 연결
   const handleButtonPress = () => {
-    if (isButtonActive) {
-      console.log('Button pressed!');
-    }
+    console.log('Button pressed!'); // 완료 버튼 누르면 실행 -> 추후 api 연결
+    router.back(); // 스택 하나 뒤로 이동
   };
-
   return (
     <>
       <ScrollView style={styles.container}>
@@ -132,25 +119,6 @@ const editprofile = () => {
             >
               <Text style={styles.dateText}>{formatDate(selectedDate)}</Text>
             </TouchableOpacity>
-            {showPicker && (
-              <View style={styles.pickerContainer}>
-                <DateTimePicker
-                  value={tempDate}
-                  mode="date"
-                  display="spinner"
-                  onChange={onChange}
-                  maximumDate={new Date()}
-                  minimumDate={new Date(1900, 0, 1)} // 최소 날짜는 1900년 1월
-                  textColor={Colors.white}
-                />
-                <TouchableOpacity
-                  style={styles.confirmButton}
-                  onPress={confirmDateSelection}
-                >
-                  <Text style={styles.confirmText}>완료</Text>
-                </TouchableOpacity>
-              </View>
-            )}
           </View>
           {/* 성별 */}
           <View style={styles.titlename}>
@@ -186,6 +154,30 @@ const editprofile = () => {
         onPress={handleButtonPress} // 버튼 클릭 이벤트 핸들러
         label="완료"
       />
+      {/* 생년월일 변경 모달 구현 */}
+      <BottomSheetModal
+        title="생년월일"
+        visible={showPicker}
+        onCancel={() => {
+          setShowPicker(false);
+        }}
+        onSave={() => {
+          confirmDateSelection();
+        }}
+      >
+        <View style={styles.birthContainer}>
+          <DateTimePicker
+            value={selectedDate}
+            mode="date"
+            display="spinner"
+            onChange={onChange}
+            maximumDate={new Date()}
+            minimumDate={new Date(1900, 0, 1)} // 최소 날짜는 1900년 1월
+            textColor={Colors.white}
+            locale="ko" // 한국어 설정
+          />
+        </View>
+      </BottomSheetModal>
     </>
   );
 };
@@ -238,20 +230,18 @@ const styles = StyleSheet.create({
   },
   birthdayContainer: {
     borderWidth: 1,
-    borderColor: Colors.white,
+    borderColor: Colors.grey1,
     borderRadius: 6,
     padding: 10,
-    color: Colors.white,
-    ...Fonts.b1_sb,
     paddingVertical: 10,
   },
   inputNickname: {
     borderWidth: 1,
-    borderColor: Colors.white,
+    borderColor: Colors.grey1,
     borderRadius: 6,
     padding: 10,
-    color: Colors.white,
-    ...Fonts.b1_sb,
+    color: Colors.grey1,
+    ...Fonts.btn,
     paddingVertical: 10,
   },
   checkboxContainer: {
@@ -266,8 +256,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.purple,
   },
   dateText: {
-    color: Colors.white,
-    fontSize: 18,
+    color: Colors.grey1,
+    ...Fonts.btn,
   },
   pickerContainer: {
     flexDirection: 'row',
@@ -286,5 +276,10 @@ const styles = StyleSheet.create({
     color: Colors.white,
     fontWeight: 'bold',
     textAlign: 'center',
+  },
+  birthContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 20,
   },
 });
