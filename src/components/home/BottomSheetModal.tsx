@@ -36,38 +36,31 @@ const BottomSheetModal = ({
   };
 
   return (
-    <View style={styles.temp}>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={handleClose}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity onPress={handleClose}>
-                <Text style={styles.buttonText}>취소</Text>
-              </TouchableOpacity>
-              <Text style={styles.titleText}>{title}</Text>
-              <TouchableOpacity onPress={handleSave}>
-                <Text style={styles.buttonText}>저장</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.bodyContent}>{children}</View>
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={modalVisible}
+      onRequestClose={handleClose}
+    >
+      <View style={styles.modalContainer}>
+        <View style={styles.modalContent}>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity onPress={handleClose}>
+              <Text style={styles.buttonText}>취소</Text>
+            </TouchableOpacity>
+            <Text style={styles.titleText}>{title}</Text>
+            <TouchableOpacity onPress={handleSave}>
+              <Text style={styles.buttonText}>저장</Text>
+            </TouchableOpacity>
           </View>
+          <View style={styles.bodyContent}>{children}</View>
         </View>
-      </Modal>
-    </View>
+      </View>
+    </Modal>
   );
 };
 
 const styles = StyleSheet.create({
-  temp: {
-    flex: 1,
-    backgroundColor: 'red',
-    height: 1000,
-  },
   modalContainer: {
     flex: 1,
     justifyContent: 'flex-end',

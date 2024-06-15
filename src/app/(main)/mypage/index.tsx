@@ -8,6 +8,9 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Feather, MaterialIcons } from '@expo/vector-icons';
+import DateTimePicker, {
+  type DateTimePickerEvent,
+} from '@react-native-community/datetimepicker';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
 import BodyNavigator from '@/components/mypage/BodyNavigator';
@@ -15,6 +18,16 @@ import CustomToggle from '@/components/common/CustomToggle';
 import CustomAlert from '@/components/common/CustomAlert';
 import BottomSheetModal from '@/components/home/BottomSheetModal';
 import MusicSelection from '@/components/home/MusicSelection';
+
+// 추후 util 폴더 등으로 깔끔히 관리하기
+function formatTime(date: Date): string {
+  let hours: number = date.getHours();
+  const minutes: number = date.getMinutes();
+  const ampm: string = hours >= 12 ? '오후' : '오전';
+  hours = hours % 12 || 12;
+  const formattedMinutes = String(minutes).padStart(2, '0'); // 분 2자리로 관리 (05분, 07분 ..)
+  return `${ampm} ${hours}:${formattedMinutes}`;
+}
 
 const MypageScreen = () => {
   const router = useRouter();
@@ -32,9 +45,11 @@ const MypageScreen = () => {
   };
 
   // 일기 알림 토글
+  const [isDiaryModalVisible, setDiaryModalVisible] = useState<boolean>(false); // 일기 알림 모달 관리
   const [isDiaryToggled, setIsDiaryToggled] = useState<boolean>(true);
   const handleDiaryToggleChange = (state: boolean) => {
     setIsDiaryToggled(state);
+    setDiaryModalVisible(state);
   };
 
   // 기타 알림 토글
@@ -82,6 +97,16 @@ const MypageScreen = () => {
     setSelectedGenres(tempSelectedGenres);
     handleMusicFlavorToggleChange();
   };
+
+  // 일기 알람 시간 설정
+
+  const [diaryTime, setDiaryTime] = useState<Date>(today);
+  const [tempDiaryTime, setTempDiaryTime] = useState<Date>(diaryTime);
+  const handleDiaryTimeChange = () => {
+    setDiaryTime(tempDiaryTime);
+    setDiaryModalVisible(false);
+  };
+  const formattedDiaryTime = formatTime(diaryTime);
 
   // 로그아웃 모달
   const [isLogoutModalVisible, setLogoutModalVisible] =
@@ -164,7 +189,7 @@ const MypageScreen = () => {
           <View style={styles.bodyRoute}>
             <Text style={styles.textb1Gray1}>일기 알림</Text>
             <View style={styles.diaryTime}>
-              <Text style={styles.textb2}>오후 10: 30</Text>
+              <Text style={styles.textb2}>{formattedDiaryTime}</Text>
               <CustomToggle
                 isToggled={isDiaryToggled}
                 onToggleChange={handleDiaryToggleChange}
@@ -232,6 +257,28 @@ const MypageScreen = () => {
           selectedGenres={tempSelectedGenres}
           setSelectedGenres={settempSelectedGenres}
         />
+      </BottomSheetModal>
+      {/* 일기 알람 모달 */}
+      <BottomSheetModal
+        title="일기 알림"
+        visible={isDiaryModalVisible}
+        onSave={() => {
+          handleDiaryTimeChange();
+        }}
+      >
+        <View style={styles.pickerContainer}>
+          <DateTimePicker
+            value={diaryTime}
+            mode="time"
+            display="spinner"
+            onChange={(event: DateTimePickerEvent, selectedDate?: Date) => {
+              if (selectedDate) {
+                setTempDiaryTime(selectedDate);
+              }
+            }}
+            textColor={Colors.white}
+          />
+        </View>
       </BottomSheetModal>
     </ScrollView>
   );
@@ -386,22 +433,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 20,
-    paddingBottom: 50,
-    borderRadius: 10,
-    backgroundColor: Colors.grey3,
-  },
-  pickerHeader: {
-    paddingHorizontal: 16,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-  },
-  pickerTitle: {
-    color: Colors.white,
-    ...Fonts.t1,
-  },
-  btnText: {
-    color: Colors.purple,
-    ...Fonts.b1_sb,
   },
 });
