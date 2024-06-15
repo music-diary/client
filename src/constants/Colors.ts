@@ -35,4 +35,7 @@ export default {
     // 80: '#7850F8CC',
     // 90: '#7850F8E6',
   },
+  black_alpha: {
+    50: '#1D1D1D80',
+  },
 };

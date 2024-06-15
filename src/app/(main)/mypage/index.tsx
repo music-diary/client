@@ -13,6 +13,8 @@ import Fonts from '@/constants/Fonts';
 import BodyNavigator from '@/components/mypage/BodyNavigator';
 import CustomToggle from '@/components/common/CustomToggle';
 import CustomAlert from '@/components/common/CustomAlert';
+import BottomSheetModal from '@/components/home/BottomSheetModal';
+import MusicSelection from '@/components/home/MusicSelection';
 
 const MypageScreen = () => {
   const router = useRouter();
@@ -22,6 +24,7 @@ const MypageScreen = () => {
   const month = today.getMonth() + 1;
 
   /* 토글 설정 */
+
   // 장르 추천 토글
   const [isGenreToggled, setIsGenreToggled] = useState<boolean>(false);
   const handleToggleChange = (state: boolean) => {
@@ -59,6 +62,27 @@ const MypageScreen = () => {
     router.push('/(main)/mypage/withdrawal');
   };
 
+  /* 모달 설정 */
+  // 내 음악 취향 선택
+  const [isMusicFlavorToggled, setIsMusicFlavorToggled] =
+    useState<boolean>(false);
+  const handleMusicFlavorToggleChange = () => {
+    setIsMusicFlavorToggled(!isMusicFlavorToggled);
+  };
+  // 음악 취향 상태 관리 (현재는 임시로 pop, 랩/힙합 선택된 상태로 설정)
+  const [selectedGenres, setSelectedGenres] = useState<string[]>([
+    'POP',
+    '랩/힙합',
+  ]);
+  // 임시로 선택된 장르 상태 관리
+  const [tempSelectedGenres, settempSelectedGenres] =
+    useState<string[]>(selectedGenres);
+
+  const handleSave = () => {
+    setSelectedGenres(tempSelectedGenres);
+    handleMusicFlavorToggleChange();
+  };
+
   // 로그아웃 모달
   const [isLogoutModalVisible, setLogoutModalVisible] =
     useState<boolean>(false);
@@ -81,7 +105,9 @@ const MypageScreen = () => {
       <View style={styles.header}>
         <View style={styles.headerleft}>
           <View style={styles.profileImage} />
-          <View style={styles.profileImageTop} />
+          <View style={styles.profileImageTop}>
+            <Feather name="star" color={Colors.white} />
+          </View>
           <Text style={styles.profileInfo}>
             <Text style={{ color: Colors.purple }}>Miya</Text>님과 함께한 지
             {'\n'}
@@ -109,17 +135,21 @@ const MypageScreen = () => {
       </TouchableOpacity>
       {/* 바디1 */}
       <View style={styles.body1}>
-        <TouchableOpacity style={styles.bodyRoute}>
+        <View style={styles.bodyRoute}>
           <Text style={styles.textb1}>내 음악 취향</Text>
-          <View style={styles.musicflaver}>
+
+          <TouchableOpacity
+            style={styles.musicflaver}
+            onPress={handleMusicFlavorToggleChange}
+          >
             <Text style={styles.musicflaverText}>팝, 힙합 외 2</Text>
             <MaterialIcons
               name="arrow-forward-ios"
               size={14}
               color={Colors.white}
             />
-          </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
+        </View>
         <View style={styles.bodyRoute}>
           <Text style={styles.textb1}>다양한 장르 추천받기</Text>
           <CustomToggle
@@ -133,12 +163,15 @@ const MypageScreen = () => {
           <Text style={styles.textb1}>서비스 알림</Text>
           <View style={styles.bodyRoute}>
             <Text style={styles.textb1Gray1}>일기 알림</Text>
-            <CustomToggle
-              isToggled={isDiaryToggled}
-              onToggleChange={handleDiaryToggleChange}
-            />
+            <View style={styles.diaryTime}>
+              <Text style={styles.textb2}>오후 10: 30</Text>
+              <CustomToggle
+                isToggled={isDiaryToggled}
+                onToggleChange={handleDiaryToggleChange}
+              />
+            </View>
           </View>
-         
+
           {/* 기타 알림 */}
           <View style={styles.bodyRoute}>
             <Text style={styles.textb1Gray1}>기타 알림</Text>
@@ -182,6 +215,24 @@ const MypageScreen = () => {
         </View>
       </View>
       <View style={{ paddingBottom: 120 }} />
+
+      {/* 모달 관리 */}
+      {/* 음악 취향 선택 */}
+      <BottomSheetModal
+        title="내 음악 취향"
+        visible={isMusicFlavorToggled}
+        onCancel={() => {
+          handleMusicFlavorToggleChange();
+        }}
+        onSave={() => {
+          handleSave();
+        }}
+      >
+        <MusicSelection
+          selectedGenres={tempSelectedGenres}
+          setSelectedGenres={settempSelectedGenres}
+        />
+      </BottomSheetModal>
     </ScrollView>
   );
 };
@@ -216,6 +267,8 @@ const styles = StyleSheet.create({
     height: 24,
     borderRadius: 12,
     backgroundColor: Colors.purple,
+    justifyContent: 'center',
+    alignItems: 'center',
     position: 'absolute',
     top: -6,
     left: 40,
@@ -299,9 +352,14 @@ const styles = StyleSheet.create({
   musicflaver: {
     flexDirection: 'row',
     alignItems: 'center',
+    gap: 4,
+  },
+  diaryTime: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
   },
   musicflaverText: {
-    paddingRight: 5,
     color: Colors.purple,
     ...Fonts.b2,
   },
