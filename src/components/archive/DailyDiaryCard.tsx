@@ -124,7 +124,6 @@ const styles = StyleSheet.create({
   lyricsText: {
     color: Colors.purple,
     ...Fonts.b2,
-    lineHeight: 22,
     paddingTop: 4,
     textAlign: 'center',
   },
@@ -142,7 +141,6 @@ const styles = StyleSheet.create({
   diaryContent: {
     color: Colors.contents_light,
     paddingTop: 10,
-    lineHeight: 22,
     marginBottom: -20,
     textAlign: 'justify',
     ...Fonts.b2,

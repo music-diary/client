@@ -186,7 +186,6 @@ const styles = StyleSheet.create({
     color: Colors.white,
     fontFamily: 'pret-b',
     fontSize: 18,
-    lineHeight: 26,
   },
   toggleContainer: {
     paddingTop: 48,
@@ -203,12 +202,11 @@ const styles = StyleSheet.create({
     borderColor: Colors.contents_light,
     borderRadius: 10,
     color: Colors.white,
-    lineHeight: 20,
   },
   placeholder: {
     color: Colors.contents_light,
     position: 'absolute',
-    lineHeight: 20,
+
     top: 16,
     left: 16,
   },
