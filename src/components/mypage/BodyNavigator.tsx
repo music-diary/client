@@ -5,7 +5,7 @@ import Fonts from '@/constants/Fonts';
 
 interface BodyNavigatorProps {
   content: string;
-  onPress?: () => void; 
+  onPress?: () => void;
 }
 
 const BodyNavigator = ({ content, onPress }: BodyNavigatorProps) => {
@@ -26,6 +26,6 @@ const styles = StyleSheet.create({
   },
   textb2: {
     color: Colors.white,
-    ...Fonts.b2,
+    ...Fonts.b1,
   },
 });

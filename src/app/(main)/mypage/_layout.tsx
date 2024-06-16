@@ -70,6 +70,18 @@ export default function MypageLayout() {
           ),
         }}
       />
+      <Stack.Screen
+        name="statistic"
+        options={{
+          title: '루틴 분석',
+          headerLeft: () => (
+            <View style={styles.headerContainer}>
+              <CustomBackButton />
+              <HeaderTitle title="루틴 분석" />
+            </View>
+          ),
+        }}
+      />
     </Stack>
   );
 }

@@ -12,6 +12,8 @@ import CustomToggle from '@/components/common/CustomToggle';
 import FriendInfo from '@/components/mypage/FriendInfo';
 import AddFriendAlert from '@/components/mypage/AddFriendAlert';
 
+
+// 추후 친구 추가 서비스 도입 시 사용 가능한 페이지
 const myfriend = () => {
   const [isToggled, setIsToggled] = useState(false);
 
