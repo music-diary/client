@@ -15,13 +15,14 @@ const CustomToggle = ({
   const translateX = useState(new Animated.Value(isOn ? 9 : -9))[0];
 
   useEffect(() => {
+    setIsOn(isToggled);
     Animated.timing(translateX, {
-      toValue: isOn ? 9 : -9,
+      toValue: isToggled ? 9 : -9,
       duration: 200,
       easing: Easing.inOut(Easing.quad),
       useNativeDriver: true,
     }).start();
-  }, [isOn]); // 토글 클릭하여 상태가 변하면 -> 애니메이션 실행
+  }, [isToggled]);
 
   const handleToggle = () => {
     const newState = !isOn;
