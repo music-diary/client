@@ -1,6 +1,8 @@
 import React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Fontisto } from '@expo/vector-icons';
+import { router } from 'expo-router';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import WeekCalendar from '@/components/home/WeekCalender';
 import MontlyMusicList from '@/components/home/MontlyMusicList';
 import MontlyLetterList from '@/components/home/MontlyLetterList';
@@ -18,6 +20,11 @@ const HomeScreen = () => {
   // 편지 개수
   const letterCount = 0;
 
+  // person클릭 시 마이페이지로 이동
+  const handlePersonClick = () => {
+    router.push('/(main)/mypage');
+  };
+
   return (
     <>
       <SafeAreaView style={styles.topSafeArea} />
@@ -27,7 +34,9 @@ const HomeScreen = () => {
           <View style={styles.top}>
             <View style={styles.topBar}>
               <Text style={styles.logoText}>Logo</Text>
-              <Fontisto name="bell" size={20} color="white" />
+              <TouchableOpacity onPress={handlePersonClick}>
+                <Fontisto name="person" size={20} color="white" />
+              </TouchableOpacity>
             </View>
             <TopDescription count={diaryCount} name={name} />
           </View>
@@ -60,16 +69,6 @@ const HomeScreen = () => {
             ) : (
               <NewUserDescription description="아직 작성한 일기가 없어요" />
             )}
-            <View style={{ marginTop: 40 }}>
-              <Text style={styles.bodyMent}>
-                이번달 Miya님께{'\n'}9통의 음악편지가 도착했어요
-              </Text>
-              {letterCount > 0 ? (
-                <MontlyLetterList />
-              ) : (
-                <NewUserDescription description="친구에게 먼저 노래를 선물해볼까요?" />
-              )}
-            </View>
           </View>
 
           {/* 하단 부분 */}
@@ -121,9 +120,10 @@ const styles = StyleSheet.create({
     paddingBottom: 23,
   },
   bodyMent: {
-    lineHeight: 24,
     color: Colors.white,
-    ...Fonts.b1_sb,
+    fontFamily: 'pret-b',
+    fontSize: 16,
+    lineHeight: 24,
   },
   showAll: {
     position: 'absolute',

@@ -4,13 +4,13 @@ import { Link } from 'expo-router';
 import Colors from '@/constants/Colors';
 
 interface DiaryEntryProps {
-  id: string; 
+  id: string;
   month: string;
-  mood: string; 
-  albumCoverUrl: string; 
-  songTitle: string; 
-  artist: string; 
-  diaryEntries: number; 
+  mood: string;
+  albumCoverUrl: string;
+  songTitle: string;
+  artist: string;
+  diaryEntries: number;
 }
 
 // 배경식이 월별로 다르다고 가정했을 때, 월별 배경색을 반환 (감정에 따라 다르다면 이 부분 수정)
@@ -179,7 +179,6 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontFamily: 'pret-b',
     color: Colors.black,
-    lineHeight: 16,
   },
   artist: {
     fontSize: 10,
