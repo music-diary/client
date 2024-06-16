@@ -116,7 +116,9 @@ const WriteScreen = () => {
               />
             </View>
           </View>
-          <View style={styles.inputContainer}>
+          <View
+            style={[styles.inputContainer, { gap: type && template ? 20 : 16 }]}
+          >
             {type && template ? (
               <>
                 <TextInput
@@ -228,7 +230,6 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   inputContainer: {
-    gap: 32,
     minHeight: 300,
   },
   infoContainer: {
@@ -253,7 +254,6 @@ const styles = StyleSheet.create({
     color: Colors.contents_light,
     backgroundColor: Colors.box,
     borderRadius: 10,
-    marginBottom: 18,
     ...Fonts.b1_sb,
   },
   inputDiaryView: {
@@ -263,8 +263,9 @@ const styles = StyleSheet.create({
   },
   inputDiary: {
     flex: 1,
-    paddingVertical: 14,
-    paddingHorizontal: 10,
+    paddingTop: 14,
+    paddingBottom: 14,
+    paddingHorizontal: 12,
     color: Colors.contents_light,
     backgroundColor: Colors.box,
     borderRadius: 10,

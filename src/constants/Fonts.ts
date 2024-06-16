@@ -5,7 +5,7 @@ export default {
   },
   t1: {
     fontFamily: 'pret-b',
-    fontSize: 16,
+    fontSize: 18,
   },
   b1: {
     fontFamily: 'pret',

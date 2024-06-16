@@ -16,7 +16,7 @@ const SelectorButton = ({
   color,
 }: SelectorButtonProps) => {
   return (
-    <TouchableOpacity onPress={onPress} style={[styles.button]}>
+    <TouchableOpacity onPress={onPress} style={styles.button}>
       <View
         style={[styles.opacityView, isSelected && color ? { ...color } : null]}
       />
