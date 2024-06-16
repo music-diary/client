@@ -10,6 +10,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 // import { useAppStore } from '@/store/useAppStore';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { StatusBar } from 'expo-status-bar';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import CustomToast from '@/components/common/CustomToast';
 
@@ -68,6 +69,7 @@ function RootLayoutNav() {
 
   return (
     <SafeAreaProvider>
+      <StatusBar style="light" />
       <GestureHandlerRootView style={{ flex: 1 }}>
         <ThemeProvider
           value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}

@@ -27,6 +27,8 @@ export interface Templates {
 
 export type TemplateType = 'SCS' | 'KPT' | 'MSG' | '4L' | '5F';
 
+export type MoodType = 'happy' | 'soso' | 'bad';
+
 export interface TemplateContent {
   contentProperies: Scs | Kpt | FiveF | FourL;
 }

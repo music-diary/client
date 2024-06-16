@@ -1,25 +1,25 @@
 import { useState } from 'react';
+import { router } from 'expo-router';
 import {
   Platform,
   ScrollView,
   StyleSheet,
-  TouchableOpacity,
   Text,
+  TouchableOpacity,
 } from 'react-native';
-import { router } from 'expo-router';
 import DetailedEmotionSelector from '@/components/diary/DetailedEmotionSelector';
 import EmotionSelector from '@/components/diary/EmotionSelector';
-import EmotionSlider from '@/components/diary/EmotionSlider';
 import MoodSelector from '@/components/diary/MoodSelector';
 import SelectorView from '@/components/diary/SelectorView';
 import TopicSelector from '@/components/diary/TopicSelector';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
+import { type MoodType } from '@/interfaces';
 
 const SubjectEmotionScreen = () => {
   const [scale, setScale] = useState(0);
   const [topic, setTopic] = useState<string[]>([]);
-  const [mood, setMood] = useState('happy');
+  const [mood, setMood] = useState<MoodType>('happy');
   const [emotions, setEmotions] = useState<string[]>([]);
   const [detailedEmotions, setDetailedEmotions] = useState<string[]>([]);
 
@@ -30,13 +30,6 @@ const SubjectEmotionScreen = () => {
   return (
     <>
       <ScrollView style={styles.container}>
-        <SelectorView
-          title="오늘은 어떤 주제를 기록하고 싶으신가요?"
-          description="선택하신 내용을 기반으로 음악을 추천해 드릴게요"
-          subDescription="*최대 2개까지 선택 가능해요"
-        >
-          <TopicSelector state={topic} setState={setTopic} />
-        </SelectorView>
         <SelectorView title="오늘 하루는 어땠나요?">
           <MoodSelector state={mood} setState={setMood} />
         </SelectorView>
@@ -65,11 +58,13 @@ const SubjectEmotionScreen = () => {
             />
           </SelectorView>
         )}
-        {detailedEmotions.length > 0 ? (
-          <SelectorView title="지금 감정이 얼마나 강렬한가요?">
-            <EmotionSlider setState={setScale} />
-          </SelectorView>
-        ) : null}
+        <SelectorView
+          title="오늘은 어떤 주제를 기록하고 싶으신가요?"
+          description="선택하신 내용을 기반으로 음악을 추천해 드릴게요"
+          subDescription="*최대 2개까지 선택 가능해요"
+        >
+          <TopicSelector state={topic} setState={setTopic} />
+        </SelectorView>
       </ScrollView>
       <TouchableOpacity
         style={[

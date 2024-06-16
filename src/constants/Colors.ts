@@ -12,6 +12,7 @@ export default {
   red: '#FF453A',
   purple_box: '#9878FF',
   grey1: '#9691A5',
+  grey2: '#696478',
   grey3: '#34323B',
   white_alpha: {
     // 10: '#FAFAFA1A',
