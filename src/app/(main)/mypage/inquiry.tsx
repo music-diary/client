@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: Colors.contents_light,
-    lineHeight: 20,
+
     ...Fonts.b2,
   },
   titleText: {
@@ -228,12 +228,10 @@ const styles = StyleSheet.create({
     borderColor: Colors.contents_light,
     borderRadius: 10,
     color: Colors.white,
-    lineHeight: 20,
   },
   placeholder: {
     color: Colors.contents_light,
     position: 'absolute',
-    lineHeight: 20,
     top: 16,
     left: 16,
   },

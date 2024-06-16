@@ -82,7 +82,8 @@ const WeekCalendar = () => {
         </Text>
         <View style={styles.arrow}>
           <TouchableOpacity onPress={prevWeek}>
-            <Text style={{ color: 'white', paddingRight: 5 }}>{'<'}</Text>
+            {/* <Text style={{ color: 'white', paddingRight: 5 }}>{'<'}</Text> */}
+            <AntDesign name="caretleft" size={16} color="#34323B" />
           </TouchableOpacity>
           <TouchableOpacity onPress={nextWeek}>
             {/* <Text style={{ color: 'white' }}>{'>'}</Text> */}

@@ -131,7 +131,6 @@ const styles = StyleSheet.create({
   },
   btnText: {
     color: Colors.white,
-    lineHeight: 18,
     ...Fonts.btn,
   },
   b2PurpleText: {

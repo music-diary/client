@@ -60,9 +60,10 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   topMent: {
-    lineHeight: 28,
     color: Colors.white,
-    ...Fonts.h1,
+    fontFamily: 'pret-b',
+    fontSize: 20,
+    lineHeight: 28,
   },
   highlightText: {
     color: Colors.green,
