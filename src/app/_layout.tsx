@@ -9,10 +9,11 @@ import { Stack, router } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 // import { useAppStore } from '@/store/useAppStore';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import CustomToast from '@/components/common/CustomToast';
+import DImOverlay from '@/components/common/DImOverlay';
+import { useColorScheme } from '@/hooks/useColorScheme';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -83,9 +84,10 @@ function RootLayoutNav() {
             <Stack.Screen name="intro" options={{ headerShown: false }} />
             <Stack.Screen name="(modals)" options={{ headerShown: false }} />
           </Stack>
+          <DImOverlay />
+          <CustomToast />
         </ThemeProvider>
       </GestureHandlerRootView>
-      <CustomToast />
     </SafeAreaProvider>
   );
 }
