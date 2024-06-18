@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { router, useLocalSearchParams } from 'expo-router';
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -10,17 +11,23 @@ import {
   View,
 } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import { router, useLocalSearchParams } from 'expo-router';
 import CustomModal from '@/components/common/CustomModal';
 import SelectorButton from '@/components/diary/SelectorButton';
 import TopicButton from '@/components/diary/TopicButton';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
+import { type ITopic, type MoodType } from '@/interfaces';
 import { useModalStore } from '@/store/useModalStore';
 import { templateList } from './template';
 
 const WriteScreen = () => {
-  const { type } = useLocalSearchParams();
+  const params = useLocalSearchParams();
+  const { mood, emotions, detailedEmotions, topics, type } = params;
+
+  const emotionList: string[] = JSON.parse(emotions as string);
+  const detailedEmotionList: string[] = JSON.parse(detailedEmotions as string);
+  const topicList: ITopic[] = JSON.parse(topics as string);
+
   const { closeModal } = useModalStore();
   const template = templateList.find((t) => t.type === type);
   const scrollViewRef = useRef<ScrollView>(null);
@@ -52,15 +59,17 @@ const WriteScreen = () => {
   }, []);
 
   const handleTemplate = () => {
-    router.push('/diary/template');
+    router.push({ pathname: '/diary/template', params });
   };
 
   const handleDraft = () => {
+    // 임시저장 로직 태울 예정
     closeModal();
     router.push('/');
   };
 
   const handleMusicRecommendation = () => {
+    // 저장 로직 태울 예정
     router.push('/diary/music');
   };
 
@@ -78,42 +87,41 @@ const WriteScreen = () => {
         >
           <View style={styles.subjectContainer}>
             <Text style={styles.title}>이제 오늘을 기록해 볼까요?</Text>
-            <Text style={styles.description}>오늘 어떤 일이 있었냐면</Text>
-            <TopicButton type="연애" emoji="💗" isSelected={true} />
+            {topicList.length > 0 && (
+              <>
+                <Text style={styles.description}>오늘 어떤 일이 있었냐면</Text>
+                <View style={styles.buttonContainer}>
+                  {topicList.map((topic, index) => (
+                    <TopicButton
+                      key={topic.id}
+                      type={topic.name}
+                      emoji={topic.emoji}
+                      isSelected={true}
+                    />
+                  ))}
+                </View>
+              </>
+            )}
           </View>
           <View style={styles.emotionContainer}>
             <Text style={styles.description}>그래서 내 기분은</Text>
             <View style={styles.buttonContainer}>
-              <SelectorButton
-                type="행복"
-                isSelected={true}
-                color={{ backgroundColor: Colors.yellow, opacity: 0.3 }}
-              />
-              <SelectorButton
-                type="행복"
-                isSelected={true}
-                color={{ backgroundColor: Colors.yellow, opacity: 0.3 }}
-              />
-              <SelectorButton
-                type="행복"
-                isSelected={true}
-                color={{ backgroundColor: Colors.yellow, opacity: 0.3 }}
-              />
-              <SelectorButton
-                type="행복"
-                isSelected={true}
-                color={{ backgroundColor: Colors.yellow, opacity: 0.3 }}
-              />
-              <SelectorButton
-                type="행복"
-                isSelected={true}
-                color={{ backgroundColor: Colors.yellow, opacity: 0.3 }}
-              />
-              <SelectorButton
-                type="행복"
-                isSelected={true}
-                color={{ backgroundColor: Colors.yellow, opacity: 0.3 }}
-              />
+              {emotionList.map((value, index) => (
+                <SelectorButton
+                  key={value + index}
+                  mood={mood as MoodType}
+                  type={value}
+                  isSelected
+                />
+              ))}
+              {detailedEmotionList.map((value, index) => (
+                <SelectorButton
+                  key={value + index}
+                  mood={mood as MoodType}
+                  type={value}
+                  isSelected
+                />
+              ))}
             </View>
           </View>
           <View

@@ -1,33 +1,40 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
+import { type MoodType } from '@/interfaces';
 
 interface SelectorButtonProps {
+  mood: MoodType;
   type: string;
   onPress?: () => void;
   isSelected?: boolean;
-  color?: { backgroundColor: string; opacity?: number };
 }
 
 const SelectorButton = ({
+  mood,
   type,
   onPress,
   isSelected,
-  color,
 }: SelectorButtonProps) => {
+  const colorMap = {
+    happy: Colors.green,
+    soso: Colors.purple,
+    bad: Colors.blue,
+  };
+
+  const buttonStyle = {
+    backgroundColor: isSelected
+      ? colorMap[mood as keyof typeof colorMap]
+      : 'transparent',
+  };
+
   return (
     <TouchableOpacity onPress={onPress} style={styles.button}>
-      <View
-        style={[styles.opacityView, isSelected && color ? { ...color } : null]}
-      />
+      <View style={[styles.opacityView, buttonStyle]} />
       <Text
         style={[
           styles.type,
-          isSelected &&
-          !color?.opacity &&
-          color?.backgroundColor === Colors.green
-            ? { color: Colors.black }
-            : null,
+          isSelected && mood === 'happy' && { color: Colors.black },
         ]}
       >
         {type}

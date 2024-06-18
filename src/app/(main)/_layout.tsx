@@ -10,7 +10,6 @@ const currentWidth = Dimensions.get('window').width * ratio;
 const currentheight = (137 / 435) * currentWidth;
 
 export default function TabLayout() {
-  console.log('currentWidth', currentWidth);
   const path = usePathname();
   // 탭바 숨길 페이지 hide에 추가하면 됩니다..!
   const hide =
