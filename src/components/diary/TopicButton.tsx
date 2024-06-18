@@ -16,10 +16,7 @@ const TopicButton = ({
   isSelected,
 }: TopicButtonProps) => {
   return (
-    <TouchableOpacity
-      onPress={onPress}
-      style={[styles.button, isSelected ? { borderColor: Colors.pink } : null]}
-    >
+    <TouchableOpacity onPress={onPress} style={styles.button}>
       <View
         style={[
           styles.opacityView,

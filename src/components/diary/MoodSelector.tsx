@@ -19,13 +19,17 @@ const moodIcons = {
 };
 
 interface MoodSelectorProps {
-  state: MoodType;
-  setState: React.Dispatch<React.SetStateAction<MoodType>>;
+  state: MoodType | null;
+  setState: React.Dispatch<React.SetStateAction<MoodType | null>>;
 }
 
 const MoodSelector = ({ state, setState }: MoodSelectorProps) => {
   const handlePress = (value: MoodType) => {
-    setState(value); // 선택된 mood를 state에 설정
+    if (state === value) {
+      setState(null); // 이미 선택된 무드를 다시 누르면 해제
+    } else {
+      setState(value); // 선택된 무드를 state에 설정
+    }
   };
 
   const moodColor = {

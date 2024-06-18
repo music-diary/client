@@ -1,7 +1,8 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { type ITopic } from '@/interfaces';
 import TopicButton from './TopicButton';
 
-const topicList = [
+const topicList: ITopic[] = [
   { id: '1', emoji: '👨‍👩‍👦‍👦', name: '가족' },
   { id: '2', emoji: '💗', name: '연애' },
   { id: '3', emoji: '💔', name: '이별' },
@@ -16,16 +17,16 @@ const topicList = [
 ];
 
 interface TopicSelectorProps {
-  state: string[];
-  setState: React.Dispatch<React.SetStateAction<string[]>>;
+  state: ITopic[];
+  setState: React.Dispatch<React.SetStateAction<ITopic[]>>;
 }
 
 const TopicSelector = ({ state, setState }: TopicSelectorProps) => {
-  const setTopic = (emotion: string) => {
-    if (state.includes(emotion)) {
-      setState(state.filter((e) => e !== emotion));
+  const setTopic = (topic: ITopic) => {
+    if (state.find((t) => t.id === topic.id)) {
+      setState(state.filter((t) => t.id !== topic.id));
     } else if (state.length < 2) {
-      setState([...state, emotion]);
+      setState([...state, topic]);
     }
   };
 
@@ -36,8 +37,8 @@ const TopicSelector = ({ state, setState }: TopicSelectorProps) => {
           key={topic.id}
           type={topic.name}
           emoji={topic.emoji}
-          onPress={() => setTopic(topic.name)}
-          isSelected={state.includes(topic.name)}
+          onPress={() => setTopic(topic)}
+          isSelected={state.includes(topic)}
         />
       ))}
     </View>
