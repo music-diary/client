@@ -7,18 +7,23 @@ interface SelectorViewProps {
   title: string;
   description?: string;
   subDescription?: string;
+  required?: boolean;
 }
 
 const SelectorView = ({
   title,
   description,
   subDescription,
+  required = false,
   children,
 }: SelectorViewProps & PropsWithChildren) => {
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
-        <Text style={styles.title}>{title}</Text>
+        <View style={styles.titleRowContainer}>
+          <Text style={styles.title}>{title}</Text>
+          {required && <View style={styles.dot} />}
+        </View>
         <View style={styles.descriptionContainer}>
           {description && <Text style={styles.description}>{description}</Text>}
           {subDescription && (
@@ -41,9 +46,20 @@ const styles = StyleSheet.create({
   titleContainer: {
     gap: 6,
   },
+  titleRowContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 4,
+  },
   title: {
     color: Colors.white,
     ...Fonts.t1,
+  },
+  dot: {
+    width: 5,
+    height: 5,
+    backgroundColor: Colors.purple,
+    borderRadius: 5,
   },
   descriptionContainer: {
     gap: 4,

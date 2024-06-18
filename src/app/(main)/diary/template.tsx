@@ -13,7 +13,7 @@ import Animated, {
   withTiming,
   type SharedValue,
 } from 'react-native-reanimated';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import Fonts from '@/constants/Fonts';
 import Colors from '@/constants/Colors';
 
@@ -85,6 +85,8 @@ export const templateList: ITemplate[] = [
 ];
 
 const TemplateScreen = () => {
+  const params = useLocalSearchParams();
+
   // 동시에 열릴때 사용할 수 있는 방법
   // const [expanded, setExpanded] = useState<{ [key in TemplateType]?: boolean }>(
   //   {},
@@ -147,7 +149,10 @@ const TemplateScreen = () => {
   };
 
   const handleSetTemplate = (type: TemplateType) => {
-    router.push({ pathname: '/diary/write', params: { type } });
+    router.navigate({
+      pathname: '/diary/write',
+      params: { type, ...params },
+    });
   };
 
   return (

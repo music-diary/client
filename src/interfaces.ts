@@ -6,7 +6,7 @@ export interface CircleComponentProps {
 }
 
 export interface ITopic {
-  id: number;
+  id: string;
   emoji: string;
   name: string;
 }
@@ -30,7 +30,7 @@ export type TemplateType = 'SCS' | 'KPT' | 'MSG' | '4L' | '5F';
 export type MoodType = 'happy' | 'soso' | 'bad';
 
 export interface TemplateContent {
-  contentProperies: Scs | Kpt | FiveF | FourL;
+  contentProperties: Scs | Kpt | FiveF | FourL;
 }
 
 export interface Scs {

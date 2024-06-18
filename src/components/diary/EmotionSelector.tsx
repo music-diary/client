@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
-import Colors from '@/constants/Colors';
+import { type MoodType } from '@/interfaces';
 import SelectorButton from './SelectorButton';
 
 const emotionGroupList = {
@@ -29,19 +29,13 @@ const emotionGroupList = {
 };
 
 interface EmotionSelectorProps {
-  mood: string;
+  mood: MoodType;
   state: string[];
   setState: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const EmotionSelector = ({ mood, state, setState }: EmotionSelectorProps) => {
   const emotionList = emotionGroupList[mood as keyof typeof emotionGroupList];
-
-  const color = {
-    happy: { backgroundColor: Colors.green, opacity: 0.5 },
-    soso: { backgroundColor: Colors.purple, opacity: 0.5 },
-    bad: { backgroundColor: Colors.blue, opacity: 0.5 },
-  };
 
   useEffect(() => {
     setState([]); // mood가 바뀔 때 선택된 감정 초기화
@@ -60,10 +54,10 @@ const EmotionSelector = ({ mood, state, setState }: EmotionSelectorProps) => {
       {emotionList.map((emotion) => (
         <SelectorButton
           key={emotion}
+          mood={mood}
           type={emotion}
           onPress={() => setEmotion(emotion)}
           isSelected={state.includes(emotion)}
-          color={color[mood as keyof typeof color]}
         />
       ))}
     </View>
