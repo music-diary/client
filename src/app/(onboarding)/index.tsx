@@ -31,15 +31,16 @@ const SignUpScreen = () => {
   };
 
   const handleVerifyPhoneNumber = () => {
-    const phone = '+82' + phoneNumber.slice(1);
-    console.log('Phone Number:', phone);
+    const phone = '+82' + phoneNumber;
     requestPhoneVerification(phone, {
-      onSuccess: (data) => {
-        console.log('Phone Verification Requested:', data);
-        router.push({ pathname: '/phone-verify', params: { phone } });
+      onSuccess: () => {
+        router.push({
+          pathname: '/phone-verify',
+          params: { phoneNumber: phone },
+        });
       },
       onError: (error) => {
-        console.log('Phone Verification Request Error:', error);
+        console.warn('Phone Verification Request Error:', error);
       },
     });
   };

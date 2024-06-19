@@ -24,7 +24,7 @@ const CompleteScreen = () => {
         style={[
           styles.startButton,
           {
-            height: Platform.OS === 'android' ? 78 : 100,
+            height: Platform.OS === 'android' ? 78 : 112,
           },
         ]}
         onPress={handleNext}

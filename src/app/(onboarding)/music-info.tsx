@@ -109,7 +109,7 @@ const MusicInfoScreen = () => {
               backgroundColor: isButtonDisabled
                 ? Colors.contents_light
                 : Colors.purple,
-              height: Platform.OS === 'android' ? 78 : 100,
+              height: Platform.OS === 'android' ? 78 : 112,
             },
           ]}
           onPress={handleNext}

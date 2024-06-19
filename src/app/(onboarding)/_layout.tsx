@@ -10,24 +10,32 @@ const LoginLayout = () => {
           backgroundColor: Colors.black,
         },
         headerTintColor: Colors.white,
-        headerTitle: '',
-        headerLeft: () => <LogoTitle />,
+        headerTitle: () => <LogoTitle />,
       }}
     >
       <Stack.Screen name="index" />
       <Stack.Screen
         name="phone-verify"
         options={{
-          headerBackVisible: true,
           animation: 'fade',
+          headerBackVisible: true,
+          headerBackTitleVisible: false,
         }}
       />
-      <Stack.Screen name="user-info" />
+      <Stack.Screen
+        name="user-info"
+        options={{
+          animation: 'fade',
+          headerBackVisible: true,
+          headerBackTitleVisible: false,
+        }}
+      />
       <Stack.Screen
         name="music-info"
         options={{
-          headerBackVisible: true,
           animation: 'fade',
+          headerBackVisible: true,
+          headerBackTitleVisible: false,
         }}
       />
       <Stack.Screen

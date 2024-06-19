@@ -5,6 +5,6 @@ export const API_ENDPOINTS = {
     SIGN_UP: '/auth/sign-up',
     LOGIN: '/auth/login',
     PHONE: '/auth/phone',
-    PHONE_VERIFICATION: '/auth/phone-verification',
+    PHONE_VERIFICATION: '/auth/phone/verification',
   },
 };

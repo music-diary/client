@@ -195,7 +195,7 @@ const WriteScreen = () => {
           styles.nextButton,
           {
             backgroundColor: hh ? Colors.purple : Colors.contents_light,
-            height: Platform.OS === 'android' ? 78 : 100,
+            height: Platform.OS === 'android' ? 78 : 112,
           },
         ]}
         onPress={handleMusicRecommendation}

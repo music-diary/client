@@ -25,7 +25,10 @@ const requestPhoneVerification = async (phoneNumber: string) => {
   return data;
 };
 
-const verifyPhone = async (verificationData: any) => {
+const verifyPhone = async (verificationData: {
+  phoneNumber: string;
+  code: string;
+}) => {
   const { data } = await apiClient.post(
     API_ENDPOINTS.ONBOARDING.PHONE_VERIFICATION,
     verificationData,

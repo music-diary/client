@@ -193,7 +193,7 @@ const MusicRecommendationScreen = () => {
           {
             backgroundColor:
               selectedLyrics.length > 0 ? Colors.purple : Colors.contents_light,
-            height: Platform.OS === 'android' ? 78 : 100,
+            height: Platform.OS === 'android' ? 78 : 112,
           },
         ]}
         onPress={handleNext}
