@@ -11,6 +11,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 // import { useAppStore } from '@/store/useAppStore';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import CustomToast from '@/components/common/CustomToast';
 import DImOverlay from '@/components/common/DImOverlay';
 import { useColorScheme } from '@/hooks/useColorScheme';
@@ -54,6 +55,8 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
+  const [queryClient] = useState(() => new QueryClient());
+
   // const { isFirstLaunch } = useAppStore();
   const [isLogin] = useState(false);
 
@@ -64,30 +67,32 @@ function RootLayoutNav() {
     //   router.navigate('intro');
     // }
     if (!isLogin) {
-      router.navigate('(main)');
+      router.navigate('(onboarding)');
     }
   }, []);
 
   return (
-    <SafeAreaProvider>
-      <StatusBar style="light" />
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <ThemeProvider
-          value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
-        >
-          <Stack>
-            <Stack.Screen name="(main)" options={{ headerShown: false }} />
-            <Stack.Screen
-              name="(onboarding)"
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen name="intro" options={{ headerShown: false }} />
-            <Stack.Screen name="(modals)" options={{ headerShown: false }} />
-          </Stack>
-          <DImOverlay />
-          <CustomToast />
-        </ThemeProvider>
-      </GestureHandlerRootView>
-    </SafeAreaProvider>
+    <QueryClientProvider client={queryClient}>
+      <SafeAreaProvider>
+        <StatusBar style="light" />
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <ThemeProvider
+            value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+          >
+            <Stack>
+              <Stack.Screen name="(main)" options={{ headerShown: false }} />
+              <Stack.Screen
+                name="(onboarding)"
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen name="intro" options={{ headerShown: false }} />
+              <Stack.Screen name="(modals)" options={{ headerShown: false }} />
+            </Stack>
+            <DImOverlay />
+            <CustomToast />
+          </ThemeProvider>
+        </GestureHandlerRootView>
+      </SafeAreaProvider>
+    </QueryClientProvider>
   );
 }

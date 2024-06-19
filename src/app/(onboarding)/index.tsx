@@ -12,10 +12,13 @@ import {
 } from 'react-native';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
+import { useRequestPhoneVerification } from '@/api/hooks/useOnboarding';
 
 const SignUpScreen = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
+  const { mutate: requestPhoneVerification } = useRequestPhoneVerification();
 
   const validatePhoneNumber = (number: string) => {
     const phoneNumberPattern = /^\d{10,11}$/;
@@ -28,7 +31,17 @@ const SignUpScreen = () => {
   };
 
   const handleVerifyPhoneNumber = () => {
-    router.push({ pathname: '/phone-verify', params: { phoneNumber } });
+    const phone = '+82' + phoneNumber.slice(1);
+    console.log('Phone Number:', phone);
+    requestPhoneVerification(phone, {
+      onSuccess: (data) => {
+        console.log('Phone Verification Requested:', data);
+        router.push({ pathname: '/phone-verify', params: { phone } });
+      },
+      onError: (error) => {
+        console.log('Phone Verification Request Error:', error);
+      },
+    });
   };
 
   return (

@@ -9,6 +9,7 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:import/recommended',
     'plugin:import/typescript',
+    'plugin:@tanstack/eslint-plugin-query/recommended',
     'prettier',
   ],
   overrides: [
@@ -37,6 +38,9 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'warn', // 사용되지 않는 변수 있을 시 경고.
     '@typescript-eslint/prefer-reduce-type-parameter': 'off', // reduce 함수의 타입 파라미터를 사용하지 않아도 됨.
     '@typescript-eslint/consistent-type-assertions': 'off', // 타입 단언을 일관되게 사용할 필요 없음.
+    '@tanstack/query/exhaustive-deps': 'error', // @tanstack/query에서 의존성 배열이 완전한지 검사.
+    '@tanstack/query/no-rest-destructuring': 'warn', // @tanstack/query에서 REST 매개변수 해체 사용 경고.
+    '@tanstack/query/stable-query-client': 'error', // @tanstack/query에서 안정적인 쿼리 클라이언트 사용.
     'import/order': [
       'error',
       {
