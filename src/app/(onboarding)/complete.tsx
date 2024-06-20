@@ -1,37 +1,26 @@
-import {
-  Image,
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  Platform,
-} from 'react-native';
 import { router } from 'expo-router';
-import Colors from '@/constants/Colors';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Fonts from '@/constants/Fonts';
+import Colors from '@/constants/Colors';
 
 const CompleteScreen = () => {
   const handleNext = () => {
     router.push({ pathname: '/(main)' });
   };
   return (
-    <View style={styles.container}>
-      <View style={styles.welcomeContainer}>
-        <Image source={require('assets/images/complete-logo.png')} />
-        <Text style={styles.welcomeText}>음계일기에 오신 것을 환영해요!</Text>
-      </View>
-      <TouchableOpacity
-        style={[
-          styles.startButton,
-          {
-            height: Platform.OS === 'android' ? 78 : 112,
-          },
-        ]}
-        onPress={handleNext}
-      >
-        <Text style={styles.startText}>음계일기 시작하기</Text>
-      </TouchableOpacity>
-    </View>
+    <>
+      <SafeAreaView edges={['top']} style={styles.container}>
+        <View style={styles.welcomeContainer}>
+          <Image source={require('assets/images/complete-logo.png')} />
+          <Text style={styles.welcomeText}>음계일기에 오신 것을 환영해요!</Text>
+        </View>
+        <TouchableOpacity style={styles.startButton} onPress={handleNext}>
+          <Text style={styles.startText}>음계일기 시작하기</Text>
+        </TouchableOpacity>
+      </SafeAreaView>
+      <SafeAreaView edges={['bottom']} style={styles.bottomSafeArea} />
+    </>
   );
 };
 
@@ -56,13 +45,17 @@ const styles = StyleSheet.create({
     ...Fonts.h1,
   },
   startButton: {
-    alignItems: 'center',
-    backgroundColor: Colors.purple,
     width: '100%',
-    paddingTop: 28,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 60,
+    backgroundColor: Colors.purple,
   },
   startText: {
     color: Colors.white,
     ...Fonts.t1,
+  },
+  bottomSafeArea: {
+    backgroundColor: Colors.purple,
   },
 });

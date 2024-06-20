@@ -1,6 +1,6 @@
 import { Stack } from 'expo-router';
+import LogoTitle from '@/components/onboarding/LogoTitle';
 import Colors from '@/constants/Colors';
-import LogoTitle from '@/components/login/LogoTitle';
 
 const LoginLayout = () => {
   return (
@@ -42,6 +42,7 @@ const LoginLayout = () => {
         name="complete"
         options={{
           animation: 'fade',
+          headerBackVisible: false,
         }}
       />
     </Stack>

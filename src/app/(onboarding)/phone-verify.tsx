@@ -10,12 +10,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   useRequestPhoneVerification,
   useVerifyPhone,
 } from '@/api/hooks/useOnboarding';
-import TermsModal from '@/components/login/TermsModal';
-import VerifyTimer from '@/components/login/VerifyTimer';
+import Header from '@/components/onboarding/Header';
+import TermsModal from '@/components/onboarding/TermsModal';
+import VerifyTimer from '@/components/onboarding/VerifyTimer';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
 import { type VerifyStatusType } from '@/interfaces';
@@ -28,7 +30,7 @@ const PhoneVerifyScreen = () => {
 
   const [retry, setRetry] = useState(false);
   const [verifyNumber, setVerifyNumber] = useState('');
-  const [modalVisible, setModalVisible] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [verifyStatus, setVerifyStatus] = useState<VerifyStatusType>('sent');
 
@@ -89,13 +91,11 @@ const PhoneVerifyScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.infoContainer}>
-        <Text style={styles.infoTitle}>전화번호 가입</Text>
-        <Text style={styles.infoDescription}>
-          음계일기를 시작하기 위해 전화번호 인증이 필요해요.
-        </Text>
-      </View>
+    <SafeAreaView style={styles.container}>
+      <Header
+        title="전화번호 가입"
+        description="음계일기를 시작하기 위해 전화번호 인증이 필요해요"
+      />
       <KeyboardAvoidingView
         style={styles.keyboardAvoidingContainer}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -170,7 +170,7 @@ const PhoneVerifyScreen = () => {
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -182,21 +182,6 @@ const styles = StyleSheet.create({
     gap: 60,
     backgroundColor: Colors.black,
     flex: 1,
-  },
-  infoContainer: {
-    display: 'flex',
-    gap: 6,
-    marginTop: 60,
-    paddingHorizontal: 16,
-  },
-  infoTitle: {
-    color: Colors.white,
-    ...Fonts.h1,
-  },
-  infoDescription: {
-    color: Colors.white,
-    opacity: 0.7,
-    ...Fonts.btn,
   },
   keyboardAvoidingContainer: {
     flex: 1,
@@ -248,7 +233,7 @@ const styles = StyleSheet.create({
   verifyButton: {
     alignItems: 'center',
     justifyContent: 'center',
-    height: 78,
+    height: 60,
   },
   verifyText: {
     color: Colors.white,

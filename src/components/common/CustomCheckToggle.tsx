@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import {
-  TouchableOpacity,
   Animated,
   Easing,
   StyleSheet,
-  View,
   Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
@@ -32,37 +32,37 @@ const CustomCheckToggle = ({
       easing: Easing.ease,
       useNativeDriver: false,
     }).start();
-  }, [isSelected]); 
+  }, [isSelected]);
 
   const toggleSwitch = () => {
     if (onToggleChange) {
-      onToggleChange(index); 
+      onToggleChange(index);
     }
   };
 
   const toggleContainerStyle = {
     ...styles.toggleContainer,
-    backgroundColor: isSelected ? Colors.purple : Colors.black, 
+    backgroundColor: isSelected ? Colors.purple : Colors.black,
     borderColor: isSelected ? Colors.purple : Colors.white,
   };
 
   const toggleCircleBackgroundColor = animation.interpolate({
     inputRange: [0, 1],
-    outputRange: [Colors.black, Colors.white], 
+    outputRange: [Colors.black, Colors.white],
   });
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity style={toggleContainerStyle} onPress={toggleSwitch}>
+    <TouchableOpacity style={styles.container} onPress={toggleSwitch}>
+      <View style={toggleContainerStyle}>
         <Animated.View
           style={[
             styles.toggleCircle,
             { backgroundColor: toggleCircleBackgroundColor },
           ]}
         />
-      </TouchableOpacity>
+      </View>
       {description && <Text style={styles.text}>{description}</Text>}
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   toggleContainer: {
     width: 20,
     height: 20,
-    borderRadius: 15, 
+    borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 1.5,
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   toggleCircle: {
     width: 10,
     height: 10,
-    borderRadius: 15, 
+    borderRadius: 15,
   },
   text: {
     marginLeft: 6,

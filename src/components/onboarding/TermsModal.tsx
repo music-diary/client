@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { router } from 'expo-router';
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { termsCheckboxes } from '@/constants';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
@@ -51,45 +52,63 @@ const TermsModal = ({ modalVisible, setModalVisible }: TermsModalProps) => {
 
   return (
     <Modal animationType="slide" visible={modalVisible} transparent={true}>
-      <View style={styles.modalContainer}>
-        <View style={styles.termsContainer}>
-          <View style={styles.termsTitleContainer}>
-            <Text style={styles.termsTitleText}>서비스 이용 동의</Text>
-            <TermsCheckbox
-              value={
-                checkboxes.every((checkbox) => checkbox.checked) &&
-                checkboxes.length > 1
-              }
-              setValue={handleCheckAll}
-              title="약관 전체동의"
-              type="all"
-            />
-          </View>
-          <View style={styles.termsCheckboxContainer}>
-            {checkboxes.map((checkbox) => (
-              <TermsCheckbox
-                key={checkbox.id}
-                value={checkbox.checked}
-                setValue={(value) => handleCheckboxChange(checkbox.id, value)}
-                title={checkbox.title}
-              />
-            ))}
-          </View>
-        </View>
-        <TouchableOpacity
-          style={[
-            styles.modalNextButton,
-            {
-              backgroundColor: isButtonDisabled
-                ? Colors.contents_light
-                : Colors.purple,
-            },
-          ]}
-          onPress={handleNext}
-          disabled={isButtonDisabled}
-        >
-          <Text style={styles.buttonText}>모두 동의하고 다음으로</Text>
-        </TouchableOpacity>
+      <View style={styles.modalOverlay}>
+        <SafeAreaProvider>
+          <SafeAreaView style={{ flex: 1 }} />
+          <SafeAreaView
+            style={[
+              styles.modalOverlay,
+              {
+                backgroundColor: isButtonDisabled
+                  ? Colors.contents_light
+                  : Colors.purple,
+              },
+            ]}
+          >
+            <View style={styles.modalContainer}>
+              <View style={styles.termsContainer}>
+                <View style={styles.termsTitleContainer}>
+                  <Text style={styles.termsTitleText}>서비스 이용 동의</Text>
+                  <TermsCheckbox
+                    value={
+                      checkboxes.every((checkbox) => checkbox.checked) &&
+                      checkboxes.length > 1
+                    }
+                    setValue={handleCheckAll}
+                    title="약관 전체동의"
+                    type="all"
+                  />
+                </View>
+                <View style={styles.termsCheckboxContainer}>
+                  {checkboxes.map((checkbox) => (
+                    <TermsCheckbox
+                      key={checkbox.id}
+                      value={checkbox.checked}
+                      setValue={(value) =>
+                        handleCheckboxChange(checkbox.id, value)
+                      }
+                      title={checkbox.title}
+                    />
+                  ))}
+                </View>
+              </View>
+              <TouchableOpacity
+                style={[
+                  styles.modalNextButton,
+                  {
+                    backgroundColor: isButtonDisabled
+                      ? Colors.contents_light
+                      : Colors.purple,
+                  },
+                ]}
+                onPress={handleNext}
+                disabled={isButtonDisabled}
+              >
+                <Text style={styles.buttonText}>모두 동의하고 다음으로</Text>
+              </TouchableOpacity>
+            </View>
+          </SafeAreaView>
+        </SafeAreaProvider>
       </View>
     </Modal>
   );
@@ -98,6 +117,10 @@ const TermsModal = ({ modalVisible, setModalVisible }: TermsModalProps) => {
 export default TermsModal;
 
 const styles = StyleSheet.create({
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
   modalContainer: {
     display: 'flex',
     backgroundColor: Colors.white,
@@ -105,8 +128,6 @@ const styles = StyleSheet.create({
     width: '100%',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    position: 'absolute',
-    bottom: 0,
   },
   termsContainer: {
     paddingHorizontal: 24,
@@ -125,15 +146,8 @@ const styles = StyleSheet.create({
   modalNextButton: {
     alignItems: 'center',
     justifyContent: 'center',
-    height: 100,
+    height: 60,
     backgroundColor: Colors.purple,
-    paddingBottom: 24,
-  },
-  checkboxContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
   },
   termsCheckboxContainer: {
     display: 'flex',
