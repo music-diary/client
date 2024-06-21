@@ -119,7 +119,7 @@ const CardScreen = () => {
             styles.nextButton,
             {
               backgroundColor: Colors.purple,
-              height: Platform.OS === 'android' ? 78 : 100,
+              height: Platform.OS === 'android' ? 78 : 112,
             },
           ]}
           onPress={handleSave}
