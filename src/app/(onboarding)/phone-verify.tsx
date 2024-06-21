@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import {
   InputAccessoryView,
   KeyboardAvoidingView,
@@ -90,6 +90,15 @@ const PhoneVerifyScreen = () => {
     });
   };
 
+  const handleNext = (isAgreedMarketing: boolean) => {
+    toggleDim();
+    setModalVisible(false);
+    router.push({
+      pathname: '/user-info',
+      params: { phoneNumber, isAgreedMarketing: isAgreedMarketing.toString() },
+    });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <Header
@@ -169,6 +178,7 @@ const PhoneVerifyScreen = () => {
       <TermsModal
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
+        onPress={handleNext}
       />
     </SafeAreaView>
   );

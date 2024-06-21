@@ -1,5 +1,5 @@
 export const genders = [
-  { value: 'M', name: '남성' },
-  { value: 'F', name: '여성' },
-  { value: 'E', name: '선택하지 않음' },
+  { value: 'MALE', name: '남성' },
+  { value: 'FEMALE', name: '여성' },
+  { value: 'OTHER', name: '선택하지 않음' },
 ];

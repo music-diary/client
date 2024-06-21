@@ -1,21 +1,22 @@
 import { useState } from 'react';
-import { router } from 'expo-router';
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { termsCheckboxes } from '@/constants';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
-import { useDimStore } from '@/store/useDimStore';
 import TermsCheckbox from './TermsCheckbox';
 
 interface TermsModalProps {
   modalVisible: boolean;
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  onPress: (isAgreedMarketing: boolean) => void;
 }
 
-const TermsModal = ({ modalVisible, setModalVisible }: TermsModalProps) => {
-  const { toggleDim } = useDimStore();
-
+const TermsModal = ({
+  modalVisible,
+  setModalVisible,
+  onPress,
+}: TermsModalProps) => {
   const [checkboxes, setCheckboxes] = useState(termsCheckboxes);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
@@ -45,9 +46,9 @@ const TermsModal = ({ modalVisible, setModalVisible }: TermsModalProps) => {
   };
 
   const handleNext = () => {
-    toggleDim();
-    setModalVisible(false);
-    router.push('/user-info');
+    const isAgreedMarketing =
+      checkboxes.find((checkbox) => !checkbox.required)?.checked ?? false;
+    onPress(isAgreedMarketing);
   };
 
   return (
@@ -104,7 +105,7 @@ const TermsModal = ({ modalVisible, setModalVisible }: TermsModalProps) => {
                 onPress={handleNext}
                 disabled={isButtonDisabled}
               >
-                <Text style={styles.buttonText}>모두 동의하고 다음으로</Text>
+                <Text style={styles.buttonText}>다음으로</Text>
               </TouchableOpacity>
             </View>
           </SafeAreaView>

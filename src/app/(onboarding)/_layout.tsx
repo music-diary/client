@@ -31,7 +31,7 @@ const LoginLayout = () => {
         }}
       />
       <Stack.Screen
-        name="music-info"
+        name="genre"
         options={{
           animation: 'fade',
           headerBackVisible: true,

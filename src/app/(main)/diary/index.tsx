@@ -104,22 +104,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 20,
   },
-  titleContainer: {
-    gap: 6,
-  },
-  title: {
-    color: Colors.white,
-    ...Fonts.t1,
-  },
-  description: {
-    color: Colors.white,
-    ...Fonts.btn,
-  },
-  info: {
-    color: '#6F6F6F',
-    fontFamily: 'pret-sb',
-    fontSize: 12,
-  },
   nextButton: {
     alignItems: 'center',
     height: 100,

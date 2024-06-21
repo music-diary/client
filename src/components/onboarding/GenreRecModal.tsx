@@ -6,21 +6,22 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import { router } from 'expo-router';
-import { useDimStore } from '@/store/useDimStore';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
+import { useDimStore } from '@/store/useDimStore';
 import { colorWithOpacity } from '@/utils/colorUtils';
 
-interface MusicRecModalProps {
+interface GenreRecModalProps {
   modalVisible: boolean;
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  onPress: (recommend: boolean) => void;
 }
 
-const MusicRecModal = ({
+const GenreRecModal = ({
   modalVisible,
   setModalVisible,
-}: MusicRecModalProps) => {
+  onPress,
+}: GenreRecModalProps) => {
   const { toggleDim } = useDimStore();
 
   const closeModel = () => {
@@ -28,9 +29,8 @@ const MusicRecModal = ({
     setModalVisible(false);
   };
 
-  const handleFinish = (recommend: string) => {
-    closeModel();
-    router.push({ pathname: '/complete', params: { recommend } });
+  const handleGenreRec = (isGenreSuggested: boolean) => {
+    onPress(isGenreSuggested);
   };
 
   return (
@@ -48,13 +48,13 @@ const MusicRecModal = ({
             </View>
             <View style={styles.buttonContainer}>
               <TouchableOpacity
-                onPress={() => handleFinish('N')}
+                onPress={() => handleGenreRec(false)}
                 style={styles.cancelButton}
               >
                 <Text style={styles.cancelText}>관심없어요</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => handleFinish('Y')}
+                onPress={() => handleGenreRec(true)}
                 style={styles.confirmButton}
               >
                 <Text style={styles.confirmText}>다양하게 추천받기</Text>
@@ -67,7 +67,7 @@ const MusicRecModal = ({
   );
 };
 
-export default MusicRecModal;
+export default GenreRecModal;
 
 const styles = StyleSheet.create({
   overlay: {

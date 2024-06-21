@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -19,9 +19,11 @@ import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
 
 const UserInfoScreen = () => {
+  const params = useLocalSearchParams();
+
   const [name, setName] = useState('');
   const [birth, setBirth] = useState('');
-  const [gender, setGender] = useState('E');
+  const [gender, setGender] = useState('OTHER');
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   useEffect(() => {
@@ -29,14 +31,17 @@ const UserInfoScreen = () => {
     setIsButtonDisabled(!isValid);
   }, [name, birth, gender]);
 
-  const handleNext = () => {
-    router.push({ pathname: '/music-info', params: { name, birth, gender } });
-  };
-
   const handleBirthChange = (birth: string) => {
     if (/^\d{0,8}$/.test(birth)) {
       setBirth(birth);
     }
+  };
+
+  const handleNext = () => {
+    router.push({
+      pathname: '/music-info',
+      params: { name, birth, gender, ...params },
+    });
   };
 
   return (
