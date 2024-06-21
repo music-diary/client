@@ -83,7 +83,7 @@ const SubjectEmotionScreen = () => {
           {
             backgroundColor:
               emotions.length > 0 ? Colors.purple : Colors.contents_light,
-            height: Platform.OS === 'android' ? 78 : 100,
+            height: Platform.OS === 'android' ? 78 : 112,
           },
         ]}
         onPress={handleNext}
@@ -103,22 +103,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.black,
     paddingHorizontal: 16,
     paddingTop: 20,
-  },
-  titleContainer: {
-    gap: 6,
-  },
-  title: {
-    color: Colors.white,
-    ...Fonts.t1,
-  },
-  description: {
-    color: Colors.white,
-    ...Fonts.btn,
-  },
-  info: {
-    color: '#6F6F6F',
-    fontFamily: 'pret-sb',
-    fontSize: 12,
   },
   nextButton: {
     alignItems: 'center',

@@ -1,6 +1,6 @@
 import { Stack } from 'expo-router';
+import LogoTitle from '@/components/onboarding/LogoTitle';
 import Colors from '@/constants/Colors';
-import LogoTitle from '@/components/login/LogoTitle';
 
 const LoginLayout = () => {
   return (
@@ -10,30 +10,39 @@ const LoginLayout = () => {
           backgroundColor: Colors.black,
         },
         headerTintColor: Colors.white,
-        headerTitle: '',
-        headerLeft: () => <LogoTitle />,
+        headerTitle: () => <LogoTitle />,
       }}
     >
       <Stack.Screen name="index" />
       <Stack.Screen
         name="phone-verify"
         options={{
-          headerBackVisible: true,
           animation: 'fade',
+          headerBackVisible: true,
+          headerBackTitleVisible: false,
         }}
       />
-      <Stack.Screen name="user-info" />
       <Stack.Screen
-        name="music-info"
+        name="user-info"
         options={{
-          headerBackVisible: true,
           animation: 'fade',
+          headerBackVisible: true,
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="genre"
+        options={{
+          animation: 'fade',
+          headerBackVisible: true,
+          headerBackTitleVisible: false,
         }}
       />
       <Stack.Screen
         name="complete"
         options={{
           animation: 'fade',
+          headerBackVisible: false,
         }}
       />
     </Stack>
