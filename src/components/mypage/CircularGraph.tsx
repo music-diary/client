@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import Svg, { Circle } from 'react-native-svg';
+import { Svg, Circle } from 'react-native-svg';
 import { colorWithOpacity } from '@/utils/colorUtils';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';

@@ -57,7 +57,7 @@ export const genres = [
   {
     label: '재즈',
     name: 'jazz',
-    color: '#0000FF',
+    color: '#FF6347',
   },
   {
     label: 'J-pop',

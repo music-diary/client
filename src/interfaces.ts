@@ -55,3 +55,32 @@ export interface FourL {
   lacked: string;
   longedFor: string;
 }
+// 통계페이지
+export interface DiaryNumberData {
+  month: number;
+  diaryCount: number;
+}
+export interface DiaryTopicData {
+  Topic: string[];
+}
+export interface MusicCount {
+  music: string;
+  count: number;
+}
+export interface MusicPreferenceData {
+  musicCount: MusicCount[];
+}
+export interface FillingData {
+  filling: string;
+  count: number;
+}
+export interface MyFillingData {
+  fillingData: FillingData[];
+}
+export interface MonthlyStatistic {
+  month: string;
+  DiaryNumberData: DiaryNumberData;
+  DiaryTopicData: DiaryTopicData;
+  MusicPreferenceData: MusicPreferenceData;
+  MyFillingData: MyFillingData;
+}
