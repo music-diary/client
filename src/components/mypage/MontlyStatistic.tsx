@@ -31,6 +31,13 @@ const MontlyStatistic = () => {
   const DiaryTopicData = {
     Topic: ['인간관계', '연애', '자존감'],
   };
+  const MusicPreferenceData = {
+    musicCount: [
+      { music: 'pop', count: 10 },
+      { music: 'rock', count: 3 },
+      { music: 'rnb', count: 4 },
+    ],
+  };
 
   const components = [
     <DiaryNumber
@@ -39,7 +46,10 @@ const MontlyStatistic = () => {
       diaryCount={DiaryNumberData.diaryCount}
     />,
     <MyFilling key="filling1" />,
-    <MusicPreference key="musicPreference" />,
+    <MusicPreference
+      key="musicPreference"
+      musicCount={MusicPreferenceData.musicCount}
+    />,
     <DiaryTopic key="diaryTopic" Topic={DiaryTopicData.Topic} />,
   ];
 
