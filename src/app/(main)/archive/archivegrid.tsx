@@ -58,9 +58,6 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 130,
   },
-  flatList: {
-    backgroundColor: Colors.black,
-  },
 
   columnWrapper: {
     justifyContent: 'space-between',

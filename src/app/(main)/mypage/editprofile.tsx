@@ -249,33 +249,9 @@ const styles = StyleSheet.create({
     gap: 15,
     paddingBottom: 30,
   },
-  okbutton: {
-    alignItems: 'center',
-    height: 84,
-    paddingVertical: 30,
-    backgroundColor: Colors.purple,
-  },
   dateText: {
     color: Colors.grey1,
     ...Fonts.btn,
-  },
-  pickerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: -30,
-    height: 200,
-  },
-  confirmButton: {
-    marginRight: 10,
-    backgroundColor: Colors.purple,
-    borderRadius: 6,
-    padding: 10,
-  },
-  confirmText: {
-    color: Colors.white,
-    fontWeight: 'bold',
-    textAlign: 'center',
   },
   birthContainer: {
     alignItems: 'center',
