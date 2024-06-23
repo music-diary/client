@@ -28,6 +28,10 @@ const MontlyStatistic = () => {
     diaryCount: 15,
   };
 
+  const DiaryTopicData = {
+    Topic: ['인간관계', '연애', '자존감'],
+  };
+
   const components = [
     <DiaryNumber
       key="diary1"
@@ -36,7 +40,7 @@ const MontlyStatistic = () => {
     />,
     <MyFilling key="filling1" />,
     <MusicPreference key="musicPreference" />,
-    <DiaryTopic key="diaryTopic" />,
+    <DiaryTopic key="diaryTopic" Topic={DiaryTopicData.Topic} />,
   ];
 
   const handleSelect = (value: string) => {
