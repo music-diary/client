@@ -6,6 +6,7 @@ import DiaryNumber from '@/components/mypage/DiaryNumber';
 import MyFilling from '@/components/mypage/MyFilling';
 import MusicPreference from '@/components/mypage/MusicPreference';
 import DiaryTopic from '@/components/mypage/DiaryTopic';
+import MoreInfo from '@/components/mypage/MoreInfo';
 
 const MontlyStatistic = () => {
   const [selectedValue, setSelectedValue] = useState('2024년 5월');
@@ -39,18 +40,27 @@ const MontlyStatistic = () => {
     ],
   };
 
+  const MyFillingData = {
+    fillingData: [
+      { filling: '좋았어요', count: 14 },
+      { filling: '괜찮아요', count: 3 },
+      { filling: '슬펐어요', count: 4 },
+    ],
+  };
+
   const components = [
     <DiaryNumber
       key="diary1"
       month={DiaryNumberData.month}
       diaryCount={DiaryNumberData.diaryCount}
     />,
-    <MyFilling key="filling1" />,
+    <MyFilling key="filling1" fillingData={MyFillingData.fillingData} />,
     <MusicPreference
       key="musicPreference"
       musicCount={MusicPreferenceData.musicCount}
     />,
     <DiaryTopic key="diaryTopic" Topic={DiaryTopicData.Topic} />,
+    <MoreInfo key="moreInfo" />,
   ];
 
   const handleSelect = (value: string) => {
@@ -93,9 +103,9 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     paddingTop: 20,
+    paddingBottom: 10,
   },
   bodyContainer: {
-    marginTop: 20,
     paddingHorizontal: 16,
     flex: 1,
   },
