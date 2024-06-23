@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
@@ -34,7 +33,8 @@ const MusicSelection = ({
       }
       setSelectedGenres(selectedGenres.filter((genre) => genre !== item));
     } else {
-      if (selectedGenres.length >= 3) {  // 3개 이상 선택한 경우
+      if (selectedGenres.length >= 3) {
+        // 3개 이상 선택한 경우
         return;
       }
       setSelectedGenres([...selectedGenres, item]);

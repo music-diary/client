@@ -360,16 +360,6 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     ...Fonts.b2_sb,
   },
-  contentText: {
-    paddingTop: 8,
-    color: Colors.white,
-    ...Fonts.btn,
-  },
-  contentNumber: {
-    paddingTop: 10,
-    color: Colors.white,
-    ...Fonts.b2_sb,
-  },
   body1: {
     paddingTop: 34,
     gap: 12,
