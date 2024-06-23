@@ -20,7 +20,7 @@ interface customDayComponentProps {
 }
 const customDayComponent = ({ date, imageuri }: customDayComponentProps) => {
   // datedata 형식 확인
-  const handleDateClick = (dd: any) => {
+  const handleDateClick = (dd: DateData) => {
     console.log('🚀 ~ file: calendar.tsx:22 ~ handleDateClick ~ dd:', dd);
   };
 
@@ -31,7 +31,7 @@ const customDayComponent = ({ date, imageuri }: customDayComponentProps) => {
       '🚀 ~ file: calendar.tsx:26 ~ handleAlbumClick ~ date:',
       date.dateString,
     );
-    router.push(tempdate as any);
+    router.push(tempdate);
   };
 
   return (

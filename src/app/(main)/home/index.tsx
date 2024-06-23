@@ -5,7 +5,6 @@ import { router } from 'expo-router';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import WeekCalendar from '@/components/home/WeekCalender';
 import MontlyMusicList from '@/components/home/MontlyMusicList';
-import MontlyLetterList from '@/components/home/MontlyLetterList';
 import CharacterAnimation from '@/components/home/CharacterAnimation';
 import Fonts from '@/constants/Fonts';
 import Colors from '@/constants/Colors';
@@ -17,8 +16,6 @@ const HomeScreen = () => {
   const diaryCount = 3;
   // 이름 -> dummy data
   const name = 'Miya';
-  // 편지 개수
-  const letterCount = 0;
 
   // person클릭 시 마이페이지로 이동
   const handlePersonClick = () => {
@@ -104,12 +101,6 @@ const styles = StyleSheet.create({
     color: '#FAFAFA',
     ...Fonts.h1,
   },
-
-  character: {
-    position: 'absolute',
-    top: -100,
-    right: 16,
-  },
   body: {
     backgroundColor: Colors.black,
     marginTop: -50,
@@ -124,11 +115,6 @@ const styles = StyleSheet.create({
     fontFamily: 'pret-b',
     fontSize: 16,
     lineHeight: 24,
-  },
-  showAll: {
-    position: 'absolute',
-    right: 16,
-    top: 28,
   },
 });
 
