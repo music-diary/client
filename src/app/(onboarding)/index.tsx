@@ -11,7 +11,7 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useRequestPhoneVerification } from '@/api/hooks/useOnboarding';
+import { useRequestPhoneVerification } from '@/api/hooks/useAuth';
 import Header from '@/components/onboarding/Header';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';

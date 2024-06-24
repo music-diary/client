@@ -14,9 +14,9 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CustomCheckToggle from '@/components/common/CustomCheckToggle';
 import Header from '@/components/onboarding/Header';
-import { genders } from '@/constants';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
+import { genders } from '@/constants/data';
 
 const UserInfoScreen = () => {
   const params = useLocalSearchParams();
@@ -39,7 +39,7 @@ const UserInfoScreen = () => {
 
   const handleNext = () => {
     router.push({
-      pathname: '/music-info',
+      pathname: '/genre',
       params: { name, birth, gender, ...params },
     });
   };

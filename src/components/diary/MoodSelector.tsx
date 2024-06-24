@@ -1,10 +1,10 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Colors from '@/constants/Colors';
-import { type MoodType } from '@/interfaces';
 import { colorWithOpacity } from '@/utils/colorUtils';
 import HappySvg from 'assets/images/happy.svg';
 import SosoSvg from 'assets/images/soso.svg';
 import BadSvg from 'assets/images/bad.svg';
+import { type Mood } from '@/models/types';
 
 const moodList = [
   { label: '좋았어요!', value: 'happy' },
@@ -19,12 +19,12 @@ const moodIcons = {
 };
 
 interface MoodSelectorProps {
-  state: MoodType | null;
-  setState: React.Dispatch<React.SetStateAction<MoodType | null>>;
+  state: Mood | null;
+  setState: React.Dispatch<React.SetStateAction<Mood | null>>;
 }
 
 const MoodSelector = ({ state, setState }: MoodSelectorProps) => {
-  const handlePress = (value: MoodType) => {
+  const handlePress = (value: Mood) => {
     if (state === value) {
       setState(null); // 이미 선택된 무드를 다시 누르면 해제
     } else {
@@ -41,10 +41,10 @@ const MoodSelector = ({ state, setState }: MoodSelectorProps) => {
   return (
     <View style={styles.container}>
       {moodList.map((mood) => {
-        const SvgIcon = moodIcons[mood.value as MoodType];
+        const SvgIcon = moodIcons[mood.value as Mood];
         const isActive = state === mood.value;
         const fillColor = isActive
-          ? moodColor[mood.value as MoodType]
+          ? moodColor[mood.value as Mood]
           : colorWithOpacity(Colors.white, 0.3);
         const color = isActive
           ? Colors.white
@@ -53,7 +53,7 @@ const MoodSelector = ({ state, setState }: MoodSelectorProps) => {
 
         return (
           <TouchableOpacity
-            onPress={() => handlePress(mood.value as MoodType)}
+            onPress={() => handlePress(mood.value as Mood)}
             key={mood.label}
             style={[styles.button, { borderColor }]}
           >
