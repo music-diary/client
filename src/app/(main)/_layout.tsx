@@ -16,7 +16,8 @@ export default function TabLayout() {
     path === '/mypage/myfriend' ||
     path === '/mypage/editprofile' ||
     path === '/mypage/inquiry' ||
-    path === '/mypage/withdrawal';
+    path === '/mypage/withdrawal' ||
+    path === '/mypage/statistic';
 
   return (
     <Tabs
@@ -85,7 +86,9 @@ export default function TabLayout() {
       <Tabs.Screen
         name="mypage"
         options={{
-          href: null,
+          title: '',
+          headerShown: false,
+          tabBarItemStyle: { display: 'none' },
         }}
       />
     </Tabs>
