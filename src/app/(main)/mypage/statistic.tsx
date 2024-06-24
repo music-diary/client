@@ -1,21 +1,34 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { ScrollView, StyleSheet } from 'react-native';
+import Colors from '@/constants/Colors';
+import StaticRouter from '@/components/mypage/StatisticRouter';
+import MontlyStatisticPage from '@/components/mypage/MontlyStatistic';
+import YearlyStatisticPage from '@/components/mypage/YearlyStatistic';
 
-const statistic = () => {
+type ViewMode = 'yearly' | 'monthly';
+
+const Statistic = () => {
+  const [activeView, setActiveView] = useState<ViewMode>('monthly');
+
   return (
-    <View style={styles.container}>
-      <Text>statistic</Text>
-    </View>
+    <>
+      <StaticRouter activeView={activeView} setActiveView={setActiveView} />
+      <ScrollView style={styles.container}>
+        {activeView === 'monthly' ? (
+          <MontlyStatisticPage />
+        ) : (
+          <YearlyStatisticPage />
+        )}
+      </ScrollView>
+    </>
   );
 };
 
-export default statistic;
+export default Statistic;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: Colors.black,
   },
 });
