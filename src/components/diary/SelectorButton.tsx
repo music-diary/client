@@ -1,10 +1,10 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
-import { type MoodType } from '@/interfaces';
+import { type Mood } from '@/models/types';
 
 interface SelectorButtonProps {
-  mood: MoodType;
+  mood: Mood;
   type: string;
   onPress?: () => void;
   isSelected?: boolean;

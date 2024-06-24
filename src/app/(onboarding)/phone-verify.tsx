@@ -14,15 +14,15 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   useRequestPhoneVerification,
   useVerifyPhone,
-} from '@/api/hooks/useOnboarding';
+} from '@/api/hooks/useAuth';
 import Header from '@/components/onboarding/Header';
 import TermsModal from '@/components/onboarding/TermsModal';
 import VerifyTimer from '@/components/onboarding/VerifyTimer';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
-import { type VerifyStatusType } from '@/interfaces';
 import { useDimStore } from '@/store/useDimStore';
 import WarningCircleSvg from 'assets/images/warning_circle.svg';
+import { type VerifyStatus } from '@/models/types';
 
 const PhoneVerifyScreen = () => {
   const { phoneNumber } = useLocalSearchParams();
@@ -32,7 +32,7 @@ const PhoneVerifyScreen = () => {
   const [verifyNumber, setVerifyNumber] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-  const [verifyStatus, setVerifyStatus] = useState<VerifyStatusType>('sent');
+  const [verifyStatus, setVerifyStatus] = useState<VerifyStatus>('sent');
 
   const { mutate: verifyPhone } = useVerifyPhone();
   const { mutate: requestPhoneVerification } = useRequestPhoneVerification();

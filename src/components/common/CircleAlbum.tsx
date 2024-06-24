@@ -1,6 +1,12 @@
 import { View, Image, StyleSheet } from 'react-native';
 import { BlurView } from 'expo-blur';
-import { type CircleComponentProps } from '@/interfaces';
+
+interface CircleComponentProps {
+  order?: number;
+  color: string;
+  imageSource: string;
+  diameter: number;
+}
 
 // 재사용 가능하도록 size를 props로 받아서 사용
 const CircleAlbum = ({

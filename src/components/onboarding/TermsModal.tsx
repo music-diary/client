@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { termsCheckboxes } from '@/constants';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
+import { termsCheckboxes } from '@/constants/data';
 import TermsCheckbox from './TermsCheckbox';
 
 interface TermsModalProps {

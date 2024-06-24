@@ -18,6 +18,7 @@ import CustomToggle from '@/components/common/CustomToggle';
 import CustomAlert from '@/components/common/CustomAlert';
 import BottomSheetModal from '@/components/home/BottomSheetModal';
 import MusicSelection from '@/components/home/MusicSelection';
+import { useAppStore } from '@/store/useAppStore';
 
 // 추후 util 폴더 등으로 깔끔히 관리하기
 function formatTime(date: Date): string {
@@ -30,6 +31,8 @@ function formatTime(date: Date): string {
 }
 
 const MypageScreen = () => {
+  const { logout } = useAppStore();
+
   const router = useRouter();
   // 날짜
   const today = new Date();
@@ -121,6 +124,7 @@ const MypageScreen = () => {
       '로그 아웃',
     );
     // 여기에 삭제 작업을 수행하는 코드를 추가하면 됨
+    logout();
     closeLogoutModal();
   };
 

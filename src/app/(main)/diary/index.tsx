@@ -14,10 +14,11 @@ import SelectorView from '@/components/diary/SelectorView';
 import TopicSelector from '@/components/diary/TopicSelector';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
-import { type ITopic, type MoodType } from '@/interfaces';
+import { type Mood } from '@/models/types';
+import { type ITopic } from '@/models/interfaces';
 
 const SubjectEmotionScreen = () => {
-  const [mood, setMood] = useState<MoodType | null>(null);
+  const [mood, setMood] = useState<Mood | null>(null);
   const [emotions, setEmotions] = useState<string[]>([]);
   const [detailedEmotions, setDetailedEmotions] = useState<string[]>([]);
   const [topics, setTopics] = useState<ITopic[]>([]);

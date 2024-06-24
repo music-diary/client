@@ -3,8 +3,8 @@ import Colors from '@/constants/Colors';
 import MusicNotesIcon from 'assets/images/mypageIcon/MusicNotes.svg';
 import Fonts from '@/constants/Fonts';
 import { colorWithOpacity } from '@/utils/colorUtils';
-import { genres } from '@/constants';
 import PreferenceGraph from '@/components/mypage/PreferenceGraph';
+import { genres } from '@/constants/data';
 
 const containerWidth = Dimensions.get('window').width / 2 - 24;
 const containerYearlyWidth = Dimensions.get('window').width - 32;
