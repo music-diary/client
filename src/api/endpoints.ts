@@ -1,10 +1,14 @@
 export const API_ENDPOINTS = {
   DIARY: '/diary',
   ARCHIVE: '/archive',
-  ONBOARDING: {
+  AUTH: {
     SIGN_UP: '/auth/sign-up',
-    LOGIN: '/auth/login',
     PHONE: '/auth/phone',
     PHONE_VERIFICATION: '/auth/phone/verification',
+  },
+  USERS: {
+    SELF: '/users/self',
+    ID: '/users/:id',
+    ALL: '/users',
   },
 };

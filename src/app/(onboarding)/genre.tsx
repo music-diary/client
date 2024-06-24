@@ -1,26 +1,26 @@
 import { useEffect, useState } from 'react';
-import { useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useLogin, useSignUp } from '@/api/hooks/useOnboarding';
-import Header from '@/components/onboarding/Header';
+import { useSignUp } from '@/api/hooks/useAuth';
 import GenreRecModal from '@/components/onboarding/GenreRecModal';
-import { genres } from '@/constants';
+import Header from '@/components/onboarding/Header';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
+import { genres } from '@/constants/data';
+import { type IGenre } from '@/models/interfaces';
+import { type SignUpSchema } from '@/models/schemas';
+import { type Gender } from '@/models/types';
 import { useDimStore } from '@/store/useDimStore';
 
 const GenreScreen = () => {
   const { phoneNumber, name, birth, gender, isAgreedMarketing } =
     useLocalSearchParams();
+
   const { toggleDim } = useDimStore();
-
   const { mutate: signUp } = useSignUp();
-  const { mutate: login } = useLogin();
 
-  const [selectedGenre, setSelectedGenre] = useState<Array<{ name: string }>>(
-    [],
-  );
+  const [selectedGenre, setSelectedGenre] = useState<IGenre[]>([]);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -30,7 +30,7 @@ const GenreScreen = () => {
     );
   }, [selectedGenre]);
 
-  const handleSelectGenre = (selectedGenreItem: { name: string }) => {
+  const handleSelectGenre = (selectedGenreItem: IGenre) => {
     if (selectedGenre.some((genre) => genre.name === selectedGenreItem.name)) {
       setSelectedGenre(
         selectedGenre.filter((genre) => genre.name !== selectedGenreItem.name),
@@ -48,17 +48,14 @@ const GenreScreen = () => {
   };
 
   const parseDate = (birth: string): Date | null => {
-    // Check if the input is exactly 8 digits
     if (/^\d{8}$/.test(birth)) {
       const year = birth.substring(0, 4);
       const month = birth.substring(4, 6);
       const day = birth.substring(6, 8);
 
-      // Create a Date object from the parsed string
       const dateString = `${year}-${month}-${day}`;
       return new Date(dateString);
     } else {
-      // Return null if the input is not valid
       return null;
     }
   };
@@ -67,20 +64,10 @@ const GenreScreen = () => {
     toggleDim();
     setModalVisible(false);
 
-    // signUp 로직 추가
-    // {
-    //   "phoneNumber": "string",
-    //   "name": "string",
-    //   "birthDay": "2024-06-20T09:33:03.103Z",
-    //   "gender": "FEMALE",
-    //   "isGenreSuggested": true,
-    //   "isAgreedMarketing": true
-    // }
-
-    const userData = {
-      name,
-      gender,
-      phoneNumber,
+    const userData: SignUpSchema = {
+      name: name as string,
+      gender: gender as Gender,
+      phoneNumber: phoneNumber as string,
       birthDay: parseDate(birth as string),
       genres: selectedGenre,
       isGenreSuggested,
@@ -91,36 +78,19 @@ const GenreScreen = () => {
     signUp(userData, {
       onSuccess: (data) => {
         console.log('Sign Up Success:', data);
-        // login 로직 추가
-        // router.push({ pathname: '/complete', params: { recommend: true } });
+        router.push('/complete');
       },
       onError: (error) => {
         console.warn('Sign Up Error:', error);
       },
     });
-
-    // router.push({ pathname: '/complete', params: { recommend: recommend } });
-  };
-
-  const loginTest = () => {
-    login(
-      { phoneNumber: '+8201042334716' },
-      {
-        onSuccess: (data) => {
-          console.log('Login Success:', data);
-        },
-        onError: (error) => {
-          console.warn('Login Error:', error);
-        },
-      },
-    );
   };
 
   return (
     <>
       <SafeAreaView edges={['top']} style={styles.container}>
         <Header
-          title="윤경 님의 음악 취향을 선택해주세요"
+          title={`${name as string} 님의 음악 취향을 선택해주세요`}
           description="최소 1개부터 최대 3개까지 가능해요"
         />
 
@@ -153,8 +123,8 @@ const GenreScreen = () => {
                   : Colors.purple,
               },
             ]}
-            // onPress={handleNext}
-            onPress={loginTest}
+            onPress={handleNext}
+            // onPress={loginTest}
             disabled={isButtonDisabled}
           >
             <Text style={styles.verifyText}>완료</Text>

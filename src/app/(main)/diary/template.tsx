@@ -16,73 +16,9 @@ import Animated, {
 import { router, useLocalSearchParams } from 'expo-router';
 import Fonts from '@/constants/Fonts';
 import Colors from '@/constants/Colors';
-
-export type TemplateType = 'SCS' | 'KPT' | '5F' | '4L' | 'MSG';
-
-export interface ITemplate {
-  name: string;
-  description: string;
-  type: TemplateType;
-  preview: Record<string, string>;
-  height: number;
-}
-
-export const templateList: ITemplate[] = [
-  {
-    name: 'SCS 회고',
-    description: '더 강하고 단단한 나로 발전하고 싶을 때',
-    type: 'SCS',
-    preview: {
-      Stop: '멈추고 싶은 것',
-      Continue: '이어나갈 것',
-      Start: '새롭게 시작하고 싶은 것',
-    },
-    height: 228,
-  },
-  {
-    name: 'KPT 회고',
-    description: '사실에 기반해 더 나은 나로 발전하고 싶을 때',
-    type: 'KPT',
-    preview: {
-      Keep: '유지할 것',
-      Problem: '해결해야 할 것',
-      Try: '시도해볼 것',
-    },
-    height: 228,
-  },
-  {
-    name: '5F 회고',
-    description: '거침없이 감정에 솔직하고 싶을 때',
-    type: '5F',
-    preview: {
-      Fact: '사실',
-      Feeling: '느낌',
-      Finding: '인사이트',
-      'Future Action': '향후계획',
-      Feedback: '피드백',
-    },
-    height: 296,
-  },
-  {
-    name: '4L 회고',
-    description: '내면의 열망을 이끌어 내고 싶을 때',
-    type: '4L',
-    preview: {
-      Loved: '사랑하는 것',
-      Learned: '배웠던 것',
-      Lacked: '부족했던 것',
-      'Longed for': '열망하는 것',
-    },
-    height: 290,
-  },
-  {
-    name: 'Mad, Sad, Glad',
-    description: '사실과 감정을 균형있게 담는 일기를 쓰고 싶을 때',
-    type: 'MSG',
-    preview: { Mad: '화남', Sad: '슬픔', Glad: '기쁨' },
-    height: 228,
-  },
-];
+import { type Template } from '@/models/types';
+import { type ITemplate } from '@/models/interfaces';
+import { templates } from '@/constants/data';
 
 const TemplateScreen = () => {
   const params = useLocalSearchParams();
@@ -104,19 +40,19 @@ const TemplateScreen = () => {
   // };
 
   // 하나만 열릴때 사용할 수 있는 방법
-  const [expanded, setExpanded] = useState<TemplateType | null>(null);
+  const [expanded, setExpanded] = useState<Template | null>(null);
 
-  const heightValues = templateList.reduce<{
-    [key in TemplateType]: SharedValue<number>;
+  const heightValues = templates.reduce<{
+    [key in Template]: SharedValue<number>;
   }>(
     (acc, curr) => {
       acc[curr.type] = useSharedValue(0);
       return acc;
     },
-    {} as { [key in TemplateType]: SharedValue<number> },
+    {} as { [key in Template]: SharedValue<number> },
   );
 
-  const animatedStyles = (type: TemplateType) =>
+  const animatedStyles = (type: Template) =>
     useAnimatedStyle(() => {
       return {
         height: heightValues[type].value,
@@ -137,7 +73,7 @@ const TemplateScreen = () => {
       // Close all other panels
       Object.keys(heightValues).forEach((key) => {
         if (key !== type) {
-          heightValues[key as TemplateType].value = withTiming(0, {
+          heightValues[key as Template].value = withTiming(0, {
             duration: 300,
           });
         }
@@ -148,7 +84,7 @@ const TemplateScreen = () => {
     }
   };
 
-  const handleSetTemplate = (type: TemplateType) => {
+  const handleSetTemplate = (type: Template) => {
     router.navigate({
       pathname: '/diary/write',
       params: { type, ...params },
@@ -170,7 +106,7 @@ const TemplateScreen = () => {
       </View>
 
       <View style={styles.templateContainer}>
-        {templateList.map((template, index) => (
+        {templates.map((template, index) => (
           <TouchableOpacity
             key={index}
             onPress={() => handlePreview(template)}

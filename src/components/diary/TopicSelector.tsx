@@ -1,5 +1,5 @@
 import { StyleSheet, View } from 'react-native';
-import { type ITopic } from '@/interfaces';
+import { type ITopic } from '@/models/interfaces';
 import TopicButton from './TopicButton';
 
 const topicList: ITopic[] = [

@@ -15,6 +15,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import CustomToast from '@/components/common/CustomToast';
 import DImOverlay from '@/components/common/DImOverlay';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { useAppStore } from '@/store/useAppStore';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -57,8 +58,7 @@ export default function RootLayout() {
 function RootLayoutNav() {
   const [queryClient] = useState(() => new QueryClient());
 
-  // const { isFirstLaunch } = useAppStore();
-  const [isLogin] = useState(false);
+  const { isAuthenticated } = useAppStore();
 
   const colorScheme = useColorScheme();
 
@@ -66,10 +66,12 @@ function RootLayoutNav() {
     // if (isFirstLaunch) {
     //   router.navigate('intro');
     // }
-    if (!isLogin) {
+    if (!isAuthenticated) {
       router.navigate('(onboarding)');
+    } else {
+      router.navigate('(main)');
     }
-  }, []);
+  }, [isAuthenticated]);
 
   return (
     <QueryClientProvider client={queryClient}>

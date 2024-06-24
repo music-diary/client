@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { type MoodType } from '@/interfaces';
+import { type Mood } from '@/models/types';
 import SelectorButton from './SelectorButton';
 
 const detailedEmotionGroupList = {
@@ -76,7 +76,7 @@ const detailedEmotionGroupList = {
 };
 
 interface DetailedEmotionSelectorProps {
-  mood: MoodType;
+  mood: Mood;
   emotions: string[];
   state: string[];
   setState: React.Dispatch<React.SetStateAction<string[]>>;

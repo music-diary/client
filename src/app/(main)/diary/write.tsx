@@ -16,9 +16,10 @@ import SelectorButton from '@/components/diary/SelectorButton';
 import TopicButton from '@/components/diary/TopicButton';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
-import { type ITopic, type MoodType } from '@/interfaces';
+import { type ITopic } from '@/models/interfaces';
+import { type Mood } from '@/models/types';
 import { useModalStore } from '@/store/useModalStore';
-import { templateList } from './template';
+import { templates } from '@/constants/data';
 
 const WriteScreen = () => {
   const params = useLocalSearchParams();
@@ -29,7 +30,7 @@ const WriteScreen = () => {
   const topicList: ITopic[] = JSON.parse(topics as string);
 
   const { closeModal } = useModalStore();
-  const template = templateList.find((t) => t.type === type);
+  const template = templates.find((t) => t.type === type);
   const scrollViewRef = useRef<ScrollView>(null);
 
   const [hh] = useState(true);
@@ -109,7 +110,7 @@ const WriteScreen = () => {
               {emotionList.map((value, index) => (
                 <SelectorButton
                   key={value + index}
-                  mood={mood as MoodType}
+                  mood={mood as Mood}
                   type={value}
                   isSelected
                 />
@@ -117,7 +118,7 @@ const WriteScreen = () => {
               {detailedEmotionList.map((value, index) => (
                 <SelectorButton
                   key={value + index}
-                  mood={mood as MoodType}
+                  mood={mood as Mood}
                   type={value}
                   isSelected
                 />
