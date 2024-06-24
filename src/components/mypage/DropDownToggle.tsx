@@ -6,7 +6,6 @@ import {
   FlatList,
   Pressable,
   Modal,
-  TouchableOpacity,
 } from 'react-native';
 import { colorWithOpacity } from '@/utils/colorUtils';
 import Fonts from '@/constants/Fonts';
@@ -61,9 +60,8 @@ const DropDownToggle = ({
           visible={isDropdownVisible}
           onRequestClose={() => setDropdownVisible(false)}
         >
-          <TouchableOpacity
+          <Pressable
             style={styles.modalOverlay}
-            activeOpacity={1}
             onPressOut={() => setDropdownVisible(false)}
           >
             <View style={styles.dropdown}>
@@ -73,7 +71,7 @@ const DropDownToggle = ({
                 keyExtractor={(item) => item}
               />
             </View>
-          </TouchableOpacity>
+          </Pressable>
         </Modal>
       )}
     </View>
@@ -111,7 +109,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     marginTop: 5,
     width: 200,
-    maxHeight: 300,
+    maxHeight: 210,
   },
   item: {
     paddingVertical: 10,

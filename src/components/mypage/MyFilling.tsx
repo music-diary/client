@@ -100,6 +100,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     gap: 12,
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: colorWithOpacity(Colors.white, 0.1),
   },
   title: {
     flexDirection: 'row',

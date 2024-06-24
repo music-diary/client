@@ -2,6 +2,7 @@ import { Dimensions, Pressable, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
+import { colorWithOpacity } from '@/utils/colorUtils';
 
 const containerWidth = Dimensions.get('window').width - 32;
 
@@ -32,6 +33,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     gap: 14,
+    borderWidth: 1,
+    borderColor: colorWithOpacity(Colors.white, 0.1),
   },
   b2Text: {
     color: Colors.white,

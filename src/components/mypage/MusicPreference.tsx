@@ -7,9 +7,11 @@ import { genres } from '@/constants';
 import PreferenceGraph from '@/components/mypage/PreferenceGraph';
 
 const containerWidth = Dimensions.get('window').width / 2 - 24;
+const containerYearlyWidth = Dimensions.get('window').width - 32;
 
 interface MusicPreferenceProps {
   musicCount: Array<{ music: string; count: number }>;
+  isYearly?: boolean;
 }
 
 const getGenreLabel = (music: string) => {
@@ -17,7 +19,7 @@ const getGenreLabel = (music: string) => {
   return genre ? genre.label : music;
 };
 
-const MusicPreference = ({ musicCount }: MusicPreferenceProps) => {
+const MusicPreference = ({ musicCount, isYearly }: MusicPreferenceProps) => {
   const generateGraphData = () => {
     return musicCount.map((item) => {
       const genre = genres.find((genre) => genre.name === item.music);
@@ -32,8 +34,10 @@ const MusicPreference = ({ musicCount }: MusicPreferenceProps) => {
   const graphData = generateGraphData(); // 변환된 데이터
   const graphtotal = graphData.reduce((acc, item) => acc + item.count, 0); // count 총합
 
+  const componentWidth = isYearly ? containerYearlyWidth : containerWidth;
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { width: componentWidth }]}>
       <View style={styles.title}>
         <MusicNotesIcon />
         <Text style={styles.buttonText}>내 음악취향</Text>
@@ -66,12 +70,13 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.grey3,
     height: 250,
-    width: containerWidth,
     borderRadius: 12,
     paddingTop: 20,
     paddingHorizontal: 10,
     gap: 12,
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: colorWithOpacity(Colors.white, 0.1),
   },
   title: {
     flexDirection: 'row',

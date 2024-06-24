@@ -3,16 +3,12 @@ import Colors from '@/constants/Colors';
 import ConfettiIcon from 'assets/images/mypageIcon/Confetti.svg';
 import Fonts from '@/constants/Fonts';
 import { colorWithOpacity } from '@/utils/colorUtils';
-import CircularGraph from '@/components/mypage/CircularGraph';
+import { type DiaryYearNumberData } from '@/interfaces';
+import LineGraph from '@/components/mypage/LineGraph';
 
-const containerWidth = Dimensions.get('window').width / 2 - 24;
+const containerWidth = Dimensions.get('window').width - 32;
 
-interface DiaryNumberProps {
-  month: number;
-  diaryCount: number;
-}
-
-const DiaryNumber = ({ month, diaryCount }: DiaryNumberProps) => {
+const DiaryYearlyGraph = ({ average, monthlydata }: DiaryYearNumberData) => {
   return (
     <View style={styles.container}>
       <View style={styles.title}>
@@ -20,27 +16,30 @@ const DiaryNumber = ({ month, diaryCount }: DiaryNumberProps) => {
         <Text style={styles.titleText}>작성한 음악일기</Text>
       </View>
       <Text style={styles.bodyText}>
-        이번 달은 <Text style={styles.highlight}>{diaryCount}개</Text>의{'\n'}
-        음악일기를 썼어요.
+        올해 정말 <Text style={styles.highlight}>꾸준하게</Text> 음악일기를
+        찾아주셨네요!
       </Text>
-      <View style={styles.graphContainer}>
-        <CircularGraph month={month} diaryCount={diaryCount} />
+      <View style={styles.boxContainer}>
+        <Text style={styles.boxText}>
+          월 평균 <Text style={styles.boxHighlight}>{average}회</Text> 작성
+        </Text>
       </View>
+      <LineGraph data={monthlydata} />
     </View>
   );
 };
 
-export default DiaryNumber;
+export default DiaryYearlyGraph;
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.grey3,
-    height: 250,
+    height: 330,
     width: containerWidth,
     borderRadius: 12,
     paddingTop: 20,
     paddingHorizontal: 10,
-    gap: 16,
+    gap: 20,
     alignItems: 'center',
     borderWidth: 1,
     borderColor: colorWithOpacity(Colors.white, 0.1),
@@ -62,7 +61,17 @@ const styles = StyleSheet.create({
   highlight: {
     color: 'white',
   },
-  graphContainer: {
-    alignItems: 'center',
+  boxContainer: {
+    backgroundColor: Colors.white,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 16,
+  },
+  boxText: {
+    color: Colors.black,
+    ...Fonts.b2_sb,
+  },
+  boxHighlight: {
+    color: Colors.purple,
   },
 });

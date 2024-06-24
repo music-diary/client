@@ -20,10 +20,6 @@ const topicList: ITopic[] = [
   { id: '10', emoji: '💪', name: '건강' },
   { id: '11', emoji: '❌', name: '이유없음' },
 ];
-//  const DiaryTopicData = {
-//    Topic: ['가족', '연애', '이별'],
-//  };
-
 interface DiaryTopicProps {
   Topic: string[];
 }
@@ -70,6 +66,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     gap: 10,
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: colorWithOpacity(Colors.white, 0.1),
   },
   title: {
     flexDirection: 'row',

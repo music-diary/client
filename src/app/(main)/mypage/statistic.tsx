@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import Colors from '@/constants/Colors';
 import StaticRouter from '@/components/mypage/StatisticRouter';
-import MontlyStatistic from '@/components/mypage/MontlyStatistic';
-import YearlyStatistic from '@/components/mypage/YearlyStatistic';
+import MontlyStatisticPage from '@/components/mypage/MontlyStatistic';
+import YearlyStatisticPage from '@/components/mypage/YearlyStatistic';
 
 type ViewMode = 'yearly' | 'monthly';
 
@@ -14,7 +14,11 @@ const Statistic = () => {
     <>
       <StaticRouter activeView={activeView} setActiveView={setActiveView} />
       <ScrollView style={styles.container}>
-        {activeView === 'monthly' ? <MontlyStatistic /> : <YearlyStatistic />}
+        {activeView === 'monthly' ? (
+          <MontlyStatisticPage />
+        ) : (
+          <YearlyStatisticPage />
+        )}
       </ScrollView>
     </>
   );
