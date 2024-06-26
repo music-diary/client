@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Modal, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
+import { colorWithOpacity } from '@/utils/colorUtils';
 
 interface BottomSheetModalProps {
   title: string;
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
     justifyContent: 'flex-end',
-    backgroundColor: Colors.black_alpha[50],
+    backgroundColor: colorWithOpacity(Colors.black, 0.5),
   },
   modalContent: {
     backgroundColor: Colors.grey3,

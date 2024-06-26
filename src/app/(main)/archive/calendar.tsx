@@ -61,7 +61,7 @@ const CalendarView = () => {
 
   // 로딩처리
   useEffect(() => {
-    setTimeout(() => setIsLoaded(true), 1000);
+    setTimeout(() => setIsLoaded(true), 100);
   }, []);
 
   useEffect(() => {

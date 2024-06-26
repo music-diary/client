@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
 import CircleAlbum from '@/components/common/CircleAlbum';
+import ArrowsInSimpleIcon from 'assets/images/archiveIcon/ArrowsInSimple.svg';
+import ArrowsOutSimpleIcon from 'assets/images/archiveIcon/ArrowsOutSimple.svg';
 
 interface DiaryDataProps {
   id: string;
@@ -37,11 +38,7 @@ const DailyMainArchive = ({
   return (
     <View style={styles.cardContainer}>
       <TouchableOpacity style={styles.expandButton} onPress={handlePress}>
-        {expanded ? (
-          <AntDesign name="shrink" size={20} color={Colors.contents_light} />
-        ) : (
-          <AntDesign name="arrowsalt" size={20} color={Colors.contents_light} />
-        )}
+        {expanded ? <ArrowsInSimpleIcon /> : <ArrowsOutSimpleIcon />}
       </TouchableOpacity>
       <View style={styles.divider}>
         <CircleAlbum

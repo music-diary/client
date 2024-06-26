@@ -3,13 +3,14 @@ import { useState } from 'react';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Share, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Feather } from '@expo/vector-icons';
 import dummy_archive_day from '@/data/dummy_archive_day.json';
 import DailyDiaryCard from '@/components/archive/DailyDiaryCard';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
 import { useModalToggleStore } from '@/store/useModalStore';
 import CustomAlert from '@/components/common/CustomAlert';
+import UploadIcon from 'assets/images/archiveIcon/Upload.svg';
+import TrashIcon from 'assets/images/archiveIcon/Trash.svg';
 
 export interface DailyDiaryData {
   id: string;
@@ -34,12 +35,12 @@ const ModalOpenView = ({
     <View style={styles.modal}>
       <TouchableOpacity style={styles.modalContent} onPress={onSharePress}>
         <Text style={styles.b1WhiteText}>공유</Text>
-        <Feather name="send" size={20} color={Colors.white} />
+        <UploadIcon fill={Colors.white} />
       </TouchableOpacity>
       <View style={styles.divider} />
       <TouchableOpacity style={styles.modalContent} onPress={onDeletePress}>
         <Text style={styles.b1RedText}>삭제</Text>
-        <Feather name="trash-2" size={20} color={Colors.red} />
+        <TrashIcon fill={Colors.red} />
       </TouchableOpacity>
     </View>
   );
