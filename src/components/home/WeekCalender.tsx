@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
 import Fonts from '@/constants/Fonts';
 import Colors from '@/constants/Colors';
+import ArrowBackIcon from 'assets/images/homeIcon/ArrowBack.svg';
 
 // toISOString()를 한국 시간으로 변환
 const formatKST = (date: Date) => {
@@ -82,12 +82,10 @@ const WeekCalendar = () => {
         </Text>
         <View style={styles.arrow}>
           <TouchableOpacity onPress={prevWeek}>
-            {/* <Text style={{ color: 'white', paddingRight: 5 }}>{'<'}</Text> */}
-            <AntDesign name="caretleft" size={16} color="#34323B" />
+            <ArrowBackIcon />
           </TouchableOpacity>
-          <TouchableOpacity onPress={nextWeek}>
-            {/* <Text style={{ color: 'white' }}>{'>'}</Text> */}
-            <AntDesign name="caretright" size={16} color="#34323B" />
+          <TouchableOpacity onPress={nextWeek} style={styles.forwardArrow}>
+            <ArrowBackIcon />
           </TouchableOpacity>
         </View>
       </View>
@@ -143,6 +141,11 @@ const styles = StyleSheet.create({
   },
   arrow: {
     flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  forwardArrow: {
+    transform: [{ rotate: '180deg' }],
   },
   calanderBody: {
     height: 84,
