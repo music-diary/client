@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
-import { Feather } from '@expo/vector-icons';
 import { router, usePathname } from 'expo-router';
 import Colors from '@/constants/Colors';
+import CardsThreeIcon from 'assets/images/archiveIcon/CardsThree.svg';
+import CalendarDotsIcon from 'assets/images/archiveIcon/CalendarDots.svg';
+import SquaresFourIcon from 'assets/images/archiveIcon/SquaresFour.svg';
 
 type ViewMode = 'monthly' | 'daily' | 'calendar' | 'archivegrid';
 
@@ -50,19 +52,15 @@ const RouteSwitcher = () => {
     <>
       <View style={styles.container}>
         <TouchableOpacity onPress={handleMonthClick} style={styles.icon}>
-          <Feather name="calendar" size={30} color={getIconColor('monthly')} />
+          <CardsThreeIcon fill={getIconColor('monthly')} />
           <View style={getUnderline('monthly')} />
         </TouchableOpacity>
         <TouchableOpacity onPress={handleCalendarClick} style={styles.icon}>
-          <Feather name="calendar" size={30} color={getIconColor('calendar')} />
+          <CalendarDotsIcon fill={getIconColor('calendar')} />
           <View style={getUnderline('calendar')} />
         </TouchableOpacity>
         <TouchableOpacity onPress={handleArchiveClick} style={styles.icon}>
-          <Feather
-            name="calendar"
-            size={30}
-            color={getIconColor('archivegrid')}
-          />
+          <SquaresFourIcon fill={getIconColor('archivegrid')} />
           <View style={getUnderline('archivegrid')} />
         </TouchableOpacity>
       </View>
@@ -93,7 +91,7 @@ const styles = StyleSheet.create({
   },
   highlight: {
     width: 90,
-    marginTop: 9,
+    marginTop: 8,
     height: 1,
     backgroundColor: Colors.white,
     zIndex: 2,
