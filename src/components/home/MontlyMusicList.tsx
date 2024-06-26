@@ -1,6 +1,7 @@
 // MontlyMusicList.tsx
-import { ScrollView, StyleSheet, Image, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import Colors from '@/constants/Colors';
+import HappyIcon from 'assets/images/happy.svg';
 import CircleAlbum from '../common/CircleAlbum';
 
 const MontlyMusicList = () => {
@@ -16,7 +17,7 @@ const MontlyMusicList = () => {
     <View style={styles.container}>
       <View style={styles.body}>
         <View style={styles.albumStart}>
-          <Image source={require(`assets/images/dummy_positive.png`)} />
+          <HappyIcon width={52} height={52} fill={Colors.green} />
         </View>
         <ScrollView
           style={styles.circleStart}
