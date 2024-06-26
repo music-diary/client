@@ -21,6 +21,7 @@ import MusicSelection from '@/components/home/MusicSelection';
 import { useAppStore } from '@/store/useAppStore';
 import ChartPieIcon from 'assets/images/mypageIcon/ChartPie.svg';
 import DefaultProfileIcon from 'assets/images/mypageIcon/DefaultProfile.svg';
+import { colorWithOpacity } from '@/utils/colorUtils';
 
 // 추후 util 폴더 등으로 깔끔히 관리하기
 function formatTime(date: Date): string {
@@ -366,7 +367,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   dateText: {
-    color: Colors.white_alpha[50],
+    color: colorWithOpacity(Colors.white, 0.5),
     textAlign: 'left',
     ...Fonts.b2_sb,
   },
@@ -423,7 +424,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   secession: {
-    color: Colors.purple_alpha[50],
+    color: colorWithOpacity(Colors.purple, 0.5),
     ...Fonts.btn,
     textDecorationLine: 'underline',
   },
