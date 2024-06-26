@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Feather } from '@expo/vector-icons';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import DateTimePicker, {
   type DateTimePickerEvent,
@@ -11,6 +10,8 @@ import Fonts from '@/constants/Fonts';
 import CustomCheckToggle from '@/components/common/CustomCheckToggle';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
 import BottomSheetModal from '@/components/home/BottomSheetModal';
+import PhotoIcon from 'assets/images/mypageIcon/Photo.svg';
+import DefaultProfileIcon from 'assets/images/mypageIcon/DefaultProfile.svg';
 
 const formatDate = (date: Date): string => {
   const year = date.getFullYear();
@@ -83,9 +84,10 @@ const editprofile = () => {
         {/* 프로필 수정 */}
         <View style={styles.profile}>
           <View style={styles.profileImage}>
+            <DefaultProfileIcon width={100} height={100} />
             <TouchableOpacity>
               <View style={styles.cameraContainer}>
-                <Feather name="camera" size={15} color="black" />
+                <PhotoIcon />
               </View>
             </TouchableOpacity>
           </View>
@@ -196,14 +198,15 @@ const styles = StyleSheet.create({
     paddingVertical: 36,
   },
   profileImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    backgroundColor: Colors.white,
+    width: 101,
+    height: 101,
+    borderRadius: 51,
+    borderWidth: 1,
+    borderColor: Colors.white,
   },
   cameraContainer: {
     position: 'absolute',
-    bottom: -100,
+    bottom: 0,
     right: 0,
     width: 30,
     height: 30,
