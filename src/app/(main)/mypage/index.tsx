@@ -19,6 +19,8 @@ import CustomAlert from '@/components/common/CustomAlert';
 import BottomSheetModal from '@/components/home/BottomSheetModal';
 import MusicSelection from '@/components/home/MusicSelection';
 import { useAppStore } from '@/store/useAppStore';
+import ChartPieIcon from 'assets/images/mypageIcon/ChartPie.svg';
+import DefaultProfileIcon from 'assets/images/mypageIcon/DefaultProfile.svg';
 
 // 추후 util 폴더 등으로 깔끔히 관리하기
 function formatTime(date: Date): string {
@@ -133,7 +135,9 @@ const MypageScreen = () => {
       {/* 헤더 */}
       <View style={styles.header}>
         <View style={styles.headerleft}>
-          <View style={styles.profileImage} />
+          <View style={styles.profileImage}>
+            <DefaultProfileIcon />
+          </View>
           <View style={styles.profileImageTop}>
             <Feather name="star" color={Colors.white} />
           </View>
@@ -159,7 +163,7 @@ const MypageScreen = () => {
         style={styles.headerContent}
         onPress={onPressStatistics}
       >
-        <Feather name="pie-chart" size={24} color={Colors.grey1} />
+        <ChartPieIcon />
         <Text style={styles.textb2sb}>통계보기</Text>
       </TouchableOpacity>
       {/* 바디1 */}
@@ -308,10 +312,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   profileImage: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: Colors.white,
+    width: 61,
+    height: 61,
+    borderRadius: 31,
+    borderWidth: 1,
+    borderColor: Colors.white,
+    overflow: 'hidden',
   },
   profileImageTop: {
     width: 24,
@@ -355,7 +361,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 90,
     marginTop: 7,
-    gap: 4,
+    gap: 6,
     backgroundColor: Colors.grey3,
     borderRadius: 10,
   },
