@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
   },
   bodyContainer: {
     paddingHorizontal: 16,
+    paddingTop: 8,
     gap: 16,
   },
   twoColumnContainer: {

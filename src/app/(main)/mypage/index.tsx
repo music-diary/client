@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Pressable,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Feather, MaterialIcons } from '@expo/vector-icons';
@@ -59,9 +60,9 @@ const MypageScreen = () => {
   };
 
   // 기타 알림 토글
-  const [isEtcToggled, setIsEtcToggled] = useState<boolean>(false);
+  const [marketingToggled, setMarketingToggled] = useState<boolean>(false);
   const handleEtcToggleChange = (state: boolean) => {
-    setIsEtcToggled(state);
+    setMarketingToggled(state);
   };
 
   /* onpress시 라우터 이동 설정 */
@@ -105,7 +106,6 @@ const MypageScreen = () => {
   };
 
   // 일기 알람 시간 설정
-
   const [diaryTime, setDiaryTime] = useState<Date>(today);
   const [tempDiaryTime, setTempDiaryTime] = useState<Date>(diaryTime);
   const handleDiaryTimeChange = () => {
@@ -198,23 +198,22 @@ const MypageScreen = () => {
           <View style={styles.bodyRoute}>
             <Text style={styles.textb1Gray1}>일기 알림</Text>
             <View style={styles.diaryTime}>
-              <Text style={styles.textb2}>{formattedDiaryTime}</Text>
+              <Pressable onPress={() => handleDiaryToggleChange(true)}>
+                <Text style={styles.textb2}>{formattedDiaryTime}</Text>
+              </Pressable>
               <CustomToggle
                 isToggled={isDiaryToggled}
                 onToggleChange={handleDiaryToggleChange}
               />
             </View>
           </View>
-
-          {/* 기타 알림 */}
           <View style={styles.bodyRoute}>
-            <Text style={styles.textb1Gray1}>기타 알림</Text>
+            <Text style={styles.textb1Gray2}>마케팅 알림</Text>
             <CustomToggle
-              isToggled={isEtcToggled}
+              isToggled={marketingToggled}
               onToggleChange={handleEtcToggleChange}
             />
           </View>
-          <Text style={styles.textb1}>마케팅 알림</Text>
         </View>
         {/* 바디2-1 */}
         <View style={styles.divider} />
@@ -389,6 +388,10 @@ const styles = StyleSheet.create({
     ...Fonts.b1,
     paddingLeft: 14,
   },
+  textb1Gray2: {
+    color: Colors.grey1,
+    ...Fonts.b1,
+  },
   textb2sb: {
     color: Colors.white,
     ...Fonts.b2_sb,
@@ -428,8 +431,6 @@ const styles = StyleSheet.create({
     ...Fonts.btn,
     textDecorationLine: 'underline',
   },
-
-  // DatePicker
   pickerContainer: {
     alignItems: 'center',
     justifyContent: 'center',

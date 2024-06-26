@@ -1,13 +1,13 @@
 import { useRouter } from 'expo-router';
 import { TouchableOpacity, StyleSheet } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import BackIcon from 'assets/images/commonIcon/Back.svg';
 
 function CustomBackButton() {
   const router = useRouter();
 
   return (
     <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
-      <MaterialIcons name="arrow-back-ios" size={20} color="white" />
+      <BackIcon />
     </TouchableOpacity>
   );
 }
@@ -18,5 +18,6 @@ const styles = StyleSheet.create({
   backButton: {
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: 1,
   },
 });

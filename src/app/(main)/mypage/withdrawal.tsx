@@ -22,7 +22,7 @@ const withdrawal = () => {
   useKeyboardScrollViewScroll(scrollViewRef);
 
   // 토글 선택 (중복 선택을 위해 배열로 초기화)
-  const [selectedToggles, setSelectedToggles] = useState<number[]>([4]);
+  const [selectedToggles, setSelectedToggles] = useState<number[]>([]);
 
   const handleToggleChange = (index: number) => {
     if (selectedToggles.includes(index)) {
