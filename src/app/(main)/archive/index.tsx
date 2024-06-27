@@ -6,6 +6,7 @@ import DailyMainArchive from '@/components/archive/DailyMainArchive';
 import dummy_archive_recommend from '@/data/dummy_archive_recommend.json';
 import RecommendMusic from '@/components/archive/RecommendMusic';
 import RouteSwitcher from '@/components/archive/RouteSwitcher';
+import { getCurrentYearMonth } from '@/utils/dateUtils';
 
 interface DiaryData {
   id: string;
@@ -26,11 +27,6 @@ interface RecommendData {
 }
 
 const MonthScreen = () => {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = today.getMonth() + 1;
-  const monthDate = `${month}월 ${year}`;
-
   const [entryData, setEntryData] = useState<DiaryData[]>([]);
   const [recommendData, setRecommendData] = useState<RecommendData[]>([]);
 
@@ -45,7 +41,7 @@ const MonthScreen = () => {
         <RouteSwitcher />
       </View>
       <ScrollView style={styles.container}>
-        <Text style={styles.headerText}>{monthDate}</Text>
+        <Text style={styles.headerText}>{getCurrentYearMonth(new Date())}</Text>
         <ScrollView
           horizontal={true}
           showsHorizontalScrollIndicator={false}

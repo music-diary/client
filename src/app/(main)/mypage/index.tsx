@@ -23,25 +23,13 @@ import ChartPieIcon from 'assets/images/mypageIcon/ChartPie.svg';
 import DefaultProfileIcon from 'assets/images/mypageIcon/DefaultProfile.svg';
 import { colorWithOpacity } from '@/utils/colorUtils';
 import CustomBottomSheetModal from '@/components/common/CustomBottomSheetModal';
-
-// 추후 util 폴더 등으로 깔끔히 관리하기
-function formatTime(date: Date): string {
-  let hours: number = date.getHours();
-  const minutes: number = date.getMinutes();
-  const ampm: string = hours >= 12 ? '오후' : '오전';
-  hours = hours % 12 || 12;
-  const formattedMinutes = String(minutes).padStart(2, '0'); // 분 2자리로 관리 (05분, 07분 ..)
-  return `${ampm} ${hours}:${formattedMinutes}`;
-}
+import { formatTime, getCurrentYearMonth } from '@/utils/dateUtils';
 
 const MypageScreen = () => {
   const { logout } = useAppStore();
+  const today = new Date();
 
   const router = useRouter();
-  // 날짜
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = today.getMonth() + 1;
 
   /* 토글 설정 */
 
@@ -159,7 +147,7 @@ const MypageScreen = () => {
         </View>
       </View>
       {/* 헤더 컨텐츠 */}
-      <Text style={styles.dateText}>{`${year}년 ${month}월`}</Text>
+      <Text style={styles.dateText}>{getCurrentYearMonth(new Date())}</Text>
       <TouchableOpacity
         style={styles.headerContent}
         onPress={onPressStatistics}
@@ -370,10 +358,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     ...Fonts.b2_sb,
   },
-  body1: {
-    paddingTop: 34,
-    gap: 12,
-  },
+
   bodyRoute: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -419,6 +404,10 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.contents_light,
     marginHorizontal: -16,
     marginVertical: 8,
+  },
+  body1: {
+    paddingTop: 34,
+    gap: 12,
   },
   body2: {
     gap: 12,
