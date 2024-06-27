@@ -1,10 +1,22 @@
 import { BlurView } from 'expo-blur';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Dimensions,
+} from 'react-native';
 import { Link } from 'expo-router';
 import Colors from '@/constants/Colors';
 import HappyIcon from 'assets/images/happy.svg';
 import SosoIcon from 'assets/images/soso.svg';
 import BadIcon from 'assets/images/bad.svg';
+import Fonts from '@/constants/Fonts';
+import { colorWithOpacity } from '@/utils/colorUtils';
+import { trimTitle } from '@/utils/textUtils';
+
+const contentWidth = Dimensions.get('window').width / 2 - 22;
 
 interface DiaryEntryProps {
   id: string;
@@ -16,10 +28,7 @@ interface DiaryEntryProps {
   diaryEntries: number;
 }
 
-// 배경식이 월별로 다르다고 가정했을 때, 월별 배경색을 반환 (감정에 따라 다르다면 이 부분 수정)
 const getBackgroundColor = (mood: string) => {
-  // 문자열에서 월 추출
-
   switch (mood) {
     case 'Neutral':
       return Colors.blue;
@@ -38,7 +47,7 @@ const EmotionImage = ({ mood }: { mood: string }) => {
   switch (mood) {
     case 'Positive':
       return (
-        <View style={styles.emotionHappy}>
+        <View style={styles.emotion}>
           <HappyIcon width={120} height={120} fill={Colors.green} />
         </View>
       );
@@ -72,69 +81,71 @@ const MontlyMainArchive = ({
   const emotionImage = EmotionImage({ mood });
 
   return (
-    <Link
-      href={`/(main)/archive/month/${month}`}
-      asChild
-      style={[styles.container, { backgroundColor }]}
-      key={id}
-    >
-      <TouchableOpacity>
-        <Text style={styles.month}>{month}</Text>
-        {emotionImage}
-        <BlurView tint="light" intensity={10} style={styles.absoluteFill} />
-        <View style={styles.bodyBottom}>
-          <Image
-            source={{ uri: albumCoverUrl }}
-            style={styles.albumCover}
-            resizeMode="cover"
-          />
-          <View style={styles.textContainer}>
-            <Text style={styles.songTitle}>
-              {songTitle} 외 {diaryEntries}개
-            </Text>
-            <Text style={styles.artist}>{artist}</Text>
+    <View style={styles.fullContainer}>
+      <Link
+        href={`/(main)/archive/month/${month}`}
+        asChild
+        style={[styles.container, { backgroundColor }]}
+        key={id}
+      >
+        <TouchableOpacity>
+          <View style={styles.emotionContainer}>{emotionImage}</View>
+          <BlurView tint="light" intensity={10} style={styles.absoluteFill} />
+          <View style={styles.bodyBottom}>
+            <Image
+              source={{ uri: albumCoverUrl }}
+              style={styles.albumCover}
+              resizeMode="cover"
+            />
+            <View style={styles.textContainer}>
+              <Text style={styles.songTitle}>
+                {trimTitle(songTitle, 4)} 외 {diaryEntries}곡
+              </Text>
+              <Text style={styles.artist}>{trimTitle(artist, 8)}</Text>
+            </View>
           </View>
-        </View>
-      </TouchableOpacity>
-    </Link>
+        </TouchableOpacity>
+      </Link>
+      <Text style={styles.month}>{month}</Text>
+    </View>
   );
 };
 
 export default MontlyMainArchive;
 
 const styles = StyleSheet.create({
+  fullContainer: {
+    flex: 1,
+    gap: 6,
+  },
   container: {
-    width: 165,
+    width: contentWidth,
     height: 165,
     padding: 10,
     borderRadius: 9,
   },
   month: {
-    fontFamily: 'pret-b',
-    fontSize: 14,
-    color: Colors.black,
+    color: Colors.white,
+    ...Fonts.b1_sb,
+  },
+  emotionContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   emotion: {
     position: 'absolute',
-    top: 25,
-    left: 20,
-    zIndex: -1,
-  },
-  emotionHappy: {
-    position: 'absolute',
-    top: 28,
-    left: 20,
+    top: 10,
     zIndex: -1,
   },
   bodyBottom: {
     height: 67,
-    width: 165,
+    width: contentWidth,
     borderBottomLeftRadius: 9,
     borderBottomRightRadius: 9,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    // 맨 밑에 고정
+    backgroundColor: colorWithOpacity(Colors.white, 0.2),
     position: 'absolute',
     bottom: 0,
     left: 0,
@@ -162,13 +173,12 @@ const styles = StyleSheet.create({
     width: 90,
   },
   songTitle: {
-    fontSize: 10,
-    fontFamily: 'pret-b',
     color: Colors.black,
+    ...Fonts.btn,
   },
   artist: {
-    fontSize: 10,
-    fontFamily: 'pret',
+    paddingTop: 2,
     color: Colors.black,
+    ...Fonts.lb,
   },
 });

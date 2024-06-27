@@ -3,10 +3,11 @@
     "id": "1",
     "date": "3월 2일",
     "albumCoverUrl": "https://picsum.photos/1329",
-    "songTitle": "New Start",
-    "artist": "Fresh Sounds",
-    "diaryTitle": "새로운 시작",
-    "emotions": ["기대하는", "의욕적인","반가운", "설레는"]
+    "songTitle": "나는야 노래제목입니다",
+    "artist": "나는야 가수이름입니다",
+    "diaryTitle": "나는야 일기제목입니다",
+    "emotions": ["기대하는", "의욕적인", "반가운", "설레는"],
+    "feeling": "happy"
   },
   {
     "id": "2",
@@ -15,7 +16,8 @@
     "songTitle": "Welcome Back",
     "artist": "Warm Feelings",
     "diaryTitle": "친구와의 재회",
-    "emotions": ["반가운", "기대하는"]
+    "emotions": ["반가운", "기대하는"],
+    "feeling": "soso"
   },
   {
     "id": "3",
@@ -24,7 +26,8 @@
     "songTitle": "Motivation",
     "artist": "Energetic Beats",
     "diaryTitle": "새로운 목표",
-    "emotions": ["의욕적인", "기대하는", "반가운"]
+    "emotions": ["의욕적인", "기대하는", "반가운"],
+    "feeling": "bad"
   },
   {
     "id": "4",
@@ -33,7 +36,8 @@
     "songTitle": "Joyful Morning",
     "artist": "Happy Tunes",
     "diaryTitle": "활기찬 아침",
-    "emotions": ["반가운", "의욕적인"]
+    "emotions": ["반가운", "의욕적인"],
+    "feeling": "happy"
   },
   {
     "id": "5",
@@ -42,7 +46,8 @@
     "songTitle": "Inspiration",
     "artist": "Creative Waves",
     "diaryTitle": "영감을 받은 날",
-    "emotions": ["의욕적인", "기대하는"]
+    "emotions": ["의욕적인", "기대하는"],
+    "feeling": "soso"
   },
   {
     "id": "6",
@@ -51,7 +56,8 @@
     "songTitle": "Chill Vibes",
     "artist": "Relaxed Mind",
     "diaryTitle": "여유로운 하루",
-    "emotions": ["기대하는", "반가운"]
+    "emotions": ["기대하는", "반가운"],
+    "feeling": "bad"
   },
   {
     "id": "7",
@@ -60,7 +66,8 @@
     "songTitle": "Adventure Time",
     "artist": "Explorers",
     "diaryTitle": "모험의 시작",
-    "emotions": ["의욕적인", "기대하는"]
+    "emotions": ["의욕적인", "기대하는"],
+    "feeling": "happy"
   },
   {
     "id": "8",
@@ -69,7 +76,8 @@
     "songTitle": "Back to Friends",
     "artist": "Together Again",
     "diaryTitle": "친구와의 시간",
-    "emotions": ["반가운", "기대하는"]
+    "emotions": ["반가운", "기대하는"],
+    "feeling": "soso"
   },
   {
     "id": "9",
@@ -78,7 +86,8 @@
     "songTitle": "Dream Big",
     "artist": "High Aspirations",
     "diaryTitle": "큰 꿈을 가진 날",
-    "emotions": ["의욕적인", "기대하는"]
+    "emotions": ["의욕적인", "기대하는"],
+    "feeling": "soso"
   },
   {
     "id": "10",
@@ -87,6 +96,7 @@
     "songTitle": "Peaceful Evening",
     "artist": "Calm Nights",
     "diaryTitle": "평화로운 저녁",
-    "emotions": ["기대하는", "반가운"]
+    "emotions": ["기대하는", "반가운"],
+    "feeling": "sad"
   }
 ]

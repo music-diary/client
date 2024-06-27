@@ -9,9 +9,9 @@ import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
 import CustomCheckToggle from '@/components/common/CustomCheckToggle';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
-import BottomSheetModal from '@/components/home/BottomSheetModal';
 import PhotoIcon from 'assets/images/mypageIcon/Photo.svg';
 import DefaultProfileIcon from 'assets/images/mypageIcon/DefaultProfile.svg';
+import CustomBottomSheetModal from '@/components/common/CustomBottomSheetModal';
 
 const formatDate = (date: Date): string => {
   const year = date.getFullYear();
@@ -157,7 +157,7 @@ const editprofile = () => {
         label="완료"
       />
       {/* 생년월일 변경 모달 구현 */}
-      <BottomSheetModal
+      <CustomBottomSheetModal
         title="생년월일"
         visible={showPicker}
         onCancel={() => {
@@ -179,7 +179,7 @@ const editprofile = () => {
             locale="ko" // 한국어 설정
           />
         </View>
-      </BottomSheetModal>
+      </CustomBottomSheetModal>
     </>
   );
 };

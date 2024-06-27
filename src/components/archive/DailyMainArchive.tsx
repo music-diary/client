@@ -3,6 +3,8 @@ import { Link } from 'expo-router';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
 import CircleAlbum from '@/components/common/CircleAlbum';
+import { colorWithOpacity, getColorForMood } from '@/utils/colorUtils';
+import { trimTitle } from '@/utils/textUtils';
 
 interface DiaryDataProps {
   id: string;
@@ -12,6 +14,7 @@ interface DiaryDataProps {
   artist: string;
   diaryTitle: string;
   emotions: string[];
+  feeling: string;
 }
 
 const DailyMainArchive = ({
@@ -22,6 +25,7 @@ const DailyMainArchive = ({
   artist,
   diaryTitle,
   emotions,
+  feeling,
 }: DiaryDataProps) => {
   return (
     <Link href={`/(main)/archive/day/${date}`} asChild key={id}>
@@ -29,20 +33,26 @@ const DailyMainArchive = ({
         <Text style={styles.b2lighttext}>{date}</Text>
         <View style={styles.cardContainer}>
           <CircleAlbum
-            color={'rgba(42,237,21, 0.3)'}
+            color={colorWithOpacity(getColorForMood(feeling), 0.3)}
             imageSource={albumCoverUrl}
             diameter={195}
           />
           <View style={styles.middleContainer}>
             <View style={styles.sing}>
-              <Text style={styles.light10Text}>{artist}</Text>
-              <Text style={styles.sb12Text}>{songTitle}</Text>
+              <Text style={styles.lightLbText}>{trimTitle(artist, 6)}</Text>
+              <Text style={styles.btnText}>{trimTitle(songTitle, 6)}</Text>
             </View>
-            <Text style={styles.sb12Text}>{diaryTitle}</Text>
+            <Text style={styles.btnText}>{diaryTitle}</Text>
           </View>
           <View style={styles.emotionContainer}>
             {emotions.map((emotion, index) => (
-              <View key={index} style={styles.emotionCircle}>
+              <View
+                key={index}
+                style={[
+                  styles.emotionCircle,
+                  { backgroundColor: getColorForMood(feeling) },
+                ]}
+              >
                 <Text style={styles.white10Text}>{emotion}</Text>
               </View>
             ))}
@@ -67,7 +77,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   b2lighttext: {
-    color: Colors.contents_light,
+    color: Colors.grey1,
     ...Fonts.b2,
   },
   middleContainer: {
@@ -80,19 +90,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 9,
   },
-  light10Text: {
-    fontFamily: 'pret',
+  lightLbText: {
     color: Colors.contents_light,
-    fontSize: 10,
+    ...Fonts.lb,
   },
   white10Text: {
-    color: Colors.white,
-    fontSize: 10,
+    color: Colors.black,
+    ...Fonts.lb,
   },
-  sb12Text: {
-    fontFamily: 'pret-sb',
+  btnText: {
     color: Colors.white,
-    fontSize: 12,
+    ...Fonts.btn,
   },
   emotionContainer: {
     paddingTop: 16,
@@ -100,7 +108,6 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   emotionCircle: {
-    backgroundColor: 'rgba(0,128,255, 0.3)',
     paddingVertical: 5,
     paddingHorizontal: 12,
     borderRadius: 30,

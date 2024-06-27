@@ -62,9 +62,8 @@ const styles = StyleSheet.create({
   columnWrapper: {
     justifyContent: 'space-between',
   },
+
   gridItem: {
-    marginTop: 20,
-    height: 165,
-    width: 165,
+    marginTop: 16,
   },
 });

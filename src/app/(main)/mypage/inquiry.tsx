@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
   maxlengthContainer: {
     flexDirection: 'row-reverse',
     marginTop: -20,
-    paddingLeft: 10,
+    marginRight: 10,
   },
   lbText: {
     color: Colors.contents_light,

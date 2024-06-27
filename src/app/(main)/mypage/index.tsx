@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Pressable,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Feather, MaterialIcons } from '@expo/vector-icons';
@@ -15,32 +16,20 @@ import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
 import BodyNavigator from '@/components/mypage/BodyNavigator';
 import CustomToggle from '@/components/common/CustomToggle';
-import CustomAlert from '@/components/common/CustomAlert';
-import BottomSheetModal from '@/components/home/BottomSheetModal';
 import MusicSelection from '@/components/home/MusicSelection';
 import { useAppStore } from '@/store/useAppStore';
 import ChartPieIcon from 'assets/images/mypageIcon/ChartPie.svg';
 import DefaultProfileIcon from 'assets/images/mypageIcon/DefaultProfile.svg';
 import { colorWithOpacity } from '@/utils/colorUtils';
-
-// 추후 util 폴더 등으로 깔끔히 관리하기
-function formatTime(date: Date): string {
-  let hours: number = date.getHours();
-  const minutes: number = date.getMinutes();
-  const ampm: string = hours >= 12 ? '오후' : '오전';
-  hours = hours % 12 || 12;
-  const formattedMinutes = String(minutes).padStart(2, '0'); // 분 2자리로 관리 (05분, 07분 ..)
-  return `${ampm} ${hours}:${formattedMinutes}`;
-}
+import CustomBottomSheetModal from '@/components/common/CustomBottomSheetModal';
+import { formatTime, getCurrentYearMonth } from '@/utils/dateUtils';
+import CustomAlertModal from '@/components/common/CustomAlertModal';
+import { useModalStore } from '@/store/useModalStore';
 
 const MypageScreen = () => {
   const { logout } = useAppStore();
-
-  const router = useRouter();
-  // 날짜
   const today = new Date();
-  const year = today.getFullYear();
-  const month = today.getMonth() + 1;
+  const router = useRouter();
 
   /* 토글 설정 */
 
@@ -59,9 +48,9 @@ const MypageScreen = () => {
   };
 
   // 기타 알림 토글
-  const [isEtcToggled, setIsEtcToggled] = useState<boolean>(false);
+  const [marketingToggled, setMarketingToggled] = useState<boolean>(false);
   const handleEtcToggleChange = (state: boolean) => {
-    setIsEtcToggled(state);
+    setMarketingToggled(state);
   };
 
   /* onpress시 라우터 이동 설정 */
@@ -105,7 +94,6 @@ const MypageScreen = () => {
   };
 
   // 일기 알람 시간 설정
-
   const [diaryTime, setDiaryTime] = useState<Date>(today);
   const [tempDiaryTime, setTempDiaryTime] = useState<Date>(diaryTime);
   const handleDiaryTimeChange = () => {
@@ -115,12 +103,8 @@ const MypageScreen = () => {
   const formattedDiaryTime = formatTime(diaryTime);
 
   // 로그아웃 모달
-  const [isLogoutModalVisible, setLogoutModalVisible] =
-    useState<boolean>(false);
-
-  const openLogoutModal = () => setLogoutModalVisible(true);
-  const closeLogoutModal = () => setLogoutModalVisible(false);
-
+  const { openModal, closeModal } = useModalStore();
+  const openLogoutModal = () => openModal('logout-confirm-modal');
   const handleConfirm = () => {
     console.log(
       '🚀 ~ file: index.tsx:56 ~ handleConfirm ~ console:',
@@ -128,7 +112,7 @@ const MypageScreen = () => {
     );
     // 여기에 삭제 작업을 수행하는 코드를 추가하면 됨
     logout();
-    closeLogoutModal();
+    closeModal();
   };
 
   return (
@@ -159,7 +143,7 @@ const MypageScreen = () => {
         </View>
       </View>
       {/* 헤더 컨텐츠 */}
-      <Text style={styles.dateText}>{`${year}년 ${month}월`}</Text>
+      <Text style={styles.dateText}>{getCurrentYearMonth(new Date())}</Text>
       <TouchableOpacity
         style={styles.headerContent}
         onPress={onPressStatistics}
@@ -198,23 +182,22 @@ const MypageScreen = () => {
           <View style={styles.bodyRoute}>
             <Text style={styles.textb1Gray1}>일기 알림</Text>
             <View style={styles.diaryTime}>
-              <Text style={styles.textb2}>{formattedDiaryTime}</Text>
+              <Pressable onPress={() => handleDiaryToggleChange(true)}>
+                <Text style={styles.textb2}>{formattedDiaryTime}</Text>
+              </Pressable>
               <CustomToggle
                 isToggled={isDiaryToggled}
                 onToggleChange={handleDiaryToggleChange}
               />
             </View>
           </View>
-
-          {/* 기타 알림 */}
           <View style={styles.bodyRoute}>
-            <Text style={styles.textb1Gray1}>기타 알림</Text>
+            <Text style={styles.textb1Gray2}>마케팅 알림</Text>
             <CustomToggle
-              isToggled={isEtcToggled}
+              isToggled={marketingToggled}
               onToggleChange={handleEtcToggleChange}
             />
           </View>
-          <Text style={styles.textb1}>마케팅 알림</Text>
         </View>
         {/* 바디2-1 */}
         <View style={styles.divider} />
@@ -234,13 +217,14 @@ const MypageScreen = () => {
         <View style={styles.body3}>
           <TouchableOpacity onPress={openLogoutModal}>
             <Text style={styles.textb1}>로그아웃</Text>
-            <CustomAlert
-              isVisible={isLogoutModalVisible}
-              onConfirm={handleConfirm} // 확인 버튼 눌렀을 때 실행할 함수
-              onCancel={closeLogoutModal}
-              firstLine="로그아웃하시겠어요?"
-              cancleMent="아니요, 안할래요"
-              confirmMent="네, 할래요"
+            <CustomAlertModal
+              name="logout-confirm-modal"
+              title="로그아웃하시겠어요?"
+              leftButtonText="아니요, 안할래요"
+              rightButtonText="네, 할래요"
+              onLeftButtonPress={closeModal}
+              onRightButtonPress={handleConfirm}
+              isDelete={true}
             />
           </TouchableOpacity>
           <TouchableOpacity onPress={onPressWithdrawal}>
@@ -252,7 +236,7 @@ const MypageScreen = () => {
 
       {/* 모달 관리 */}
       {/* 음악 취향 선택 */}
-      <BottomSheetModal
+      <CustomBottomSheetModal
         title="내 음악 취향"
         visible={isMusicFlavorToggled}
         onCancel={() => {
@@ -266,9 +250,9 @@ const MypageScreen = () => {
           selectedGenres={tempSelectedGenres}
           setSelectedGenres={settempSelectedGenres}
         />
-      </BottomSheetModal>
+      </CustomBottomSheetModal>
       {/* 일기 알람 모달 */}
-      <BottomSheetModal
+      <CustomBottomSheetModal
         title="일기 알림"
         visible={isDiaryModalVisible}
         onSave={() => {
@@ -288,7 +272,7 @@ const MypageScreen = () => {
             textColor={Colors.white}
           />
         </View>
-      </BottomSheetModal>
+      </CustomBottomSheetModal>
     </ScrollView>
   );
 };
@@ -371,10 +355,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     ...Fonts.b2_sb,
   },
-  body1: {
-    paddingTop: 34,
-    gap: 12,
-  },
+
   bodyRoute: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -388,6 +369,10 @@ const styles = StyleSheet.create({
     color: Colors.grey1,
     ...Fonts.b1,
     paddingLeft: 14,
+  },
+  textb1Gray2: {
+    color: Colors.grey1,
+    ...Fonts.b1,
   },
   textb2sb: {
     color: Colors.white,
@@ -417,6 +402,10 @@ const styles = StyleSheet.create({
     marginHorizontal: -16,
     marginVertical: 8,
   },
+  body1: {
+    paddingTop: 34,
+    gap: 12,
+  },
   body2: {
     gap: 12,
   },
@@ -428,8 +417,6 @@ const styles = StyleSheet.create({
     ...Fonts.btn,
     textDecorationLine: 'underline',
   },
-
-  // DatePicker
   pickerContainer: {
     alignItems: 'center',
     justifyContent: 'center',
