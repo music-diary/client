@@ -17,12 +17,12 @@ import Fonts from '@/constants/Fonts';
 import BodyNavigator from '@/components/mypage/BodyNavigator';
 import CustomToggle from '@/components/common/CustomToggle';
 import CustomAlert from '@/components/common/CustomAlert';
-import BottomSheetModal from '@/components/home/BottomSheetModal';
 import MusicSelection from '@/components/home/MusicSelection';
 import { useAppStore } from '@/store/useAppStore';
 import ChartPieIcon from 'assets/images/mypageIcon/ChartPie.svg';
 import DefaultProfileIcon from 'assets/images/mypageIcon/DefaultProfile.svg';
 import { colorWithOpacity } from '@/utils/colorUtils';
+import CustomBottomSheetModal from '@/components/common/CustomBottomSheetModal';
 
 // 추후 util 폴더 등으로 깔끔히 관리하기
 function formatTime(date: Date): string {
@@ -251,7 +251,7 @@ const MypageScreen = () => {
 
       {/* 모달 관리 */}
       {/* 음악 취향 선택 */}
-      <BottomSheetModal
+      <CustomBottomSheetModal
         title="내 음악 취향"
         visible={isMusicFlavorToggled}
         onCancel={() => {
@@ -265,9 +265,9 @@ const MypageScreen = () => {
           selectedGenres={tempSelectedGenres}
           setSelectedGenres={settempSelectedGenres}
         />
-      </BottomSheetModal>
+      </CustomBottomSheetModal>
       {/* 일기 알람 모달 */}
-      <BottomSheetModal
+      <CustomBottomSheetModal
         title="일기 알림"
         visible={isDiaryModalVisible}
         onSave={() => {
@@ -287,7 +287,7 @@ const MypageScreen = () => {
             textColor={Colors.white}
           />
         </View>
-      </BottomSheetModal>
+      </CustomBottomSheetModal>
     </ScrollView>
   );
 };
