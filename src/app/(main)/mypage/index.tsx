@@ -16,7 +16,6 @@ import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
 import BodyNavigator from '@/components/mypage/BodyNavigator';
 import CustomToggle from '@/components/common/CustomToggle';
-import CustomAlert from '@/components/common/CustomAlert';
 import MusicSelection from '@/components/home/MusicSelection';
 import { useAppStore } from '@/store/useAppStore';
 import ChartPieIcon from 'assets/images/mypageIcon/ChartPie.svg';
@@ -24,11 +23,12 @@ import DefaultProfileIcon from 'assets/images/mypageIcon/DefaultProfile.svg';
 import { colorWithOpacity } from '@/utils/colorUtils';
 import CustomBottomSheetModal from '@/components/common/CustomBottomSheetModal';
 import { formatTime, getCurrentYearMonth } from '@/utils/dateUtils';
+import CustomAlertModal from '@/components/common/CustomAlertModal';
+import { useModalStore } from '@/store/useModalStore';
 
 const MypageScreen = () => {
   const { logout } = useAppStore();
   const today = new Date();
-
   const router = useRouter();
 
   /* 토글 설정 */
@@ -103,12 +103,8 @@ const MypageScreen = () => {
   const formattedDiaryTime = formatTime(diaryTime);
 
   // 로그아웃 모달
-  const [isLogoutModalVisible, setLogoutModalVisible] =
-    useState<boolean>(false);
-
-  const openLogoutModal = () => setLogoutModalVisible(true);
-  const closeLogoutModal = () => setLogoutModalVisible(false);
-
+  const { openModal, closeModal } = useModalStore();
+  const openLogoutModal = () => openModal('logout-confirm-modal');
   const handleConfirm = () => {
     console.log(
       '🚀 ~ file: index.tsx:56 ~ handleConfirm ~ console:',
@@ -116,7 +112,7 @@ const MypageScreen = () => {
     );
     // 여기에 삭제 작업을 수행하는 코드를 추가하면 됨
     logout();
-    closeLogoutModal();
+    closeModal();
   };
 
   return (
@@ -221,13 +217,14 @@ const MypageScreen = () => {
         <View style={styles.body3}>
           <TouchableOpacity onPress={openLogoutModal}>
             <Text style={styles.textb1}>로그아웃</Text>
-            <CustomAlert
-              isVisible={isLogoutModalVisible}
-              onConfirm={handleConfirm} // 확인 버튼 눌렀을 때 실행할 함수
-              onCancel={closeLogoutModal}
-              firstLine="로그아웃하시겠어요?"
-              cancleMent="아니요, 안할래요"
-              confirmMent="네, 할래요"
+            <CustomAlertModal
+              name="logout-confirm-modal"
+              title="로그아웃하시겠어요?"
+              leftButtonText="아니요, 안할래요"
+              rightButtonText="네, 할래요"
+              onLeftButtonPress={closeModal}
+              onRightButtonPress={handleConfirm}
+              isDelete={true}
             />
           </TouchableOpacity>
           <TouchableOpacity onPress={onPressWithdrawal}>

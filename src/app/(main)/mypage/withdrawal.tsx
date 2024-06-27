@@ -14,9 +14,11 @@ import Fonts from '@/constants/Fonts';
 import CustomCheckToggle from '@/components/common/CustomCheckToggle';
 import useKeyboardScrollViewScroll from '@/hooks/useKeyboardScrollViewScroll';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
-import CustomAlert from '@/components/common/CustomAlert';
+import CustomAlertModal from '@/components/common/CustomAlertModal';
+import { useModalStore } from '@/store/useModalStore';
 
 const withdrawal = () => {
+  const { openModal, closeModal } = useModalStore();
   // 키보드 높이 조절 (커스텀 훅 사용)
   const scrollViewRef = useRef<ScrollView>(null);
   useKeyboardScrollViewScroll(scrollViewRef);
@@ -43,7 +45,6 @@ const withdrawal = () => {
 
   // 하단 완료 버튼 + 최종 확인 모달
   const [isButtonActive, setButtonActive] = useState(false);
-  const [isModalVisible, setModalVisible] = useState<boolean>(false);
 
   // 하나라도 체크박스 선택 시 하단 탈퇴하기 버튼 활성화
   useEffect(() => {
@@ -61,9 +62,9 @@ const withdrawal = () => {
   }, [selectedToggles, extraReason]);
 
   const handleButtonPress = () => {
-    setModalVisible(true);
+    openModal('withdrawal-confirm-modal');
   };
-  const closeModal = () => setModalVisible(false);
+
   const handleConfirm = () => {
     // 여기에 삭제 작업을 수행하는 코드를 추가하면 됨 (일단 임시로 홈으로 보냄 + 0.5초의 지연)
     setTimeout(() => {
@@ -75,14 +76,14 @@ const withdrawal = () => {
 
   const FinalConfirmModal = () => {
     return (
-      <CustomAlert
-        isVisible={isModalVisible}
-        onConfirm={handleConfirm}
-        onCancel={closeModal}
-        firstLine="정말 음계일기에서 탈퇴하시겠어요?"
-        secondLine="작성하신 일기 및 편지, 음악들을 복구할 수 없어요."
-        cancleMent="아니오, 취소할래요"
-        confirmMent="네, 탈퇴할래요"
+      <CustomAlertModal
+        name="withdrawal-confirm-modal"
+        title="정말 음계일기에서 탈퇴하시겠어요?"
+        description="작성하신 일기 및 편지, 음악들을 복구할 수 없어요."
+        leftButtonText="아니오, 취소할래요"
+        rightButtonText="네, 탈퇴할래요"
+        onLeftButtonPress={closeModal}
+        onRightButtonPress={handleConfirm}
       />
     );
   };

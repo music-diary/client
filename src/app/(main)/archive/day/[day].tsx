@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
-import { useState } from 'react';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Share, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -7,10 +5,10 @@ import dummy_archive_day from '@/data/dummy_archive_day.json';
 import DailyDiaryCard from '@/components/archive/DailyDiaryCard';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
-import { useModalToggleStore } from '@/store/useModalStore';
-import CustomAlert from '@/components/common/CustomAlert';
+import { useModalToggleStore, useModalStore } from '@/store/useModalStore';
 import UploadIcon from 'assets/images/archiveIcon/Upload.svg';
 import TrashIcon from 'assets/images/archiveIcon/Trash.svg';
+import CustomAlertModal from '@/components/common/CustomAlertModal';
 
 export interface DailyDiaryData {
   id: string;
@@ -50,10 +48,10 @@ const ModalOpenView = ({
 const DayScreen = () => {
   // ...모달 토글 상태 (zustand 사용)
   const { toggleModal, isModalOpen } = useModalToggleStore();
+  const { activeModal, openModal, closeModal } = useModalStore();
+
   // 삭제 모달 상태
-  const [isDeleteModalVisible, setModalVisible] = useState<boolean>(false);
-  const openModal = () => setModalVisible(true);
-  const closeModal = () => setModalVisible(false);
+
   const handleConfirm = () => {
     console.log('삭제 확인'); // 추후 삭제에 관해서는 비동기 처리 로직 추가 예정
     closeModal();
@@ -79,9 +77,12 @@ const DayScreen = () => {
       console.error('공유 실패:', error);
     }
   };
+  const onSharePressHandler = () => {
+    onSharePress().catch((error) => console.error('Error', error));
+  };
   const onDeletePress = () => {
     toggleModal();
-    openModal();
+    openModal('delete-diary-modal');
   };
 
   const { day } = useLocalSearchParams<{ day: string }>();
@@ -92,20 +93,20 @@ const DayScreen = () => {
       {/* ...더보기 눌렸을때 */}
       {isModalOpen ? (
         <ModalOpenView
-          onSharePress={onSharePress}
+          onSharePress={onSharePressHandler}
           onDeletePress={onDeletePress}
         />
       ) : null}
       {/* 삭제버튼 눌렸을 때 */}
-      {isDeleteModalVisible ? (
-        <CustomAlert
-          isVisible={isDeleteModalVisible}
-          onConfirm={handleConfirm}
-          onCancel={closeModal}
-          firstLine="이 일기를 정말 삭제하시겠어요?"
-          secondLine="한 번 삭제하면 일기를 복구할 수 없어요."
-          cancleMent="아니오, 그냥 둘래요"
-          confirmMent="네, 삭제할래요"
+      {activeModal ? (
+        <CustomAlertModal
+          name="delete-diary-modal"
+          title="이 일기를 정말 삭제하시겠어요?"
+          description="한 번 삭제하면 일기를 복구할 수 없어요."
+          leftButtonText="아니오, 그냥 둘래요"
+          rightButtonText="네, 삭제할래요"
+          onLeftButtonPress={closeModal}
+          onRightButtonPress={handleConfirm}
           isDelete={true}
         />
       ) : null}
