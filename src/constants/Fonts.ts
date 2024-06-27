@@ -29,6 +29,16 @@ export default {
     fontSize: 14,
     lineHeight: 16,
   },
+  b2_line2: {
+    fontFamily: 'pret',
+    fontSize: 14,
+    lineHeight: 22,
+  },
+  b2_line2_sb: {
+    fontFamily: 'pret-sb',
+    fontSize: 14,
+    lineHeight: 22,
+  },
   btn: {
     fontFamily: 'pret',
     fontSize: 12,

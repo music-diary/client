@@ -22,6 +22,7 @@ export interface DailyDiaryData {
   emotions: string[];
   lyrics: string;
   diaryContent: string;
+  feeling: string;
 }
 
 const ModalOpenView = ({

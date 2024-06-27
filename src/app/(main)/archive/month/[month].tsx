@@ -7,6 +7,7 @@ import DailyMainArchive from '@/components/archive/DailyMainArchive';
 import dummy_archive_recommend from '@/data/dummy_archive_recommend.json';
 import RecommendMusic from '@/components/archive/RecommendMusic';
 import RouteSwitcher from '@/components/archive/RouteSwitcher';
+import Fonts from '@/constants/Fonts';
 
 interface DiaryData {
   id: string;
@@ -16,6 +17,7 @@ interface DiaryData {
   artist: string;
   diaryTitle: string;
   emotions: string[];
+  feeling: string;
 }
 
 interface RecommendData {
@@ -23,7 +25,7 @@ interface RecommendData {
   albumCoverUrl: string;
   songTitle: string;
   artist: string;
-  emotion: string;
+  feeling: string;
 }
 
 const MonthScreen = () => {
@@ -83,8 +85,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: Colors.white,
-    fontFamily: 'pret-b',
-    fontSize: 18,
+    ...Fonts.t1,
   },
   scrollContent: {
     flexDirection: 'row',

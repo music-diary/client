@@ -5,10 +5,9 @@ import Fonts from '@/constants/Fonts';
 import CircleAlbum from '@/components/common/CircleAlbum';
 import ArrowsInSimpleIcon from 'assets/images/archiveIcon/ArrowsInSimple.svg';
 import ArrowsOutSimpleIcon from 'assets/images/archiveIcon/ArrowsOutSimple.svg';
+import { colorWithOpacity, getColorForMood } from '@/utils/colorUtils';
 
 interface DiaryDataProps {
-  id: string;
-  date: string;
   albumCoverUrl: string;
   songTitle: string;
   artist: string;
@@ -16,11 +15,10 @@ interface DiaryDataProps {
   emotions: string[];
   lyrics: string;
   diaryContent: string;
+  feeling: string;
 }
 
 const DailyMainArchive = ({
-  id,
-  date,
   albumCoverUrl,
   songTitle,
   artist,
@@ -28,6 +26,7 @@ const DailyMainArchive = ({
   emotions,
   lyrics,
   diaryContent,
+  feeling,
 }: DiaryDataProps) => {
   const [expanded, setExpanded] = useState(false);
 
@@ -42,24 +41,30 @@ const DailyMainArchive = ({
       </TouchableOpacity>
       <View style={styles.divider}>
         <CircleAlbum
-          color={'rgba(42,237,21, 0.3)'}
+          color={colorWithOpacity(getColorForMood(feeling), 0.3)}
           imageSource={albumCoverUrl}
           diameter={240}
         />
         <View style={styles.middleContainer}>
           <View style={styles.sing}>
-            <Text style={styles.lightbtnText}>{artist}</Text>
-            <Text style={styles.sb14Text}>{songTitle}</Text>
-            {expanded && <Text style={styles.lyricsText}>{lyrics}</Text>}
+            <Text style={styles.greyBtnText}>{artist}</Text>
+            <Text style={styles.b2sbText}>{songTitle}</Text>
+            <Text style={styles.lyricsText}>{lyrics}</Text>
           </View>
         </View>
       </View>
-      <Text style={styles.sb14Text}>{diaryTitle}</Text>
+      <Text style={styles.b2sbText}>{diaryTitle}</Text>
       {expanded && <Text style={styles.diaryContent}>{diaryContent}</Text>}
       <View style={styles.emotionContainer}>
         {emotions.map((emotion, index) => (
-          <View key={index} style={styles.emotionCircle}>
-            <Text style={styles.white10Text}>{emotion}</Text>
+          <View
+            key={index}
+            style={[
+              styles.emotionCircle,
+              { backgroundColor: getColorForMood(feeling) },
+            ]}
+          >
+            <Text style={styles.btnText}>{emotion}</Text>
           </View>
         ))}
       </View>
@@ -99,47 +104,45 @@ const styles = StyleSheet.create({
     paddingBottom: 23,
     marginBottom: 16,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.contents_light,
+    borderBottomColor: Colors.grey1,
   },
   sing: {
     flexDirection: 'column',
     alignItems: 'center',
     gap: 6,
   },
-  lightbtnText: {
-    color: Colors.contents_light,
+  greyBtnText: {
+    color: Colors.grey1,
     ...Fonts.btn,
   },
-  white10Text: {
-    color: Colors.white,
-    fontSize: 11,
-  },
-  sb14Text: {
+  b2sbText: {
     color: Colors.white,
     ...Fonts.b2_sb,
   },
+  btnText: {
+    color: Colors.black,
+    ...Fonts.btn,
+  },
   lyricsText: {
     color: Colors.purple,
-    ...Fonts.b2,
-    paddingTop: 4,
+    ...Fonts.b2_line2_sb,
+    paddingTop: 10,
     textAlign: 'center',
   },
   emotionContainer: {
-    paddingTop: 50,
+    paddingTop: 20,
     flexDirection: 'row',
     gap: 8,
   },
   emotionCircle: {
-    backgroundColor: 'rgba(0,128,255, 0.3)',
     paddingVertical: 5,
     paddingHorizontal: 12,
     borderRadius: 30,
   },
   diaryContent: {
     color: Colors.contents_light,
-    paddingTop: 10,
-    marginBottom: -20,
+    paddingTop: 16,
     textAlign: 'justify',
-    ...Fonts.b2,
+    ...Fonts.b2_line2,
   },
 });

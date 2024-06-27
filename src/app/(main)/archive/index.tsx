@@ -16,6 +16,7 @@ interface DiaryData {
   artist: string;
   diaryTitle: string;
   emotions: string[];
+  feeling: string;
 }
 
 interface RecommendData {
@@ -23,7 +24,7 @@ interface RecommendData {
   albumCoverUrl: string;
   songTitle: string;
   artist: string;
-  emotion: string;
+  feeling: string;
 }
 
 const MonthScreen = () => {
