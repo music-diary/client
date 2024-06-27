@@ -38,9 +38,9 @@ const CircleAlbum = ({
       >
         <Image
           style={{
-            height: diameter / 2,
-            width: diameter / 2,
-            borderRadius: diameter / 4,
+            height: diameter / 1.7,
+            width: diameter / 1.7,
+            borderRadius: diameter / 3.4,
           }}
           source={{ uri: imageSource }}
         />

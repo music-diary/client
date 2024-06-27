@@ -1,7 +1,7 @@
 import { Stack } from 'expo-router';
 import HeaderRight from '@/components/diary/HeaderRight';
 import HeaderRightDraft from '@/components/diary/HeaderRightDraft';
-import HeaderTitle from '@/components/diary/HeaderTitle';
+import HeaderTitle from '@/components/common/HeaderTitle';
 import Colors from '@/constants/Colors';
 
 export default function DiaryLayout() {

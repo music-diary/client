@@ -1,8 +1,7 @@
 import { Stack } from 'expo-router';
-import { StyleSheet, View } from 'react-native';
 import HeaderTitle from '@/components/common/HeaderTitle';
-import Colors from '@/constants/Colors';
 import CustomBackButton from '@/components/common/CustomBackButton';
+import Colors from '@/constants/Colors';
 
 export default function MypageLayout() {
   return (
@@ -13,83 +12,47 @@ export default function MypageLayout() {
         },
         headerTintColor: Colors.white,
         headerTitle: '',
-        headerLeft: () => <HeaderTitle title="마이페이지" />,
       }}
     >
       <Stack.Screen
         name="index"
         options={{
           title: '마이페이지',
+          headerTitle: () => <HeaderTitle title="일기쓰기" />,
         }}
       />
       <Stack.Screen
         name="editprofile"
         options={{
           title: '프로필 수정',
-          headerLeft: () => (
-            <View style={styles.headerContainer}>
-              <CustomBackButton />
-              <HeaderTitle title="프로필 수정" />
-            </View>
-          ),
-        }}
-      />
-      <Stack.Screen
-        name="myfriend"
-        options={{
-          title: '내 친구',
-          headerLeft: () => (
-            <View style={styles.headerContainer}>
-              <CustomBackButton />
-              <HeaderTitle title="내 친구" />
-            </View>
-          ),
+          headerTitle: () => <HeaderTitle title="프로필 수정" />,
+          headerLeft: () => <CustomBackButton />,
         }}
       />
       <Stack.Screen
         name="inquiry"
         options={{
           title: '문의사항',
-          headerLeft: () => (
-            <View style={styles.headerContainer}>
-              <CustomBackButton />
-              <HeaderTitle title="문의사항" />
-            </View>
-          ),
+          headerTitle: () => <HeaderTitle title="문의사항" />,
+          headerLeft: () => <CustomBackButton />,
         }}
       />
       <Stack.Screen
         name="withdrawal"
         options={{
           title: '회원탈퇴',
-          headerLeft: () => (
-            <View style={styles.headerContainer}>
-              <CustomBackButton />
-              <HeaderTitle title="회원탈퇴" />
-            </View>
-          ),
+          headerTitle: () => <HeaderTitle title="회원탈퇴" />,
+          headerLeft: () => <CustomBackButton />,
         }}
       />
       <Stack.Screen
         name="statistic"
         options={{
           title: '루틴 분석',
-          headerLeft: () => (
-            <View style={styles.headerContainer}>
-              <CustomBackButton />
-              <HeaderTitle title="루틴 분석" />
-            </View>
-          ),
+          headerTitle: () => <HeaderTitle title="루틴 분석" />,
+          headerLeft: () => <CustomBackButton />,
         }}
       />
     </Stack>
   );
 }
-
-const styles = StyleSheet.create({
-  headerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-  },
-});
