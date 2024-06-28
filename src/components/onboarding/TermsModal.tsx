@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Modal, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
 import { termsCheckboxes } from '@/constants/data';
+import { colorWithOpacity } from '@/utils/colorUtils';
+import CustomBottomButton from '../common/CustomBottomButton';
 import TermsCheckbox from './TermsCheckbox';
 
 interface TermsModalProps {
@@ -57,6 +59,7 @@ const TermsModal = ({
         <SafeAreaProvider>
           <SafeAreaView style={{ flex: 1 }} />
           <SafeAreaView
+            edges={['top']}
             style={[
               styles.modalOverlay,
               {
@@ -93,22 +96,13 @@ const TermsModal = ({
                   ))}
                 </View>
               </View>
-              <TouchableOpacity
-                style={[
-                  styles.modalNextButton,
-                  {
-                    backgroundColor: isButtonDisabled
-                      ? Colors.contents_light
-                      : Colors.purple,
-                  },
-                ]}
-                onPress={handleNext}
-                disabled={isButtonDisabled}
-              >
-                <Text style={styles.buttonText}>다음으로</Text>
-              </TouchableOpacity>
             </View>
           </SafeAreaView>
+          <CustomBottomButton
+            isActive={!isButtonDisabled}
+            onPress={handleNext}
+            label="다음으로"
+          />
         </SafeAreaProvider>
       </View>
     </Modal>
@@ -124,7 +118,7 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     display: 'flex',
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.grey3,
     paddingTop: 32,
     width: '100%',
     borderTopLeftRadius: 10,
@@ -136,28 +130,18 @@ const styles = StyleSheet.create({
   termsTitleContainer: {
     display: 'flex',
     gap: 30,
-    borderBottomColor: Colors.contents_light,
+    borderBottomColor: colorWithOpacity(Colors.white, 0.2),
     borderBottomWidth: 1,
     paddingBottom: 24,
   },
   termsTitleText: {
     ...Fonts.t1,
-    color: '#000000',
-  },
-  modalNextButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 60,
-    backgroundColor: Colors.purple,
+    color: Colors.white,
   },
   termsCheckboxContainer: {
     display: 'flex',
     gap: 20,
     paddingTop: 24,
     paddingBottom: 24,
-  },
-  buttonText: {
-    color: Colors.white,
-    ...Fonts.t1,
   },
 });

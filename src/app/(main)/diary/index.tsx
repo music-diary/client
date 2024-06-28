@@ -1,21 +1,15 @@
 import { useState } from 'react';
 import { router } from 'expo-router';
-import {
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
+import CustomBottomButton from '@/components/common/CustomBottomButton';
 import DetailedEmotionSelector from '@/components/diary/DetailedEmotionSelector';
 import EmotionSelector from '@/components/diary/EmotionSelector';
 import MoodSelector from '@/components/diary/MoodSelector';
 import SelectorView from '@/components/diary/SelectorView';
 import TopicSelector from '@/components/diary/TopicSelector';
 import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
-import { type Mood } from '@/models/types';
 import { type ITopic } from '@/models/interfaces';
+import { type Mood } from '@/models/types';
 
 const SubjectEmotionScreen = () => {
   const [mood, setMood] = useState<Mood | null>(null);
@@ -78,20 +72,11 @@ const SubjectEmotionScreen = () => {
           </SelectorView>
         )}
       </ScrollView>
-      <TouchableOpacity
-        style={[
-          styles.nextButton,
-          {
-            backgroundColor:
-              emotions.length > 0 ? Colors.purple : Colors.contents_light,
-            height: Platform.OS === 'android' ? 78 : 112,
-          },
-        ]}
-        onPress={handleNext}
-        disabled={!mood || emotions.length === 0}
-      >
-        <Text style={styles.nextText}>일기 쓰러가기</Text>
-      </TouchableOpacity>
+      <CustomBottomButton
+        isActive={emotions.length > 0}
+        onPress={handleNext} // 버튼 클릭 이벤트 핸들러
+        label="완료"
+      />
     </>
   );
 };
@@ -104,14 +89,5 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.black,
     paddingHorizontal: 16,
     paddingTop: 20,
-  },
-  nextButton: {
-    alignItems: 'center',
-    height: 100,
-    paddingTop: 28,
-  },
-  nextText: {
-    color: Colors.white,
-    ...Fonts.t1,
   },
 });

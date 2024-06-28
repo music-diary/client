@@ -71,37 +71,29 @@ const SignUpScreen = () => {
             inputAccessoryViewID="phoneNumber"
           />
         </View>
-        {Platform.OS === 'ios' ? (
-          <InputAccessoryView
-            nativeID="phoneNumber"
-            backgroundColor={
-              isButtonDisabled ? Colors.contents_light : Colors.purple
-            }
-          >
-            <TouchableOpacity
-              style={styles.verifyButton}
-              onPress={handleVerifyPhoneNumber}
-              disabled={isButtonDisabled}
-            >
-              <Text style={styles.verifyText}>인증번호 받기</Text>
-            </TouchableOpacity>
-          </InputAccessoryView>
-        ) : (
+        <InputAccessoryView
+          nativeID="phoneNumber"
+          backgroundColor={isButtonDisabled ? Colors.bg_light : Colors.purple}
+        >
           <TouchableOpacity
-            style={[
-              styles.verifyButton,
-              {
-                backgroundColor: isButtonDisabled
-                  ? Colors.contents_light
-                  : Colors.purple,
-              },
-            ]}
+            style={styles.verifyButton}
             onPress={handleVerifyPhoneNumber}
             disabled={isButtonDisabled}
           >
-            <Text style={styles.verifyText}>인증번호 받기</Text>
+            <Text
+              style={[
+                styles.verifyText,
+                {
+                  color: isButtonDisabled
+                    ? Colors.contents_light
+                    : Colors.white,
+                },
+              ]}
+            >
+              인증번호 받기
+            </Text>
           </TouchableOpacity>
-        )}
+        </InputAccessoryView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
@@ -131,10 +123,10 @@ const styles = StyleSheet.create({
   },
   inputPhoneNumber: {
     color: Colors.white,
-    borderBottomColor: '#C7C7C7',
+    borderBottomColor: Colors.grey1,
     borderBottomWidth: 1,
     paddingBottom: 8,
-    ...Fonts.b2_sb,
+    ...Fonts.b2_line2,
   },
   verifyButton: {
     alignItems: 'center',
@@ -142,7 +134,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   verifyText: {
-    color: Colors.white,
-    ...Fonts.t1,
+    ...Fonts.b1_sb,
   },
 });
