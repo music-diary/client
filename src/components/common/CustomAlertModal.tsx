@@ -9,7 +9,7 @@ import {
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
 import { useModalStore } from '@/store/useModalStore';
-import { colorWithOpacity } from '@/utils/colorUtils';
+import { colorWithOpacity } from '@/utils/color-utils';
 
 // 2줄 입력, 삭제에 따른 오른쪽 버튼 색깔은 옵셔널로 받음
 interface CustomAlertModalProps {

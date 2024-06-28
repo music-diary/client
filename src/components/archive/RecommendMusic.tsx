@@ -2,8 +2,8 @@ import { View, Text, StyleSheet } from 'react-native';
 import CircleAlbum from '@/components/common/CircleAlbum';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
-import { colorWithOpacity, getColorForMood } from '@/utils/colorUtils';
-import { trimTitle } from '@/utils/textUtils';
+import { colorWithOpacity, getColorForMood } from '@/utils/color-utils';
+import { trimTitle } from '@/utils/text-utils';
 
 interface RecommendData {
   id: string;

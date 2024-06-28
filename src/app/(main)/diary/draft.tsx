@@ -11,7 +11,7 @@ import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
 import useDraftStore from '@/store/useDraftStore';
 import { useModalStore } from '@/store/useModalStore';
-import { colorWithOpacity } from '@/utils/colorUtils';
+import { colorWithOpacity } from '@/utils/color-utils';
 
 const draftList = [
   { id: 1, title: '어쩌구 제목', date: '24.04.23', music: '밤양갱' },

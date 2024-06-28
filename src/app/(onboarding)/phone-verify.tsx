@@ -23,7 +23,7 @@ import Fonts from '@/constants/Fonts';
 import { useDimStore } from '@/store/useDimStore';
 import WarningCircleSvg from 'assets/images/warning_circle.svg';
 import { type VerifyStatus } from '@/models/types';
-import { colorWithOpacity } from '@/utils/colorUtils';
+import { colorWithOpacity } from '@/utils/color-utils';
 
 const PhoneVerifyScreen = () => {
   const { phoneNumber } = useLocalSearchParams();

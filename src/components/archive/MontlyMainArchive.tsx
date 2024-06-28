@@ -13,8 +13,8 @@ import HappyIcon from 'assets/images/happy.svg';
 import SosoIcon from 'assets/images/soso.svg';
 import BadIcon from 'assets/images/bad.svg';
 import Fonts from '@/constants/Fonts';
-import { colorWithOpacity } from '@/utils/colorUtils';
-import { trimTitle } from '@/utils/textUtils';
+import { colorWithOpacity } from '@/utils/color-utils';
+import { trimTitle } from '@/utils/text-utils';
 
 const contentWidth = Dimensions.get('window').width / 2 - 22;
 

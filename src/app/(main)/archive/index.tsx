@@ -6,7 +6,7 @@ import DailyMainArchive from '@/components/archive/DailyMainArchive';
 import dummy_archive_recommend from '@/data/dummy_archive_recommend.json';
 import RecommendMusic from '@/components/archive/RecommendMusic';
 import RouteSwitcher from '@/components/archive/RouteSwitcher';
-import { getCurrentYearMonth } from '@/utils/dateUtils';
+import { getCurrentYearMonth } from '@/utils/date-utils';
 
 interface DiaryData {
   id: string;

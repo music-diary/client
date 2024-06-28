@@ -7,7 +7,7 @@ import {
   Pressable,
   Modal,
 } from 'react-native';
-import { colorWithOpacity } from '@/utils/colorUtils';
+import { colorWithOpacity } from '@/utils/color-utils';
 import Fonts from '@/constants/Fonts';
 import Colors from '@/constants/Colors';
 import ArrowDown from 'assets/images/mypageIcon/ArrowDown.svg';

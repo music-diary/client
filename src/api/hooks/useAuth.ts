@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { extractToken } from '@/utils/commonUtils';
+import { extractToken } from '@/utils/common-utils';
 import { useAppStore } from '@/store/useAppStore';
 import { type VerifyPhoneSchema, type SignUpSchema } from '@/models/schemas';
 import apiClient from '../client';

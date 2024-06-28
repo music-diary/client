@@ -23,7 +23,7 @@ import { type ITopic } from '@/models/interfaces';
 import { type Mood } from '@/models/types';
 import { useModalStore } from '@/store/useModalStore';
 import { useSplashStore } from '@/store/useSplashStore';
-import GroupSvg from 'assets/images/splash/group_dot.svg';
+import GroupSvg from 'assets/images/splash/group-dot.svg';
 
 const WriteScreen = () => {
   const params = useLocalSearchParams();

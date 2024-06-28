@@ -2,7 +2,7 @@ import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import Colors from '@/constants/Colors';
 import ConfettiIcon from 'assets/images/mypageIcon/Confetti.svg';
 import Fonts from '@/constants/Fonts';
-import { colorWithOpacity } from '@/utils/colorUtils';
+import { colorWithOpacity } from '@/utils/color-utils';
 import CircularGraph from '@/components/mypage/CircularGraph';
 
 const containerWidth = Dimensions.get('window').width / 2 - 24;

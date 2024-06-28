@@ -4,7 +4,7 @@ import Colors from '@/constants/Colors';
 import SmileyIcon from 'assets/images/mypageIcon/Smiley.svg';
 import Fonts from '@/constants/Fonts';
 import EmotionIcon from '@/components/mypage/EmotionIcon';
-import { colorWithOpacity } from '@/utils/colorUtils';
+import { colorWithOpacity } from '@/utils/color-utils';
 
 const containerWidth = Dimensions.get('window').width / 2 - 24;
 

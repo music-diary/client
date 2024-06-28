@@ -1,8 +1,8 @@
 import { Dimensions, View, StyleSheet } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
-import { type LineGraphDataProps } from '@/interfaces';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
+import { type LineGraphDataProps } from '@/models/interfaces';
 
 const ContainerWidth = Dimensions.get('window').width - 34;
 const LineGraph = ({ data }: LineGraphDataProps) => {

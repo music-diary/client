@@ -20,9 +20,9 @@ import MusicSelection from '@/components/home/MusicSelection';
 import { useAppStore } from '@/store/useAppStore';
 import ChartPieIcon from 'assets/images/mypageIcon/ChartPie.svg';
 import DefaultProfileIcon from 'assets/images/mypageIcon/DefaultProfile.svg';
-import { colorWithOpacity } from '@/utils/colorUtils';
+import { colorWithOpacity } from '@/utils/color-utils';
 import CustomBottomSheetModal from '@/components/common/CustomBottomSheetModal';
-import { formatTime, getCurrentYearMonth } from '@/utils/dateUtils';
+import { formatTime, getCurrentYearMonth } from '@/utils/date-utils';
 import CustomAlertModal from '@/components/common/CustomAlertModal';
 import { useModalStore } from '@/store/useModalStore';
 
