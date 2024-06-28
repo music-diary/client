@@ -30,7 +30,7 @@ export default {
     lineHeight: 16,
   },
   b2_line2: {
-    fontFamily: 'pret',
+    fontFamily: 'pret-r',
     fontSize: 14,
     lineHeight: 22,
   },

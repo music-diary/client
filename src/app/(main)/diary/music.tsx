@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import { router } from 'expo-router';
 import {
   Dimensions,
-  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -15,6 +14,7 @@ import Carousel, {
   type ICarouselInstance,
 } from 'react-native-reanimated-carousel';
 import CustomAlertModal from '@/components/common/CustomAlertModal';
+import CustomBottomButton from '@/components/common/CustomBottomButton';
 import LoadingView from '@/components/diary/LoadingView';
 import Tooltip from '@/components/diary/Tooltip';
 import Colors from '@/constants/Colors';
@@ -187,20 +187,11 @@ const MusicRecommendationScreen = () => {
           )}
         />
       </View>
-      <TouchableOpacity
-        style={[
-          styles.nextButton,
-          {
-            backgroundColor:
-              selectedLyrics.length > 0 ? Colors.purple : Colors.contents_light,
-            height: Platform.OS === 'android' ? 78 : 112,
-          },
-        ]}
-        onPress={handleNext}
-        disabled={selectedLyrics.length === 0}
-      >
-        <Text style={styles.nextText}>다음</Text>
-      </TouchableOpacity>
+      <CustomBottomButton
+        isActive={selectedLyrics.length > 0}
+        onPress={handleNext} // 버튼 클릭 이벤트 핸들러
+        label="다음"
+      />
       <CustomAlertModal
         name="music-cancel"
         title="작성을 그만두시겠어요?"
@@ -287,14 +278,5 @@ const styles = StyleSheet.create({
   lyricsText: {
     color: Colors.white,
     ...Fonts.b2,
-  },
-  nextButton: {
-    alignItems: 'center',
-    height: 100,
-    paddingTop: 28,
-  },
-  nextText: {
-    color: Colors.white,
-    ...Fonts.t1,
   },
 });

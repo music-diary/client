@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import CustomAlertModal from '@/components/common/CustomAlertModal';
+import CustomBottomButton from '@/components/common/CustomBottomButton';
 import CustomSplash from '@/components/common/CustomSplash';
 import SelectorButton from '@/components/diary/SelectorButton';
 import TopicButton from '@/components/diary/TopicButton';
@@ -197,19 +198,11 @@ const WriteScreen = () => {
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
-      <TouchableOpacity
-        style={[
-          styles.nextButton,
-          {
-            backgroundColor: hh ? Colors.purple : Colors.contents_light,
-            height: Platform.OS === 'android' ? 78 : 112,
-          },
-        ]}
-        onPress={handleMusicRecommendation}
-        disabled={!hh}
-      >
-        <Text style={styles.nextText}>노래 추천받기</Text>
-      </TouchableOpacity>
+      <CustomBottomButton
+        isActive={hh}
+        onPress={handleMusicRecommendation} // 버튼 클릭 이벤트 핸들러
+        label="노래 추천받기"
+      />
       <CustomAlertModal
         name="write-cancel"
         title="작성을 그만두시겠어요?"
@@ -298,15 +291,7 @@ const styles = StyleSheet.create({
     color: Colors.contents_light,
     ...Fonts.lb,
   },
-  nextButton: {
-    alignItems: 'center',
-    height: 100,
-    paddingTop: 28,
-  },
-  nextText: {
-    color: Colors.white,
-    ...Fonts.t1,
-  },
+
   previewName: {
     color: Colors.white,
     ...Fonts.b2,

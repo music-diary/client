@@ -32,6 +32,7 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const [loaded, error] = useFonts({
     pret: require(`assets/fonts/Pretendard-Medium.otf`),
+    'pret-r': require(`assets/fonts/Pretendard-Regular.otf`),
     'pret-b': require(`assets/fonts/Pretendard-Bold.otf`),
     'pret-sb': require(`assets/fonts/Pretendard-SemiBold.otf`),
   });
@@ -66,7 +67,7 @@ function RootLayoutNav() {
     //   router.navigate('intro');
     // }
     if (!isAuthenticated) {
-      // router.navigate('(onboarding)/phone-verify');
+      // router.navigate('(onboarding)/genre');
       router.navigate('(main)/diary/music');
     } else {
       router.navigate('(main)');

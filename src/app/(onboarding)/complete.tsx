@@ -1,8 +1,9 @@
 import { router } from 'expo-router';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Fonts from '@/constants/Fonts';
+import CustomBottomButton from '@/components/common/CustomBottomButton';
 import Colors from '@/constants/Colors';
+import Fonts from '@/constants/Fonts';
 
 const CompleteScreen = () => {
   const handleNext = () => {
@@ -15,11 +16,8 @@ const CompleteScreen = () => {
           <Image source={require('assets/images/complete-logo.png')} />
           <Text style={styles.welcomeText}>음계일기에 오신 것을 환영해요!</Text>
         </View>
-        <TouchableOpacity style={styles.startButton} onPress={handleNext}>
-          <Text style={styles.startText}>음계일기 시작하기</Text>
-        </TouchableOpacity>
       </SafeAreaView>
-      <SafeAreaView edges={['bottom']} style={styles.bottomSafeArea} />
+      <CustomBottomButton isActive={true} onPress={handleNext} label="다음" />
     </>
   );
 };
@@ -43,19 +41,5 @@ const styles = StyleSheet.create({
   welcomeText: {
     color: Colors.white,
     ...Fonts.h1,
-  },
-  startButton: {
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 60,
-    backgroundColor: Colors.purple,
-  },
-  startText: {
-    color: Colors.white,
-    ...Fonts.t1,
-  },
-  bottomSafeArea: {
-    backgroundColor: Colors.purple,
   },
 });

@@ -4,7 +4,6 @@ import DateTimePicker, {
 } from '@react-native-community/datetimepicker';
 import { router, useFocusEffect, useNavigation } from 'expo-router';
 import {
-  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -13,6 +12,7 @@ import {
 } from 'react-native';
 import DailyDiaryCard from '@/components/archive/DailyDiaryCard';
 import CustomAlertModal from '@/components/common/CustomAlertModal';
+import CustomBottomButton from '@/components/common/CustomBottomButton';
 import CustomSplash from '@/components/common/CustomSplash';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
@@ -139,18 +139,11 @@ const CardScreen = () => {
             />
           </View>
         ) : (
-          <TouchableOpacity
-            style={[
-              styles.nextButton,
-              {
-                backgroundColor: Colors.purple,
-                height: Platform.OS === 'android' ? 78 : 112,
-              },
-            ]}
-            onPress={handleSave}
-          >
-            <Text style={styles.nextText}>아카이브에 저장</Text>
-          </TouchableOpacity>
+          <CustomBottomButton
+            isActive={true}
+            onPress={handleSave} // 버튼 클릭 이벤트 핸들러
+            label="아카이브에 저장"
+          />
         )}
         <CustomAlertModal
           name="push-notification"
@@ -188,15 +181,6 @@ const styles = StyleSheet.create({
   cardContainer: {
     marginTop: 10,
     marginBottom: 130,
-  },
-  nextButton: {
-    alignItems: 'center',
-    height: 100,
-    paddingTop: 28,
-  },
-  nextText: {
-    color: Colors.white,
-    ...Fonts.t1,
   },
   // DatePicker
   pickerContainer: {

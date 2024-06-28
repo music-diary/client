@@ -12,6 +12,7 @@ import { type IGenre } from '@/models/interfaces';
 import { type SignUpSchema } from '@/models/schemas';
 import { type Gender } from '@/models/types';
 import { useDimStore } from '@/store/useDimStore';
+import CustomBottomButton from '@/components/common/CustomBottomButton';
 
 const GenreScreen = () => {
   const { phoneNumber, name, birth, gender, isAgreedMarketing } =
@@ -93,57 +94,33 @@ const GenreScreen = () => {
           title={`${name as string} 님의 음악 취향을 선택해주세요`}
           description="최소 1개부터 최대 3개까지 가능해요"
         />
-
-        <View style={styles.keyboardAvoidingContainer}>
-          <View style={styles.genreListContainer}>
-            {genres.map((genre) => {
-              const isSelected = selectedGenre.some(
-                (g) => g.name === genre.name,
-              );
-              return (
-                <TouchableOpacity
-                  key={genre.name}
-                  onPress={() => handleSelectGenre({ name: genre.name })}
-                  style={[
-                    styles.genreButton,
-                    isSelected ? styles.selectedGenreButton : null, // 조건부 스타일 적용
-                  ]}
-                >
-                  <Text style={styles.genreType}>{genre.label}</Text>
-                </TouchableOpacity>
-              );
-            })}
-          </View>
-          <TouchableOpacity
-            style={[
-              styles.verifyButton,
-              {
-                backgroundColor: isButtonDisabled
-                  ? Colors.contents_light
-                  : Colors.purple,
-              },
-            ]}
-            onPress={handleNext}
-            // onPress={loginTest}
-            disabled={isButtonDisabled}
-          >
-            <Text style={styles.verifyText}>완료</Text>
-          </TouchableOpacity>
+        <View style={styles.genreListContainer}>
+          {genres.map((genre) => {
+            const isSelected = selectedGenre.some((g) => g.name === genre.name);
+            return (
+              <TouchableOpacity
+                key={genre.name}
+                onPress={() => handleSelectGenre({ name: genre.name })}
+                style={[
+                  styles.genreButton,
+                  isSelected ? styles.selectedGenreButton : null, // 조건부 스타일 적용
+                ]}
+              >
+                <Text style={styles.genreType}>{genre.label}</Text>
+              </TouchableOpacity>
+            );
+          })}
         </View>
-
-        <GenreRecModal
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-          onPress={handleGenreRec}
-        />
       </SafeAreaView>
-      <SafeAreaView
-        edges={['bottom']}
-        style={{
-          backgroundColor: isButtonDisabled
-            ? Colors.contents_light
-            : Colors.purple,
-        }}
+      <CustomBottomButton
+        isActive={!isButtonDisabled}
+        onPress={handleNext}
+        label="완료"
+      />
+      <GenreRecModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        onPress={handleGenreRec}
       />
     </>
   );
@@ -157,20 +134,6 @@ const styles = StyleSheet.create({
     gap: 28,
     backgroundColor: Colors.black,
     flex: 1,
-  },
-  keyboardAvoidingContainer: {
-    flex: 1,
-    justifyContent: 'space-between',
-  },
-  verifyButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 60,
-    backgroundColor: Colors.purple,
-  },
-  verifyText: {
-    color: Colors.white,
-    ...Fonts.t1,
   },
   genreButton: {
     alignItems: 'center',
