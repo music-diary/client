@@ -3,7 +3,6 @@ import { Animated, Dimensions, StyleSheet, Text } from 'react-native';
 import useToastStore from '@/store/useToastStore';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
-import { colorWithOpacity } from '@/utils/colorUtils';
 
 const { width, height } = Dimensions.get('window');
 
@@ -15,14 +14,14 @@ const CustomToast = () => {
     if (visible) {
       Animated.timing(fadeAnim, {
         toValue: 1,
-        duration: 300,
+        duration: 800,
         useNativeDriver: true,
       }).start();
 
       const timer = setTimeout(() => {
         Animated.timing(fadeAnim, {
           toValue: 0,
-          duration: 300,
+          duration: 800,
           useNativeDriver: true,
         }).start(hideToast);
       }, duration);
@@ -68,27 +67,23 @@ export default CustomToast;
 
 const styles = StyleSheet.create({
   overlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
     width,
     height,
-    backgroundColor: colorWithOpacity(Colors.black, 0.7), // dim background
-    justifyContent: 'center',
+    position: 'absolute',
     alignItems: 'center',
-    zIndex: 1000,
+    justifyContent: 'flex-end',
+    paddingBottom: 100,
   },
   toast: {
     backgroundColor: Colors.grey3,
     borderRadius: 10,
     paddingVertical: 20,
     paddingHorizontal: 32,
-    zIndex: 1001,
-    alignItems: 'center',
+    alignItems: 'flex-end',
     ...Fonts.b2_sb,
   },
   text: {
-    color: '#FFF',
-    fontSize: 16,
+    color: Colors.white,
+    ...Fonts.b2_sb,
   },
 });
