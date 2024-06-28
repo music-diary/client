@@ -12,7 +12,6 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import CustomToast from '@/components/common/CustomToast';
 import DImOverlay from '@/components/common/DImOverlay';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { useAppStore } from '@/store/useAppStore';
@@ -91,7 +90,6 @@ function RootLayoutNav() {
               <Stack.Screen name="(modals)" options={{ headerShown: false }} />
             </Stack>
             <DImOverlay />
-            <CustomToast />
           </ThemeProvider>
         </GestureHandlerRootView>
       </SafeAreaProvider>

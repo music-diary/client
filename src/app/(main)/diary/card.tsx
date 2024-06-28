@@ -18,7 +18,29 @@ import Fonts from '@/constants/Fonts';
 import dummy_archive_day from '@/data/dummy_archive_day.json';
 import { useModalStore } from '@/store/useModalStore';
 import useToastStore from '@/store/useToastStore';
+import CustomSplash from '@/components/common/CustomSplash';
+import { useSplashStore } from '@/store/useSplashStore';
+import {
+  ArchiveCheerSvg,
+  ArchiveIdeaSvg,
+  ArchiveSaveSvg,
+} from 'assets/images/splash';
 import { type DailyDiaryData } from '../archive/day/[day]';
+
+const splashOptions = [
+  {
+    svg: ArchiveCheerSvg,
+    description: '당신의 하루를 뮤다가 응원해요',
+  },
+  {
+    svg: ArchiveSaveSvg,
+    description: '오늘의 ost가 뮤다에 소중히 담겼어요',
+  },
+  {
+    svg: ArchiveIdeaSvg,
+    description: '이 노래가 떠오를 때 언제든지 놀러오세요',
+  },
+];
 
 const CardScreen = () => {
   const { openModal, closeModal } = useModalStore();
@@ -29,18 +51,7 @@ const CardScreen = () => {
   const [tempDate, setTempDate] = useState<Date>(new Date());
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
-  const handleSave = () => {
-    console.log('아카이브에 저장');
-    // 저장하는 후 토스트
-    showToast('아카이브에 저장되었습니다', 2000, () => {
-      // 토스트가 닫힌 후 최초 일기 작성시 일기 알림 팝업
-      if (isFirstDiary) {
-        return openModal('push-notification');
-      }
-      // 월별 아카이브로 이동
-      return router.replace('/(main)/archive/archivegrid');
-    });
-  };
+  const { openSplash } = useSplashStore();
 
   const handleNoPushNotification = () => {
     closeModal();
@@ -85,58 +96,76 @@ const CardScreen = () => {
     }, []),
   );
 
-  return (
-    <View style={{ flex: 1, backgroundColor: Colors.black }}>
-      <ScrollView style={styles.container}>
-        <Text style={styles.b1LightText}>3월 2일</Text>
-        <View style={styles.cardContainer}>
-          <DailyDiaryCard {...dailyDiaryData[0]} />
-        </View>
-      </ScrollView>
+  const randomIndex = Math.floor(Math.random() * splashOptions.length);
+  const { svg, description } = splashOptions[randomIndex];
 
-      {showPicker ? (
-        <View style={styles.pickerContainer}>
-          <View style={styles.pickerHeader}>
-            <TouchableOpacity onPress={cancelDateSelection}>
-              <Text style={styles.btnText}>취소</Text>
-            </TouchableOpacity>
-            <Text style={styles.pickerTitle}>일기 알림</Text>
-            <TouchableOpacity onPress={confirmDateSelection}>
-              <Text style={styles.btnText}>저장</Text>
-            </TouchableOpacity>
+  const handleSave = () => {
+    // 아카이브 저장
+    // 스플래시 오픈
+    openSplash('archive-save');
+  };
+
+  return (
+    <>
+      <View style={{ flex: 1, backgroundColor: Colors.black }}>
+        <ScrollView style={styles.container}>
+          <Text style={styles.b1LightText}>3월 2일</Text>
+          <View style={styles.cardContainer}>
+            <DailyDiaryCard {...dailyDiaryData[0]} />
           </View>
-          <DateTimePicker
-            value={tempDate}
-            mode="time"
-            display="spinner"
-            onChange={onChange}
-            textColor={Colors.white}
-          />
-        </View>
-      ) : (
-        <TouchableOpacity
-          style={[
-            styles.nextButton,
-            {
-              backgroundColor: Colors.purple,
-              height: Platform.OS === 'android' ? 78 : 112,
-            },
-          ]}
-          onPress={handleSave}
-        >
-          <Text style={styles.nextText}>아카이브에 저장</Text>
-        </TouchableOpacity>
-      )}
-      <CustomModal
-        name="push-notification"
-        title="매일 일기 쓰는 시간에 맞춰 알려드릴까요?"
-        description=""
-        leftButtonText="괜찮아요"
-        rightButtonText="네, 알려주세요"
-        onLeftButtonPress={handleNoPushNotification}
-        onRightButtonPress={handlePushNotification}
+        </ScrollView>
+
+        {showPicker ? (
+          <View style={styles.pickerContainer}>
+            <View style={styles.pickerHeader}>
+              <TouchableOpacity onPress={cancelDateSelection}>
+                <Text style={styles.btnText}>취소</Text>
+              </TouchableOpacity>
+              <Text style={styles.pickerTitle}>일기 알림</Text>
+              <TouchableOpacity onPress={confirmDateSelection}>
+                <Text style={styles.btnText}>저장</Text>
+              </TouchableOpacity>
+            </View>
+            <DateTimePicker
+              value={tempDate}
+              mode="time"
+              display="spinner"
+              onChange={onChange}
+              textColor={Colors.white}
+            />
+          </View>
+        ) : (
+          <TouchableOpacity
+            style={[
+              styles.nextButton,
+              {
+                backgroundColor: Colors.purple,
+                height: Platform.OS === 'android' ? 78 : 112,
+              },
+            ]}
+            onPress={handleSave}
+          >
+            <Text style={styles.nextText}>아카이브에 저장</Text>
+          </TouchableOpacity>
+        )}
+        <CustomModal
+          name="push-notification"
+          title="매일 일기 쓰는 시간에 맞춰 알려드릴까요?"
+          description=""
+          leftButtonText="괜찮아요"
+          rightButtonText="네, 알려주세요"
+          onLeftButtonPress={handleNoPushNotification}
+          onRightButtonPress={handlePushNotification}
+        />
+      </View>
+      <CustomSplash
+        name="archive-save"
+        description={description}
+        toastMessage="아카이브에 저장되었습니다"
+        svg={svg}
+        onClose={() => router.replace('/(main)/archive')}
       />
-    </View>
+    </>
   );
 };
 
