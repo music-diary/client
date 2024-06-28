@@ -1,26 +1,26 @@
 import { useEffect, useRef, useState } from 'react';
+import { router } from 'expo-router';
 import {
   Dimensions,
-  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import Animated, { useSharedValue } from 'react-native-reanimated';
 import Carousel, {
   Pagination,
   type ICarouselInstance,
 } from 'react-native-reanimated-carousel';
-import Animated, { useSharedValue } from 'react-native-reanimated';
-import { router } from 'expo-router';
-import { ScrollView } from 'react-native-gesture-handler';
+import CustomAlertModal from '@/components/common/CustomAlertModal';
+import CustomBottomButton from '@/components/common/CustomBottomButton';
+import LoadingView from '@/components/diary/LoadingView';
+import Tooltip from '@/components/diary/Tooltip';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
-import { colorWithOpacity } from '@/utils/colorUtils';
-import Tooltip from '@/components/diary/Tooltip';
-import LoadingView from '@/components/diary/LoadingView';
-import CustomModal from '@/components/common/CustomModal';
 import { useModalStore } from '@/store/useModalStore';
+import { colorWithOpacity } from '@/utils/colorUtils';
 
 const PAGE_WIDTH = Dimensions.get('window').width;
 const PAGE_HEIGHT = Dimensions.get('window').height;
@@ -187,24 +187,15 @@ const MusicRecommendationScreen = () => {
           )}
         />
       </View>
-      <TouchableOpacity
-        style={[
-          styles.nextButton,
-          {
-            backgroundColor:
-              selectedLyrics.length > 0 ? Colors.purple : Colors.contents_light,
-            height: Platform.OS === 'android' ? 78 : 112,
-          },
-        ]}
-        onPress={handleNext}
-        disabled={selectedLyrics.length === 0}
-      >
-        <Text style={styles.nextText}>다음</Text>
-      </TouchableOpacity>
-      <CustomModal
+      <CustomBottomButton
+        isActive={selectedLyrics.length > 0}
+        onPress={handleNext} // 버튼 클릭 이벤트 핸들러
+        label="다음"
+      />
+      <CustomAlertModal
         name="music-cancel"
         title="작성을 그만두시겠어요?"
-        description="일기 내용은 저장되지 않으며, 노래를 추천 받을 수 없어요."
+        description="임시저장을 해두면 나중에 다시 적을 수 있어요."
         leftButtonText="일기 계속 작성하기"
         rightButtonText="임시저장하기"
         onLeftButtonPress={closeModal}
@@ -287,14 +278,5 @@ const styles = StyleSheet.create({
   lyricsText: {
     color: Colors.white,
     ...Fonts.b2,
-  },
-  nextButton: {
-    alignItems: 'center',
-    height: 100,
-    paddingTop: 28,
-  },
-  nextText: {
-    color: Colors.white,
-    ...Fonts.t1,
   },
 });

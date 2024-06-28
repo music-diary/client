@@ -23,6 +23,7 @@ import Fonts from '@/constants/Fonts';
 import { useDimStore } from '@/store/useDimStore';
 import WarningCircleSvg from 'assets/images/warning_circle.svg';
 import { type VerifyStatus } from '@/models/types';
+import { colorWithOpacity } from '@/utils/colorUtils';
 
 const PhoneVerifyScreen = () => {
   const { phoneNumber } = useLocalSearchParams();
@@ -118,7 +119,7 @@ const PhoneVerifyScreen = () => {
                 style={styles.inputVerifyNumber}
                 autoFocus={true}
                 placeholder="인증번호 6자리를 입력해주세요."
-                placeholderTextColor={Colors.contents_light}
+                placeholderTextColor={Colors.grey1}
                 value={verifyNumber}
                 onChangeText={handleVerifyNumberChange}
                 keyboardType="phone-pad"
@@ -141,38 +142,29 @@ const PhoneVerifyScreen = () => {
             <Text style={styles.validityQnAText}>인증번호가 오지 않나요?</Text>
           </TouchableOpacity>
         </View>
-        {Platform.OS === 'ios' ? (
-          <InputAccessoryView
-            nativeID="verifyNumber"
-            backgroundColor={
-              isButtonDisabled ? Colors.contents_light : Colors.purple
-            }
-          >
-            <TouchableOpacity
-              style={styles.verifyButton}
-              onPress={handleVerify}
-              disabled={isButtonDisabled}
-            >
-              <Text style={styles.verifyText}>인증하기</Text>
-            </TouchableOpacity>
-          </InputAccessoryView>
-        ) : (
+        <InputAccessoryView
+          nativeID="verifyNumber"
+          backgroundColor={isButtonDisabled ? Colors.bg_light : Colors.purple}
+        >
           <TouchableOpacity
-            style={[
-              styles.verifyButton,
-              {
-                backgroundColor: isButtonDisabled
-                  ? Colors.contents_light
-                  : Colors.purple,
-                height: Platform.OS === 'android' ? 78 : null,
-              },
-            ]}
+            style={styles.verifyButton}
             onPress={handleVerify}
             disabled={isButtonDisabled}
           >
-            <Text style={styles.verifyText}>인증하기</Text>
+            <Text
+              style={[
+                styles.verifyText,
+                {
+                  color: isButtonDisabled
+                    ? Colors.contents_light
+                    : Colors.white,
+                },
+              ]}
+            >
+              인증하기
+            </Text>
           </TouchableOpacity>
-        )}
+        </InputAccessoryView>
       </KeyboardAvoidingView>
 
       <TermsModal
@@ -212,7 +204,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 12,
     flexDirection: 'row',
-    borderBottomColor: '#C7C7C7',
+    borderBottomColor: Colors.grey1,
     borderBottomWidth: 1,
     paddingBottom: 8,
     alignItems: 'center',
@@ -225,12 +217,12 @@ const styles = StyleSheet.create({
     flex: 1,
     color: Colors.white,
     alignSelf: 'flex-start',
-    ...Fonts.b2_sb,
+    ...Fonts.b2_line2,
   },
   verifyResendButton: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: Colors.contents_light,
+    backgroundColor: colorWithOpacity(Colors.grey1, 0.5),
     borderRadius: 2,
     height: 21,
     paddingHorizontal: 10,
@@ -246,8 +238,7 @@ const styles = StyleSheet.create({
     height: 60,
   },
   verifyText: {
-    color: Colors.white,
-    ...Fonts.t1,
+    ...Fonts.b1_sb,
   },
   verifyStatusView: {
     display: 'flex',
@@ -262,7 +253,7 @@ const styles = StyleSheet.create({
   },
   validityQnAButton: {
     alignSelf: 'flex-start',
-    borderBottomColor: Colors.contents_light,
+    borderBottomColor: Colors.grey1,
     borderBottomWidth: 1,
     paddingBottom: 3,
   },

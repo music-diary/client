@@ -51,20 +51,21 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   checkbox: {
-    width: 20,
-    height: 20,
+    width: 15,
+    height: 15,
   },
   titleContainer: {
     display: 'flex',
     flexDirection: 'row',
+    alignItems: 'center',
     gap: 8,
   },
   title: {
     ...Fonts.b2,
-    color: '#000000',
+    color: Colors.white,
   },
   openTerms: {
-    ...Fonts.lb,
-    color: Colors.contents_light,
+    ...Fonts.btn,
+    color: Colors.grey1,
   },
 });

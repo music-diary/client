@@ -7,19 +7,23 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import CustomAlertModal from '@/components/common/CustomAlertModal';
+import CustomBottomButton from '@/components/common/CustomBottomButton';
 import CustomCheckToggle from '@/components/common/CustomCheckToggle';
 import Header from '@/components/onboarding/Header';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
 import { genders } from '@/constants/data';
+import { useModalStore } from '@/store/useModalStore';
+import { colorWithOpacity } from '@/utils/colorUtils';
 
 const UserInfoScreen = () => {
   const params = useLocalSearchParams();
+  const { closeModal } = useModalStore();
 
   const [name, setName] = useState('');
   const [birth, setBirth] = useState('');
@@ -58,11 +62,11 @@ const UserInfoScreen = () => {
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.formContainer}>
               <View style={styles.inputContainer}>
-                <Text style={styles.inputLabel}>이름</Text>
+                <Text style={styles.inputLabel}>닉네임</Text>
                 <TextInput
                   style={styles.inputText}
-                  placeholder="이름을 입력해주세요."
-                  placeholderTextColor={Colors.contents_light}
+                  placeholder="뭐라고 불러드릴까요?"
+                  placeholderTextColor={Colors.grey1}
                   value={name}
                   onChangeText={setName}
                 />
@@ -73,7 +77,7 @@ const UserInfoScreen = () => {
                   <TextInput
                     style={styles.inputText}
                     placeholder="YYYYMMDD"
-                    placeholderTextColor={Colors.contents_light}
+                    placeholderTextColor={Colors.grey1}
                     value={birth}
                     keyboardType="number-pad"
                     onChangeText={handleBirthChange}
@@ -104,29 +108,24 @@ const UserInfoScreen = () => {
               </View>
             </View>
           </TouchableWithoutFeedback>
-          <TouchableOpacity
-            style={[
-              styles.verifyButton,
-              {
-                backgroundColor: isButtonDisabled
-                  ? Colors.contents_light
-                  : Colors.purple,
-              },
-            ]}
-            onPress={handleNext}
-            disabled={isButtonDisabled}
-          >
-            <Text style={styles.verifyText}>다음</Text>
-          </TouchableOpacity>
         </KeyboardAvoidingView>
       </SafeAreaView>
-      <SafeAreaView
-        edges={['bottom']}
-        style={{
-          backgroundColor: isButtonDisabled
-            ? Colors.contents_light
-            : Colors.purple,
-        }}
+      <CustomBottomButton
+        isActive={!isButtonDisabled}
+        onPress={handleNext}
+        label="다음"
+      />
+      <CustomAlertModal
+        name="sign_up-cancel"
+        title="지금 그만두시면 입력한 정보는 저장되지 않고,"
+        description="회원가입이 되지 않아요."
+        leftButtonText="그만할래요"
+        rightButtonText="계속 진행할래요"
+        onLeftButtonPress={() =>
+          console.log('모달 닫은 후 튜토리얼 화면으로 돌아감')
+        }
+        onRightButtonPress={closeModal}
+        isDelete={false}
       />
     </>
   );
@@ -163,28 +162,18 @@ const styles = StyleSheet.create({
   },
   inputText: {
     color: Colors.white,
-    borderBottomColor: '#C7C7C7',
-    borderBottomWidth: 1,
+    borderBottomColor: Colors.grey1,
+    borderBottomWidth: 1.5,
     paddingBottom: 8,
-    ...Fonts.b2_sb,
+    ...Fonts.b2_line2,
   },
   inputDescription: {
-    color: Colors.contents_light,
+    color: colorWithOpacity(Colors.white, 0.7),
     ...Fonts.btn,
   },
   birthInfo: {
     color: Colors.pink,
     ...Fonts.lb,
-  },
-  verifyButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 60,
-    backgroundColor: Colors.purple,
-  },
-  verifyText: {
-    color: Colors.white,
-    ...Fonts.t1,
   },
   genderButtonGroup: {
     display: 'flex',

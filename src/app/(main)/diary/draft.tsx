@@ -6,12 +6,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import CustomAlertModal from '@/components/common/CustomAlertModal';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
 import useDraftStore from '@/store/useDraftStore';
-import { colorWithOpacity } from '@/utils/colorUtils';
-import CustomModal from '@/components/common/CustomModal';
 import { useModalStore } from '@/store/useModalStore';
+import { colorWithOpacity } from '@/utils/colorUtils';
 
 const draftList = [
   { id: 1, title: '어쩌구 제목', date: '24.04.23', music: '밤양갱' },
@@ -95,14 +95,15 @@ const DraftScreen = () => {
           ))}
         </ScrollView>
       </View>
-      <CustomModal
+      <CustomAlertModal
         name="delete-drafts"
-        title=""
-        description="이 일기를 정말 삭제하시겠어요? 한 번 삭제하면 일기를 복구할 수 없어요."
+        title="이 일기를 정말 삭제하시겠어요?"
+        description="한 번 삭제하면 일기를 복구할 수 없어요."
         leftButtonText="아니오, 그냥 둘래요"
         rightButtonText="네 삭제할래요"
         onLeftButtonPress={closeModal}
         onRightButtonPress={handleDeleteDrafts}
+        isDelete={true}
       />
     </>
   );

@@ -1,10 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import DateTimePicker, {
   type DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
 import { router, useFocusEffect, useNavigation } from 'expo-router';
 import {
-  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -12,14 +11,15 @@ import {
   View,
 } from 'react-native';
 import DailyDiaryCard from '@/components/archive/DailyDiaryCard';
-import CustomModal from '@/components/common/CustomModal';
+import CustomAlertModal from '@/components/common/CustomAlertModal';
+import CustomBottomButton from '@/components/common/CustomBottomButton';
+import CustomSplash from '@/components/common/CustomSplash';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
 import dummy_archive_day from '@/data/dummy_archive_day.json';
 import { useModalStore } from '@/store/useModalStore';
-import useToastStore from '@/store/useToastStore';
-import CustomSplash from '@/components/common/CustomSplash';
 import { useSplashStore } from '@/store/useSplashStore';
+import useToastStore from '@/store/useToastStore';
 import {
   ArchiveCheerSvg,
   ArchiveIdeaSvg,
@@ -101,6 +101,10 @@ const CardScreen = () => {
 
   const handleSave = () => {
     // 아카이브 저장
+    // 첫번째 일기 작성시 푸시 알림 설정
+    if (isFirstDiary) {
+      openModal('push-notification');
+    }
     // 스플래시 오픈
     openSplash('archive-save');
   };
@@ -135,23 +139,15 @@ const CardScreen = () => {
             />
           </View>
         ) : (
-          <TouchableOpacity
-            style={[
-              styles.nextButton,
-              {
-                backgroundColor: Colors.purple,
-                height: Platform.OS === 'android' ? 78 : 112,
-              },
-            ]}
-            onPress={handleSave}
-          >
-            <Text style={styles.nextText}>아카이브에 저장</Text>
-          </TouchableOpacity>
+          <CustomBottomButton
+            isActive={true}
+            onPress={handleSave} // 버튼 클릭 이벤트 핸들러
+            label="아카이브에 저장"
+          />
         )}
-        <CustomModal
+        <CustomAlertModal
           name="push-notification"
           title="매일 일기 쓰는 시간에 맞춰 알려드릴까요?"
-          description=""
           leftButtonText="괜찮아요"
           rightButtonText="네, 알려주세요"
           onLeftButtonPress={handleNoPushNotification}
@@ -185,15 +181,6 @@ const styles = StyleSheet.create({
   cardContainer: {
     marginTop: 10,
     marginBottom: 130,
-  },
-  nextButton: {
-    alignItems: 'center',
-    height: 100,
-    paddingTop: 28,
-  },
-  nextText: {
-    color: Colors.white,
-    ...Fonts.t1,
   },
   // DatePicker
   pickerContainer: {
