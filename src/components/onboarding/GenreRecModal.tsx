@@ -9,7 +9,7 @@ import {
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
 import { useDimStore } from '@/store/useDimStore';
-import { colorWithOpacity } from '@/utils/colorUtils';
+import { colorWithOpacity } from '@/utils/color-utils';
 
 interface GenreRecModalProps {
   modalVisible: boolean;

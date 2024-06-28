@@ -20,7 +20,7 @@ import Tooltip from '@/components/diary/Tooltip';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
 import { useModalStore } from '@/store/useModalStore';
-import { colorWithOpacity } from '@/utils/colorUtils';
+import { colorWithOpacity } from '@/utils/color-utils';
 
 const PAGE_WIDTH = Dimensions.get('window').width;
 const PAGE_HEIGHT = Dimensions.get('window').height;

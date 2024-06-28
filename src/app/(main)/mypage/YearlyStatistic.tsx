@@ -5,9 +5,9 @@ import DropDownToggle from '@/components/mypage/DropDownToggle';
 import MyFilling from '@/components/mypage/MyFilling';
 import MusicPreference from '@/components/mypage/MusicPreference';
 import DiaryTopic from '@/components/mypage/DiaryTopic';
-import { type YearlyStatistic } from '@/interfaces';
 import yearlyData from '@/data/dummy_statistic_yearly.json';
 import DiaryYearlyGraph from '@/components/mypage/DiaryYearlyGraph';
+import { type YearlyStatistic } from '@/models/interfaces';
 
 const YearlyStatisticPage = () => {
   const [selectedValue, setSelectedValue] = useState(yearlyData[0].year);

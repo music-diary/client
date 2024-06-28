@@ -3,8 +3,8 @@ import { Link } from 'expo-router';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
 import CircleAlbum from '@/components/common/CircleAlbum';
-import { colorWithOpacity, getColorForMood } from '@/utils/colorUtils';
-import { trimTitle } from '@/utils/textUtils';
+import { colorWithOpacity, getColorForMood } from '@/utils/color-utils';
+import { trimTitle } from '@/utils/text-utils';
 
 interface DiaryDataProps {
   id: string;

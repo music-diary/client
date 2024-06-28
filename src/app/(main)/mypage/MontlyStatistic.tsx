@@ -7,8 +7,8 @@ import MyFilling from '@/components/mypage/MyFilling';
 import MusicPreference from '@/components/mypage/MusicPreference';
 import DiaryTopic from '@/components/mypage/DiaryTopic';
 import MoreInfo from '@/components/mypage/MoreInfo';
-import { type MonthlyStatistic } from '@/interfaces';
 import monthlyData from '@/data/dummy_statistic_montly.json';
+import { type MonthlyStatistic } from '@/models/interfaces';
 
 const MontlyStatisticPage = () => {
   const [selectedValue, setSelectedValue] = useState(monthlyData[0].month);

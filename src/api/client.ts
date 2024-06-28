@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getToken } from '@/utils/commonUtils';
+import { getToken } from '@/utils/common-utils';
 
 const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
