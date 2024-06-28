@@ -12,7 +12,7 @@ import { useModalStore } from '@/store/useModalStore';
 import { colorWithOpacity } from '@/utils/colorUtils';
 
 // 2줄 입력, 삭제에 따른 오른쪽 버튼 색깔은 옵셔널로 받음
-interface CustomModalProps {
+interface CustomAlertModalProps {
   name: string;
   title: string;
   description?: string;
@@ -24,7 +24,7 @@ interface CustomModalProps {
 }
 
 // 1줄만 입력시
-const firstLinestyle = ({ title }: { title: string }) => {
+const firstLineStyle = ({ title }: { title: string }) => {
   return (
     <View>
       <Text style={styles.middleText}>{title}</Text>
@@ -32,7 +32,7 @@ const firstLinestyle = ({ title }: { title: string }) => {
   );
 };
 // 2줄 입력 시
-const secondLinestyle = ({
+const secondLineStyle = ({
   title,
   description,
 }: {
@@ -56,7 +56,7 @@ const CustomAlertModal = ({
   onLeftButtonPress,
   onRightButtonPress,
   isDelete,
-}: CustomModalProps) => {
+}: CustomAlertModalProps) => {
   const { activeModal, closeModal } = useModalStore();
   return (
     <Modal
@@ -68,8 +68,8 @@ const CustomAlertModal = ({
         <View style={styles.overlay}>
           <View style={styles.container}>
             {description
-              ? secondLinestyle({ title, description })
-              : firstLinestyle({ title })}
+              ? secondLineStyle({ title, description })
+              : firstLineStyle({ title })}
             <View style={styles.buttonContainer}>
               <TouchableOpacity
                 onPress={onLeftButtonPress}
@@ -108,12 +108,12 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     backgroundColor: Colors.box,
-    padding: 22,
+    paddingVertical: 18,
+    paddingHorizontal: 20,
     width: '100%',
     borderRadius: 10,
     gap: 14,
   },
-
   buttonContainer: {
     flexDirection: 'row',
     gap: 12,
@@ -134,6 +134,7 @@ const styles = StyleSheet.create({
   middleText: {
     textAlign: 'center',
     color: Colors.white,
+    marginBottom: 6,
     ...Fonts.b2,
   },
   leftText: {

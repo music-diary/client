@@ -11,17 +11,17 @@ import {
   View,
 } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import CustomModal from '@/components/common/CustomModal';
+import CustomAlertModal from '@/components/common/CustomAlertModal';
+import CustomSplash from '@/components/common/CustomSplash';
 import SelectorButton from '@/components/diary/SelectorButton';
 import TopicButton from '@/components/diary/TopicButton';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
+import { templates } from '@/constants/data';
 import { type ITopic } from '@/models/interfaces';
 import { type Mood } from '@/models/types';
 import { useModalStore } from '@/store/useModalStore';
-import { templates } from '@/constants/data';
 import { useSplashStore } from '@/store/useSplashStore';
-import CustomSplash from '@/components/common/CustomSplash';
 import GroupSvg from 'assets/images/splash/group_dot.svg';
 
 const WriteScreen = () => {
@@ -210,7 +210,7 @@ const WriteScreen = () => {
       >
         <Text style={styles.nextText}>노래 추천받기</Text>
       </TouchableOpacity>
-      <CustomModal
+      <CustomAlertModal
         name="write-cancel"
         title="작성을 그만두시겠어요?"
         description="지금 그만두시면, 노래를 추천 받을 수 없어요."

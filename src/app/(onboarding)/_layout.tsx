@@ -1,8 +1,12 @@
 import { Stack } from 'expo-router';
 import LogoTitle from '@/components/onboarding/LogoTitle';
 import Colors from '@/constants/Colors';
+import CustomBackButton from '@/components/common/CustomBackButton';
+import { useModalStore } from '@/store/useModalStore';
 
 const LoginLayout = () => {
+  const { openModal } = useModalStore();
+
   return (
     <Stack
       screenOptions={{
@@ -11,6 +15,7 @@ const LoginLayout = () => {
         },
         headerTintColor: Colors.white,
         headerTitle: () => <LogoTitle />,
+        headerLeft: () => <CustomBackButton />,
       }}
     >
       <Stack.Screen name="index" />
@@ -26,7 +31,9 @@ const LoginLayout = () => {
         name="user-info"
         options={{
           animation: 'fade',
-          headerBackVisible: true,
+          headerLeft: () => (
+            <CustomBackButton onPress={() => openModal('sign_up-cancel')} />
+          ),
           headerBackTitleVisible: false,
         }}
       />

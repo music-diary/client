@@ -17,9 +17,12 @@ import Header from '@/components/onboarding/Header';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
 import { genders } from '@/constants/data';
+import CustomAlertModal from '@/components/common/CustomAlertModal';
+import { useModalStore } from '@/store/useModalStore';
 
 const UserInfoScreen = () => {
   const params = useLocalSearchParams();
+  const { closeModal } = useModalStore();
 
   const [name, setName] = useState('');
   const [birth, setBirth] = useState('');
@@ -127,6 +130,18 @@ const UserInfoScreen = () => {
             ? Colors.contents_light
             : Colors.purple,
         }}
+      />
+      <CustomAlertModal
+        name="sign_up-cancel"
+        title="지금 그만두시면 입력한 정보는 저장되지 않고,"
+        description="회원가입이 되지 않아요."
+        leftButtonText="그만할래요"
+        rightButtonText="계속 진행할래요"
+        onLeftButtonPress={() =>
+          console.log('모달 닫은 후 튜토리얼 화면으로 돌아감')
+        }
+        onRightButtonPress={closeModal}
+        isDelete={false}
       />
     </>
   );
