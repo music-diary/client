@@ -20,6 +20,9 @@ import { type ITopic } from '@/models/interfaces';
 import { type Mood } from '@/models/types';
 import { useModalStore } from '@/store/useModalStore';
 import { templates } from '@/constants/data';
+import { useSplashStore } from '@/store/useSplashStore';
+import CustomSplash from '@/components/common/CustomSplash';
+import GroupSvg from 'assets/images/splash/group_dot.svg';
 
 const WriteScreen = () => {
   const params = useLocalSearchParams();
@@ -29,6 +32,7 @@ const WriteScreen = () => {
   const detailedEmotionList: string[] = JSON.parse(detailedEmotions as string);
   const topicList: ITopic[] = JSON.parse(topics as string);
 
+  const { openSplash } = useSplashStore();
   const { closeModal } = useModalStore();
   const template = templates.find((t) => t.type === type);
   const scrollViewRef = useRef<ScrollView>(null);
@@ -64,9 +68,11 @@ const WriteScreen = () => {
   };
 
   const handleDraft = () => {
-    // 임시저장 로직 태울 예정
+    // 0. 모달 닫기
     closeModal();
-    router.push('/');
+    // 1. 임시 저장
+    // 2. 스플래시 화면 띄우기
+    openSplash('draft-save');
   };
 
   const handleMusicRecommendation = () => {
@@ -212,6 +218,13 @@ const WriteScreen = () => {
         rightButtonText="임시저장하고 나가기"
         onLeftButtonPress={closeModal}
         onRightButtonPress={handleDraft}
+      />
+      <CustomSplash
+        name="draft-save"
+        description={`미처 마무리 짓지 못한 일기도\n언제든 다시 적어보세요`}
+        toastMessage="임시저장 되었습니다"
+        svg={GroupSvg}
+        onClose={() => router.navigate('(main)')}
       />
     </>
   );
