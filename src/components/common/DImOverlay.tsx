@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native';
 import { useDimStore } from '@/store/useDimStore';
 import Colors from '@/constants/Colors';
-import { colorWithOpacity } from '@/utils/colorUtils';
+import { colorWithOpacity } from '@/utils/color-utils';
 
 const DImOverlay = () => {
   const { isDim } = useDimStore();

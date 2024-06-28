@@ -2,9 +2,9 @@ import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import Colors from '@/constants/Colors';
 import ConfettiIcon from 'assets/images/mypageIcon/Confetti.svg';
 import Fonts from '@/constants/Fonts';
-import { colorWithOpacity } from '@/utils/colorUtils';
-import { type DiaryYearNumberData } from '@/interfaces';
+import { colorWithOpacity } from '@/utils/color-utils';
 import LineGraph from '@/components/mypage/LineGraph';
+import { type DiaryYearNumberData } from '@/models/interfaces';
 
 const containerWidth = Dimensions.get('window').width - 32;
 

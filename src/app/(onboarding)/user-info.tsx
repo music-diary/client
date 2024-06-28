@@ -19,7 +19,7 @@ import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
 import { genders } from '@/constants/data';
 import { useModalStore } from '@/store/useModalStore';
-import { colorWithOpacity } from '@/utils/colorUtils';
+import { colorWithOpacity } from '@/utils/color-utils';
 
 const UserInfoScreen = () => {
   const params = useLocalSearchParams();

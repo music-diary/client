@@ -5,7 +5,7 @@ import Fonts from '@/constants/Fonts';
 import CircleAlbum from '@/components/common/CircleAlbum';
 import ArrowsInSimpleIcon from 'assets/images/archiveIcon/ArrowsInSimple.svg';
 import ArrowsOutSimpleIcon from 'assets/images/archiveIcon/ArrowsOutSimple.svg';
-import { colorWithOpacity, getColorForMood } from '@/utils/colorUtils';
+import { colorWithOpacity, getColorForMood } from '@/utils/color-utils';
 
 interface DiaryDataProps {
   albumCoverUrl: string;

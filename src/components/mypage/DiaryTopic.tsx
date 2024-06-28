@@ -2,8 +2,8 @@ import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import Colors from '@/constants/Colors';
 import BookOpenIcon from 'assets/images/mypageIcon/BookOpen.svg';
 import Fonts from '@/constants/Fonts';
-import { type ITopic } from '@/interfaces';
-import { colorWithOpacity } from '@/utils/colorUtils';
+import { colorWithOpacity } from '@/utils/color-utils';
+import { type ITopic } from '@/models/interfaces';
 
 const containerWidth = Dimensions.get('window').width / 2 - 24;
 

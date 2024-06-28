@@ -4,7 +4,7 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
 import { termsCheckboxes } from '@/constants/data';
-import { colorWithOpacity } from '@/utils/colorUtils';
+import { colorWithOpacity } from '@/utils/color-utils';
 import CustomBottomButton from '../common/CustomBottomButton';
 import TermsCheckbox from './TermsCheckbox';
 
