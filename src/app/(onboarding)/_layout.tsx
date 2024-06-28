@@ -16,42 +16,21 @@ const LoginLayout = () => {
         headerTintColor: Colors.white,
         headerTitle: () => <LogoTitle />,
         headerLeft: () => <CustomBackButton />,
+        animation: 'fade',
       }}
     >
-      <Stack.Screen name="index" />
-      <Stack.Screen
-        name="phone-verify"
-        options={{
-          animation: 'fade',
-          headerBackVisible: true,
-          headerBackTitleVisible: false,
-        }}
-      />
+      <Stack.Screen name="index" options={{ headerLeft: () => null }} />
+      <Stack.Screen name="phone-verify" />
       <Stack.Screen
         name="user-info"
         options={{
-          animation: 'fade',
           headerLeft: () => (
             <CustomBackButton onPress={() => openModal('sign_up-cancel')} />
           ),
-          headerBackTitleVisible: false,
         }}
       />
-      <Stack.Screen
-        name="genre"
-        options={{
-          animation: 'fade',
-          headerBackVisible: true,
-          headerBackTitleVisible: false,
-        }}
-      />
-      <Stack.Screen
-        name="complete"
-        options={{
-          animation: 'fade',
-          headerBackVisible: false,
-        }}
-      />
+      <Stack.Screen name="genre" />
+      <Stack.Screen name="complete" />
     </Stack>
   );
 };

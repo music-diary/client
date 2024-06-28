@@ -5,6 +5,7 @@ import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
 import useDraftStore from '@/store/useDraftStore';
 import { useModalStore } from '@/store/useModalStore';
+import CustomBackButton from '../common/CustomBackButton';
 
 const HeaderRightDraft = () => {
   const navigation = useNavigation();
@@ -21,13 +22,14 @@ const HeaderRightDraft = () => {
 
   useEffect(() => {
     navigation.setOptions({
-      headerBackVisible: !isEditMode,
       headerLeft: () =>
         isEditMode ? (
           <TouchableOpacity onPress={toggleEditMode}>
             <Text style={styles.cancelText}>취소</Text>
           </TouchableOpacity>
-        ) : null,
+        ) : (
+          <CustomBackButton />
+        ),
     });
   }, [isEditMode]);
 

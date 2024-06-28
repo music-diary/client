@@ -82,11 +82,11 @@ function RootLayoutNav() {
             value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
           >
             <Stack>
-              <Stack.Screen name="(main)" options={{ headerShown: false }} />
               <Stack.Screen
                 name="(onboarding)"
                 options={{ headerShown: false }}
               />
+              <Stack.Screen name="(main)" options={{ headerShown: false }} />
               <Stack.Screen name="intro" options={{ headerShown: false }} />
               <Stack.Screen name="(modals)" options={{ headerShown: false }} />
             </Stack>
