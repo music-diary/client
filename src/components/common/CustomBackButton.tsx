@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
 import { TouchableOpacity, StyleSheet } from 'react-native';
-import BackIcon from 'assets/images/commonIcon/Back.svg';
+import { BackSvg } from 'assets/images/common';
 
 interface CustomBackButtonProps {
   onPress?: () => void;
@@ -19,7 +19,7 @@ function CustomBackButton({ onPress }: CustomBackButtonProps) {
 
   return (
     <TouchableOpacity style={styles.backButton} onPress={handlePress}>
-      <BackIcon />
+      <BackSvg />
     </TouchableOpacity>
   );
 }

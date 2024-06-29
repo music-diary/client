@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Fonts from '@/constants/Fonts';
 import Colors from '@/constants/Colors';
-import ArrowBackIcon from 'assets/images/homeIcon/ArrowBack.svg';
+import { ArrowButtonSvg } from 'assets/images/home';
 
 // toISOString()를 한국 시간으로 변환
 const formatKST = (date: Date) => {
@@ -82,10 +82,10 @@ const WeekCalendar = () => {
         </Text>
         <View style={styles.arrow}>
           <TouchableOpacity onPress={prevWeek}>
-            <ArrowBackIcon />
+            <ArrowButtonSvg />
           </TouchableOpacity>
           <TouchableOpacity onPress={nextWeek} style={styles.forwardArrow}>
-            <ArrowBackIcon />
+            <ArrowButtonSvg />
           </TouchableOpacity>
         </View>
       </View>

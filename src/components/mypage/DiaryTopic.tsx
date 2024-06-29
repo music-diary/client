@@ -1,6 +1,6 @@
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import Colors from '@/constants/Colors';
-import BookOpenIcon from 'assets/images/mypageIcon/BookOpen.svg';
+import { BookOpenSvg } from 'assets/images/mypage';
 import Fonts from '@/constants/Fonts';
 import { colorWithOpacity } from '@/utils/color-utils';
 import { type ITopic } from '@/models/interfaces';
@@ -28,7 +28,7 @@ const DiaryTopic = ({ Topic }: DiaryTopicProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.title}>
-        <BookOpenIcon />
+        <BookOpenSvg />
         <Text style={styles.buttonText}>일기 주제</Text>
       </View>
       <Text style={styles.bodyText}>

@@ -1,6 +1,6 @@
 import { ScrollView, StyleSheet, View } from 'react-native';
 import Colors from '@/constants/Colors';
-import HappyIcon from 'assets/images/happy.svg';
+import { HappySvg } from 'assets/images/common';
 import CircleAlbum from '../common/CircleAlbum';
 
 const MonthlyMusicList = () => {
@@ -16,7 +16,7 @@ const MonthlyMusicList = () => {
     <View style={styles.container}>
       <View style={styles.body}>
         <View style={styles.albumStart}>
-          <HappyIcon width={52} height={52} fill={Colors.green} />
+          <HappySvg width={52} height={52} fill={Colors.green} />
         </View>
         <ScrollView
           style={styles.circleStart}

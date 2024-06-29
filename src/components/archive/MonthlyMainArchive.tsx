@@ -9,9 +9,7 @@ import {
 } from 'react-native';
 import { Link } from 'expo-router';
 import Colors from '@/constants/Colors';
-import HappyIcon from 'assets/images/happy.svg';
-import SosoIcon from 'assets/images/soso.svg';
-import BadIcon from 'assets/images/bad.svg';
+import { BadSvg, HappySvg, SosoSvg } from 'assets/images/common';
 import Fonts from '@/constants/Fonts';
 import { colorWithOpacity } from '@/utils/color-utils';
 import { trimTitle } from '@/utils/text-utils';
@@ -48,19 +46,19 @@ const EmotionImage = ({ mood }: { mood: string }) => {
     case 'Positive':
       return (
         <View style={styles.emotion}>
-          <HappyIcon width={120} height={120} fill={Colors.green} />
+          <HappySvg width={120} height={120} fill={Colors.green} />
         </View>
       );
     case 'Negative':
       return (
         <View style={styles.emotion}>
-          <BadIcon width={125} height={125} fill={Colors.blue} />
+          <BadSvg width={125} height={125} fill={Colors.blue} />
         </View>
       );
     case 'Neutral':
       return (
         <View style={styles.emotion}>
-          <SosoIcon width={125} height={125} fill={Colors.purple} />
+          <SosoSvg width={125} height={125} fill={Colors.purple} />
         </View>
       );
     default:

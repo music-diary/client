@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import Colors from '@/constants/Colors';
-import SmileyIcon from 'assets/images/mypageIcon/Smiley.svg';
+import { SmileySvg } from 'assets/images/mypage';
 import Fonts from '@/constants/Fonts';
 import EmotionIcon from '@/components/mypage/EmotionIcon';
 import { colorWithOpacity } from '@/utils/color-utils';
@@ -47,7 +47,7 @@ const MyFilling = ({ fillingData }: MyFillingDataProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.title}>
-        <SmileyIcon />
+        <SmileySvg />
         <Text style={styles.buttonText}>내 감정</Text>
       </View>
       <Text style={styles.bodyText}>

@@ -6,8 +6,7 @@ import DailyDiaryCard from '@/components/archive/DailyDiaryCard';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
 import { useModalToggleStore, useModalStore } from '@/store/useModalStore';
-import UploadIcon from 'assets/images/archiveIcon/Upload.svg';
-import TrashIcon from 'assets/images/archiveIcon/Trash.svg';
+import { TrashSvg, UploadSvg } from 'assets/images/archive';
 import CustomAlertModal from '@/components/common/CustomAlertModal';
 
 export interface DailyDiaryData {
@@ -34,12 +33,12 @@ const ModalOpenView = ({
     <View style={styles.modal}>
       <TouchableOpacity style={styles.modalContent} onPress={onSharePress}>
         <Text style={styles.b1WhiteText}>공유</Text>
-        <UploadIcon fill={Colors.white} />
+        <UploadSvg fill={Colors.white} />
       </TouchableOpacity>
       <View style={styles.divider} />
       <TouchableOpacity style={styles.modalContent} onPress={onDeletePress}>
         <Text style={styles.b1RedText}>삭제</Text>
-        <TrashIcon fill={Colors.red} />
+        <TrashSvg fill={Colors.red} />
       </TouchableOpacity>
     </View>
   );

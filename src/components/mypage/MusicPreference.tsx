@@ -1,6 +1,6 @@
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import Colors from '@/constants/Colors';
-import MusicNotesIcon from 'assets/images/mypageIcon/MusicNotes.svg';
+import { MusicNotesSvg } from 'assets/images/mypage';
 import Fonts from '@/constants/Fonts';
 import { colorWithOpacity } from '@/utils/color-utils';
 import PreferenceGraph from '@/components/mypage/PreferenceGraph';
@@ -39,7 +39,7 @@ const MusicPreference = ({ musicCount, isYearly }: MusicPreferenceProps) => {
   return (
     <View style={[styles.container, { width: componentWidth }]}>
       <View style={styles.title}>
-        <MusicNotesIcon />
+        <MusicNotesSvg />
         <Text style={styles.buttonText}>내 음악취향</Text>
       </View>
       <Text style={styles.bodyText}>

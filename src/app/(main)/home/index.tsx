@@ -2,6 +2,7 @@ import React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { ProfileSvg } from 'assets/images/home';
 import WeekCalendar from '@/components/home/WeekCalender';
 import MonthlyMusicList from '@/components/home/MonthlyMusicList';
 import CharacterAnimation from '@/components/home/CharacterAnimation';
@@ -9,7 +10,6 @@ import Fonts from '@/constants/Fonts';
 import Colors from '@/constants/Colors';
 import TopDescription from '@/components/home/TopDescription';
 import NewUserDescription from '@/components/home/NewUserDescription';
-import MypageIcon from 'assets/images/homeIcon/MyPage.svg';
 
 const HomeScreen = () => {
   // 월간 작성 개수 -> dummy data
@@ -32,7 +32,7 @@ const HomeScreen = () => {
             <View style={styles.topBar}>
               <Text style={styles.logoText}>Logo</Text>
               <TouchableOpacity onPress={handlePersonClick}>
-                <MypageIcon />
+                <ProfileSvg />
               </TouchableOpacity>
             </View>
             <TopDescription count={diaryCount} name={name} />

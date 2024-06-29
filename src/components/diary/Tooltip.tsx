@@ -5,12 +5,12 @@ import {
   TouchableOpacity,
   Modal,
   StyleSheet,
-  Image,
   type ImageSourcePropType,
 } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
+import { TooltipSvg } from 'assets/images/diary';
 
 interface CustomTooltipProps {
   tooltipText?: string;
@@ -23,10 +23,7 @@ const Tooltip = ({ tooltipText }: CustomTooltipProps) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => setVisible(true)}>
-        <Image
-          source={require('assets/images/tooltip.png')}
-          style={styles.icon}
-        />
+        <TooltipSvg />
       </TouchableOpacity>
 
       <Modal
@@ -67,11 +64,6 @@ export default Tooltip;
 const styles = StyleSheet.create({
   container: {
     position: 'relative',
-  },
-  icon: {
-    width: 14,
-    height: 14,
-    padding: 2,
   },
   modalOverlay: {
     flex: 1,

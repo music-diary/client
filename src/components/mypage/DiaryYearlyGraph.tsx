@@ -1,6 +1,6 @@
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import Colors from '@/constants/Colors';
-import ConfettiIcon from 'assets/images/mypageIcon/Confetti.svg';
+import { ConfettiSvg } from 'assets/images/mypage';
 import Fonts from '@/constants/Fonts';
 import { colorWithOpacity } from '@/utils/color-utils';
 import LineGraph from '@/components/mypage/LineGraph';
@@ -12,7 +12,7 @@ const DiaryYearlyGraph = ({ average, monthlyData }: DiaryYearNumberData) => {
   return (
     <View style={styles.container}>
       <View style={styles.title}>
-        <ConfettiIcon />
+        <ConfettiSvg />
         <Text style={styles.titleText}>작성한 음악일기</Text>
       </View>
       <Text style={styles.bodyText}>

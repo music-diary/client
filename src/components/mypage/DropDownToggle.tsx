@@ -10,7 +10,7 @@ import {
 import { colorWithOpacity } from '@/utils/color-utils';
 import Fonts from '@/constants/Fonts';
 import Colors from '@/constants/Colors';
-import ArrowDown from 'assets/images/mypageIcon/ArrowDown.svg';
+import { ArrowDownSvg } from 'assets/images/mypage';
 
 interface DropdownComponentProps {
   data: string[];
@@ -51,7 +51,7 @@ const DropDownToggle = ({
       <Pressable onPress={toggleDropdown}>
         <View style={styles.title}>
           <Text style={styles.buttonText}>{selectedValue} </Text>
-          <ArrowDown fill={Colors.white} />
+          <ArrowDownSvg fill={Colors.white} />
         </View>
       </Pressable>
       {isDropdownVisible && (

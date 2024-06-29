@@ -3,7 +3,7 @@ import { Dimensions, StyleSheet, View } from 'react-native';
 import { Foundation, Feather, FontAwesome6 } from '@expo/vector-icons';
 import { useClientOnlyValue } from '@/hooks/useClientOnlyValue';
 import Colors from '@/constants/Colors';
-import TempBottomBar from 'assets/images/BottombarIcon';
+import BottomBarIcon from '@/components/common/BottomBarIcon';
 
 const ratio = 435 / 375;
 const currentWidth = Dimensions.get('window').width * ratio;
@@ -32,7 +32,7 @@ export default function TabLayout() {
 
         tabBarBackground: () => (
           <View style={styles.layout}>
-            <TempBottomBar
+            <BottomBarIcon
               color={Colors.grey3}
               width={currentWidth}
               height={currentHeight}

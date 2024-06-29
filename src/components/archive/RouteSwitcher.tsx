@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { router, usePathname } from 'expo-router';
+import {
+  CardsThreeSvg,
+  CalendarDotsSvg,
+  SquaresFourSvg,
+} from 'assets/images/archive';
 import Colors from '@/constants/Colors';
-import CardsThreeIcon from 'assets/images/archiveIcon/CardsThree.svg';
-import CalendarDotsIcon from 'assets/images/archiveIcon/CalendarDots.svg';
-import SquaresFourIcon from 'assets/images/archiveIcon/SquaresFour.svg';
 
 type ViewMode = 'monthly' | 'daily' | 'calendar' | 'grid';
 
@@ -52,15 +54,15 @@ const RouteSwitcher = () => {
     <>
       <View style={styles.container}>
         <TouchableOpacity onPress={handleMonthClick} style={styles.icon}>
-          <CardsThreeIcon fill={getIconColor('monthly')} />
+          <CardsThreeSvg fill={getIconColor('monthly')} />
           <View style={getUnderline('monthly')} />
         </TouchableOpacity>
         <TouchableOpacity onPress={handleCalendarClick} style={styles.icon}>
-          <CalendarDotsIcon fill={getIconColor('calendar')} />
+          <CalendarDotsSvg fill={getIconColor('calendar')} />
           <View style={getUnderline('calendar')} />
         </TouchableOpacity>
         <TouchableOpacity onPress={handleArchiveClick} style={styles.icon}>
-          <SquaresFourIcon fill={getIconColor('grid')} />
+          <SquaresFourSvg fill={getIconColor('grid')} />
           <View style={getUnderline('grid')} />
         </TouchableOpacity>
       </View>
