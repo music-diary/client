@@ -68,7 +68,7 @@ const EmotionImage = ({ mood }: { mood: string }) => {
   }
 };
 
-const MontlyMainArchive = ({
+const MonthlyMainArchive = ({
   id,
   month,
   mood,
@@ -111,7 +111,7 @@ const MontlyMainArchive = ({
   );
 };
 
-export default MontlyMainArchive;
+export default MonthlyMainArchive;
 
 const styles = StyleSheet.create({
   fullContainer: {

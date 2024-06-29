@@ -22,7 +22,7 @@ import ChartPieIcon from 'assets/images/mypageIcon/ChartPie.svg';
 import DefaultProfileIcon from 'assets/images/mypageIcon/DefaultProfile.svg';
 import { colorWithOpacity } from '@/utils/color-utils';
 import CustomBottomSheetModal from '@/components/common/CustomBottomSheetModal';
-import { formatTime, getCurrentYearMonth } from '@/utils/date-utils';
+import { formatToMeridiemTime, formatToYearMonth } from '@/utils/date-utils';
 import CustomAlertModal from '@/components/common/CustomAlertModal';
 import { useModalStore } from '@/store/useModalStore';
 
@@ -53,21 +53,21 @@ const MypageScreen = () => {
     setMarketingToggled(state);
   };
 
-  /* onpress시 라우터 이동 설정 */
+  /* onPress시 라우터 이동 설정 */
   // 통계 페이지로 이동
   const onPressStatistics = () => {
     router.push('/(main)/mypage/statistic');
   };
 
-  // onpress시 editprofile로 이동
+  // onPress시 edit Profile로 이동
   const onPressEditProfile = () => {
-    router.push('/(main)/mypage/editprofile');
+    router.push('/(main)/mypage/edit');
   };
-  // onpress시 inquiry(문의사항)으로 이동
+  // onPress시 inquiry(문의사항)으로 이동
   const onPressInquiry = () => {
     router.push('/(main)/mypage/inquiry');
   };
-  // onpress시 withdrawal(회원탈퇴)으로 이동
+  // onPress시 withdrawal(회원탈퇴)으로 이동
   const onPressWithdrawal = () => {
     router.push('/(main)/mypage/withdrawal');
   };
@@ -85,7 +85,7 @@ const MypageScreen = () => {
     '랩/힙합',
   ]);
   // 임시로 선택된 장르 상태 관리
-  const [tempSelectedGenres, settempSelectedGenres] =
+  const [tempSelectedGenres, setTempSelectedGenres] =
     useState<string[]>(selectedGenres);
 
   const handleSave = () => {
@@ -100,7 +100,7 @@ const MypageScreen = () => {
     setDiaryTime(tempDiaryTime);
     setDiaryModalVisible(false);
   };
-  const formattedDiaryTime = formatTime(diaryTime);
+  const formattedDiaryTime = formatToMeridiemTime(diaryTime);
 
   // 로그아웃 모달
   const { openModal, closeModal } = useModalStore();
@@ -119,7 +119,7 @@ const MypageScreen = () => {
     <ScrollView style={styles.container}>
       {/* 헤더 */}
       <View style={styles.header}>
-        <View style={styles.headerleft}>
+        <View style={styles.headerLeft}>
           <View style={styles.profileImage}>
             <DefaultProfileIcon />
           </View>
@@ -129,7 +129,7 @@ const MypageScreen = () => {
           <Text style={styles.profileInfo}>
             <Text style={{ color: Colors.purple }}>Miya</Text>님과 함께한 지
             {'\n'}
-            <View style={{ paddingVertical: 12 }} />
+            <View style={{ paddingVertical: 10 }} />
             <Text style={{ color: Colors.purple }}>60일</Text>이 되었어요
           </Text>
         </View>
@@ -143,24 +143,24 @@ const MypageScreen = () => {
         </View>
       </View>
       {/* 헤더 컨텐츠 */}
-      <Text style={styles.dateText}>{getCurrentYearMonth(new Date())}</Text>
+      <Text style={styles.dateText}>{formatToYearMonth(new Date())}</Text>
       <TouchableOpacity
         style={styles.headerContent}
         onPress={onPressStatistics}
       >
         <ChartPieIcon />
-        <Text style={styles.textb2sb}>통계보기</Text>
+        <Text style={styles.textB2sb}>통계보기</Text>
       </TouchableOpacity>
       {/* 바디1 */}
       <View style={styles.body1}>
         <View style={styles.bodyRoute}>
-          <Text style={styles.textb1}>내 음악 취향</Text>
+          <Text style={styles.textB1}>내 음악 취향</Text>
 
           <TouchableOpacity
-            style={styles.musicflaver}
+            style={styles.musicFlavor}
             onPress={handleMusicFlavorToggleChange}
           >
-            <Text style={styles.musicflaverText}>팝, 힙합 외 2</Text>
+            <Text style={styles.musicFlavorText}>팝, 힙합 외 2</Text>
             <MaterialIcons
               name="arrow-forward-ios"
               size={14}
@@ -169,7 +169,7 @@ const MypageScreen = () => {
           </TouchableOpacity>
         </View>
         <View style={styles.bodyRoute}>
-          <Text style={styles.textb1}>다양한 장르 추천받기</Text>
+          <Text style={styles.textB1}>다양한 장르 추천받기</Text>
           <CustomToggle
             isToggled={isGenreToggled}
             onToggleChange={handleToggleChange}
@@ -178,12 +178,12 @@ const MypageScreen = () => {
         {/* 바디2 */}
         <View style={styles.divider} />
         <View style={styles.body2}>
-          <Text style={styles.textb1}>서비스 알림</Text>
+          <Text style={styles.textB1}>서비스 알림</Text>
           <View style={styles.bodyRoute}>
-            <Text style={styles.textb1Gray1}>일기 알림</Text>
+            <Text style={styles.textB1Gray1}>일기 알림</Text>
             <View style={styles.diaryTime}>
               <Pressable onPress={() => handleDiaryToggleChange(true)}>
-                <Text style={styles.textb2}>{formattedDiaryTime}</Text>
+                <Text style={styles.textB2}>{formattedDiaryTime}</Text>
               </Pressable>
               <CustomToggle
                 isToggled={isDiaryToggled}
@@ -192,7 +192,7 @@ const MypageScreen = () => {
             </View>
           </View>
           <View style={styles.bodyRoute}>
-            <Text style={styles.textb1Gray2}>마케팅 알림</Text>
+            <Text style={styles.textB1Gray2}>마케팅 알림</Text>
             <CustomToggle
               isToggled={marketingToggled}
               onToggleChange={handleEtcToggleChange}
@@ -216,7 +216,7 @@ const MypageScreen = () => {
         <View style={styles.divider} />
         <View style={styles.body3}>
           <TouchableOpacity onPress={openLogoutModal}>
-            <Text style={styles.textb1}>로그아웃</Text>
+            <Text style={styles.textB1}>로그아웃</Text>
             <CustomAlertModal
               name="logout-confirm-modal"
               title="로그아웃하시겠어요?"
@@ -248,7 +248,7 @@ const MypageScreen = () => {
       >
         <MusicSelection
           selectedGenres={tempSelectedGenres}
-          setSelectedGenres={settempSelectedGenres}
+          setSelectedGenres={setTempSelectedGenres}
         />
       </CustomBottomSheetModal>
       {/* 일기 알람 모달 */}
@@ -291,7 +291,7 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     paddingBottom: 24,
   },
-  headerleft: {
+  headerLeft: {
     backgroundColor: Colors.black,
     flexDirection: 'row',
     alignItems: 'center',
@@ -318,10 +318,7 @@ const styles = StyleSheet.create({
   profileInfo: {
     paddingLeft: 16,
     color: Colors.white,
-    // fontfamily 확인 필요
-    fontSize: 18,
-    fontFamily: 'pret-b',
-    // ...Fonts.t1,
+    ...Fonts.t1,
   },
   headerRight: {
     flexDirection: 'row',
@@ -361,28 +358,28 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  textb1: {
+  textB1: {
     color: Colors.white,
     ...Fonts.b1,
   },
-  textb1Gray1: {
+  textB1Gray1: {
     color: Colors.grey1,
     ...Fonts.b1,
     paddingLeft: 14,
   },
-  textb1Gray2: {
+  textB1Gray2: {
     color: Colors.grey1,
     ...Fonts.b1,
   },
-  textb2sb: {
+  textB2sb: {
     color: Colors.white,
     ...Fonts.b2_sb,
   },
-  textb2: {
+  textB2: {
     color: Colors.white,
     ...Fonts.b2,
   },
-  musicflaver: {
+  musicFlavor: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 4,
@@ -392,7 +389,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 10,
   },
-  musicflaverText: {
+  musicFlavorText: {
     color: Colors.purple,
     ...Fonts.b2,
   },

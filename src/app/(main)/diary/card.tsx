@@ -55,7 +55,7 @@ const CardScreen = () => {
 
   const handleNoPushNotification = () => {
     closeModal();
-    return router.replace('/(main)/archive/archivegrid');
+    return router.replace('/(main)/archive/grid');
   };
 
   const handlePushNotification = () => {
@@ -73,7 +73,7 @@ const CardScreen = () => {
   const cancelDateSelection = () => {
     setSelectedDate(new Date());
     setShowPicker(false);
-    return router.replace('/(main)/archive/archivegrid');
+    return router.replace('/(main)/archive/grid');
   };
 
   const confirmDateSelection = () => {
@@ -83,7 +83,7 @@ const CardScreen = () => {
     // 일기 푸시 알림 설정 로직 작성 예정
 
     showToast('일기 알림이 설정되었습니다', 2000, () =>
-      router.replace('/(main)/archive/archivegrid'),
+      router.replace('/(main)/archive/grid'),
     );
   };
 

@@ -35,7 +35,7 @@ const YearlyStatisticPage = () => {
       <View style={styles.bodyContainer}>
         <DiaryYearlyGraph
           average={selectedData.DiaryYearNumberData.average}
-          monthlydata={selectedData.DiaryYearNumberData.monthlydata}
+          monthlyData={selectedData.DiaryYearNumberData.monthlyData}
         />
         <MusicPreference
           musicCount={selectedData.MusicPreferenceData.musicCount}

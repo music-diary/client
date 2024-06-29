@@ -11,7 +11,7 @@ interface BodyNavigatorProps {
 const BodyNavigator = ({ content, onPress }: BodyNavigatorProps) => {
   return (
     <TouchableOpacity style={styles.bodyRoute} onPress={onPress}>
-      <Text style={styles.textb2}>{content}</Text>
+      <Text style={styles.textB2}>{content}</Text>
       <MaterialIcons name="arrow-forward-ios" size={14} color={Colors.white} />
     </TouchableOpacity>
   );
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  textb2: {
+  textB2: {
     color: Colors.white,
     ...Fonts.b1,
   },

@@ -11,7 +11,7 @@ const formatKST = (date: Date) => {
   return koreaDate.toISOString().split('T')[0];
 };
 
-const cvtDatetoWeekStr = (date: Date): { weekStart: Date; weekEnd: Date } => {
+const cvtDateToWeekStr = (date: Date): { weekStart: Date; weekEnd: Date } => {
   const weekStart = new Date(date);
   weekStart.setDate(weekStart.getDate() - weekStart.getDay()); // 시작일: 일요일로 설정
 
@@ -39,7 +39,7 @@ const moveWeek = (date: Date, type: 'prev' | 'post') => {
 
 const WeekCalendar = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const { weekStart } = cvtDatetoWeekStr(selectedDate);
+  const { weekStart } = cvtDateToWeekStr(selectedDate);
 
   const koreaDate = formatKST(new Date());
   const today = koreaDate.split('-');
@@ -76,7 +76,7 @@ const WeekCalendar = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.calanderTop}>
+      <View style={styles.calendarTop}>
         <Text style={styles.currentDate}>
           {displayYear}년 {displayMonth}월
         </Text>
@@ -89,7 +89,7 @@ const WeekCalendar = () => {
           </TouchableOpacity>
         </View>
       </View>
-      <View style={styles.calanderBody}>
+      <View style={styles.calendarBody}>
         <View style={styles.week}>
           {weekName.map((name, index) => (
             <Text key={index} style={styles.weekText}>
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   container: {
     marginRight: 16, // 수정 필요
   },
-  calanderTop: {
+  calendarTop: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
   forwardArrow: {
     transform: [{ rotate: '180deg' }],
   },
-  calanderBody: {
+  calendarBody: {
     height: 84,
     backgroundColor: Colors.bg_light,
     borderRadius: 10,

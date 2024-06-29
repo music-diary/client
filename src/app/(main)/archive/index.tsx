@@ -6,7 +6,7 @@ import DailyMainArchive from '@/components/archive/DailyMainArchive';
 import dummy_archive_recommend from '@/data/dummy_archive_recommend.json';
 import RecommendMusic from '@/components/archive/RecommendMusic';
 import RouteSwitcher from '@/components/archive/RouteSwitcher';
-import { getCurrentYearMonth } from '@/utils/date-utils';
+import { formatToYearMonth } from '@/utils/date-utils';
 
 interface DiaryData {
   id: string;
@@ -42,7 +42,7 @@ const MonthScreen = () => {
         <RouteSwitcher />
       </View>
       <ScrollView style={styles.container}>
-        <Text style={styles.headerText}>{getCurrentYearMonth(new Date())}</Text>
+        <Text style={styles.headerText}>{formatToYearMonth(new Date())}</Text>
         <ScrollView
           horizontal={true}
           showsHorizontalScrollIndicator={false}

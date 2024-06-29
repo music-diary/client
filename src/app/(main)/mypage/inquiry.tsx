@@ -134,7 +134,7 @@ const inquiry = () => {
           </View>
           <Text style={styles.titleText}>상세 내용을 입력해주세요.</Text>
 
-          <View style={styles.inputboxContainer}>
+          <View style={styles.inputBoxContainer}>
             {/* Placeholder 스타일링 */}
             {extraReason === '' && (
               <Text style={styles.placeholder}>
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
     gap: 14,
     marginTop: 14,
   },
-  inputboxContainer: {
+  inputBoxContainer: {
     position: 'relative',
     marginTop: 10,
   },

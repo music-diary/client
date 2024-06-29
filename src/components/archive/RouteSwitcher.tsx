@@ -6,7 +6,7 @@ import CardsThreeIcon from 'assets/images/archiveIcon/CardsThree.svg';
 import CalendarDotsIcon from 'assets/images/archiveIcon/CalendarDots.svg';
 import SquaresFourIcon from 'assets/images/archiveIcon/SquaresFour.svg';
 
-type ViewMode = 'monthly' | 'daily' | 'calendar' | 'archivegrid';
+type ViewMode = 'monthly' | 'daily' | 'calendar' | 'grid';
 
 const RouteSwitcher = () => {
   const [activeView, setActiveView] = useState<ViewMode | null>(null);
@@ -17,8 +17,8 @@ const RouteSwitcher = () => {
   useEffect(() => {
     if (pathname.includes('/archive/calendar')) {
       setActiveView('calendar');
-    } else if (pathname.includes('/archive/archivegrid')) {
-      setActiveView('archivegrid');
+    } else if (pathname.includes('/archive/grid')) {
+      setActiveView('grid');
     } else if (pathname.includes('/archive')) {
       setActiveView('monthly');
     } else {
@@ -31,7 +31,7 @@ const RouteSwitcher = () => {
     return activeView === viewMode ? Colors.white : Colors.bg_light;
   };
 
-  // 만약 activeview상태이면 밑줄 생성
+  // 만약 active view상태이면 밑줄 생성
   const getUnderline = (viewMode: ViewMode) => {
     return activeView === viewMode ? styles.highlight : null;
   };
@@ -41,7 +41,7 @@ const RouteSwitcher = () => {
   };
 
   const handleArchiveClick = () => {
-    router.navigate('(main)/archive/archivegrid');
+    router.navigate('(main)/archive/grid');
   };
 
   const handleMonthClick = () => {
@@ -60,8 +60,8 @@ const RouteSwitcher = () => {
           <View style={getUnderline('calendar')} />
         </TouchableOpacity>
         <TouchableOpacity onPress={handleArchiveClick} style={styles.icon}>
-          <SquaresFourIcon fill={getIconColor('archivegrid')} />
-          <View style={getUnderline('archivegrid')} />
+          <SquaresFourIcon fill={getIconColor('grid')} />
+          <View style={getUnderline('grid')} />
         </TouchableOpacity>
       </View>
       <View style={styles.underline} />

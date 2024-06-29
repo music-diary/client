@@ -8,7 +8,7 @@ import { type DiaryYearNumberData } from '@/models/interfaces';
 
 const containerWidth = Dimensions.get('window').width - 32;
 
-const DiaryYearlyGraph = ({ average, monthlydata }: DiaryYearNumberData) => {
+const DiaryYearlyGraph = ({ average, monthlyData }: DiaryYearNumberData) => {
   return (
     <View style={styles.container}>
       <View style={styles.title}>
@@ -24,7 +24,7 @@ const DiaryYearlyGraph = ({ average, monthlydata }: DiaryYearNumberData) => {
           월 평균 <Text style={styles.boxHighlight}>{average}회</Text> 작성
         </Text>
       </View>
-      <LineGraph data={monthlydata} />
+      <LineGraph data={monthlyData} />
     </View>
   );
 };

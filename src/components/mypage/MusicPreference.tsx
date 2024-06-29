@@ -32,7 +32,7 @@ const MusicPreference = ({ musicCount, isYearly }: MusicPreferenceProps) => {
   };
 
   const graphData = generateGraphData(); // 변환된 데이터
-  const graphtotal = graphData.reduce((acc, item) => acc + item.count, 0); // count 총합
+  const graphTotal = graphData.reduce((acc, item) => acc + item.count, 0); // count 총합
 
   const componentWidth = isYearly ? containerYearlyWidth : containerWidth;
 
@@ -51,7 +51,7 @@ const MusicPreference = ({ musicCount, isYearly }: MusicPreferenceProps) => {
         </Text>
         장르를 많이 기록했어요.
       </Text>
-      <PreferenceGraph data={graphData} total={graphtotal} />
+      <PreferenceGraph data={graphData} total={graphTotal} />
       <View style={styles.genreContainer}>
         {graphData.map((genre, index) => (
           <View key={index} style={styles.genreItem}>

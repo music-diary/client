@@ -16,33 +16,34 @@ import RouteSwitcher from '@/components/archive/RouteSwitcher';
 
 interface customDayComponentProps {
   date: DateData;
-  imageuri?: string;
+  imageUri?: string;
 }
-const customDayComponent = ({ date, imageuri }: customDayComponentProps) => {
-  // datedata 형식 확인
+const customDayComponent = ({ date, imageUri }: customDayComponentProps) => {
+  // dateData 형식 확인
   const handleDateClick = (dd: DateData) => {
-    console.log('🚀 ~ file: calendar.tsx:22 ~ handleDateClick ~ dd:', dd);
+    // console.log('🚀 ~ file: calendar.tsx:22 ~ handleDateClick ~ dd:', dd);
+    // 추후 날짜 누르면 이동하게 구현
   };
 
   // temp date (임시 설정)
-  const tempdate = 'archive/day/3%EC%9B%94%202%EC%9D%BC';
+  const tempDate = 'archive/day/3%EC%9B%94%202%EC%9D%BC';
   const handleAlbumClick = (date: DateData) => {
     console.log(
       '🚀 ~ file: calendar.tsx:26 ~ handleAlbumClick ~ date:',
       date.dateString,
     );
-    router.push(tempdate);
+    router.push(tempDate);
   };
 
   return (
     <View style={styles.dayContainer}>
-      {imageuri ? (
+      {imageUri ? (
         <TouchableOpacity
           style={styles.albumContainer}
           onPress={() => handleAlbumClick(date)}
         >
           <View style={styles.albumImageContainer}>
-            <Image source={{ uri: imageuri }} style={styles.albumImage} />
+            <Image source={{ uri: imageUri }} style={styles.albumImage} />
           </View>
           <Text style={styles.whiteText}>{date.day}</Text>
         </TouchableOpacity>
@@ -102,7 +103,7 @@ const CalendarView = () => {
             dayComponent={({ date, state }) =>
               customDayComponent({
                 date: date as DateData,
-                imageuri: date
+                imageUri: date
                   ? getImageUriForDate(date.dateString)
                   : undefined,
               })
@@ -111,7 +112,10 @@ const CalendarView = () => {
         </>
       ) : (
         <>
-          <ActivityIndicator style={styles.loadingContainer} color="#793FB5" />
+          <ActivityIndicator
+            style={styles.loadingContainer}
+            color={Colors.purple}
+          />
         </>
       )}
     </View>

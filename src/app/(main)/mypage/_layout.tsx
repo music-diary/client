@@ -22,7 +22,7 @@ export default function MypageLayout() {
         }}
       />
       <Stack.Screen
-        name="editprofile"
+        name="edit"
         options={{
           title: '프로필 수정',
           headerTitle: () => <HeaderTitle title="프로필 수정" />,

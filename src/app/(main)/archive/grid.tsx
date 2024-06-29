@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
 import Colors from '@/constants/Colors';
 import dummy_archive_main from '@/data/dummy_archive_main.json';
-import MontlyMainArchive from '@/components/archive/MontlyMainArchive';
+import MonthlyMainArchive from '@/components/archive/MonthlyMainArchive';
 import RouteSwitcher from '@/components/archive/RouteSwitcher';
 
 interface DiaryEntryData {
@@ -33,7 +33,7 @@ const ArchiveScreen = () => {
         columnWrapperStyle={styles.columnWrapper}
         renderItem={({ item }) => (
           <View style={styles.gridItem}>
-            <MontlyMainArchive {...item} />
+            <MonthlyMainArchive {...item} />
           </View>
         )}
         contentContainerStyle={styles.contentContainer}

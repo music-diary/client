@@ -14,7 +14,7 @@
 // // import FriendInfo from '@/components/mypage/FriendInfo';
 // import AddFriendAlert from '@/components/mypage/AddFriendAlert';
 
-// const myfriend = () => {
+// const myFriend = () => {
 //   const [isToggled, setIsToggled] = useState(false);
 
 //   const handleToggleChange = (state: boolean) => {
@@ -32,7 +32,7 @@
 //       setFriends([...friends, nickname]);
 //     }
 //     console.log(
-//       '🚀 ~ file: myfriend.tsx:33 ~ handleAddFriend ~ nickname:',
+//       '🚀 ~ file: myFriend.tsx:33 ~ handleAddFriend ~ nickname:',
 //       nickname,
 //     );
 //     closeAlert();
@@ -46,29 +46,29 @@
 //           <View style={{ paddingLeft: 10 }}>
 //             <Text style={styles.profileName}>Miya</Text>
 //             <View style={{ paddingVertical: 3 }} />
-//             <Text style={styles.profileID}>@mshdo23y2</Text>
+//             <Text style={styles.profileID}>@ID</Text>
 //           </View>
 //         </View>
-//         <View style={styles.profilefriend}>
-//           <Text style={styles.textb2}>내가 추가한 친구에게만 편지 받기</Text>
+//         <View style={styles.profileFriend}>
+//           <Text style={styles.textB2}>내가 추가한 친구에게만 편지 받기</Text>
 //           <CustomToggle
 //             isToggled={isToggled}
 //             onToggleChange={handleToggleChange}
 //           />
 //         </View>
 //       </View>
-//       <View style={styles.addfriend}>
-//         <View style={styles.myfriend}>
-//           <Text style={styles.textb1_sb}>내 친구</Text>
-//           <Text style={styles.textb2_sb}>20명</Text>
+//       <View style={styles.addFriend}>
+//         <View style={styles.myFriend}>
+//           <Text style={styles.textB1_sb}>내 친구</Text>
+//           <Text style={styles.textB2_sb}>20명</Text>
 //         </View>
 //         <TouchableOpacity onPress={openAlert}>
-//           <Text style={styles.addfriendText}>친구 추가하기</Text>
+//           <Text style={styles.addFriendText}>친구 추가하기</Text>
 //           <AddFriendAlert
 //             isVisible={isAlertVisible}
 //             onConfirm={handleAddFriend}
 //             onCancel={closeAlert}
-//             myId="mshdo23y2"
+//             myId="@id"
 //           />
 //         </TouchableOpacity>
 //       </View>
@@ -90,7 +90,7 @@
 //   );
 // };
 
-// export default myfriend;
+// export default myFriend;
 
 // const styles = StyleSheet.create({
 //   container: {
@@ -124,38 +124,38 @@
 //     color: Colors.contents_light,
 //     ...Fonts.btn,
 //   },
-//   textb2: {
+//   textB2: {
 //     color: Colors.white,
 //     ...Fonts.b2,
 //   },
-//   profilefriend: {
+//   profileFriend: {
 //     paddingTop: 20,
 //     flexDirection: 'row',
 //     justifyContent: 'space-between',
 //     alignItems: 'center',
 //   },
-//   addfriend: {
+//   addFriend: {
 //     marginTop: 30,
 //     flexDirection: 'row',
 //     justifyContent: 'space-between',
 //     alignItems: 'center',
 //   },
 
-//   myfriend: {
+//   myFriend: {
 //     flexDirection: 'row',
 //     alignItems: 'center',
 //   },
-//   textb1_sb: {
+//   textB1_sb: {
 //     color: Colors.white,
 //     ...Fonts.b1_sb,
 //   },
-//   textb2_sb: {
+//   textB2_sb: {
 //     color: Colors.purple,
 //     ...Fonts.b2_sb,
 //     paddingLeft: 6,
 //     marginTop: 2,
 //   },
-//   addfriendText: {
+//   addFriendText: {
 //     color: Colors.white,
 //     ...Fonts.btn,
 //     textDecorationLine: 'underline',

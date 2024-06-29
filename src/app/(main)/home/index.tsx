@@ -3,7 +3,7 @@ import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import WeekCalendar from '@/components/home/WeekCalender';
-import MontlyMusicList from '@/components/home/MontlyMusicList';
+import MonthlyMusicList from '@/components/home/MonthlyMusicList';
 import CharacterAnimation from '@/components/home/CharacterAnimation';
 import Fonts from '@/constants/Fonts';
 import Colors from '@/constants/Colors';
@@ -62,7 +62,7 @@ const HomeScreen = () => {
               )}
             </View>
             {diaryCount > 0 ? (
-              <MontlyMusicList />
+              <MonthlyMusicList />
             ) : (
               <NewUserDescription description="아직 작성한 일기가 없어요" />
             )}

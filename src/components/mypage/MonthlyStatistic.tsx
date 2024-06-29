@@ -7,14 +7,11 @@ import MyFilling from '@/components/mypage/MyFilling';
 import MusicPreference from '@/components/mypage/MusicPreference';
 import DiaryTopic from '@/components/mypage/DiaryTopic';
 import MoreInfo from '@/components/mypage/MoreInfo';
-import monthlyData from '@/data/dummy_statistic_montly.json';
-import { type MonthlyStatistic } from '@/models/interfaces';
+import monthlyData from '@/data/dummy_statistic_monthly.json';
 
-const MontlyStatisticPage = () => {
+const MonthlyStatistic = () => {
   const [selectedValue, setSelectedValue] = useState(monthlyData[0].month);
-  const [selectedData, setSelectedData] = useState<MonthlyStatistic>(
-    monthlyData[0],
-  );
+  const [selectedData, setSelectedData] = useState(monthlyData[0]);
 
   const handleSelect = (value: string) => {
     setSelectedValue(value);
@@ -66,7 +63,7 @@ const MontlyStatisticPage = () => {
   );
 };
 
-export default MontlyStatisticPage;
+export default MonthlyStatistic;
 
 const styles = StyleSheet.create({
   container: {

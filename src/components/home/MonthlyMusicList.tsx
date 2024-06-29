@@ -1,10 +1,9 @@
-// MontlyMusicList.tsx
 import { ScrollView, StyleSheet, View } from 'react-native';
 import Colors from '@/constants/Colors';
 import HappyIcon from 'assets/images/happy.svg';
 import CircleAlbum from '../common/CircleAlbum';
 
-const MontlyMusicList = () => {
+const MonthlyMusicList = () => {
   const colors = [
     'rgba(42,237,21, 0.3)',
     'rgba(255,59,257, 0.3)',
@@ -40,7 +39,7 @@ const MontlyMusicList = () => {
   );
 };
 
-export default MontlyMusicList;
+export default MonthlyMusicList;
 
 const styles = StyleSheet.create({
   container: {

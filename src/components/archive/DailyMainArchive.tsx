@@ -30,7 +30,7 @@ const DailyMainArchive = ({
   return (
     <Link href={`/(main)/archive/day/${date}`} asChild key={id}>
       <TouchableOpacity key={id}>
-        <Text style={styles.b2lighttext}>{date}</Text>
+        <Text style={styles.b2LightText}>{date}</Text>
         <View style={styles.cardContainer}>
           <CircleAlbum
             color={colorWithOpacity(getColorForMood(feeling), 0.3)}
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     paddingTop: 25,
     borderRadius: 8,
   },
-  b2lighttext: {
+  b2LightText: {
     color: Colors.grey1,
     ...Fonts.b2,
   },

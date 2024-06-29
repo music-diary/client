@@ -12,22 +12,13 @@ import CustomBottomButton from '@/components/common/CustomBottomButton';
 import PhotoIcon from 'assets/images/mypageIcon/Photo.svg';
 import DefaultProfileIcon from 'assets/images/mypageIcon/DefaultProfile.svg';
 import CustomBottomSheetModal from '@/components/common/CustomBottomSheetModal';
+import { formatToDate } from '@/utils/date-utils';
 
-const formatDate = (date: Date): string => {
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  const formattedMonth = String(month).padStart(2, '0'); // 한 자리 수 월을 두 자리로 변환
-  const formattedDay = String(day).padStart(2, '0');
-  return `${year}-${formattedMonth}-${formattedDay}`;
-};
-
-const editprofile = () => {
-  // 닉네임
-  const myname = 'Miya';
-  const [nickname, setNickname] = useState(myname);
-  const onChangeNickname = (inputtext: string) => {
-    setNickname(inputtext);
+const editProfile = () => {
+  const myName = 'Miya';
+  const [nickname, setNickname] = useState(myName);
+  const onChangeNickname = (inputText: string) => {
+    setNickname(inputText);
   };
 
   // 달력
@@ -62,7 +53,7 @@ const editprofile = () => {
   const [isButtonActive, setButtonActive] = useState(true);
 
   useEffect(() => {
-    const isNicknameChanged = nickname !== myname;
+    const isNicknameChanged = nickname !== myName;
     const isDateChanged =
       selectedDate.toLocaleDateString() !== birthday.toLocaleDateString();
     const isToggleChanged = selectedToggle !== initialToggle.current;
@@ -98,7 +89,7 @@ const editprofile = () => {
         {/* body */}
         <View style={styles.body}>
           {/* 닉네임 */}
-          <View style={styles.titlename}>
+          <View style={styles.titleName}>
             <Text style={styles.btnText}>
               닉네임 <Text style={{ color: Colors.pink }}>*</Text>
             </Text>
@@ -111,7 +102,7 @@ const editprofile = () => {
             />
           </View>
           {/* 생년월일 */}
-          <View style={styles.titlename}>
+          <View style={styles.titleName}>
             <Text style={styles.btnText}>
               생년월일 <Text style={{ color: Colors.pink }}>*</Text>
             </Text>
@@ -119,11 +110,11 @@ const editprofile = () => {
               style={styles.birthdayContainer}
               onPress={showDatePicker}
             >
-              <Text style={styles.dateText}>{formatDate(selectedDate)}</Text>
+              <Text style={styles.dateText}>{formatToDate(selectedDate)}</Text>
             </TouchableOpacity>
           </View>
           {/* 성별 */}
-          <View style={styles.titlename}>
+          <View style={styles.titleName}>
             <Text style={styles.btnText}>
               성별 <Text style={{ color: Colors.pink }}>*</Text>
             </Text>
@@ -184,7 +175,7 @@ const editprofile = () => {
   );
 };
 
-export default editprofile;
+export default editProfile;
 
 const styles = StyleSheet.create({
   container: {
@@ -226,7 +217,7 @@ const styles = StyleSheet.create({
   body: {
     gap: 30,
   },
-  titlename: { gap: 10 },
+  titleName: { gap: 10 },
   btnText: {
     color: Colors.white,
     ...Fonts.btn,
