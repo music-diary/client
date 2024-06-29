@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';
-import Colors from '@/constants/Colors';
+import { Colors } from '@/constants';
 import DropDownToggle from '@/components/mypage/DropDownToggle';
 import DiaryNumber from '@/components/mypage/DiaryNumber';
 import MyFilling from '@/components/mypage/MyFilling';

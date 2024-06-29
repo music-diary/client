@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import Fonts from '@/constants/Fonts';
-import Colors from '@/constants/Colors';
+import { Colors, Fonts } from '@/constants';
 
 const HeaderTitle = ({ title }: { title: string }) => {
   return (

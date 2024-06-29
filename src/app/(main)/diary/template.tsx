@@ -14,8 +14,7 @@ import Animated, {
   type SharedValue,
 } from 'react-native-reanimated';
 import { router, useLocalSearchParams } from 'expo-router';
-import Fonts from '@/constants/Fonts';
-import Colors from '@/constants/Colors';
+import { Colors, Fonts } from '@/constants';
 import { type Template } from '@/models/types';
 import { type ITemplate } from '@/models/interfaces';
 import { templates } from '@/constants/data';

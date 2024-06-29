@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Animated, Dimensions, StyleSheet, Text } from 'react-native';
 import useToastStore from '@/store/useToastStore';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 
 const { width, height } = Dimensions.get('window');
 

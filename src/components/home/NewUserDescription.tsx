@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 
 const NewUserDescription = ({ description }: { description: string }) => {
   return (

@@ -6,8 +6,7 @@ import { ProfileSvg } from 'assets/images/home';
 import WeekCalendar from '@/components/home/WeekCalender';
 import MonthlyMusicList from '@/components/home/MonthlyMusicList';
 import CharacterAnimation from '@/components/home/CharacterAnimation';
-import Fonts from '@/constants/Fonts';
-import Colors from '@/constants/Colors';
+import { Colors, Fonts } from '@/constants';
 import TopDescription from '@/components/home/TopDescription';
 import NewUserDescription from '@/components/home/NewUserDescription';
 

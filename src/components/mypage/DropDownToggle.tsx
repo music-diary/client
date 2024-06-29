@@ -8,8 +8,7 @@ import {
   Modal,
 } from 'react-native';
 import { colorWithOpacity } from '@/utils/color-utils';
-import Fonts from '@/constants/Fonts';
-import Colors from '@/constants/Colors';
+import { Colors, Fonts } from '@/constants';
 import { ArrowDownSvg } from 'assets/images/mypage';
 
 interface DropdownComponentProps {

@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from 'expo-router';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 import useDraftStore from '@/store/useDraftStore';
 import { useModalStore } from '@/store/useModalStore';
 import CustomBackButton from '../common/CustomBackButton';

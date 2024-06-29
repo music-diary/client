@@ -8,13 +8,12 @@ import {
   View,
 } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 import useKeyboardScrollViewScroll from '@/hooks/useKeyboardScrollViewScroll';
 import CustomCheckToggle from '@/components/common/CustomCheckToggle';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
 
-const inquiry = () => {
+const InquiryScreen = () => {
   // 키보드 높이 조절 (커스텀 훅 사용)
   const scrollViewRef = useRef<ScrollView>(null);
   useKeyboardScrollViewScroll(scrollViewRef);
@@ -178,7 +177,7 @@ const inquiry = () => {
   );
 };
 
-export default inquiry;
+export default InquiryScreen;
 
 const styles = StyleSheet.create({
   container: {

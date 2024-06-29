@@ -17,8 +17,7 @@ import CustomAlertModal from '@/components/common/CustomAlertModal';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
 import LoadingView from '@/components/diary/LoadingView';
 import Tooltip from '@/components/diary/Tooltip';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 import { useModalStore } from '@/store/useModalStore';
 import { colorWithOpacity } from '@/utils/color-utils';
 

@@ -1,7 +1,6 @@
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
-import Colors from '@/constants/Colors';
 import { MusicNotesSvg } from 'assets/images/mypage';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 import { colorWithOpacity } from '@/utils/color-utils';
 import PreferenceGraph from '@/components/mypage/PreferenceGraph';
 import { genres } from '@/constants/data';

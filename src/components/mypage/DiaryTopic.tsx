@@ -1,7 +1,6 @@
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
-import Colors from '@/constants/Colors';
+import { Colors, Fonts } from '@/constants';
 import { BookOpenSvg } from 'assets/images/mypage';
-import Fonts from '@/constants/Fonts';
 import { colorWithOpacity } from '@/utils/color-utils';
 import { type ITopic } from '@/models/interfaces';
 

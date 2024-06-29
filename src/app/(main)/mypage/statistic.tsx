@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
-import Colors from '@/constants/Colors';
+import { Colors } from '@/constants';
 import StaticRouter from '@/components/mypage/StatisticRouter';
 import MonthlyStatistic from '@/components/mypage/MonthlyStatistic';
 import YearlyStatistic from '@/components/mypage/YearlyStatistic';
 
 type ViewMode = 'yearly' | 'monthly';
 
-const Statistic = () => {
+const StaticScreen = () => {
   const [activeView, setActiveView] = useState<ViewMode>('monthly');
 
   return (
@@ -20,7 +20,7 @@ const Statistic = () => {
   );
 };
 
-export default Statistic;
+export default StaticScreen;
 
 const styles = StyleSheet.create({
   container: {

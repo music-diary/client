@@ -2,8 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Svg, Circle } from 'react-native-svg';
 import { colorWithOpacity } from '@/utils/color-utils';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 
 interface CircularGraphProps {
   month: number;

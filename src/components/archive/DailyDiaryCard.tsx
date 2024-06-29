@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 import CircleAlbum from '@/components/common/CircleAlbum';
 import { ArrowInSvg, ArrowOutSvg } from 'assets/images/archive';
 import { colorWithOpacity, getColorForMood } from '@/utils/color-utils';

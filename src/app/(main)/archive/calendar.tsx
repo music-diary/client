@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { CalendarList, type DateData } from 'react-native-calendars';
 import { router } from 'expo-router';
-import Colors from '@/constants/Colors';
+import { Colors } from '@/constants';
 import TempBlack from '@/components/archive/TempBlack';
 import dummyArchiveCalendar from '@/data/dummy_archive_calendar.json';
 import RouteSwitcher from '@/components/archive/RouteSwitcher';
@@ -56,7 +56,7 @@ const customDayComponent = ({ date, imageUri }: customDayComponentProps) => {
   );
 };
 
-const CalendarView = () => {
+const CalendarScreen = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [showTempBlack, setShowTempBlack] = useState(false);
 
@@ -122,7 +122,7 @@ const CalendarView = () => {
   );
 };
 
-export default CalendarView;
+export default CalendarScreen;
 
 const styles = StyleSheet.create({
   container: {

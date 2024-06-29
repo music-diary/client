@@ -1,4 +1,4 @@
-import Colors from '@/constants/Colors';
+import { Colors } from '@/constants';
 
 export const colorWithOpacity = (hex: string, alpha: number) => {
   const r = parseInt(hex.slice(1, 3), 16);

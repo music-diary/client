@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useLocalSearchParams } from 'expo-router';
 import { StyleSheet, ScrollView, Text, View } from 'react-native';
-import Colors from '@/constants/Colors';
+import { Colors, Fonts } from '@/constants';
 import dummy_archive_month from '@/data/dummy_archive_month.json';
 import DailyMainArchive from '@/components/archive/DailyMainArchive';
 import dummy_archive_recommend from '@/data/dummy_archive_recommend.json';
 import RecommendMusic from '@/components/archive/RecommendMusic';
 import RouteSwitcher from '@/components/archive/RouteSwitcher';
-import Fonts from '@/constants/Fonts';
 
 interface DiaryData {
   id: string;

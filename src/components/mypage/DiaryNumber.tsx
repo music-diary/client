@@ -1,7 +1,6 @@
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
-import Colors from '@/constants/Colors';
 import { ConfettiSvg } from 'assets/images/mypage';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 import { colorWithOpacity } from '@/utils/color-utils';
 import CircularGraph from '@/components/mypage/CircularGraph';
 

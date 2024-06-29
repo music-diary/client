@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { Modal, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 import { termsCheckboxes } from '@/constants/data';
 import { colorWithOpacity } from '@/utils/color-utils';
 import CustomBottomButton from '../common/CustomBottomButton';

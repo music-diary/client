@@ -1,7 +1,6 @@
 import { Dimensions, Pressable, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 import { colorWithOpacity } from '@/utils/color-utils';
 
 const containerWidth = Dimensions.get('window').width - 32;

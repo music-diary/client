@@ -6,7 +6,7 @@ import {
   CalendarDotsSvg,
   SquaresFourSvg,
 } from 'assets/images/archive';
-import Colors from '@/constants/Colors';
+import { Colors } from '@/constants';
 
 type ViewMode = 'monthly' | 'daily' | 'calendar' | 'grid';
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
-import Colors from '@/constants/Colors';
+import { Colors } from '@/constants';
 import dummy_archive_main from '@/data/dummy_archive_main.json';
 import MonthlyMainArchive from '@/components/archive/MonthlyMainArchive';
 import RouteSwitcher from '@/components/archive/RouteSwitcher';
@@ -15,7 +15,7 @@ interface DiaryEntryData {
   diaryEntries: number;
 }
 
-const ArchiveScreen = () => {
+const GridScreen = () => {
   const [entryData, setEntryData] = useState<DiaryEntryData[]>([]);
   useEffect(() => {
     setEntryData(dummy_archive_main);
@@ -43,7 +43,7 @@ const ArchiveScreen = () => {
   );
 };
 
-export default ArchiveScreen;
+export default GridScreen;
 
 const styles = StyleSheet.create({
   container: {

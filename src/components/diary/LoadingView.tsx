@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View, Image } from 'react-native';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 
 const LoadingView = () => {
   return (

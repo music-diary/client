@@ -18,8 +18,7 @@ import {
 import Header from '@/components/onboarding/Header';
 import TermsModal from '@/components/onboarding/TermsModal';
 import VerifyTimer from '@/components/onboarding/VerifyTimer';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 import { useDimStore } from '@/store/useDimStore';
 import { WarningCircleSvg } from 'assets/images/onboarding';
 import { type VerifyStatus } from '@/models/types';

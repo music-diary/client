@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, Text } from 'react-native';
-import Colors from '@/constants/Colors';
+import { Colors } from '@/constants';
 
 interface VerifyTimerProps {
   retry: boolean;

@@ -12,8 +12,7 @@ import { Feather, MaterialIcons } from '@expo/vector-icons';
 import DateTimePicker, {
   type DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 import BodyNavigator from '@/components/mypage/BodyNavigator';
 import CustomToggle from '@/components/common/CustomToggle';
 import MusicSelection from '@/components/home/MusicSelection';

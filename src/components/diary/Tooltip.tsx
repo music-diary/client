@@ -8,8 +8,7 @@ import {
   type ImageSourcePropType,
 } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 import { TooltipSvg } from 'assets/images/diary';
 
 interface CustomTooltipProps {

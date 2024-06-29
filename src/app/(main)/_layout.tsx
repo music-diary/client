@@ -2,7 +2,7 @@ import { Tabs, usePathname } from 'expo-router';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import { Foundation, Feather, FontAwesome6 } from '@expo/vector-icons';
 import { useClientOnlyValue } from '@/hooks/useClientOnlyValue';
-import Colors from '@/constants/Colors';
+import { Colors } from '@/constants';
 import BottomBarIcon from '@/components/common/BottomBarIcon';
 
 const ratio = 435 / 375;

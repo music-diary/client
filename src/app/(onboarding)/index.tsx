@@ -13,8 +13,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRequestPhoneVerification } from '@/api/hooks/useAuth';
 import Header from '@/components/onboarding/Header';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 
 const SignUpScreen = () => {
   const [phoneNumber, setPhoneNumber] = useState('');

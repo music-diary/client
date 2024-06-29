@@ -9,15 +9,14 @@ import {
 } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { router } from 'expo-router';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 import CustomCheckToggle from '@/components/common/CustomCheckToggle';
 import useKeyboardScrollViewScroll from '@/hooks/useKeyboardScrollViewScroll';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
 import CustomAlertModal from '@/components/common/CustomAlertModal';
 import { useModalStore } from '@/store/useModalStore';
 
-const withdrawal = () => {
+const WithdrawalScreen = () => {
   const { openModal, closeModal } = useModalStore();
   // 키보드 높이 조절 (커스텀 훅 사용)
   const scrollViewRef = useRef<ScrollView>(null);
@@ -174,7 +173,7 @@ const withdrawal = () => {
   );
 };
 
-export default withdrawal;
+export default WithdrawalScreen;
 
 const styles = StyleSheet.create({
   container: {

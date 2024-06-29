@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Animated, StyleSheet, Easing, TouchableHighlight } from 'react-native';
-import Colors from '@/constants/Colors';
+import { Colors } from '@/constants';
 
 interface CustomToggleProps {
   isToggled?: boolean; // 초기 토글 상태

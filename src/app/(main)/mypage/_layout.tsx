@@ -1,7 +1,7 @@
 import { Stack } from 'expo-router';
 import HeaderTitle from '@/components/common/HeaderTitle';
 import CustomBackButton from '@/components/common/CustomBackButton';
-import Colors from '@/constants/Colors';
+import { Colors } from '@/constants';
 
 export default function MypageLayout() {
   return (

@@ -2,7 +2,7 @@ import { Stack } from 'expo-router';
 import HeaderRight from '@/components/diary/HeaderRight';
 import HeaderRightDraft from '@/components/diary/HeaderRightDraft';
 import HeaderTitle from '@/components/common/HeaderTitle';
-import Colors from '@/constants/Colors';
+import { Colors } from '@/constants';
 import CustomBackButton from '@/components/common/CustomBackButton';
 
 export default function DiaryLayout() {

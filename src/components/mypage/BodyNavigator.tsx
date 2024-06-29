@@ -1,7 +1,6 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 
 interface BodyNavigatorProps {
   content: string;

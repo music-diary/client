@@ -2,8 +2,7 @@ import { router } from 'expo-router';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 
 const CompleteScreen = () => {
   const handleNext = () => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, ScrollView, Text, View } from 'react-native';
-import Colors from '@/constants/Colors';
+import { Colors } from '@/constants';
 import dummy_archive_month from '@/data/dummy_archive_month.json';
 import DailyMainArchive from '@/components/archive/DailyMainArchive';
 import dummy_archive_recommend from '@/data/dummy_archive_recommend.json';
@@ -27,7 +27,7 @@ interface RecommendData {
   feeling: string;
 }
 
-const MonthScreen = () => {
+const ArchiveScreen = () => {
   const [entryData, setEntryData] = useState<DiaryData[]>([]);
   const [recommendData, setRecommendData] = useState<RecommendData[]>([]);
 
@@ -69,7 +69,7 @@ const MonthScreen = () => {
   );
 };
 
-export default MonthScreen;
+export default ArchiveScreen;
 
 const styles = StyleSheet.create({
   container: {

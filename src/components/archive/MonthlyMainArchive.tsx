@@ -8,9 +8,8 @@ import {
   Dimensions,
 } from 'react-native';
 import { Link } from 'expo-router';
-import Colors from '@/constants/Colors';
 import { BadSvg, HappySvg, SosoSvg } from 'assets/images/common';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 import { colorWithOpacity } from '@/utils/color-utils';
 import { trimTitle } from '@/utils/text-utils';
 

@@ -1,6 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 import { type Mood } from '@/models/types';
 
 interface SelectorButtonProps {

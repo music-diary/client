@@ -10,12 +10,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { Colors, Fonts } from '@/constants';
 import DailyDiaryCard from '@/components/archive/DailyDiaryCard';
 import CustomAlertModal from '@/components/common/CustomAlertModal';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
 import CustomSplash from '@/components/common/CustomSplash';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
 import dummy_archive_day from '@/data/dummy_archive_day.json';
 import { useModalStore } from '@/store/useModalStore';
 import { useSplashStore } from '@/store/useSplashStore';

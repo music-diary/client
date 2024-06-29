@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Colors from '@/constants/Colors';
+import { Colors } from '@/constants';
 import { colorWithOpacity } from '@/utils/color-utils';
 import { BadSvg, HappySvg, SosoSvg } from 'assets/images/common';
 import { type Mood } from '@/models/types';

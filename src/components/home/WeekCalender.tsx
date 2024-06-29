@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import Fonts from '@/constants/Fonts';
-import Colors from '@/constants/Colors';
+import { Colors, Fonts } from '@/constants';
 import { ArrowButtonSvg } from 'assets/images/home';
 
 // toISOString()를 한국 시간으로 변환

@@ -7,7 +7,7 @@ import EmotionSelector from '@/components/diary/EmotionSelector';
 import MoodSelector from '@/components/diary/MoodSelector';
 import SelectorView from '@/components/diary/SelectorView';
 import TopicSelector from '@/components/diary/TopicSelector';
-import Colors from '@/constants/Colors';
+import { Colors } from '@/constants';
 import { type ITopic } from '@/models/interfaces';
 import { type Mood } from '@/models/types';
 

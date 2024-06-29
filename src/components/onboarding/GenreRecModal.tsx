@@ -6,8 +6,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 import { useDimStore } from '@/store/useDimStore';
 import { colorWithOpacity } from '@/utils/color-utils';
 

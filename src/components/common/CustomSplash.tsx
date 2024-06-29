@@ -7,8 +7,7 @@ import {
   View,
 } from 'react-native';
 import { useSplashStore } from '@/store/useSplashStore';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 import useToastStore from '@/store/useToastStore';
 import CustomToast from './CustomToast';
 

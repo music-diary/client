@@ -5,15 +5,14 @@ import DateTimePicker, {
   type DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
 import { router } from 'expo-router';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 import CustomCheckToggle from '@/components/common/CustomCheckToggle';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
 import { PhotoSvg, DefaultProfileSvg } from 'assets/images/mypage';
 import CustomBottomSheetModal from '@/components/common/CustomBottomSheetModal';
 import { formatToDate } from '@/utils/date-utils';
 
-const editProfile = () => {
+const EditScreen = () => {
   const myName = 'Miya';
   const [nickname, setNickname] = useState(myName);
   const onChangeNickname = (inputText: string) => {
@@ -174,7 +173,7 @@ const editProfile = () => {
   );
 };
 
-export default editProfile;
+export default EditScreen;
 
 const styles = StyleSheet.create({
   container: {

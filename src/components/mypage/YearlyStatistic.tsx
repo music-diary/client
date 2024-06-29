@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import Colors from '@/constants/Colors';
+import { Colors } from '@/constants';
 import DropDownToggle from '@/components/mypage/DropDownToggle';
 import MyFilling from '@/components/mypage/MyFilling';
 import MusicPreference from '@/components/mypage/MusicPreference';

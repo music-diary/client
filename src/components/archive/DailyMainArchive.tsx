@@ -1,7 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Link } from 'expo-router';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 import CircleAlbum from '@/components/common/CircleAlbum';
 import { colorWithOpacity, getColorForMood } from '@/utils/color-utils';
 import { trimTitle } from '@/utils/text-utils';

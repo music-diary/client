@@ -1,6 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 
 const formatKST = (date: Date) => {
   const offset = 1000 * 60 * 60 * 9; // UTC+9

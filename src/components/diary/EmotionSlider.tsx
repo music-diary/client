@@ -1,6 +1,6 @@
 import { Slider } from 'react-native-awesome-slider';
 import { useSharedValue } from 'react-native-reanimated';
-import Colors from '@/constants/Colors';
+import { Colors } from '@/constants';
 
 interface TopicSelectorProps {
   setState: React.Dispatch<React.SetStateAction<number>>;

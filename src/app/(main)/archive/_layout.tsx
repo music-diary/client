@@ -2,7 +2,7 @@ import { Stack } from 'expo-router';
 import HeaderTitle from '@/components/common/HeaderTitle';
 import CustomBackButton from '@/components/common/CustomBackButton';
 import HeaderRightMore from '@/components/archive/HeaderRightMore';
-import Colors from '@/constants/Colors';
+import { Colors } from '@/constants';
 
 export default function ArchiveLayout() {
   return (

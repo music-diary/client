@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet, View } from 'react-native';
-import Colors from '@/constants/Colors';
+import { Colors } from '@/constants';
 import { HappySvg } from 'assets/images/common';
 import CircleAlbum from '../common/CircleAlbum';
 

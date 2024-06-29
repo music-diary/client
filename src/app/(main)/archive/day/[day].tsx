@@ -1,10 +1,9 @@
 import { router, useLocalSearchParams } from 'expo-router';
 import { Share, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { Colors, Fonts } from '@/constants';
 import dummy_archive_day from '@/data/dummy_archive_day.json';
 import DailyDiaryCard from '@/components/archive/DailyDiaryCard';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
 import { useModalToggleStore, useModalStore } from '@/store/useModalStore';
 import { TrashSvg, UploadSvg } from 'assets/images/archive';
 import CustomAlertModal from '@/components/common/CustomAlertModal';

@@ -1,8 +1,7 @@
 import React from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
-import Colors from '@/constants/Colors';
+import { Colors, Fonts } from '@/constants';
 import { SmileySvg } from 'assets/images/mypage';
-import Fonts from '@/constants/Fonts';
 import EmotionIcon from '@/components/mypage/EmotionIcon';
 import { colorWithOpacity } from '@/utils/color-utils';
 

@@ -7,8 +7,7 @@ import {
   View,
 } from 'react-native';
 import CustomAlertModal from '@/components/common/CustomAlertModal';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 import useDraftStore from '@/store/useDraftStore';
 import { useModalStore } from '@/store/useModalStore';
 import { colorWithOpacity } from '@/utils/color-utils';
