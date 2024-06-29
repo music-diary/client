@@ -11,9 +11,9 @@ const LoginLayout = () => {
     <Stack
       screenOptions={{
         headerStyle: {
-          backgroundColor: Colors.black,
+          backgroundColor: Colors.BLACK,
         },
-        headerTintColor: Colors.white,
+        headerTintColor: Colors.WHITE,
         headerTitle: () => <LogoTitle />,
         headerLeft: () => <CustomBackButton />,
         animation: 'fade',

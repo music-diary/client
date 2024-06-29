@@ -25,7 +25,7 @@ export default MoreInfo;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.grey3,
+    backgroundColor: Colors.GREY3,
     height: 60,
     width: containerWidth,
     borderRadius: 12,
@@ -34,18 +34,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 14,
     borderWidth: 1,
-    borderColor: colorWithOpacity(Colors.white, 0.1),
+    borderColor: colorWithOpacity(Colors.WHITE, 0.1),
   },
   b2Text: {
-    color: Colors.white,
-    ...Fonts.b2,
+    color: Colors.WHITE,
+    ...Fonts.B2,
   },
   b2sbText: {
-    color: Colors.white,
-    ...Fonts.b2_sb,
+    color: Colors.WHITE,
+    ...Fonts.B2_SB,
   },
   button: {
-    backgroundColor: Colors.purple,
+    backgroundColor: Colors.PURPLE,
     borderRadius: 22,
     paddingVertical: 6,
     paddingHorizontal: 12,

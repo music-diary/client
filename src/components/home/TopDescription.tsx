@@ -60,23 +60,23 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   topMent: {
-    color: Colors.white,
+    color: Colors.WHITE,
     fontFamily: 'pret-b',
     fontSize: 20,
     lineHeight: 28,
   },
   highlightText: {
-    color: Colors.green,
+    color: Colors.GREEN,
   },
   topButton: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.WHITE,
     marginTop: 13,
     paddingVertical: 6,
     paddingHorizontal: 12,
     borderRadius: 23,
   },
   topButtonText: {
-    color: Colors.purple,
-    ...Fonts.b2_sb,
+    color: Colors.PURPLE,
+    ...Fonts.B2_SB,
   },
 });

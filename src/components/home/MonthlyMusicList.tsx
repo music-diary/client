@@ -16,7 +16,7 @@ const MonthlyMusicList = () => {
     <View style={styles.container}>
       <View style={styles.body}>
         <View style={styles.albumStart}>
-          <HappySvg width={52} height={52} fill={Colors.green} />
+          <HappySvg width={52} height={52} fill={Colors.GREEN} />
         </View>
         <ScrollView
           style={styles.circleStart}
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     height: 68,
     width: 68,
     borderRadius: 6,
-    backgroundColor: Colors.purple,
+    backgroundColor: Colors.PURPLE,
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 100,

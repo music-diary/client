@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   },
   tooltip: {
     flexDirection: 'row',
-    backgroundColor: Colors.purple,
+    backgroundColor: Colors.PURPLE,
     paddingLeft: 14,
     paddingRight: 6.6,
     paddingVertical: 10,
@@ -91,8 +91,8 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   tooltipText: {
-    color: Colors.white,
-    ...Fonts.b2,
+    color: Colors.WHITE,
+    ...Fonts.B2,
   },
   tooltipArrow: {
     position: 'absolute',
@@ -106,6 +106,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 24,
     borderLeftColor: 'transparent',
     borderRightColor: 'transparent',
-    borderBottomColor: Colors.purple,
+    borderBottomColor: Colors.PURPLE,
   },
 });

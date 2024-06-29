@@ -68,7 +68,7 @@ export default MonthlyStatistic;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.BLACK,
     paddingBottom: 50,
   },
   dropdown: {

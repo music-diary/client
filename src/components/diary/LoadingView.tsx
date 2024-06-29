@@ -20,7 +20,7 @@ export default LoadingView;
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.BLACK,
     flex: 1,
     alignItems: 'center',
     paddingTop: 120,
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     gap: 60,
   },
   welcomeText: {
-    color: Colors.white,
-    ...Fonts.h1,
+    color: Colors.WHITE,
+    ...Fonts.H1,
   },
 });

@@ -10,9 +10,9 @@ export default function DiaryLayout() {
     <Stack
       screenOptions={{
         headerStyle: {
-          backgroundColor: Colors.black,
+          backgroundColor: Colors.BLACK,
         },
-        headerTintColor: Colors.white,
+        headerTintColor: Colors.WHITE,
         headerTitle: () => <HeaderTitle title="일기쓰기" />,
         headerRight: () => <HeaderRight />,
         headerLeft: () => <CustomBackButton />,

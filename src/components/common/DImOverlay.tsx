@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     left: 0,
     width: '100%',
     height: '100%',
-    backgroundColor: colorWithOpacity(Colors.black, 0.7),
+    backgroundColor: colorWithOpacity(Colors.BLACK, 0.7),
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 1000,

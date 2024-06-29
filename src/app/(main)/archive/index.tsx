@@ -74,7 +74,7 @@ export default MonthScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.BLACK,
     paddingLeft: 16,
     paddingTop: 20,
   },
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     height: 50,
   },
   headerText: {
-    color: Colors.white,
+    color: Colors.WHITE,
     fontFamily: 'pret-b',
     fontSize: 18,
   },

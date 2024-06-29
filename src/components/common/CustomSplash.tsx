@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.BLACK,
     gap: 50,
   },
   image: {
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: 'center',
-    color: Colors.white,
-    ...Fonts.t1,
+    color: Colors.WHITE,
+    ...Fonts.T1,
   },
 });

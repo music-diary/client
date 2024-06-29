@@ -18,7 +18,7 @@ const BottomSafeAreaButton = ({
   return (
     <SafeAreaView
       edges={['bottom']}
-      style={{ backgroundColor: isActive ? Colors.purple : Colors.bg_light }}
+      style={{ backgroundColor: isActive ? Colors.PURPLE : Colors.BG_LIGHT }}
     >
       <TouchableOpacity
         onPress={isActive ? onPress : undefined}
@@ -29,7 +29,7 @@ const BottomSafeAreaButton = ({
           <Text
             style={[
               styles.btnText,
-              { color: isActive ? Colors.white : Colors.contents_light },
+              { color: isActive ? Colors.WHITE : Colors.CONTENTS_LIGHT },
             ]}
           >
             {label}
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   btnText: {
-    ...Fonts.b1_sb,
+    ...Fonts.B1_SB,
   },
 });
 

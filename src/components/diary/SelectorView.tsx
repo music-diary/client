@@ -52,24 +52,24 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   title: {
-    color: Colors.white,
-    ...Fonts.t1,
+    color: Colors.WHITE,
+    ...Fonts.T1,
   },
   dot: {
     width: 5,
     height: 5,
-    backgroundColor: Colors.purple,
+    backgroundColor: Colors.PURPLE,
     borderRadius: 5,
   },
   descriptionContainer: {
     gap: 4,
   },
   description: {
-    color: Colors.white,
-    ...Fonts.btn,
+    color: Colors.WHITE,
+    ...Fonts.BTN,
   },
   subDescription: {
-    color: Colors.white,
+    color: Colors.WHITE,
     fontFamily: 'pret-sb',
     fontSize: 12,
   },

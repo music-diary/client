@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
-    backgroundColor: Colors.box,
+    backgroundColor: Colors.BOX,
     width: 280,
     height: 335,
     marginTop: 8,
@@ -77,8 +77,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   b2LightText: {
-    color: Colors.grey1,
-    ...Fonts.b2,
+    color: Colors.GREY1,
+    ...Fonts.B2,
   },
   middleContainer: {
     paddingTop: 18,
@@ -91,16 +91,16 @@ const styles = StyleSheet.create({
     gap: 9,
   },
   lightLbText: {
-    color: Colors.contents_light,
-    ...Fonts.lb,
+    color: Colors.CONTENTS_LIGHT,
+    ...Fonts.LB,
   },
   white10Text: {
-    color: Colors.black,
-    ...Fonts.lb,
+    color: Colors.BLACK,
+    ...Fonts.LB,
   },
   btnText: {
-    color: Colors.white,
-    ...Fonts.btn,
+    color: Colors.WHITE,
+    ...Fonts.BTN,
   },
   emotionContainer: {
     paddingTop: 16,

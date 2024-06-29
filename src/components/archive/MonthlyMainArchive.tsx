@@ -29,11 +29,11 @@ interface DiaryEntryProps {
 const getBackgroundColor = (mood: string) => {
   switch (mood) {
     case 'Neutral':
-      return Colors.blue;
+      return Colors.BLUE;
     case 'Positive':
-      return Colors.purple;
+      return Colors.PURPLE;
     case 'Negative':
-      return Colors.green;
+      return Colors.GREEN;
 
     default:
       return '#f5f5f5';
@@ -46,19 +46,19 @@ const EmotionImage = ({ mood }: { mood: string }) => {
     case 'Positive':
       return (
         <View style={styles.emotion}>
-          <HappySvg width={120} height={120} fill={Colors.green} />
+          <HappySvg width={120} height={120} fill={Colors.GREEN} />
         </View>
       );
     case 'Negative':
       return (
         <View style={styles.emotion}>
-          <BadSvg width={125} height={125} fill={Colors.blue} />
+          <BadSvg width={125} height={125} fill={Colors.BLUE} />
         </View>
       );
     case 'Neutral':
       return (
         <View style={styles.emotion}>
-          <SosoSvg width={125} height={125} fill={Colors.purple} />
+          <SosoSvg width={125} height={125} fill={Colors.PURPLE} />
         </View>
       );
     default:
@@ -123,8 +123,8 @@ const styles = StyleSheet.create({
     borderRadius: 9,
   },
   month: {
-    color: Colors.white,
-    ...Fonts.b1_sb,
+    color: Colors.WHITE,
+    ...Fonts.B1_SB,
   },
   emotionContainer: {
     flex: 1,
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 9,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colorWithOpacity(Colors.white, 0.2),
+    backgroundColor: colorWithOpacity(Colors.WHITE, 0.2),
     position: 'absolute',
     bottom: 0,
     left: 0,
@@ -171,12 +171,12 @@ const styles = StyleSheet.create({
     width: 90,
   },
   songTitle: {
-    color: Colors.black,
-    ...Fonts.btn,
+    color: Colors.BLACK,
+    ...Fonts.BTN,
   },
   artist: {
     paddingTop: 2,
-    color: Colors.black,
-    ...Fonts.lb,
+    color: Colors.BLACK,
+    ...Fonts.LB,
   },
 });

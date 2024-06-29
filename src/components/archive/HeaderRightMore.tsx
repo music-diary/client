@@ -14,7 +14,7 @@ const HeaderRightMore = () => {
       <Feather
         name={isModalOpen ? 'x' : 'more-horizontal'}
         size={18}
-        color={Colors.white}
+        color={Colors.WHITE}
       />
     </TouchableOpacity>
   );

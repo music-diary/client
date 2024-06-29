@@ -132,13 +132,13 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     gap: 28,
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.BLACK,
     flex: 1,
   },
   genreButton: {
     alignItems: 'center',
     justifyContent: 'center',
-    borderColor: Colors.contents_light,
+    borderColor: Colors.CONTENTS_LIGHT,
     borderWidth: 1,
     borderRadius: 38,
     paddingHorizontal: 16,
@@ -146,8 +146,8 @@ const styles = StyleSheet.create({
   },
 
   genreType: {
-    color: Colors.white,
-    ...Fonts.b2_sb,
+    color: Colors.WHITE,
+    ...Fonts.B2_SB,
   },
 
   genreListContainer: {
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   selectedGenreButton: {
-    backgroundColor: Colors.purple,
-    borderColor: Colors.purple,
+    backgroundColor: Colors.PURPLE,
+    borderColor: Colors.PURPLE,
   },
 });

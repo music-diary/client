@@ -14,7 +14,7 @@ export default HeaderTitle;
 
 const styles = StyleSheet.create({
   title: {
-    color: Colors.white,
-    ...Fonts.h1,
+    color: Colors.WHITE,
+    ...Fonts.H1,
   },
 });

@@ -111,7 +111,7 @@ const CardScreen = () => {
 
   return (
     <>
-      <View style={{ flex: 1, backgroundColor: Colors.black }}>
+      <View style={{ flex: 1, backgroundColor: Colors.BLACK }}>
         <ScrollView style={styles.container}>
           <Text style={styles.b1LightText}>3월 2일</Text>
           <View style={styles.cardContainer}>
@@ -135,7 +135,7 @@ const CardScreen = () => {
               mode="time"
               display="spinner"
               onChange={onChange}
-              textColor={Colors.white}
+              textColor={Colors.WHITE}
             />
           </View>
         ) : (
@@ -171,12 +171,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 16,
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.BLACK,
   },
   b1LightText: {
     paddingTop: 20,
-    color: Colors.contents_light,
-    ...Fonts.b1,
+    color: Colors.CONTENTS_LIGHT,
+    ...Fonts.B1,
   },
   cardContainer: {
     marginTop: 10,
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 50,
     borderRadius: 10,
-    backgroundColor: Colors.grey3,
+    backgroundColor: Colors.GREY3,
   },
   pickerHeader: {
     paddingHorizontal: 16,
@@ -198,11 +198,11 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   pickerTitle: {
-    color: Colors.white,
-    ...Fonts.t1,
+    color: Colors.WHITE,
+    ...Fonts.T1,
   },
   btnText: {
-    color: Colors.purple,
-    ...Fonts.b1_sb,
+    color: Colors.PURPLE,
+    ...Fonts.B1_SB,
   },
 });

@@ -17,9 +17,9 @@ const SelectorButton = ({
   isSelected,
 }: SelectorButtonProps) => {
   const colorMap = {
-    happy: Colors.green,
-    soso: Colors.purple,
-    bad: Colors.blue,
+    happy: Colors.GREEN,
+    soso: Colors.PURPLE,
+    bad: Colors.BLUE,
   };
 
   const buttonStyle = {
@@ -34,7 +34,7 @@ const SelectorButton = ({
       <Text
         style={[
           styles.type,
-          isSelected && mood === 'happy' && { color: Colors.black },
+          isSelected && mood === 'happy' && { color: Colors.BLACK },
         ]}
       >
         {type}
@@ -52,13 +52,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderRadius: 38,
     borderWidth: 1,
-    borderColor: Colors.white,
+    borderColor: Colors.WHITE,
   },
   type: {
     justifyContent: 'center',
     alignItems: 'center',
-    color: Colors.white,
-    ...Fonts.b2_sb,
+    color: Colors.WHITE,
+    ...Fonts.B2_SB,
   },
   opacityView: {
     borderRadius: 38,

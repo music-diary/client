@@ -42,12 +42,12 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
   btnGrayText: {
-    color: Colors.grey1,
-    ...Fonts.btn,
+    color: Colors.GREY1,
+    ...Fonts.BTN,
   },
   btnText: {
-    color: Colors.white,
-    ...Fonts.btn,
+    color: Colors.WHITE,
+    ...Fonts.BTN,
   },
 });
 

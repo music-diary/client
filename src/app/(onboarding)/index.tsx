@@ -64,7 +64,7 @@ const SignUpScreen = () => {
             style={styles.inputPhoneNumber}
             autoFocus={true}
             placeholder="-를 제외한 번호를 입력해주세요."
-            placeholderTextColor={Colors.contents_light}
+            placeholderTextColor={Colors.CONTENTS_LIGHT}
             value={phoneNumber}
             onChangeText={handlePhoneNumberChange}
             keyboardType="phone-pad"
@@ -73,7 +73,7 @@ const SignUpScreen = () => {
         </View>
         <InputAccessoryView
           nativeID="phoneNumber"
-          backgroundColor={isButtonDisabled ? Colors.bg_light : Colors.purple}
+          backgroundColor={isButtonDisabled ? Colors.BG_LIGHT : Colors.PURPLE}
         >
           <TouchableOpacity
             style={styles.verifyButton}
@@ -85,8 +85,8 @@ const SignUpScreen = () => {
                 styles.verifyText,
                 {
                   color: isButtonDisabled
-                    ? Colors.contents_light
-                    : Colors.white,
+                    ? Colors.CONTENTS_LIGHT
+                    : Colors.WHITE,
                 },
               ]}
             >
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     gap: 60,
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.BLACK,
     flex: 1,
   },
   keyboardAvoidingContainer: {
@@ -118,15 +118,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   inputLabel: {
-    color: Colors.white,
-    ...Fonts.b2_sb,
+    color: Colors.WHITE,
+    ...Fonts.B2_SB,
   },
   inputPhoneNumber: {
-    color: Colors.white,
-    borderBottomColor: Colors.grey1,
+    color: Colors.WHITE,
+    borderBottomColor: Colors.GREY1,
     borderBottomWidth: 1,
     paddingBottom: 8,
-    ...Fonts.b2_line2,
+    ...Fonts.B2_LINE2,
   },
   verifyButton: {
     alignItems: 'center',
@@ -134,6 +134,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   verifyText: {
-    ...Fonts.b1_sb,
+    ...Fonts.B1_SB,
   },
 });

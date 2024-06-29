@@ -26,7 +26,7 @@ const MusicPreference = ({ musicCount, isYearly }: MusicPreferenceProps) => {
       return {
         label: genre ? genre.label : item.music,
         count: item.count,
-        color: genre ? genre.color : Colors.black,
+        color: genre ? genre.color : Colors.BLACK,
       };
     });
   };
@@ -68,7 +68,7 @@ export default MusicPreference;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.grey3,
+    backgroundColor: Colors.GREY3,
     height: 250,
     borderRadius: 12,
     paddingTop: 20,
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     gap: 12,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: colorWithOpacity(Colors.white, 0.1),
+    borderColor: colorWithOpacity(Colors.WHITE, 0.1),
   },
   title: {
     flexDirection: 'row',
@@ -84,13 +84,13 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   buttonText: {
-    color: Colors.purple_box,
-    ...Fonts.btn,
+    color: Colors.PURPLE_BOX,
+    ...Fonts.BTN,
   },
   bodyText: {
     marginTop: 4,
-    color: colorWithOpacity(Colors.white, 0.5),
-    ...Fonts.b2,
+    color: colorWithOpacity(Colors.WHITE, 0.5),
+    ...Fonts.B2,
     textAlign: 'center',
   },
   highlight: {
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     marginRight: 4,
   },
   genreText: {
-    color: colorWithOpacity(Colors.white, 0.5),
-    ...Fonts.btn,
+    color: colorWithOpacity(Colors.WHITE, 0.5),
+    ...Fonts.BTN,
   },
 });

@@ -64,8 +64,8 @@ const TermsModal = ({
               styles.modalOverlay,
               {
                 backgroundColor: isButtonDisabled
-                  ? Colors.contents_light
-                  : Colors.purple,
+                  ? Colors.CONTENTS_LIGHT
+                  : Colors.PURPLE,
               },
             ]}
           >
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     display: 'flex',
-    backgroundColor: Colors.grey3,
+    backgroundColor: Colors.GREY3,
     paddingTop: 32,
     width: '100%',
     borderTopLeftRadius: 10,
@@ -130,13 +130,13 @@ const styles = StyleSheet.create({
   termsTitleContainer: {
     display: 'flex',
     gap: 30,
-    borderBottomColor: colorWithOpacity(Colors.white, 0.2),
+    borderBottomColor: colorWithOpacity(Colors.WHITE, 0.2),
     borderBottomWidth: 1,
     paddingBottom: 24,
   },
   termsTitleText: {
-    ...Fonts.t1,
-    color: Colors.white,
+    ...Fonts.T1,
+    color: Colors.WHITE,
   },
   termsCheckboxContainer: {
     display: 'flex',

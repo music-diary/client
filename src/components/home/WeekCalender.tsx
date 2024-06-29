@@ -136,8 +136,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   currentDate: {
-    color: Colors.white,
-    ...Fonts.b2_sb,
+    color: Colors.WHITE,
+    ...Fonts.B2_SB,
   },
   arrow: {
     flexDirection: 'row',
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
   },
   calendarBody: {
     height: 84,
-    backgroundColor: Colors.bg_light,
+    backgroundColor: Colors.BG_LIGHT,
     borderRadius: 10,
     paddingTop: 16,
     paddingHorizontal: 15,
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
   dayText: {
     fontFamily: 'pret-sb',
     fontSize: 12,
-    color: Colors.white,
+    color: Colors.WHITE,
     textAlign: 'center',
   },
   dayToday: {
@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: Colors.purple,
+    backgroundColor: Colors.PURPLE,
     justifyContent: 'center',
     textAlign: 'center',
   },
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
     width: 4,
     height: 4,
     borderRadius: 2,
-    backgroundColor: Colors.purple,
+    backgroundColor: Colors.PURPLE,
     position: 'absolute',
     top: 5,
     right: 5,

@@ -42,13 +42,13 @@ const CustomCheckToggle = ({
 
   const toggleContainerStyle = {
     ...styles.toggleContainer,
-    backgroundColor: isSelected ? Colors.purple : Colors.black,
-    borderColor: isSelected ? Colors.purple : Colors.white,
+    backgroundColor: isSelected ? Colors.PURPLE : Colors.BLACK,
+    borderColor: isSelected ? Colors.PURPLE : Colors.WHITE,
   };
 
   const toggleCircleBackgroundColor = animation.interpolate({
     inputRange: [0, 1],
-    outputRange: [Colors.black, Colors.white],
+    outputRange: [Colors.BLACK, Colors.WHITE],
   });
 
   return (
@@ -86,8 +86,8 @@ const styles = StyleSheet.create({
   },
   text: {
     marginLeft: 6,
-    color: Colors.white,
-    ...Fonts.b1_sb,
+    color: Colors.WHITE,
+    ...Fonts.B1_SB,
   },
 });
 

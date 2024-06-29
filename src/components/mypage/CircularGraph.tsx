@@ -36,7 +36,7 @@ const CircularGraph = ({ month, diaryCount }: CircularGraphProps) => {
           strokeWidth={strokeWidth}
         />
         <Circle
-          stroke={Colors.purple}
+          stroke={Colors.PURPLE}
           fill="none"
           cx={center}
           cy={center}
@@ -75,12 +75,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   numberText: {
-    color: Colors.white,
-    ...Fonts.h1,
+    color: Colors.WHITE,
+    ...Fonts.H1,
   },
   percentText: {
     marginTop: 5,
-    color: colorWithOpacity(Colors.white, 0.5),
-    ...Fonts.btn,
+    color: colorWithOpacity(Colors.WHITE, 0.5),
+    ...Fonts.BTN,
   },
 });

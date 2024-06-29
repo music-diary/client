@@ -20,13 +20,13 @@ const TopicButton = ({
       <View
         style={[
           styles.opacityView,
-          isSelected ? { backgroundColor: Colors.white } : null,
+          isSelected ? { backgroundColor: Colors.WHITE } : null,
         ]}
       />
       <View style={styles.emoji}>
         <Text>{emoji}</Text>
       </View>
-      <Text style={[styles.type, isSelected ? { color: Colors.black } : null]}>
+      <Text style={[styles.type, isSelected ? { color: Colors.BLACK } : null]}>
         {type}
       </Text>
     </TouchableOpacity>
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderRadius: 38,
     borderWidth: 1,
-    borderColor: Colors.white,
+    borderColor: Colors.WHITE,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
@@ -53,8 +53,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   type: {
-    color: Colors.white,
-    ...Fonts.b2_sb,
+    color: Colors.WHITE,
+    ...Fonts.B2_SB,
   },
   opacityView: {
     borderRadius: 38,

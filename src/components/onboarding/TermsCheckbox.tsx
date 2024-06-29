@@ -25,9 +25,9 @@ const TermsCheckbox = ({
           style={styles.checkbox}
           value={value}
           onValueChange={setValue}
-          color={Colors.purple}
+          color={Colors.PURPLE}
         />
-        <Text style={[styles.title, type === 'all' && Fonts.b2_sb]}>
+        <Text style={[styles.title, type === 'all' && Fonts.B2_SB]}>
           {title}
         </Text>
       </View>
@@ -61,11 +61,11 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   title: {
-    ...Fonts.b2,
-    color: Colors.white,
+    ...Fonts.B2,
+    color: Colors.WHITE,
   },
   openTerms: {
-    ...Fonts.btn,
-    color: Colors.grey1,
+    ...Fonts.BTN,
+    color: Colors.GREY1,
   },
 });

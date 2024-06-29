@@ -30,7 +30,7 @@ const RouteSwitcher = () => {
 
   // 아이콘 색상 설정
   const getIconColor = (viewMode: ViewMode) => {
-    return activeView === viewMode ? Colors.white : Colors.bg_light;
+    return activeView === viewMode ? Colors.WHITE : Colors.BG_LIGHT;
   };
 
   // 만약 active view상태이면 밑줄 생성
@@ -75,7 +75,7 @@ export default RouteSwitcher;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.BLACK,
     flex: 1,
     paddingVertical: 10,
     height: 50,
@@ -89,13 +89,13 @@ const styles = StyleSheet.create({
   },
   underline: {
     height: 1,
-    backgroundColor: Colors.bg_light,
+    backgroundColor: Colors.BG_LIGHT,
   },
   highlight: {
     width: 90,
     marginTop: 8,
     height: 1,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.WHITE,
     zIndex: 2,
   },
 });

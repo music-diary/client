@@ -75,15 +75,15 @@ const styles = StyleSheet.create({
     paddingBottom: 100,
   },
   toast: {
-    backgroundColor: Colors.grey3,
+    backgroundColor: Colors.GREY3,
     borderRadius: 10,
     paddingVertical: 20,
     paddingHorizontal: 32,
     alignItems: 'flex-end',
-    ...Fonts.b2_sb,
+    ...Fonts.B2_SB,
   },
   text: {
-    color: Colors.white,
-    ...Fonts.b2_sb,
+    color: Colors.WHITE,
+    ...Fonts.B2_SB,
   },
 });

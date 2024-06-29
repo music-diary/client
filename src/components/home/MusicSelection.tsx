@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     paddingBottom: 28,
   },
   item: {
-    backgroundColor: Colors.grey1,
+    backgroundColor: Colors.GREY1,
     paddingVertical: 10,
     paddingHorizontal: 16,
     borderRadius: 38,
@@ -84,13 +84,13 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   selectedItem: {
-    backgroundColor: Colors.purple,
+    backgroundColor: Colors.PURPLE,
   },
   itemText: {
-    color: Colors.white,
-    ...Fonts.b2_sb,
+    color: Colors.WHITE,
+    ...Fonts.B2_SB,
   },
   selectedItemText: {
-    color: Colors.white,
+    color: Colors.WHITE,
   },
 });

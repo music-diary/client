@@ -35,7 +35,7 @@ const EmotionIcon = ({ percentage, color, emotion }: HappyIconProps) => {
           fillRule="evenodd"
           clipRule="evenodd"
           d={pathD}
-          fill={Colors.contents_light}
+          fill={Colors.CONTENTS_LIGHT}
         />
         <Path
           fillRule="evenodd"
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   percentageText: {
     position: 'absolute',
     top: 40,
-    color: Colors.grey3,
-    ...Fonts.h1,
+    color: Colors.GREY3,
+    ...Fonts.H1,
   },
 });

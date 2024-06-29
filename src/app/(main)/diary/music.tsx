@@ -210,22 +210,22 @@ export default MusicRecommendationScreen;
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.BLACK,
     flex: 1,
     alignItems: 'center',
     paddingTop: 20,
   },
   headerTitle: {
-    color: Colors.white,
-    ...Fonts.b1_sb,
+    color: Colors.WHITE,
+    ...Fonts.B1_SB,
   },
   cardContainer: {
     height: '100%',
     flex: 1,
-    backgroundColor: Colors.grey3,
+    backgroundColor: Colors.GREY3,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: colorWithOpacity(Colors.white, 0.1),
+    borderColor: colorWithOpacity(Colors.WHITE, 0.1),
     gap: 20,
     alignItems: 'center',
     padding: 20,
@@ -240,12 +240,12 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   singer: {
-    color: Colors.grey1,
-    ...Fonts.btn,
+    color: Colors.GREY1,
+    ...Fonts.BTN,
   },
   title: {
-    color: Colors.white,
-    ...Fonts.b2_sb,
+    color: Colors.WHITE,
+    ...Fonts.B2_SB,
   },
   lyricsSection: {
     flex: 1,
@@ -259,8 +259,8 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   tooltipTitle: {
-    color: Colors.white,
-    ...Fonts.b1_sb,
+    color: Colors.WHITE,
+    ...Fonts.B1_SB,
   },
   lyricsContainer: {
     flex: 1,
@@ -273,10 +273,10 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   selectedLyricLine: {
-    backgroundColor: Colors.contents_light,
+    backgroundColor: Colors.CONTENTS_LIGHT,
   },
   lyricsText: {
-    color: Colors.white,
-    ...Fonts.b2,
+    color: Colors.WHITE,
+    ...Fonts.B2,
   },
 });

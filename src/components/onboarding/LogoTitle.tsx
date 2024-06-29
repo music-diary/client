@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   title: {
-    color: Colors.white,
+    color: Colors.WHITE,
     fontFamily: 'pret-b',
     fontSize: 24,
   },

@@ -16,10 +16,10 @@ const EmotionSlider = ({ setState }: TopicSelectorProps) => {
         setState(value);
       }}
       theme={{
-        maximumTrackTintColor: Colors.contents_light,
-        minimumTrackTintColor: Colors.purple,
-        cacheTrackTintColor: Colors.purple,
-        bubbleBackgroundColor: Colors.purple,
+        maximumTrackTintColor: Colors.CONTENTS_LIGHT,
+        minimumTrackTintColor: Colors.PURPLE,
+        cacheTrackTintColor: Colors.PURPLE,
+        bubbleBackgroundColor: Colors.PURPLE,
       }}
       progress={progress}
       minimumValue={min}

@@ -30,9 +30,9 @@ const calculatePercentages = (
 };
 
 const fillingColors: Record<string, string> = {
-  좋았어요: Colors.green,
-  괜찮아요: Colors.purple,
-  슬펐어요: Colors.blue,
+  좋았어요: Colors.GREEN,
+  괜찮아요: Colors.PURPLE,
+  슬펐어요: Colors.BLUE,
 };
 
 const MyFilling = ({ fillingData }: MyFillingDataProps) => {
@@ -92,7 +92,7 @@ export default MyFilling;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.grey3,
+    backgroundColor: Colors.GREY3,
     height: 250,
     width: containerWidth,
     borderRadius: 12,
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     gap: 12,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: colorWithOpacity(Colors.white, 0.1),
+    borderColor: colorWithOpacity(Colors.WHITE, 0.1),
   },
   title: {
     flexDirection: 'row',
@@ -109,18 +109,18 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   buttonText: {
-    color: Colors.purple_box,
-    ...Fonts.btn,
+    color: Colors.PURPLE_BOX,
+    ...Fonts.BTN,
   },
   bodyText: {
     marginTop: 4,
-    color: colorWithOpacity(Colors.white, 0.5),
+    color: colorWithOpacity(Colors.WHITE, 0.5),
     textAlign: 'center',
-    ...Fonts.b2,
+    ...Fonts.B2,
   },
   highlight: {
     fontWeight: 'bold',
-    ...Fonts.b2,
+    ...Fonts.B2,
   },
   bottomContainer: {
     flexDirection: 'row',
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   btnText: {
-    color: colorWithOpacity(Colors.white, 0.5),
-    ...Fonts.btn,
+    color: colorWithOpacity(Colors.WHITE, 0.5),
+    ...Fonts.BTN,
   },
 });

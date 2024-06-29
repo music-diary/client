@@ -86,7 +86,7 @@ export default SubjectEmotionScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.BLACK,
     paddingHorizontal: 16,
     paddingTop: 20,
   },

@@ -69,12 +69,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   btnText: {
-    color: Colors.grey1,
-    ...Fonts.btn,
+    color: Colors.GREY1,
+    ...Fonts.BTN,
   },
   totalText: {
     marginTop: 5,
-    color: Colors.white,
-    ...Fonts.b1_sb,
+    color: Colors.WHITE,
+    ...Fonts.B1_SB,
   },
 });

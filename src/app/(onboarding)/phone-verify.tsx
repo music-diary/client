@@ -21,7 +21,7 @@ import VerifyTimer from '@/components/onboarding/VerifyTimer';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
 import { useDimStore } from '@/store/useDimStore';
-import WarningCircleSvg from 'assets/images/warning_circle.svg';
+import { WarningCircleSvg } from 'assets/images/onboarding';
 import { type VerifyStatus } from '@/models/types';
 import { colorWithOpacity } from '@/utils/color-utils';
 
@@ -119,7 +119,7 @@ const PhoneVerifyScreen = () => {
                 style={styles.inputVerifyNumber}
                 autoFocus={true}
                 placeholder="인증번호 6자리를 입력해주세요."
-                placeholderTextColor={Colors.grey1}
+                placeholderTextColor={Colors.GREY1}
                 value={verifyNumber}
                 onChangeText={handleVerifyNumberChange}
                 keyboardType="phone-pad"
@@ -144,7 +144,7 @@ const PhoneVerifyScreen = () => {
         </View>
         <InputAccessoryView
           nativeID="verifyNumber"
-          backgroundColor={isButtonDisabled ? Colors.bg_light : Colors.purple}
+          backgroundColor={isButtonDisabled ? Colors.BG_LIGHT : Colors.PURPLE}
         >
           <TouchableOpacity
             style={styles.verifyButton}
@@ -156,8 +156,8 @@ const PhoneVerifyScreen = () => {
                 styles.verifyText,
                 {
                   color: isButtonDisabled
-                    ? Colors.contents_light
-                    : Colors.white,
+                    ? Colors.CONTENTS_LIGHT
+                    : Colors.WHITE,
                 },
               ]}
             >
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     gap: 60,
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.BLACK,
     flex: 1,
   },
   keyboardAvoidingContainer: {
@@ -204,33 +204,33 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 12,
     flexDirection: 'row',
-    borderBottomColor: Colors.grey1,
+    borderBottomColor: Colors.GREY1,
     borderBottomWidth: 1,
     paddingBottom: 8,
     alignItems: 'center',
   },
   inputLabel: {
-    color: Colors.white,
-    ...Fonts.b2_sb,
+    color: Colors.WHITE,
+    ...Fonts.B2_SB,
   },
   inputVerifyNumber: {
     flex: 1,
-    color: Colors.white,
+    color: Colors.WHITE,
     alignSelf: 'flex-start',
-    ...Fonts.b2_line2,
+    ...Fonts.B2_LINE2,
   },
   verifyResendButton: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colorWithOpacity(Colors.grey1, 0.5),
+    backgroundColor: colorWithOpacity(Colors.GREY1, 0.5),
     borderRadius: 2,
     height: 21,
     paddingHorizontal: 10,
     marginTop: 8,
   },
   verifyResendText: {
-    color: Colors.white,
-    ...Fonts.lb,
+    color: Colors.WHITE,
+    ...Fonts.LB,
   },
   verifyButton: {
     alignItems: 'center',
@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
     height: 60,
   },
   verifyText: {
-    ...Fonts.b1_sb,
+    ...Fonts.B1_SB,
   },
   verifyStatusView: {
     display: 'flex',
@@ -248,17 +248,17 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   validityInfoText: {
-    color: Colors.pink,
-    ...Fonts.btn,
+    color: Colors.PINK,
+    ...Fonts.BTN,
   },
   validityQnAButton: {
     alignSelf: 'flex-start',
-    borderBottomColor: Colors.grey1,
+    borderBottomColor: Colors.GREY1,
     borderBottomWidth: 1,
     paddingBottom: 3,
   },
   validityQnAText: {
-    color: Colors.contents_light,
+    color: Colors.CONTENTS_LIGHT,
     fontFamily: 'pret-sb',
     fontSize: 12,
     display: 'flex',

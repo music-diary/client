@@ -25,12 +25,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   title: {
-    color: Colors.white,
-    ...Fonts.h1,
+    color: Colors.WHITE,
+    ...Fonts.H1,
   },
   description: {
-    color: Colors.white,
+    color: Colors.WHITE,
     opacity: 0.7,
-    ...Fonts.btn,
+    ...Fonts.BTN,
   },
 });

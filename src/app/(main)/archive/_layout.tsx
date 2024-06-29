@@ -9,9 +9,9 @@ export default function ArchiveLayout() {
     <Stack
       screenOptions={{
         headerStyle: {
-          backgroundColor: Colors.black,
+          backgroundColor: Colors.BLACK,
         },
-        headerTintColor: Colors.white,
+        headerTintColor: Colors.WHITE,
         headerBackVisible: false,
         headerTitle: () => <HeaderTitle title="아카이브" />,
         animation: 'none',

@@ -46,15 +46,15 @@ export default HeaderRightDraft;
 
 const styles = StyleSheet.create({
   editText: {
-    color: Colors.purple,
-    ...Fonts.b1_sb,
+    color: Colors.PURPLE,
+    ...Fonts.B1_SB,
   },
   deleteText: {
-    color: Colors.red,
-    ...Fonts.b1_sb,
+    color: Colors.RED,
+    ...Fonts.B1_SB,
   },
   cancelText: {
-    color: Colors.grey1,
-    ...Fonts.b1_sb,
+    color: Colors.GREY1,
+    ...Fonts.B1_SB,
   },
 });

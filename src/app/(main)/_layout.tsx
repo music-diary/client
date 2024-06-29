@@ -21,8 +21,8 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors.purple,
-        tabBarInactiveTintColor: Colors.white,
+        tabBarActiveTintColor: Colors.PURPLE,
+        tabBarInactiveTintColor: Colors.WHITE,
         headerShown: useClientOnlyValue(false, true),
         tabBarShowLabel: false,
         tabBarStyle: hide
@@ -33,7 +33,7 @@ export default function TabLayout() {
         tabBarBackground: () => (
           <View style={styles.layout}>
             <BottomBarIcon
-              color={Colors.grey3}
+              color={Colors.GREY3}
               width={currentWidth}
               height={currentHeight}
             />
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     bottom: 34,
     // shadow 설정
-    shadowColor: Colors.black,
+    shadowColor: Colors.BLACK,
     shadowOpacity: 0.9,
     shadowOffset: {
       width: 0,
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   middleItem: {
-    backgroundColor: Colors.purple,
+    backgroundColor: Colors.PURPLE,
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',

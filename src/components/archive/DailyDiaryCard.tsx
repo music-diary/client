@@ -3,8 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Colors from '@/constants/Colors';
 import Fonts from '@/constants/Fonts';
 import CircleAlbum from '@/components/common/CircleAlbum';
-import ArrowsInSimpleIcon from 'assets/images/archiveIcon/ArrowsInSimple.svg';
-import ArrowsOutSimpleIcon from 'assets/images/archiveIcon/ArrowsOutSimple.svg';
+import { ArrowInSvg, ArrowOutSvg } from 'assets/images/archive';
 import { colorWithOpacity, getColorForMood } from '@/utils/color-utils';
 
 interface DiaryDataProps {
@@ -37,7 +36,7 @@ const DailyMainArchive = ({
   return (
     <View style={styles.cardContainer}>
       <TouchableOpacity style={styles.expandButton} onPress={handlePress}>
-        {expanded ? <ArrowsInSimpleIcon /> : <ArrowsOutSimpleIcon />}
+        {expanded ? <ArrowInSvg /> : <ArrowOutSvg />}
       </TouchableOpacity>
       <View style={styles.divider}>
         <CircleAlbum
@@ -79,7 +78,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
-    backgroundColor: Colors.box,
+    backgroundColor: Colors.BOX,
     marginTop: 1,
     paddingTop: 30,
     paddingBottom: 20,
@@ -104,7 +103,7 @@ const styles = StyleSheet.create({
     paddingBottom: 23,
     marginBottom: 16,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.grey1,
+    borderBottomColor: Colors.GREY1,
   },
   sing: {
     flexDirection: 'column',
@@ -112,20 +111,20 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   greyBtnText: {
-    color: Colors.grey1,
-    ...Fonts.btn,
+    color: Colors.GREY1,
+    ...Fonts.BTN,
   },
   b2sbText: {
-    color: Colors.white,
-    ...Fonts.b2_sb,
+    color: Colors.WHITE,
+    ...Fonts.B2_SB,
   },
   btnText: {
-    color: Colors.black,
-    ...Fonts.btn,
+    color: Colors.BLACK,
+    ...Fonts.BTN,
   },
   lyricsText: {
-    color: Colors.purple,
-    ...Fonts.b2_line2_sb,
+    color: Colors.PURPLE,
+    ...Fonts.B2_LINE2_SB,
     paddingTop: 10,
     textAlign: 'center',
   },
@@ -140,9 +139,9 @@ const styles = StyleSheet.create({
     borderRadius: 30,
   },
   diaryContent: {
-    color: Colors.contents_light,
+    color: Colors.CONTENTS_LIGHT,
     paddingTop: 16,
     textAlign: 'justify',
-    ...Fonts.b2_line2,
+    ...Fonts.B2_LINE2,
   },
 });

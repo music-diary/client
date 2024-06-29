@@ -51,7 +51,7 @@ const HomeScreen = () => {
               {diaryCount > 0 ? (
                 <Text style={styles.bodyMent}>
                   이번달 Miya님은{'\n'}
-                  <Text style={{ color: Colors.green }}>긍정적인</Text> 감정의
+                  <Text style={{ color: Colors.GREEN }}>긍정적인</Text> 감정의
                   노래를 가장 많이 들었어요
                 </Text>
               ) : (
@@ -78,15 +78,15 @@ const HomeScreen = () => {
 
 const styles = StyleSheet.create({
   topSafeArea: {
-    backgroundColor: Colors.purple,
+    backgroundColor: Colors.PURPLE,
   },
   container: {
     flex: 1,
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.BLACK,
   },
   top: {
     paddingHorizontal: 16,
-    backgroundColor: Colors.purple,
+    backgroundColor: Colors.PURPLE,
     paddingBottom: 50,
     marginTop: -200,
     paddingTop: 200,
@@ -99,10 +99,10 @@ const styles = StyleSheet.create({
   },
   logoText: {
     color: '#FAFAFA',
-    ...Fonts.h1,
+    ...Fonts.H1,
   },
   body: {
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.BLACK,
     marginTop: -50,
     borderTopLeftRadius: 18,
     borderTopRightRadius: 18,
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     paddingBottom: 23,
   },
   bodyMent: {
-    color: Colors.white,
+    color: Colors.WHITE,
     fontFamily: 'pret-b',
     fontSize: 16,
     lineHeight: 24,

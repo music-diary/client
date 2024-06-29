@@ -94,10 +94,10 @@ const CalendarView = () => {
             hideExtraDays
             horizontal={false}
             theme={{
-              calendarBackground: Colors.black,
-              monthTextColor: Colors.white,
-              textSectionTitleColor: Colors.contents_light,
-              dayTextColor: Colors.white,
+              calendarBackground: Colors.BLACK,
+              monthTextColor: Colors.WHITE,
+              textSectionTitleColor: Colors.CONTENTS_LIGHT,
+              dayTextColor: Colors.WHITE,
               textMonthFontFamily: 'pret-b',
             }}
             dayComponent={({ date, state }) =>
@@ -114,7 +114,7 @@ const CalendarView = () => {
         <>
           <ActivityIndicator
             style={styles.loadingContainer}
-            color={Colors.purple}
+            color={Colors.PURPLE}
           />
         </>
       )}
@@ -127,7 +127,7 @@ export default CalendarView;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.BLACK,
   },
   routerContainer: {
     position: 'absolute',
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
   },
   whiteText: {
     textAlign: 'center',
-    color: Colors.white,
+    color: Colors.WHITE,
     zIndex: 1,
     opacity: 1,
   },
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     width: 40,
     borderRadius: 20,
     overflow: 'hidden',
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.BLACK,
   },
   albumImageContainer: {
     position: 'absolute',

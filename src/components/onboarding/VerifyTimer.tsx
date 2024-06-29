@@ -54,6 +54,6 @@ export default VerifyTimer;
 
 const styles = StyleSheet.create({
   verifyTimer: {
-    color: Colors.pink,
+    color: Colors.PINK,
   },
 });

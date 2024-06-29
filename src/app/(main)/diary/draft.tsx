@@ -114,7 +114,7 @@ export default DraftScreen;
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.BLACK,
     flex: 1,
     paddingTop: 22,
     gap: 10,
@@ -122,10 +122,10 @@ const styles = StyleSheet.create({
   totalText: {
     paddingHorizontal: 16,
     color: 'white',
-    ...Fonts.lb,
+    ...Fonts.LB,
   },
   number: {
-    color: Colors.purple,
+    color: Colors.PURPLE,
   },
   draftListContainer: {
     flex: 1,
@@ -136,26 +136,26 @@ const styles = StyleSheet.create({
   infoView: {
     gap: 4,
     borderBottomWidth: 1,
-    borderColor: Colors.grey1,
+    borderColor: Colors.GREY1,
     paddingVertical: 10,
   },
   selectedDraft: {
-    backgroundColor: colorWithOpacity(Colors.white, 0.1), // 선택된 항목의 배경 색상
+    backgroundColor: colorWithOpacity(Colors.WHITE, 0.1), // 선택된 항목의 배경 색상
   },
   titleView: {
     flexDirection: 'row',
     gap: 10,
   },
   title: {
-    color: Colors.white,
-    ...Fonts.b2_sb,
+    color: Colors.WHITE,
+    ...Fonts.B2_SB,
   },
   music: {
-    color: Colors.purple,
-    ...Fonts.b2_sb,
+    color: Colors.PURPLE,
+    ...Fonts.B2_SB,
   },
   date: {
-    color: Colors.grey1,
-    ...Fonts.btn,
+    color: Colors.GREY1,
+    ...Fonts.BTN,
   },
 });

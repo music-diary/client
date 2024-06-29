@@ -43,17 +43,17 @@ const CustomToggle = ({
     <TouchableHighlight
       style={[
         styles.toggleButton,
-        { backgroundColor: isOn ? Colors.purple : '#969696' },
+        { backgroundColor: isOn ? Colors.PURPLE : '#969696' },
       ]}
       onPress={handleToggle}
-      underlayColor={isOn ? Colors.purple : '#969696'}
+      underlayColor={isOn ? Colors.PURPLE : '#969696'}
     >
       <Animated.View
         style={[
           styles.thumb,
           {
             transform: [{ translateX }],
-            backgroundColor: isOn ? Colors.white : Colors.purple,
+            backgroundColor: isOn ? Colors.WHITE : Colors.PURPLE,
           },
         ]}
       />

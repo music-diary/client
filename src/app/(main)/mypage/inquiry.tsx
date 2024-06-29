@@ -67,7 +67,7 @@ const inquiry = () => {
   return (
     <>
       <KeyboardAvoidingView
-        style={{ flex: 1, backgroundColor: Colors.black }}
+        style={{ flex: 1, backgroundColor: Colors.BLACK }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
       >
@@ -127,7 +127,7 @@ const inquiry = () => {
             <TextInput
               style={styles.inputText}
               placeholder="이메일 주소를 입력해주세요."
-              placeholderTextColor={Colors.contents_light}
+              placeholderTextColor={Colors.CONTENTS_LIGHT}
               keyboardType="email-address"
               onChangeText={handleEmailChange}
             />
@@ -182,7 +182,7 @@ export default inquiry;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.BLACK,
     paddingHorizontal: 16,
 
     paddingBottom: 150,
@@ -190,14 +190,14 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   headerText: {
-    color: Colors.contents_light,
+    color: Colors.CONTENTS_LIGHT,
 
-    ...Fonts.b2,
+    ...Fonts.B2,
   },
   titleText: {
-    color: Colors.white,
+    color: Colors.WHITE,
     marginTop: 27,
-    ...Fonts.b1_sb,
+    ...Fonts.B1_SB,
   },
   inputContainer: {
     marginTop: 12,
@@ -206,11 +206,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderWidth: 1,
     borderRadius: 6,
-    borderColor: Colors.contents_light,
+    borderColor: Colors.CONTENTS_LIGHT,
   },
   inputText: {
-    color: Colors.white,
-    ...Fonts.b2,
+    color: Colors.WHITE,
+    ...Fonts.B2,
   },
   toggleContainer: {
     gap: 14,
@@ -225,12 +225,12 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     height: 165,
     borderWidth: 1,
-    borderColor: Colors.contents_light,
+    borderColor: Colors.CONTENTS_LIGHT,
     borderRadius: 10,
-    color: Colors.white,
+    color: Colors.WHITE,
   },
   placeholder: {
-    color: Colors.contents_light,
+    color: Colors.CONTENTS_LIGHT,
     position: 'absolute',
     top: 16,
     left: 16,
@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   lbText: {
-    color: Colors.contents_light,
-    ...Fonts.lb,
+    color: Colors.CONTENTS_LIGHT,
+    ...Fonts.LB,
   },
 });

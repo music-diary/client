@@ -37,7 +37,7 @@ const ArchiveScreen = () => {
           </View>
         )}
         contentContainerStyle={styles.contentContainer}
-        style={{ backgroundColor: Colors.black }}
+        style={{ backgroundColor: Colors.BLACK }}
       />
     </View>
   );
@@ -48,7 +48,7 @@ export default ArchiveScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.BLACK,
   },
   header: {
     height: 50,

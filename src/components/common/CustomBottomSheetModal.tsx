@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   modalContent: {
-    backgroundColor: Colors.grey3,
+    backgroundColor: Colors.GREY3,
     paddingTop: 20,
     paddingBottom: 34, // safe area bottom 설정,
     paddingHorizontal: 16,
@@ -114,11 +114,11 @@ const styles = StyleSheet.create({
     // t1 수정해야함
     fontSize: 16,
     fontWeight: 'bold',
-    color: Colors.white,
+    color: Colors.WHITE,
   },
   buttonText: {
-    color: Colors.purple,
-    ...Fonts.b1_sb,
+    color: Colors.PURPLE,
+    ...Fonts.B1_SB,
   },
   bodyContent: {},
 });

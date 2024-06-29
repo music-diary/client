@@ -8,9 +8,9 @@ export default function MypageLayout() {
     <Stack
       screenOptions={{
         headerStyle: {
-          backgroundColor: Colors.black,
+          backgroundColor: Colors.BLACK,
         },
-        headerTintColor: Colors.white,
+        headerTintColor: Colors.WHITE,
         headerTitle: '',
       }}
     >

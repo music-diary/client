@@ -18,8 +18,7 @@ import BodyNavigator from '@/components/mypage/BodyNavigator';
 import CustomToggle from '@/components/common/CustomToggle';
 import MusicSelection from '@/components/home/MusicSelection';
 import { useAppStore } from '@/store/useAppStore';
-import ChartPieIcon from 'assets/images/mypageIcon/ChartPie.svg';
-import DefaultProfileIcon from 'assets/images/mypageIcon/DefaultProfile.svg';
+import { ChartPieSvg, DefaultProfileSvg } from 'assets/images/mypage';
 import { colorWithOpacity } from '@/utils/color-utils';
 import CustomBottomSheetModal from '@/components/common/CustomBottomSheetModal';
 import { formatToMeridiemTime, formatToYearMonth } from '@/utils/date-utils';
@@ -121,16 +120,16 @@ const MypageScreen = () => {
       <View style={styles.header}>
         <View style={styles.headerLeft}>
           <View style={styles.profileImage}>
-            <DefaultProfileIcon />
+            <DefaultProfileSvg />
           </View>
           <View style={styles.profileImageTop}>
-            <Feather name="star" color={Colors.white} />
+            <Feather name="star" color={Colors.WHITE} />
           </View>
           <Text style={styles.profileInfo}>
-            <Text style={{ color: Colors.purple }}>Miya</Text>님과 함께한 지
+            <Text style={{ color: Colors.PURPLE }}>Miya</Text>님과 함께한 지
             {'\n'}
             <View style={{ paddingVertical: 10 }} />
-            <Text style={{ color: Colors.purple }}>60일</Text>이 되었어요
+            <Text style={{ color: Colors.PURPLE }}>60일</Text>이 되었어요
           </Text>
         </View>
         <View style={styles.headerRight}>
@@ -148,7 +147,7 @@ const MypageScreen = () => {
         style={styles.headerContent}
         onPress={onPressStatistics}
       >
-        <ChartPieIcon />
+        <ChartPieSvg />
         <Text style={styles.textB2sb}>통계보기</Text>
       </TouchableOpacity>
       {/* 바디1 */}
@@ -164,7 +163,7 @@ const MypageScreen = () => {
             <MaterialIcons
               name="arrow-forward-ios"
               size={14}
-              color={Colors.white}
+              color={Colors.WHITE}
             />
           </TouchableOpacity>
         </View>
@@ -269,7 +268,7 @@ const MypageScreen = () => {
                 setTempDiaryTime(selectedDate);
               }
             }}
-            textColor={Colors.white}
+            textColor={Colors.WHITE}
           />
         </View>
       </CustomBottomSheetModal>
@@ -283,7 +282,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 16,
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.BLACK,
   },
   header: {
     flexDirection: 'row',
@@ -292,7 +291,7 @@ const styles = StyleSheet.create({
     paddingBottom: 24,
   },
   headerLeft: {
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.BLACK,
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -301,14 +300,14 @@ const styles = StyleSheet.create({
     height: 61,
     borderRadius: 31,
     borderWidth: 1,
-    borderColor: Colors.white,
+    borderColor: Colors.WHITE,
     overflow: 'hidden',
   },
   profileImageTop: {
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: Colors.purple,
+    backgroundColor: Colors.PURPLE,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
@@ -317,8 +316,8 @@ const styles = StyleSheet.create({
   },
   profileInfo: {
     paddingLeft: 16,
-    color: Colors.white,
-    ...Fonts.t1,
+    color: Colors.WHITE,
+    ...Fonts.T1,
   },
   headerRight: {
     flexDirection: 'row',
@@ -327,7 +326,7 @@ const styles = StyleSheet.create({
     marginTop: -24,
   },
   profileCorrection: {
-    backgroundColor: Colors.bg_light,
+    backgroundColor: Colors.BG_LIGHT,
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 8,
@@ -335,8 +334,8 @@ const styles = StyleSheet.create({
     borderRadius: 37,
   },
   profileCorrectionText: {
-    color: Colors.white,
-    ...Fonts.btn,
+    color: Colors.WHITE,
+    ...Fonts.BTN,
   },
   headerContent: {
     justifyContent: 'center',
@@ -344,13 +343,13 @@ const styles = StyleSheet.create({
     height: 90,
     marginTop: 7,
     gap: 6,
-    backgroundColor: Colors.grey3,
+    backgroundColor: Colors.GREY3,
     borderRadius: 10,
   },
   dateText: {
-    color: colorWithOpacity(Colors.white, 0.5),
+    color: colorWithOpacity(Colors.WHITE, 0.5),
     textAlign: 'left',
-    ...Fonts.b2_sb,
+    ...Fonts.B2_SB,
   },
 
   bodyRoute: {
@@ -359,25 +358,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   textB1: {
-    color: Colors.white,
-    ...Fonts.b1,
+    color: Colors.WHITE,
+    ...Fonts.B1,
   },
   textB1Gray1: {
-    color: Colors.grey1,
-    ...Fonts.b1,
+    color: Colors.GREY1,
+    ...Fonts.B1,
     paddingLeft: 14,
   },
   textB1Gray2: {
-    color: Colors.grey1,
-    ...Fonts.b1,
+    color: Colors.GREY1,
+    ...Fonts.B1,
   },
   textB2sb: {
-    color: Colors.white,
-    ...Fonts.b2_sb,
+    color: Colors.WHITE,
+    ...Fonts.B2_SB,
   },
   textB2: {
-    color: Colors.white,
-    ...Fonts.b2,
+    color: Colors.WHITE,
+    ...Fonts.B2,
   },
   musicFlavor: {
     flexDirection: 'row',
@@ -390,12 +389,12 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   musicFlavorText: {
-    color: Colors.purple,
-    ...Fonts.b2,
+    color: Colors.PURPLE,
+    ...Fonts.B2,
   },
   divider: {
     height: 1,
-    backgroundColor: Colors.contents_light,
+    backgroundColor: Colors.CONTENTS_LIGHT,
     marginHorizontal: -16,
     marginVertical: 8,
   },
@@ -410,8 +409,8 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   secession: {
-    color: colorWithOpacity(Colors.purple, 0.5),
-    ...Fonts.btn,
+    color: colorWithOpacity(Colors.PURPLE, 0.5),
+    ...Fonts.BTN,
     textDecorationLine: 'underline',
   },
   pickerContainer: {
