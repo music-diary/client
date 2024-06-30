@@ -1,7 +1,6 @@
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
-import Colors from '@/constants/Colors';
-import BookOpenIcon from 'assets/images/mypageIcon/BookOpen.svg';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
+import { BookOpenSvg } from 'assets/images/mypage';
 import { colorWithOpacity } from '@/utils/color-utils';
 import { type ITopic } from '@/models/interfaces';
 
@@ -28,7 +27,7 @@ const DiaryTopic = ({ Topic }: DiaryTopicProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.title}>
-        <BookOpenIcon />
+        <BookOpenSvg />
         <Text style={styles.buttonText}>일기 주제</Text>
       </View>
       <Text style={styles.bodyText}>
@@ -58,7 +57,7 @@ export default DiaryTopic;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.grey3,
+    backgroundColor: Colors.GREY3,
     height: 250,
     width: containerWidth,
     borderRadius: 12,
@@ -67,7 +66,7 @@ const styles = StyleSheet.create({
     gap: 10,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: colorWithOpacity(Colors.white, 0.1),
+    borderColor: colorWithOpacity(Colors.WHITE, 0.1),
   },
   title: {
     flexDirection: 'row',
@@ -75,13 +74,13 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   buttonText: {
-    color: Colors.purple_box,
-    ...Fonts.btn,
+    color: Colors.PURPLE_BOX,
+    ...Fonts.BTN,
   },
   bodyText: {
     paddingVertical: 6,
-    color: colorWithOpacity(Colors.white, 0.5),
-    ...Fonts.b2,
+    color: colorWithOpacity(Colors.WHITE, 0.5),
+    ...Fonts.B2,
     textAlign: 'center',
   },
   highlight: {
@@ -94,13 +93,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 8,
-    backgroundColor: colorWithOpacity(Colors.white, 0.2),
+    backgroundColor: colorWithOpacity(Colors.WHITE, 0.2),
     borderWidth: 1.5,
-    borderColor: colorWithOpacity(Colors.white, 0.1),
+    borderColor: colorWithOpacity(Colors.WHITE, 0.1),
     borderRadius: 22,
   },
   b2sbText: {
-    color: Colors.white,
-    ...Fonts.b2_sb,
+    color: Colors.WHITE,
+    ...Fonts.B2_SB,
   },
 });

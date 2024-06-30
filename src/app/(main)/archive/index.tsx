@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, ScrollView, Text, View } from 'react-native';
-import Colors from '@/constants/Colors';
+import { Colors } from '@/constants';
 import dummy_archive_month from '@/data/dummy_archive_month.json';
 import DailyMainArchive from '@/components/archive/DailyMainArchive';
 import dummy_archive_recommend from '@/data/dummy_archive_recommend.json';
 import RecommendMusic from '@/components/archive/RecommendMusic';
 import RouteSwitcher from '@/components/archive/RouteSwitcher';
-import { getCurrentYearMonth } from '@/utils/date-utils';
+import { formatToYearMonth } from '@/utils/date-utils';
 
 interface DiaryData {
   id: string;
@@ -27,7 +27,7 @@ interface RecommendData {
   feeling: string;
 }
 
-const MonthScreen = () => {
+const ArchiveScreen = () => {
   const [entryData, setEntryData] = useState<DiaryData[]>([]);
   const [recommendData, setRecommendData] = useState<RecommendData[]>([]);
 
@@ -42,7 +42,7 @@ const MonthScreen = () => {
         <RouteSwitcher />
       </View>
       <ScrollView style={styles.container}>
-        <Text style={styles.headerText}>{getCurrentYearMonth(new Date())}</Text>
+        <Text style={styles.headerText}>{formatToYearMonth(new Date())}</Text>
         <ScrollView
           horizontal={true}
           showsHorizontalScrollIndicator={false}
@@ -69,12 +69,12 @@ const MonthScreen = () => {
   );
 };
 
-export default MonthScreen;
+export default ArchiveScreen;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.BLACK,
     paddingLeft: 16,
     paddingTop: 20,
   },
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     height: 50,
   },
   headerText: {
-    color: Colors.white,
+    color: Colors.WHITE,
     fontFamily: 'pret-b',
     fontSize: 18,
   },

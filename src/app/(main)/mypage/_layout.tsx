@@ -1,16 +1,16 @@
 import { Stack } from 'expo-router';
 import HeaderTitle from '@/components/common/HeaderTitle';
 import CustomBackButton from '@/components/common/CustomBackButton';
-import Colors from '@/constants/Colors';
+import { Colors } from '@/constants';
 
 export default function MypageLayout() {
   return (
     <Stack
       screenOptions={{
         headerStyle: {
-          backgroundColor: Colors.black,
+          backgroundColor: Colors.BLACK,
         },
-        headerTintColor: Colors.white,
+        headerTintColor: Colors.WHITE,
         headerTitle: '',
       }}
     >
@@ -22,7 +22,7 @@ export default function MypageLayout() {
         }}
       />
       <Stack.Screen
-        name="editprofile"
+        name="edit"
         options={{
           title: '프로필 수정',
           headerTitle: () => <HeaderTitle title="프로필 수정" />,

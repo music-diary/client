@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 
 interface HeaderProps {
   title: string;
@@ -25,12 +24,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   title: {
-    color: Colors.white,
-    ...Fonts.h1,
+    color: Colors.WHITE,
+    ...Fonts.H1,
   },
   description: {
-    color: Colors.white,
+    color: Colors.WHITE,
     opacity: 0.7,
-    ...Fonts.btn,
+    ...Fonts.BTN,
   },
 });

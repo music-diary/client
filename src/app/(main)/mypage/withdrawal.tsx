@@ -9,15 +9,14 @@ import {
 } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { router } from 'expo-router';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 import CustomCheckToggle from '@/components/common/CustomCheckToggle';
 import useKeyboardScrollViewScroll from '@/hooks/useKeyboardScrollViewScroll';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
 import CustomAlertModal from '@/components/common/CustomAlertModal';
 import { useModalStore } from '@/store/useModalStore';
 
-const withdrawal = () => {
+const WithdrawalScreen = () => {
   const { openModal, closeModal } = useModalStore();
   // 키보드 높이 조절 (커스텀 훅 사용)
   const scrollViewRef = useRef<ScrollView>(null);
@@ -91,7 +90,7 @@ const withdrawal = () => {
   return (
     <>
       <KeyboardAvoidingView
-        style={{ flex: 1, backgroundColor: Colors.black }}
+        style={{ flex: 1, backgroundColor: Colors.BLACK }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
       >
@@ -174,17 +173,17 @@ const withdrawal = () => {
   );
 };
 
-export default withdrawal;
+export default WithdrawalScreen;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.BLACK,
     paddingHorizontal: 16,
     paddingTop: 30,
     paddingBottom: 150,
   },
   headerText: {
-    color: Colors.white,
+    color: Colors.WHITE,
     fontFamily: 'pret-b',
     fontSize: 18,
   },
@@ -200,12 +199,12 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     height: 212,
     borderWidth: 1,
-    borderColor: Colors.contents_light,
+    borderColor: Colors.CONTENTS_LIGHT,
     borderRadius: 10,
-    color: Colors.white,
+    color: Colors.WHITE,
   },
   placeholder: {
-    color: Colors.contents_light,
+    color: Colors.CONTENTS_LIGHT,
     position: 'absolute',
 
     top: 16,
@@ -216,7 +215,7 @@ const styles = StyleSheet.create({
     marginTop: -10,
   },
   lbText: {
-    color: Colors.contents_light,
-    ...Fonts.lb,
+    color: Colors.CONTENTS_LIGHT,
+    ...Fonts.LB,
   },
 });

@@ -15,8 +15,7 @@ import CustomAlertModal from '@/components/common/CustomAlertModal';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
 import CustomCheckToggle from '@/components/common/CustomCheckToggle';
 import Header from '@/components/onboarding/Header';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 import { genders } from '@/constants/data';
 import { useModalStore } from '@/store/useModalStore';
 import { colorWithOpacity } from '@/utils/color-utils';
@@ -66,7 +65,7 @@ const UserInfoScreen = () => {
                 <TextInput
                   style={styles.inputText}
                   placeholder="뭐라고 불러드릴까요?"
-                  placeholderTextColor={Colors.grey1}
+                  placeholderTextColor={Colors.GREY1}
                   value={name}
                   onChangeText={setName}
                 />
@@ -77,7 +76,7 @@ const UserInfoScreen = () => {
                   <TextInput
                     style={styles.inputText}
                     placeholder="YYYYMMDD"
-                    placeholderTextColor={Colors.grey1}
+                    placeholderTextColor={Colors.GREY1}
                     value={birth}
                     keyboardType="number-pad"
                     onChangeText={handleBirthChange}
@@ -137,7 +136,7 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     gap: 28,
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.BLACK,
     flex: 1,
   },
   keyboardAvoidingContainer: {
@@ -157,23 +156,23 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   inputLabel: {
-    color: Colors.white,
-    ...Fonts.b2_sb,
+    color: Colors.WHITE,
+    ...Fonts.B2_SB,
   },
   inputText: {
-    color: Colors.white,
-    borderBottomColor: Colors.grey1,
+    color: Colors.WHITE,
+    borderBottomColor: Colors.GREY1,
     borderBottomWidth: 1.5,
     paddingBottom: 8,
-    ...Fonts.b2_line2,
+    ...Fonts.B2_LINE2,
   },
   inputDescription: {
-    color: colorWithOpacity(Colors.white, 0.7),
-    ...Fonts.btn,
+    color: colorWithOpacity(Colors.WHITE, 0.7),
+    ...Fonts.BTN,
   },
   birthInfo: {
-    color: Colors.pink,
-    ...Fonts.lb,
+    color: Colors.PINK,
+    ...Fonts.LB,
   },
   genderButtonGroup: {
     display: 'flex',

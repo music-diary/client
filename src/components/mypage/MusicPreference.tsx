@@ -1,7 +1,6 @@
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
-import Colors from '@/constants/Colors';
-import MusicNotesIcon from 'assets/images/mypageIcon/MusicNotes.svg';
-import Fonts from '@/constants/Fonts';
+import { MusicNotesSvg } from 'assets/images/mypage';
+import { Colors, Fonts } from '@/constants';
 import { colorWithOpacity } from '@/utils/color-utils';
 import PreferenceGraph from '@/components/mypage/PreferenceGraph';
 import { genres } from '@/constants/data';
@@ -26,20 +25,20 @@ const MusicPreference = ({ musicCount, isYearly }: MusicPreferenceProps) => {
       return {
         label: genre ? genre.label : item.music,
         count: item.count,
-        color: genre ? genre.color : Colors.black,
+        color: genre ? genre.color : Colors.BLACK,
       };
     });
   };
 
   const graphData = generateGraphData(); // 변환된 데이터
-  const graphtotal = graphData.reduce((acc, item) => acc + item.count, 0); // count 총합
+  const graphTotal = graphData.reduce((acc, item) => acc + item.count, 0); // count 총합
 
   const componentWidth = isYearly ? containerYearlyWidth : containerWidth;
 
   return (
     <View style={[styles.container, { width: componentWidth }]}>
       <View style={styles.title}>
-        <MusicNotesIcon />
+        <MusicNotesSvg />
         <Text style={styles.buttonText}>내 음악취향</Text>
       </View>
       <Text style={styles.bodyText}>
@@ -51,7 +50,7 @@ const MusicPreference = ({ musicCount, isYearly }: MusicPreferenceProps) => {
         </Text>
         장르를 많이 기록했어요.
       </Text>
-      <PreferenceGraph data={graphData} total={graphtotal} />
+      <PreferenceGraph data={graphData} total={graphTotal} />
       <View style={styles.genreContainer}>
         {graphData.map((genre, index) => (
           <View key={index} style={styles.genreItem}>
@@ -68,7 +67,7 @@ export default MusicPreference;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.grey3,
+    backgroundColor: Colors.GREY3,
     height: 250,
     borderRadius: 12,
     paddingTop: 20,
@@ -76,7 +75,7 @@ const styles = StyleSheet.create({
     gap: 12,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: colorWithOpacity(Colors.white, 0.1),
+    borderColor: colorWithOpacity(Colors.WHITE, 0.1),
   },
   title: {
     flexDirection: 'row',
@@ -84,13 +83,13 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   buttonText: {
-    color: Colors.purple_box,
-    ...Fonts.btn,
+    color: Colors.PURPLE_BOX,
+    ...Fonts.BTN,
   },
   bodyText: {
     marginTop: 4,
-    color: colorWithOpacity(Colors.white, 0.5),
-    ...Fonts.b2,
+    color: colorWithOpacity(Colors.WHITE, 0.5),
+    ...Fonts.B2,
     textAlign: 'center',
   },
   highlight: {
@@ -113,7 +112,7 @@ const styles = StyleSheet.create({
     marginRight: 4,
   },
   genreText: {
-    color: colorWithOpacity(Colors.white, 0.5),
-    ...Fonts.btn,
+    color: colorWithOpacity(Colors.WHITE, 0.5),
+    ...Fonts.BTN,
   },
 });

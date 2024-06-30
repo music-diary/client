@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 
 type ViewMode = 'yearly' | 'monthly';
 
@@ -13,7 +12,7 @@ interface StaticRouterProps {
 const StaticRouter = ({ activeView, setActiveView }: StaticRouterProps) => {
   // 텍스트 색상 설정
   const getTextColor = (viewMode: ViewMode) => {
-    return activeView === viewMode ? Colors.white : Colors.bg_light;
+    return activeView === viewMode ? Colors.WHITE : Colors.BG_LIGHT;
   };
 
   // 만약 activeView 상태이면 밑줄 생성
@@ -56,7 +55,7 @@ export default StaticRouter;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.BLACK,
     paddingTop: 10,
     height: 38,
     flexDirection: 'row',
@@ -68,17 +67,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
-    ...Fonts.b1_sb,
+    ...Fonts.B1_SB,
   },
   underline: {
     height: 1,
-    backgroundColor: Colors.bg_light,
+    backgroundColor: Colors.BG_LIGHT,
   },
   highlight: {
     width: 140,
     marginTop: 9,
     height: 1,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.WHITE,
     zIndex: 2,
   },
 });

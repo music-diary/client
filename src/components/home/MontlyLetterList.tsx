@@ -4,7 +4,7 @@
 // import Colors from '@/constants/Colors';
 // import Fonts from '@/constants/Fonts';
 // import CircleAlbum from '@/components/common/CircleAlbum';
-// const MontlyLetterList = () => {
+// const MonthlyLetterList = () => {
 //   const colors = [
 //     'rgba(42,237,21, 0.3)',
 //     'rgba(255,59,257, 0.3)',
@@ -39,7 +39,7 @@
 //   );
 // };
 
-// export default MontlyLetterList;
+// export default MonthlyLetterList;
 
 // const styles = StyleSheet.create({
 //   container: {

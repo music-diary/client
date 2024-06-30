@@ -45,7 +45,7 @@
 //           onCancel={closeModal}
 //           firstLine="정말로 삭제하시겠습니까?"
 //           secondLine="삭제된 친구는 다시 추가가 불가능합니다."
-//           cancleMent="취소할래요"
+//           cancelMent="취소할래요"
 //           confirmMent="차단할래요"
 //         />
 //       </TouchableOpacity>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import Colors from '@/constants/Colors';
+import { Colors } from '@/constants';
 import DropDownToggle from '@/components/mypage/DropDownToggle';
 import MyFilling from '@/components/mypage/MyFilling';
 import MusicPreference from '@/components/mypage/MusicPreference';
@@ -35,7 +35,7 @@ const YearlyStatisticPage = () => {
       <View style={styles.bodyContainer}>
         <DiaryYearlyGraph
           average={selectedData.DiaryYearNumberData.average}
-          monthlydata={selectedData.DiaryYearNumberData.monthlydata}
+          monthlyData={selectedData.DiaryYearNumberData.monthlyData}
         />
         <MusicPreference
           musicCount={selectedData.MusicPreferenceData.musicCount}
@@ -55,7 +55,7 @@ export default YearlyStatisticPage;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.BLACK,
     paddingBottom: 50,
   },
   dropdown: {

@@ -1,13 +1,11 @@
 import { router, useLocalSearchParams } from 'expo-router';
 import { Share, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { Colors, Fonts } from '@/constants';
 import dummy_archive_day from '@/data/dummy_archive_day.json';
 import DailyDiaryCard from '@/components/archive/DailyDiaryCard';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
 import { useModalToggleStore, useModalStore } from '@/store/useModalStore';
-import UploadIcon from 'assets/images/archiveIcon/Upload.svg';
-import TrashIcon from 'assets/images/archiveIcon/Trash.svg';
+import { TrashSvg, UploadSvg } from 'assets/images/archive';
 import CustomAlertModal from '@/components/common/CustomAlertModal';
 
 export interface DailyDiaryData {
@@ -34,12 +32,12 @@ const ModalOpenView = ({
     <View style={styles.modal}>
       <TouchableOpacity style={styles.modalContent} onPress={onSharePress}>
         <Text style={styles.b1WhiteText}>공유</Text>
-        <UploadIcon fill={Colors.white} />
+        <UploadSvg fill={Colors.WHITE} />
       </TouchableOpacity>
       <View style={styles.divider} />
       <TouchableOpacity style={styles.modalContent} onPress={onDeletePress}>
         <Text style={styles.b1RedText}>삭제</Text>
-        <TrashIcon fill={Colors.red} />
+        <TrashSvg fill={Colors.RED} />
       </TouchableOpacity>
     </View>
   );
@@ -124,7 +122,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 16,
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.BLACK,
   },
   modal: {
     backgroundColor: '#2A2B2B', // 추후 수정 필요할 수도..!
@@ -144,21 +142,21 @@ const styles = StyleSheet.create({
   },
   divider: {
     height: 0.5,
-    backgroundColor: Colors.contents_light,
+    backgroundColor: Colors.CONTENTS_LIGHT,
     marginHorizontal: -16,
   },
   b1LightText: {
     paddingTop: 20,
-    color: Colors.contents_light,
-    ...Fonts.b1,
+    color: Colors.CONTENTS_LIGHT,
+    ...Fonts.B1,
   },
   b1WhiteText: {
-    color: Colors.white,
-    ...Fonts.b1,
+    color: Colors.WHITE,
+    ...Fonts.B1,
   },
   b1RedText: {
-    color: Colors.red,
-    ...Fonts.b1,
+    color: Colors.RED,
+    ...Fonts.B1,
   },
   cardContainer: {
     marginTop: 10,

@@ -2,14 +2,13 @@ import React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { ProfileSvg } from 'assets/images/home';
 import WeekCalendar from '@/components/home/WeekCalender';
-import MontlyMusicList from '@/components/home/MontlyMusicList';
+import MonthlyMusicList from '@/components/home/MonthlyMusicList';
 import CharacterAnimation from '@/components/home/CharacterAnimation';
-import Fonts from '@/constants/Fonts';
-import Colors from '@/constants/Colors';
+import { Colors, Fonts } from '@/constants';
 import TopDescription from '@/components/home/TopDescription';
 import NewUserDescription from '@/components/home/NewUserDescription';
-import MypageIcon from 'assets/images/homeIcon/MyPage.svg';
 
 const HomeScreen = () => {
   // 월간 작성 개수 -> dummy data
@@ -32,7 +31,7 @@ const HomeScreen = () => {
             <View style={styles.topBar}>
               <Text style={styles.logoText}>Logo</Text>
               <TouchableOpacity onPress={handlePersonClick}>
-                <MypageIcon />
+                <ProfileSvg />
               </TouchableOpacity>
             </View>
             <TopDescription count={diaryCount} name={name} />
@@ -51,7 +50,7 @@ const HomeScreen = () => {
               {diaryCount > 0 ? (
                 <Text style={styles.bodyMent}>
                   이번달 Miya님은{'\n'}
-                  <Text style={{ color: Colors.green }}>긍정적인</Text> 감정의
+                  <Text style={{ color: Colors.GREEN }}>긍정적인</Text> 감정의
                   노래를 가장 많이 들었어요
                 </Text>
               ) : (
@@ -62,7 +61,7 @@ const HomeScreen = () => {
               )}
             </View>
             {diaryCount > 0 ? (
-              <MontlyMusicList />
+              <MonthlyMusicList />
             ) : (
               <NewUserDescription description="아직 작성한 일기가 없어요" />
             )}
@@ -78,15 +77,15 @@ const HomeScreen = () => {
 
 const styles = StyleSheet.create({
   topSafeArea: {
-    backgroundColor: Colors.purple,
+    backgroundColor: Colors.PURPLE,
   },
   container: {
     flex: 1,
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.BLACK,
   },
   top: {
     paddingHorizontal: 16,
-    backgroundColor: Colors.purple,
+    backgroundColor: Colors.PURPLE,
     paddingBottom: 50,
     marginTop: -200,
     paddingTop: 200,
@@ -99,10 +98,10 @@ const styles = StyleSheet.create({
   },
   logoText: {
     color: '#FAFAFA',
-    ...Fonts.h1,
+    ...Fonts.H1,
   },
   body: {
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.BLACK,
     marginTop: -50,
     borderTopLeftRadius: 18,
     borderTopRightRadius: 18,
@@ -111,7 +110,7 @@ const styles = StyleSheet.create({
     paddingBottom: 23,
   },
   bodyMent: {
-    color: Colors.white,
+    color: Colors.WHITE,
     fontFamily: 'pret-b',
     fontSize: 16,
     lineHeight: 24,

@@ -1,7 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Link } from 'expo-router';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 import CircleAlbum from '@/components/common/CircleAlbum';
 import { colorWithOpacity, getColorForMood } from '@/utils/color-utils';
 import { trimTitle } from '@/utils/text-utils';
@@ -30,7 +29,7 @@ const DailyMainArchive = ({
   return (
     <Link href={`/(main)/archive/day/${date}`} asChild key={id}>
       <TouchableOpacity key={id}>
-        <Text style={styles.b2lighttext}>{date}</Text>
+        <Text style={styles.b2LightText}>{date}</Text>
         <View style={styles.cardContainer}>
           <CircleAlbum
             color={colorWithOpacity(getColorForMood(feeling), 0.3)}
@@ -69,16 +68,16 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
-    backgroundColor: Colors.box,
+    backgroundColor: Colors.BOX,
     width: 280,
     height: 335,
     marginTop: 8,
     paddingTop: 25,
     borderRadius: 8,
   },
-  b2lighttext: {
-    color: Colors.grey1,
-    ...Fonts.b2,
+  b2LightText: {
+    color: Colors.GREY1,
+    ...Fonts.B2,
   },
   middleContainer: {
     paddingTop: 18,
@@ -91,16 +90,16 @@ const styles = StyleSheet.create({
     gap: 9,
   },
   lightLbText: {
-    color: Colors.contents_light,
-    ...Fonts.lb,
+    color: Colors.CONTENTS_LIGHT,
+    ...Fonts.LB,
   },
   white10Text: {
-    color: Colors.black,
-    ...Fonts.lb,
+    color: Colors.BLACK,
+    ...Fonts.LB,
   },
   btnText: {
-    color: Colors.white,
-    ...Fonts.btn,
+    color: Colors.WHITE,
+    ...Fonts.BTN,
   },
   emotionContainer: {
     paddingTop: 16,

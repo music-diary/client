@@ -1,18 +1,17 @@
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
-import Colors from '@/constants/Colors';
-import ConfettiIcon from 'assets/images/mypageIcon/Confetti.svg';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
+import { ConfettiSvg } from 'assets/images/mypage';
 import { colorWithOpacity } from '@/utils/color-utils';
 import LineGraph from '@/components/mypage/LineGraph';
 import { type DiaryYearNumberData } from '@/models/interfaces';
 
 const containerWidth = Dimensions.get('window').width - 32;
 
-const DiaryYearlyGraph = ({ average, monthlydata }: DiaryYearNumberData) => {
+const DiaryYearlyGraph = ({ average, monthlyData }: DiaryYearNumberData) => {
   return (
     <View style={styles.container}>
       <View style={styles.title}>
-        <ConfettiIcon />
+        <ConfettiSvg />
         <Text style={styles.titleText}>작성한 음악일기</Text>
       </View>
       <Text style={styles.bodyText}>
@@ -24,7 +23,7 @@ const DiaryYearlyGraph = ({ average, monthlydata }: DiaryYearNumberData) => {
           월 평균 <Text style={styles.boxHighlight}>{average}회</Text> 작성
         </Text>
       </View>
-      <LineGraph data={monthlydata} />
+      <LineGraph data={monthlyData} />
     </View>
   );
 };
@@ -33,7 +32,7 @@ export default DiaryYearlyGraph;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.grey3,
+    backgroundColor: Colors.GREY3,
     height: 330,
     width: containerWidth,
     borderRadius: 12,
@@ -42,7 +41,7 @@ const styles = StyleSheet.create({
     gap: 20,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: colorWithOpacity(Colors.white, 0.1),
+    borderColor: colorWithOpacity(Colors.WHITE, 0.1),
   },
   title: {
     flexDirection: 'row',
@@ -50,28 +49,28 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   titleText: {
-    color: Colors.purple_box,
-    ...Fonts.btn,
+    color: Colors.PURPLE_BOX,
+    ...Fonts.BTN,
   },
   bodyText: {
-    color: colorWithOpacity(Colors.white, 0.5),
-    ...Fonts.b2,
+    color: colorWithOpacity(Colors.WHITE, 0.5),
+    ...Fonts.B2,
     textAlign: 'center',
   },
   highlight: {
     color: 'white',
   },
   boxContainer: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.WHITE,
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 16,
   },
   boxText: {
-    color: Colors.black,
-    ...Fonts.b2_sb,
+    color: Colors.BLACK,
+    ...Fonts.B2_SB,
   },
   boxHighlight: {
-    color: Colors.purple,
+    color: Colors.PURPLE,
   },
 });

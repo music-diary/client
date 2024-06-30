@@ -9,40 +9,41 @@ import {
 } from 'react-native';
 import { CalendarList, type DateData } from 'react-native-calendars';
 import { router } from 'expo-router';
-import Colors from '@/constants/Colors';
+import { Colors } from '@/constants';
 import TempBlack from '@/components/archive/TempBlack';
 import dummyArchiveCalendar from '@/data/dummy_archive_calendar.json';
 import RouteSwitcher from '@/components/archive/RouteSwitcher';
 
 interface customDayComponentProps {
   date: DateData;
-  imageuri?: string;
+  imageUri?: string;
 }
-const customDayComponent = ({ date, imageuri }: customDayComponentProps) => {
-  // datedata 형식 확인
+const customDayComponent = ({ date, imageUri }: customDayComponentProps) => {
+  // dateData 형식 확인
   const handleDateClick = (dd: DateData) => {
-    console.log('🚀 ~ file: calendar.tsx:22 ~ handleDateClick ~ dd:', dd);
+    // console.log('🚀 ~ file: calendar.tsx:22 ~ handleDateClick ~ dd:', dd);
+    // 추후 날짜 누르면 이동하게 구현
   };
 
   // temp date (임시 설정)
-  const tempdate = 'archive/day/3%EC%9B%94%202%EC%9D%BC';
+  const tempDate = 'archive/day/3%EC%9B%94%202%EC%9D%BC';
   const handleAlbumClick = (date: DateData) => {
     console.log(
       '🚀 ~ file: calendar.tsx:26 ~ handleAlbumClick ~ date:',
       date.dateString,
     );
-    router.push(tempdate);
+    router.push(tempDate);
   };
 
   return (
     <View style={styles.dayContainer}>
-      {imageuri ? (
+      {imageUri ? (
         <TouchableOpacity
           style={styles.albumContainer}
           onPress={() => handleAlbumClick(date)}
         >
           <View style={styles.albumImageContainer}>
-            <Image source={{ uri: imageuri }} style={styles.albumImage} />
+            <Image source={{ uri: imageUri }} style={styles.albumImage} />
           </View>
           <Text style={styles.whiteText}>{date.day}</Text>
         </TouchableOpacity>
@@ -55,7 +56,7 @@ const customDayComponent = ({ date, imageuri }: customDayComponentProps) => {
   );
 };
 
-const CalendarView = () => {
+const CalendarScreen = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [showTempBlack, setShowTempBlack] = useState(false);
 
@@ -93,16 +94,16 @@ const CalendarView = () => {
             hideExtraDays
             horizontal={false}
             theme={{
-              calendarBackground: Colors.black,
-              monthTextColor: Colors.white,
-              textSectionTitleColor: Colors.contents_light,
-              dayTextColor: Colors.white,
+              calendarBackground: Colors.BLACK,
+              monthTextColor: Colors.WHITE,
+              textSectionTitleColor: Colors.CONTENTS_LIGHT,
+              dayTextColor: Colors.WHITE,
               textMonthFontFamily: 'pret-b',
             }}
             dayComponent={({ date, state }) =>
               customDayComponent({
                 date: date as DateData,
-                imageuri: date
+                imageUri: date
                   ? getImageUriForDate(date.dateString)
                   : undefined,
               })
@@ -111,19 +112,22 @@ const CalendarView = () => {
         </>
       ) : (
         <>
-          <ActivityIndicator style={styles.loadingContainer} color="#793FB5" />
+          <ActivityIndicator
+            style={styles.loadingContainer}
+            color={Colors.PURPLE}
+          />
         </>
       )}
     </View>
   );
 };
 
-export default CalendarView;
+export default CalendarScreen;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.BLACK,
   },
   routerContainer: {
     position: 'absolute',
@@ -155,7 +159,7 @@ const styles = StyleSheet.create({
   },
   whiteText: {
     textAlign: 'center',
-    color: Colors.white,
+    color: Colors.WHITE,
     zIndex: 1,
     opacity: 1,
   },
@@ -167,7 +171,7 @@ const styles = StyleSheet.create({
     width: 40,
     borderRadius: 20,
     overflow: 'hidden',
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.BLACK,
   },
   albumImageContainer: {
     position: 'absolute',

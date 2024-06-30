@@ -1,4 +1,4 @@
-import Colors from '@/constants/Colors';
+import { Colors } from '@/constants';
 
 export const colorWithOpacity = (hex: string, alpha: number) => {
   const r = parseInt(hex.slice(1, 3), 16);
@@ -9,13 +9,13 @@ export const colorWithOpacity = (hex: string, alpha: number) => {
 };
 
 const moods = [
-  { value: 'happy', color: Colors.green },
-  { value: 'soso', color: Colors.purple },
-  { value: 'bad', color: Colors.blue },
+  { value: 'happy', color: Colors.GREEN },
+  { value: 'soso', color: Colors.PURPLE },
+  { value: 'bad', color: Colors.BLUE },
 ];
 
 // 감정에 따라 색상을 반환하는 함수
 export function getColorForMood(mood: string) {
   const moodEntry = moods.find((entry) => entry.value === mood);
-  return moodEntry ? moodEntry.color : Colors.black;
+  return moodEntry ? moodEntry.color : Colors.BLACK;
 }

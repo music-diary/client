@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { router, usePathname } from 'expo-router';
-import Colors from '@/constants/Colors';
-import CardsThreeIcon from 'assets/images/archiveIcon/CardsThree.svg';
-import CalendarDotsIcon from 'assets/images/archiveIcon/CalendarDots.svg';
-import SquaresFourIcon from 'assets/images/archiveIcon/SquaresFour.svg';
+import {
+  CardsThreeSvg,
+  CalendarDotsSvg,
+  SquaresFourSvg,
+} from 'assets/images/archive';
+import { Colors } from '@/constants';
 
-type ViewMode = 'monthly' | 'daily' | 'calendar' | 'archivegrid';
+type ViewMode = 'monthly' | 'daily' | 'calendar' | 'grid';
 
 const RouteSwitcher = () => {
   const [activeView, setActiveView] = useState<ViewMode | null>(null);
@@ -17,8 +19,8 @@ const RouteSwitcher = () => {
   useEffect(() => {
     if (pathname.includes('/archive/calendar')) {
       setActiveView('calendar');
-    } else if (pathname.includes('/archive/archivegrid')) {
-      setActiveView('archivegrid');
+    } else if (pathname.includes('/archive/grid')) {
+      setActiveView('grid');
     } else if (pathname.includes('/archive')) {
       setActiveView('monthly');
     } else {
@@ -28,10 +30,10 @@ const RouteSwitcher = () => {
 
   // 아이콘 색상 설정
   const getIconColor = (viewMode: ViewMode) => {
-    return activeView === viewMode ? Colors.white : Colors.bg_light;
+    return activeView === viewMode ? Colors.WHITE : Colors.BG_LIGHT;
   };
 
-  // 만약 activeview상태이면 밑줄 생성
+  // 만약 active view상태이면 밑줄 생성
   const getUnderline = (viewMode: ViewMode) => {
     return activeView === viewMode ? styles.highlight : null;
   };
@@ -41,7 +43,7 @@ const RouteSwitcher = () => {
   };
 
   const handleArchiveClick = () => {
-    router.navigate('(main)/archive/archivegrid');
+    router.navigate('(main)/archive/grid');
   };
 
   const handleMonthClick = () => {
@@ -52,16 +54,16 @@ const RouteSwitcher = () => {
     <>
       <View style={styles.container}>
         <TouchableOpacity onPress={handleMonthClick} style={styles.icon}>
-          <CardsThreeIcon fill={getIconColor('monthly')} />
+          <CardsThreeSvg fill={getIconColor('monthly')} />
           <View style={getUnderline('monthly')} />
         </TouchableOpacity>
         <TouchableOpacity onPress={handleCalendarClick} style={styles.icon}>
-          <CalendarDotsIcon fill={getIconColor('calendar')} />
+          <CalendarDotsSvg fill={getIconColor('calendar')} />
           <View style={getUnderline('calendar')} />
         </TouchableOpacity>
         <TouchableOpacity onPress={handleArchiveClick} style={styles.icon}>
-          <SquaresFourIcon fill={getIconColor('archivegrid')} />
-          <View style={getUnderline('archivegrid')} />
+          <SquaresFourSvg fill={getIconColor('grid')} />
+          <View style={getUnderline('grid')} />
         </TouchableOpacity>
       </View>
       <View style={styles.underline} />
@@ -73,7 +75,7 @@ export default RouteSwitcher;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.BLACK,
     flex: 1,
     paddingVertical: 10,
     height: 50,
@@ -87,13 +89,13 @@ const styles = StyleSheet.create({
   },
   underline: {
     height: 1,
-    backgroundColor: Colors.bg_light,
+    backgroundColor: Colors.BG_LIGHT,
   },
   highlight: {
     width: 90,
     marginTop: 8,
     height: 1,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.WHITE,
     zIndex: 2,
   },
 });

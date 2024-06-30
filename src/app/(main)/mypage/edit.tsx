@@ -5,29 +5,18 @@ import DateTimePicker, {
   type DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
 import { router } from 'expo-router';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 import CustomCheckToggle from '@/components/common/CustomCheckToggle';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
-import PhotoIcon from 'assets/images/mypageIcon/Photo.svg';
-import DefaultProfileIcon from 'assets/images/mypageIcon/DefaultProfile.svg';
+import { PhotoSvg, DefaultProfileSvg } from 'assets/images/mypage';
 import CustomBottomSheetModal from '@/components/common/CustomBottomSheetModal';
+import { formatToDate } from '@/utils/date-utils';
 
-const formatDate = (date: Date): string => {
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  const formattedMonth = String(month).padStart(2, '0'); // 한 자리 수 월을 두 자리로 변환
-  const formattedDay = String(day).padStart(2, '0');
-  return `${year}-${formattedMonth}-${formattedDay}`;
-};
-
-const editprofile = () => {
-  // 닉네임
-  const myname = 'Miya';
-  const [nickname, setNickname] = useState(myname);
-  const onChangeNickname = (inputtext: string) => {
-    setNickname(inputtext);
+const EditScreen = () => {
+  const myName = 'Miya';
+  const [nickname, setNickname] = useState(myName);
+  const onChangeNickname = (inputText: string) => {
+    setNickname(inputText);
   };
 
   // 달력
@@ -62,7 +51,7 @@ const editprofile = () => {
   const [isButtonActive, setButtonActive] = useState(true);
 
   useEffect(() => {
-    const isNicknameChanged = nickname !== myname;
+    const isNicknameChanged = nickname !== myName;
     const isDateChanged =
       selectedDate.toLocaleDateString() !== birthday.toLocaleDateString();
     const isToggleChanged = selectedToggle !== initialToggle.current;
@@ -84,10 +73,10 @@ const editprofile = () => {
         {/* 프로필 수정 */}
         <View style={styles.profile}>
           <View style={styles.profileImage}>
-            <DefaultProfileIcon width={100} height={100} />
+            <DefaultProfileSvg width={100} height={100} />
             <TouchableOpacity>
               <View style={styles.cameraContainer}>
-                <PhotoIcon />
+                <PhotoSvg />
               </View>
             </TouchableOpacity>
           </View>
@@ -98,34 +87,34 @@ const editprofile = () => {
         {/* body */}
         <View style={styles.body}>
           {/* 닉네임 */}
-          <View style={styles.titlename}>
+          <View style={styles.titleName}>
             <Text style={styles.btnText}>
-              닉네임 <Text style={{ color: Colors.pink }}>*</Text>
+              닉네임 <Text style={{ color: Colors.PINK }}>*</Text>
             </Text>
             <TextInput
               style={styles.inputNickname}
               onChangeText={onChangeNickname}
               value={nickname}
               placeholder="(기존 닉네임)"
-              placeholderTextColor={Colors.contents_light}
+              placeholderTextColor={Colors.CONTENTS_LIGHT}
             />
           </View>
           {/* 생년월일 */}
-          <View style={styles.titlename}>
+          <View style={styles.titleName}>
             <Text style={styles.btnText}>
-              생년월일 <Text style={{ color: Colors.pink }}>*</Text>
+              생년월일 <Text style={{ color: Colors.PINK }}>*</Text>
             </Text>
             <TouchableOpacity
               style={styles.birthdayContainer}
               onPress={showDatePicker}
             >
-              <Text style={styles.dateText}>{formatDate(selectedDate)}</Text>
+              <Text style={styles.dateText}>{formatToDate(selectedDate)}</Text>
             </TouchableOpacity>
           </View>
           {/* 성별 */}
-          <View style={styles.titlename}>
+          <View style={styles.titleName}>
             <Text style={styles.btnText}>
-              성별 <Text style={{ color: Colors.pink }}>*</Text>
+              성별 <Text style={{ color: Colors.PINK }}>*</Text>
             </Text>
             <View style={styles.checkboxContainer}>
               <CustomCheckToggle
@@ -175,7 +164,7 @@ const editprofile = () => {
             onChange={onChange}
             maximumDate={new Date()}
             minimumDate={new Date(1900, 0, 1)} // 최소 날짜는 1900년 1월
-            textColor={Colors.white}
+            textColor={Colors.WHITE}
             locale="ko" // 한국어 설정
           />
         </View>
@@ -184,12 +173,12 @@ const editprofile = () => {
   );
 };
 
-export default editprofile;
+export default EditScreen;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.BLACK,
     paddingHorizontal: 16,
   },
 
@@ -202,7 +191,7 @@ const styles = StyleSheet.create({
     height: 101,
     borderRadius: 51,
     borderWidth: 1,
-    borderColor: Colors.white,
+    borderColor: Colors.WHITE,
   },
   cameraContainer: {
     position: 'absolute',
@@ -212,39 +201,39 @@ const styles = StyleSheet.create({
     height: 30,
     borderRadius: 15,
     borderWidth: 1,
-    borderColor: Colors.black,
-    backgroundColor: Colors.white,
+    borderColor: Colors.BLACK,
+    backgroundColor: Colors.WHITE,
     justifyContent: 'center',
     alignItems: 'center',
     paddingLeft: 1,
   },
   deleteText: {
-    color: Colors.contents_light,
-    ...Fonts.btn,
+    color: Colors.CONTENTS_LIGHT,
+    ...Fonts.BTN,
     marginTop: 11,
   },
   body: {
     gap: 30,
   },
-  titlename: { gap: 10 },
+  titleName: { gap: 10 },
   btnText: {
-    color: Colors.white,
-    ...Fonts.btn,
+    color: Colors.WHITE,
+    ...Fonts.BTN,
   },
   birthdayContainer: {
     borderWidth: 1,
-    borderColor: Colors.grey1,
+    borderColor: Colors.GREY1,
     borderRadius: 6,
     padding: 10,
     paddingVertical: 10,
   },
   inputNickname: {
     borderWidth: 1,
-    borderColor: Colors.grey1,
+    borderColor: Colors.GREY1,
     borderRadius: 6,
     padding: 10,
-    color: Colors.grey1,
-    ...Fonts.btn,
+    color: Colors.GREY1,
+    ...Fonts.BTN,
     paddingVertical: 10,
   },
   checkboxContainer: {
@@ -253,8 +242,8 @@ const styles = StyleSheet.create({
     paddingBottom: 30,
   },
   dateText: {
-    color: Colors.grey1,
-    ...Fonts.btn,
+    color: Colors.GREY1,
+    ...Fonts.BTN,
   },
   birthContainer: {
     alignItems: 'center',

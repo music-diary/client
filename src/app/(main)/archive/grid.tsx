@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
-import Colors from '@/constants/Colors';
+import { Colors } from '@/constants';
 import dummy_archive_main from '@/data/dummy_archive_main.json';
-import MontlyMainArchive from '@/components/archive/MontlyMainArchive';
+import MonthlyMainArchive from '@/components/archive/MonthlyMainArchive';
 import RouteSwitcher from '@/components/archive/RouteSwitcher';
 
 interface DiaryEntryData {
@@ -15,7 +15,7 @@ interface DiaryEntryData {
   diaryEntries: number;
 }
 
-const ArchiveScreen = () => {
+const GridScreen = () => {
   const [entryData, setEntryData] = useState<DiaryEntryData[]>([]);
   useEffect(() => {
     setEntryData(dummy_archive_main);
@@ -33,22 +33,22 @@ const ArchiveScreen = () => {
         columnWrapperStyle={styles.columnWrapper}
         renderItem={({ item }) => (
           <View style={styles.gridItem}>
-            <MontlyMainArchive {...item} />
+            <MonthlyMainArchive {...item} />
           </View>
         )}
         contentContainerStyle={styles.contentContainer}
-        style={{ backgroundColor: Colors.black }}
+        style={{ backgroundColor: Colors.BLACK }}
       />
     </View>
   );
 };
 
-export default ArchiveScreen;
+export default GridScreen;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.BLACK,
   },
   header: {
     height: 50,

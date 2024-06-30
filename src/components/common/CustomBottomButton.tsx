@@ -1,8 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 
 interface CustomButtonProps {
   isActive: boolean;
@@ -18,7 +17,7 @@ const BottomSafeAreaButton = ({
   return (
     <SafeAreaView
       edges={['bottom']}
-      style={{ backgroundColor: isActive ? Colors.purple : Colors.bg_light }}
+      style={{ backgroundColor: isActive ? Colors.PURPLE : Colors.BG_LIGHT }}
     >
       <TouchableOpacity
         onPress={isActive ? onPress : undefined}
@@ -29,7 +28,7 @@ const BottomSafeAreaButton = ({
           <Text
             style={[
               styles.btnText,
-              { color: isActive ? Colors.white : Colors.contents_light },
+              { color: isActive ? Colors.WHITE : Colors.CONTENTS_LIGHT },
             ]}
           >
             {label}
@@ -48,7 +47,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   btnText: {
-    ...Fonts.b1_sb,
+    ...Fonts.B1_SB,
   },
 });
 

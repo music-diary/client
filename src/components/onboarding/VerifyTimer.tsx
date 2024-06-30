@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, Text } from 'react-native';
-import Colors from '@/constants/Colors';
+import { Colors } from '@/constants';
 
 interface VerifyTimerProps {
   retry: boolean;
@@ -54,6 +54,6 @@ export default VerifyTimer;
 
 const styles = StyleSheet.create({
   verifyTimer: {
-    color: Colors.pink,
+    color: Colors.PINK,
   },
 });

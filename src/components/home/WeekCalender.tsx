@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import Fonts from '@/constants/Fonts';
-import Colors from '@/constants/Colors';
-import ArrowBackIcon from 'assets/images/homeIcon/ArrowBack.svg';
+import { Colors, Fonts } from '@/constants';
+import { ArrowButtonSvg } from 'assets/images/home';
 
 // toISOString()를 한국 시간으로 변환
 const formatKST = (date: Date) => {
@@ -11,7 +10,7 @@ const formatKST = (date: Date) => {
   return koreaDate.toISOString().split('T')[0];
 };
 
-const cvtDatetoWeekStr = (date: Date): { weekStart: Date; weekEnd: Date } => {
+const cvtDateToWeekStr = (date: Date): { weekStart: Date; weekEnd: Date } => {
   const weekStart = new Date(date);
   weekStart.setDate(weekStart.getDate() - weekStart.getDay()); // 시작일: 일요일로 설정
 
@@ -39,7 +38,7 @@ const moveWeek = (date: Date, type: 'prev' | 'post') => {
 
 const WeekCalendar = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const { weekStart } = cvtDatetoWeekStr(selectedDate);
+  const { weekStart } = cvtDateToWeekStr(selectedDate);
 
   const koreaDate = formatKST(new Date());
   const today = koreaDate.split('-');
@@ -76,20 +75,20 @@ const WeekCalendar = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.calanderTop}>
+      <View style={styles.calendarTop}>
         <Text style={styles.currentDate}>
           {displayYear}년 {displayMonth}월
         </Text>
         <View style={styles.arrow}>
           <TouchableOpacity onPress={prevWeek}>
-            <ArrowBackIcon />
+            <ArrowButtonSvg />
           </TouchableOpacity>
           <TouchableOpacity onPress={nextWeek} style={styles.forwardArrow}>
-            <ArrowBackIcon />
+            <ArrowButtonSvg />
           </TouchableOpacity>
         </View>
       </View>
-      <View style={styles.calanderBody}>
+      <View style={styles.calendarBody}>
         <View style={styles.week}>
           {weekName.map((name, index) => (
             <Text key={index} style={styles.weekText}>
@@ -130,14 +129,14 @@ const styles = StyleSheet.create({
   container: {
     marginRight: 16, // 수정 필요
   },
-  calanderTop: {
+  calendarTop: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
   currentDate: {
-    color: Colors.white,
-    ...Fonts.b2_sb,
+    color: Colors.WHITE,
+    ...Fonts.B2_SB,
   },
   arrow: {
     flexDirection: 'row',
@@ -147,9 +146,9 @@ const styles = StyleSheet.create({
   forwardArrow: {
     transform: [{ rotate: '180deg' }],
   },
-  calanderBody: {
+  calendarBody: {
     height: 84,
-    backgroundColor: Colors.bg_light,
+    backgroundColor: Colors.BG_LIGHT,
     borderRadius: 10,
     paddingTop: 16,
     paddingHorizontal: 15,
@@ -181,7 +180,7 @@ const styles = StyleSheet.create({
   dayText: {
     fontFamily: 'pret-sb',
     fontSize: 12,
-    color: Colors.white,
+    color: Colors.WHITE,
     textAlign: 'center',
   },
   dayToday: {
@@ -190,7 +189,7 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: Colors.purple,
+    backgroundColor: Colors.PURPLE,
     justifyContent: 'center',
     textAlign: 'center',
   },
@@ -198,7 +197,7 @@ const styles = StyleSheet.create({
     width: 4,
     height: 4,
     borderRadius: 2,
-    backgroundColor: Colors.purple,
+    backgroundColor: Colors.PURPLE,
     position: 'absolute',
     top: 5,
     right: 5,

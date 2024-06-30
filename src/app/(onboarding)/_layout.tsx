@@ -1,6 +1,6 @@
 import { Stack } from 'expo-router';
 import LogoTitle from '@/components/onboarding/LogoTitle';
-import Colors from '@/constants/Colors';
+import { Colors } from '@/constants';
 import CustomBackButton from '@/components/common/CustomBackButton';
 import { useModalStore } from '@/store/useModalStore';
 
@@ -11,9 +11,9 @@ const LoginLayout = () => {
     <Stack
       screenOptions={{
         headerStyle: {
-          backgroundColor: Colors.black,
+          backgroundColor: Colors.BLACK,
         },
-        headerTintColor: Colors.white,
+        headerTintColor: Colors.WHITE,
         headerTitle: () => <LogoTitle />,
         headerLeft: () => <CustomBackButton />,
         animation: 'fade',

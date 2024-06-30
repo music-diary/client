@@ -8,11 +8,8 @@ import {
   Dimensions,
 } from 'react-native';
 import { Link } from 'expo-router';
-import Colors from '@/constants/Colors';
-import HappyIcon from 'assets/images/happy.svg';
-import SosoIcon from 'assets/images/soso.svg';
-import BadIcon from 'assets/images/bad.svg';
-import Fonts from '@/constants/Fonts';
+import { BadSvg, HappySvg, SosoSvg } from 'assets/images/common';
+import { Colors, Fonts } from '@/constants';
 import { colorWithOpacity } from '@/utils/color-utils';
 import { trimTitle } from '@/utils/text-utils';
 
@@ -31,11 +28,11 @@ interface DiaryEntryProps {
 const getBackgroundColor = (mood: string) => {
   switch (mood) {
     case 'Neutral':
-      return Colors.blue;
+      return Colors.BLUE;
     case 'Positive':
-      return Colors.purple;
+      return Colors.PURPLE;
     case 'Negative':
-      return Colors.green;
+      return Colors.GREEN;
 
     default:
       return '#f5f5f5';
@@ -48,19 +45,19 @@ const EmotionImage = ({ mood }: { mood: string }) => {
     case 'Positive':
       return (
         <View style={styles.emotion}>
-          <HappyIcon width={120} height={120} fill={Colors.green} />
+          <HappySvg width={120} height={120} fill={Colors.GREEN} />
         </View>
       );
     case 'Negative':
       return (
         <View style={styles.emotion}>
-          <BadIcon width={125} height={125} fill={Colors.blue} />
+          <BadSvg width={125} height={125} fill={Colors.BLUE} />
         </View>
       );
     case 'Neutral':
       return (
         <View style={styles.emotion}>
-          <SosoIcon width={125} height={125} fill={Colors.purple} />
+          <SosoSvg width={125} height={125} fill={Colors.PURPLE} />
         </View>
       );
     default:
@@ -68,7 +65,7 @@ const EmotionImage = ({ mood }: { mood: string }) => {
   }
 };
 
-const MontlyMainArchive = ({
+const MonthlyMainArchive = ({
   id,
   month,
   mood,
@@ -111,7 +108,7 @@ const MontlyMainArchive = ({
   );
 };
 
-export default MontlyMainArchive;
+export default MonthlyMainArchive;
 
 const styles = StyleSheet.create({
   fullContainer: {
@@ -125,8 +122,8 @@ const styles = StyleSheet.create({
     borderRadius: 9,
   },
   month: {
-    color: Colors.white,
-    ...Fonts.b1_sb,
+    color: Colors.WHITE,
+    ...Fonts.B1_SB,
   },
   emotionContainer: {
     flex: 1,
@@ -145,7 +142,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 9,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colorWithOpacity(Colors.white, 0.2),
+    backgroundColor: colorWithOpacity(Colors.WHITE, 0.2),
     position: 'absolute',
     bottom: 0,
     left: 0,
@@ -173,12 +170,12 @@ const styles = StyleSheet.create({
     width: 90,
   },
   songTitle: {
-    color: Colors.black,
-    ...Fonts.btn,
+    color: Colors.BLACK,
+    ...Fonts.BTN,
   },
   artist: {
     paddingTop: 2,
-    color: Colors.black,
-    ...Fonts.lb,
+    color: Colors.BLACK,
+    ...Fonts.LB,
   },
 });
