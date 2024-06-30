@@ -2,16 +2,16 @@ import { Stack } from 'expo-router';
 import HeaderTitle from '@/components/common/HeaderTitle';
 import CustomBackButton from '@/components/common/CustomBackButton';
 import HeaderRightMore from '@/components/archive/HeaderRightMore';
-import Colors from '@/constants/Colors';
+import { Colors } from '@/constants';
 
 export default function ArchiveLayout() {
   return (
     <Stack
       screenOptions={{
         headerStyle: {
-          backgroundColor: Colors.black,
+          backgroundColor: Colors.BLACK,
         },
-        headerTintColor: Colors.white,
+        headerTintColor: Colors.WHITE,
         headerBackVisible: false,
         headerTitle: () => <HeaderTitle title="아카이브" />,
         animation: 'none',

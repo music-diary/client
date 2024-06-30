@@ -1,13 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 
 const NewUserDescription = ({ description }: { description: string }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.descriptionText}>{description}</Text>
-      <MaterialIcons name="arrow-outward" size={20} color={Colors.white} />
+      <MaterialIcons name="arrow-outward" size={20} color={Colors.WHITE} />
     </View>
   );
 };
@@ -19,15 +18,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: Colors.bg_light,
+    backgroundColor: Colors.BG_LIGHT,
     borderRadius: 10,
     marginTop: 16,
     marginRight: 16,
     paddingVertical: 22,
   },
   descriptionText: {
-    color: Colors.white,
+    color: Colors.WHITE,
     paddingRight: 5,
-    ...Fonts.b2,
+    ...Fonts.B2,
   },
 });

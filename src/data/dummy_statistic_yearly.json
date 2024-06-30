@@ -3,7 +3,7 @@
     "year": "2024년",
     "DiaryYearNumberData": {
       "average": 21,
-      "monthlydata": [
+      "monthlyData": [
         { "month": 1, "count": 21 },
         { "month": 2, "count": 10 },
         { "month": 3, "count": 0 },
@@ -40,7 +40,7 @@
     "year": "2023년",
     "DiaryYearNumberData": {
       "average": 17,
-      "monthlydata": [
+      "monthlyData": [
         { "month": 1, "count": 20 },
         { "month": 2, "count": 1 },
         { "month": 3, "count": 3 },

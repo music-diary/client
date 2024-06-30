@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View, Image } from 'react-native';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 
 const LoadingView = () => {
   return (
@@ -20,7 +19,7 @@ export default LoadingView;
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.BLACK,
     flex: 1,
     alignItems: 'center',
     paddingTop: 120,
@@ -32,7 +31,7 @@ const styles = StyleSheet.create({
     gap: 60,
   },
   welcomeText: {
-    color: Colors.white,
-    ...Fonts.h1,
+    color: Colors.WHITE,
+    ...Fonts.H1,
   },
 });

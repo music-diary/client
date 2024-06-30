@@ -5,12 +5,11 @@ import {
   TouchableOpacity,
   Modal,
   StyleSheet,
-  Image,
   type ImageSourcePropType,
 } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
+import { TooltipSvg } from 'assets/images/diary';
 
 interface CustomTooltipProps {
   tooltipText?: string;
@@ -23,10 +22,7 @@ const Tooltip = ({ tooltipText }: CustomTooltipProps) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => setVisible(true)}>
-        <Image
-          source={require('assets/images/tooltip.png')}
-          style={styles.icon}
-        />
+        <TooltipSvg />
       </TouchableOpacity>
 
       <Modal
@@ -68,11 +64,6 @@ const styles = StyleSheet.create({
   container: {
     position: 'relative',
   },
-  icon: {
-    width: 14,
-    height: 14,
-    padding: 2,
-  },
   modalOverlay: {
     flex: 1,
     justifyContent: 'center',
@@ -86,7 +77,7 @@ const styles = StyleSheet.create({
   },
   tooltip: {
     flexDirection: 'row',
-    backgroundColor: Colors.purple,
+    backgroundColor: Colors.PURPLE,
     paddingLeft: 14,
     paddingRight: 6.6,
     paddingVertical: 10,
@@ -99,8 +90,8 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   tooltipText: {
-    color: Colors.white,
-    ...Fonts.b2,
+    color: Colors.WHITE,
+    ...Fonts.B2,
   },
   tooltipArrow: {
     position: 'absolute',
@@ -114,6 +105,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 24,
     borderLeftColor: 'transparent',
     borderRightColor: 'transparent',
-    borderBottomColor: Colors.purple,
+    borderBottomColor: Colors.PURPLE,
   },
 });

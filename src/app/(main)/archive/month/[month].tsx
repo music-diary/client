@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useLocalSearchParams } from 'expo-router';
 import { StyleSheet, ScrollView, Text, View } from 'react-native';
-import Colors from '@/constants/Colors';
+import { Colors, Fonts } from '@/constants';
 import dummy_archive_month from '@/data/dummy_archive_month.json';
 import DailyMainArchive from '@/components/archive/DailyMainArchive';
 import dummy_archive_recommend from '@/data/dummy_archive_recommend.json';
 import RecommendMusic from '@/components/archive/RecommendMusic';
 import RouteSwitcher from '@/components/archive/RouteSwitcher';
-import Fonts from '@/constants/Fonts';
 
 interface DiaryData {
   id: string;
@@ -76,7 +75,7 @@ export default MonthScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.BLACK,
     paddingLeft: 16,
     paddingTop: 20,
   },
@@ -84,8 +83,8 @@ const styles = StyleSheet.create({
     height: 50,
   },
   headerText: {
-    color: Colors.white,
-    ...Fonts.t1,
+    color: Colors.WHITE,
+    ...Fonts.T1,
   },
   scrollContent: {
     flexDirection: 'row',

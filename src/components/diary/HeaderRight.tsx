@@ -1,7 +1,8 @@
 import { AntDesign } from '@expo/vector-icons';
 import { router, usePathname } from 'expo-router';
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useModalStore } from '@/store/useModalStore';
+import { StoringSvg } from 'assets/images/diary';
 
 interface HeaderRightProps {
   onPress?: () => void;
@@ -30,10 +31,7 @@ const HeaderRight = ({ onPress }: HeaderRightProps) => {
     <View style={styles.container}>
       {pathname.includes('/diary') && (
         <TouchableOpacity onPress={handleDraft}>
-          <Image
-            source={require('assets/images/storing.png')}
-            style={styles.icon}
-          />
+          <StoringSvg />
         </TouchableOpacity>
       )}
       <AntDesign size={22} name="close" color="white" onPress={handleXButton} />
@@ -48,9 +46,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 6,
     alignItems: 'center',
-  },
-  icon: {
-    width: 24,
-    height: 24,
   },
 });

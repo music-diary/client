@@ -1,16 +1,13 @@
 import React from 'react';
 import { Svg, Path, Rect, Defs, ClipPath } from 'react-native-svg';
 import { View, StyleSheet, Text } from 'react-native';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 
 interface HappyIconProps {
   percentage: number;
   color: string;
   emotion: string;
 }
-
-// 'M35.5002 7.00024C35.5002 7.7415 35.385 8.45585 35.1715 9.12635C35.6016 9.04373 36.0457 9.00047 36.4999 9.00047C40.3659 9.00047 43.4999 12.1345 43.4999 16.0005C43.4999 18.5468 42.1403 20.7756 40.1074 22.0005C42.1404 23.2254 43.5 25.4542 43.5 28.0006C43.5 31.8666 40.366 35.0006 36.5 35.0006C36.0459 35.0006 35.6019 34.9574 35.1719 34.8748C35.3852 35.545 35.5003 36.259 35.5003 36.9999C35.5003 40.8659 32.3663 43.9999 28.5003 43.9999C25.554 43.9999 23.0329 42.1796 22.0001 39.6023C20.9673 42.1796 18.4461 43.9999 15.4998 43.9999C11.6338 43.9999 8.49982 40.8659 8.49982 36.9999C8.49982 36.259 8.61492 35.545 8.82821 34.8748C8.39822 34.9574 7.95423 35.0006 7.50014 35.0006C3.63415 35.0006 0.50014 31.8666 0.50014 28.0006C0.50014 25.4543 1.85974 23.2255 3.89259 22.0006C1.85966 20.7757 0.5 18.5469 0.5 16.0005C0.5 12.1345 3.63401 9.00047 7.5 9.00047C7.95455 9.00047 8.39898 9.04379 8.82939 9.12654C8.61585 8.45598 8.50062 7.74157 8.50062 7.00024C8.50062 3.13425 11.6346 0.000244141 15.5006 0.000244141C18.4465 0.000244141 20.9673 1.81997 22.0004 4.39665C23.0335 1.81997 25.5543 0.000244141 28.5002 0.000244141C32.3662 0.000244141 35.5002 3.13425 35.5002 7.00024ZM21.178 11.8894C19.4467 11.5874 17.9679 10.5666 17.1249 9.7238L18.0926 8.75582C18.7994 9.46237 20.0358 10.3007 21.4132 10.541C22.7344 10.7715 24.2387 10.4666 25.6394 8.79956L26.6873 9.68006C24.9637 11.7314 22.9656 12.2012 21.178 11.8894Z';
 
 const EmotionIcon = ({ percentage, color, emotion }: HappyIconProps) => {
   const iconSize = 44;
@@ -37,7 +34,7 @@ const EmotionIcon = ({ percentage, color, emotion }: HappyIconProps) => {
           fillRule="evenodd"
           clipRule="evenodd"
           d={pathD}
-          fill={Colors.contents_light}
+          fill={Colors.CONTENTS_LIGHT}
         />
         <Path
           fillRule="evenodd"
@@ -76,7 +73,7 @@ const styles = StyleSheet.create({
   percentageText: {
     position: 'absolute',
     top: 40,
-    color: Colors.grey3,
-    ...Fonts.h1,
+    color: Colors.GREY3,
+    ...Fonts.H1,
   },
 });

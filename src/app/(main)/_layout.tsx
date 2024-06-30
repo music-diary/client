@@ -2,19 +2,18 @@ import { Tabs, usePathname } from 'expo-router';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import { Foundation, Feather, FontAwesome6 } from '@expo/vector-icons';
 import { useClientOnlyValue } from '@/hooks/useClientOnlyValue';
-import Colors from '@/constants/Colors';
-import TempBottomBar from 'assets/images/BottombarIcon';
+import { Colors } from '@/constants';
+import BottomBarIcon from '@/components/common/BottomBarIcon';
 
 const ratio = 435 / 375;
 const currentWidth = Dimensions.get('window').width * ratio;
-const currentheight = (137 / 435) * currentWidth;
+const currentHeight = (137 / 435) * currentWidth;
 
 export default function TabLayout() {
   const path = usePathname();
   // 탭바 숨길 페이지 hide에 추가하면 됩니다..!
   const hide =
-    path === '/mypage/myfriend' ||
-    path === '/mypage/editprofile' ||
+    path === '/mypage/edit' ||
     path === '/mypage/inquiry' ||
     path === '/mypage/withdrawal' ||
     path === '/mypage/statistic';
@@ -22,8 +21,8 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors.purple,
-        tabBarInactiveTintColor: Colors.white,
+        tabBarActiveTintColor: Colors.PURPLE,
+        tabBarInactiveTintColor: Colors.WHITE,
         headerShown: useClientOnlyValue(false, true),
         tabBarShowLabel: false,
         tabBarStyle: hide
@@ -33,10 +32,10 @@ export default function TabLayout() {
 
         tabBarBackground: () => (
           <View style={styles.layout}>
-            <TempBottomBar
-              color={Colors.grey3}
+            <BottomBarIcon
+              color={Colors.GREY3}
               width={currentWidth}
-              height={currentheight}
+              height={currentHeight}
             />
           </View>
         ),
@@ -63,7 +62,7 @@ export default function TabLayout() {
             <FontAwesome6 name="pen-nib" size={17} color={color} />
           ),
           tabBarStyle: { display: 'none' },
-          tabBarItemStyle: styles.middleitem,
+          tabBarItemStyle: styles.middleItem,
         }}
       />
       <Tabs.Screen
@@ -74,7 +73,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => (
             <Feather name="archive" size={18} color={color} />
           ),
-          tabBarItemStyle: styles.rightitem,
+          tabBarItemStyle: styles.rightItem,
         }}
       />
       <Tabs.Screen
@@ -114,7 +113,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     bottom: 34,
     // shadow 설정
-    shadowColor: Colors.black,
+    shadowColor: Colors.BLACK,
     shadowOpacity: 0.9,
     shadowOffset: {
       width: 0,
@@ -126,8 +125,8 @@ const styles = StyleSheet.create({
     paddingRight: 50,
     paddingBottom: 20,
   },
-  middleitem: {
-    backgroundColor: Colors.purple,
+  middleItem: {
+    backgroundColor: Colors.PURPLE,
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',
@@ -142,7 +141,7 @@ const styles = StyleSheet.create({
     overflow: 'visible',
   },
 
-  rightitem: {
+  rightItem: {
     paddingLeft: 50,
     paddingBottom: 20,
   },

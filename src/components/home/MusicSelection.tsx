@@ -1,6 +1,5 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 
 const musicList = [
   '발라드',
@@ -75,7 +74,7 @@ const styles = StyleSheet.create({
     paddingBottom: 28,
   },
   item: {
-    backgroundColor: Colors.grey1,
+    backgroundColor: Colors.GREY1,
     paddingVertical: 10,
     paddingHorizontal: 16,
     borderRadius: 38,
@@ -84,13 +83,13 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   selectedItem: {
-    backgroundColor: Colors.purple,
+    backgroundColor: Colors.PURPLE,
   },
   itemText: {
-    color: Colors.white,
-    ...Fonts.b2_sb,
+    color: Colors.WHITE,
+    ...Fonts.B2_SB,
   },
   selectedItemText: {
-    color: Colors.white,
+    color: Colors.WHITE,
   },
 });

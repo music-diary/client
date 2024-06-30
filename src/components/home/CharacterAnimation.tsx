@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { Animated, StyleSheet, View } from 'react-native';
-import MainCharacter from 'assets/images/homeIcon/MainCharacter.svg';
+import { MainCharacterSvg } from 'assets/images/common';
 
 const FloatingCharacter = () => {
   const moveAnim = useRef(new Animated.Value(0)).current;
@@ -35,7 +35,7 @@ const FloatingCharacter = () => {
       ]}
     >
       <View style={styles.character}>
-        <MainCharacter />
+        <MainCharacterSvg />
       </View>
     </Animated.View>
   );

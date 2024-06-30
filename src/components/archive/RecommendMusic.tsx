@@ -1,7 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native';
 import CircleAlbum from '@/components/common/CircleAlbum';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 import { colorWithOpacity, getColorForMood } from '@/utils/color-utils';
 import { trimTitle } from '@/utils/text-utils';
 
@@ -42,12 +41,12 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
   btnGrayText: {
-    color: Colors.grey1,
-    ...Fonts.btn,
+    color: Colors.GREY1,
+    ...Fonts.BTN,
   },
   btnText: {
-    color: Colors.white,
-    ...Fonts.btn,
+    color: Colors.WHITE,
+    ...Fonts.BTN,
   },
 });
 

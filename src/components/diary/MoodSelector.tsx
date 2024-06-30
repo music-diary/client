@@ -1,9 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Colors from '@/constants/Colors';
+import { Colors } from '@/constants';
 import { colorWithOpacity } from '@/utils/color-utils';
-import HappySvg from 'assets/images/happy.svg';
-import SosoSvg from 'assets/images/soso.svg';
-import BadSvg from 'assets/images/bad.svg';
+import { BadSvg, HappySvg, SosoSvg } from 'assets/images/common';
 import { type Mood } from '@/models/types';
 
 const moodList = [
@@ -33,9 +31,9 @@ const MoodSelector = ({ state, setState }: MoodSelectorProps) => {
   };
 
   const moodColor = {
-    happy: Colors.green,
-    soso: Colors.purple,
-    bad: Colors.blue,
+    happy: Colors.GREEN,
+    soso: Colors.PURPLE,
+    bad: Colors.BLUE,
   };
 
   return (
@@ -45,11 +43,11 @@ const MoodSelector = ({ state, setState }: MoodSelectorProps) => {
         const isActive = state === mood.value;
         const fillColor = isActive
           ? moodColor[mood.value as Mood]
-          : colorWithOpacity(Colors.white, 0.3);
+          : colorWithOpacity(Colors.WHITE, 0.3);
         const color = isActive
-          ? Colors.white
-          : colorWithOpacity(Colors.white, 0.3);
-        const borderColor = isActive ? Colors.white : Colors.grey2;
+          ? Colors.WHITE
+          : colorWithOpacity(Colors.WHITE, 0.3);
+        const borderColor = isActive ? Colors.WHITE : Colors.GREY2;
 
         return (
           <TouchableOpacity
@@ -84,6 +82,6 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   label: {
-    color: Colors.white,
+    color: Colors.WHITE,
   },
 });

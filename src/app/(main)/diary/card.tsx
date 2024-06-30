@@ -10,12 +10,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { Colors, Fonts } from '@/constants';
 import DailyDiaryCard from '@/components/archive/DailyDiaryCard';
 import CustomAlertModal from '@/components/common/CustomAlertModal';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
 import CustomSplash from '@/components/common/CustomSplash';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
 import dummy_archive_day from '@/data/dummy_archive_day.json';
 import { useModalStore } from '@/store/useModalStore';
 import { useSplashStore } from '@/store/useSplashStore';
@@ -55,7 +54,7 @@ const CardScreen = () => {
 
   const handleNoPushNotification = () => {
     closeModal();
-    return router.replace('/(main)/archive/archivegrid');
+    return router.replace('/(main)/archive/grid');
   };
 
   const handlePushNotification = () => {
@@ -73,7 +72,7 @@ const CardScreen = () => {
   const cancelDateSelection = () => {
     setSelectedDate(new Date());
     setShowPicker(false);
-    return router.replace('/(main)/archive/archivegrid');
+    return router.replace('/(main)/archive/grid');
   };
 
   const confirmDateSelection = () => {
@@ -83,7 +82,7 @@ const CardScreen = () => {
     // 일기 푸시 알림 설정 로직 작성 예정
 
     showToast('일기 알림이 설정되었습니다', 2000, () =>
-      router.replace('/(main)/archive/archivegrid'),
+      router.replace('/(main)/archive/grid'),
     );
   };
 
@@ -111,7 +110,7 @@ const CardScreen = () => {
 
   return (
     <>
-      <View style={{ flex: 1, backgroundColor: Colors.black }}>
+      <View style={{ flex: 1, backgroundColor: Colors.BLACK }}>
         <ScrollView style={styles.container}>
           <Text style={styles.b1LightText}>3월 2일</Text>
           <View style={styles.cardContainer}>
@@ -135,7 +134,7 @@ const CardScreen = () => {
               mode="time"
               display="spinner"
               onChange={onChange}
-              textColor={Colors.white}
+              textColor={Colors.WHITE}
             />
           </View>
         ) : (
@@ -171,12 +170,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 16,
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.BLACK,
   },
   b1LightText: {
     paddingTop: 20,
-    color: Colors.contents_light,
-    ...Fonts.b1,
+    color: Colors.CONTENTS_LIGHT,
+    ...Fonts.B1,
   },
   cardContainer: {
     marginTop: 10,
@@ -189,7 +188,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 50,
     borderRadius: 10,
-    backgroundColor: Colors.grey3,
+    backgroundColor: Colors.GREY3,
   },
   pickerHeader: {
     paddingHorizontal: 16,
@@ -198,11 +197,11 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   pickerTitle: {
-    color: Colors.white,
-    ...Fonts.t1,
+    color: Colors.WHITE,
+    ...Fonts.T1,
   },
   btnText: {
-    color: Colors.purple,
-    ...Fonts.b1_sb,
+    color: Colors.PURPLE,
+    ...Fonts.B1_SB,
   },
 });

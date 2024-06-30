@@ -29,7 +29,7 @@ export interface LineGraphDataProps {
 }
 export interface DiaryYearNumberData {
   average: number;
-  monthlydata: MonthlyData[];
+  monthlyData: MonthlyData[];
 }
 export interface MonthlyStatistic {
   month: string;

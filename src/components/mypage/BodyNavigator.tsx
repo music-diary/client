@@ -1,7 +1,6 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
-import Colors from '@/constants/Colors';
-import Fonts from '@/constants/Fonts';
+import { Colors, Fonts } from '@/constants';
 
 interface BodyNavigatorProps {
   content: string;
@@ -11,8 +10,8 @@ interface BodyNavigatorProps {
 const BodyNavigator = ({ content, onPress }: BodyNavigatorProps) => {
   return (
     <TouchableOpacity style={styles.bodyRoute} onPress={onPress}>
-      <Text style={styles.textb2}>{content}</Text>
-      <MaterialIcons name="arrow-forward-ios" size={14} color={Colors.white} />
+      <Text style={styles.textB2}>{content}</Text>
+      <MaterialIcons name="arrow-forward-ios" size={14} color={Colors.WHITE} />
     </TouchableOpacity>
   );
 };
@@ -24,8 +23,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  textb2: {
-    color: Colors.white,
-    ...Fonts.b1,
+  textB2: {
+    color: Colors.WHITE,
+    ...Fonts.B1,
   },
 });
