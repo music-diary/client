@@ -7,7 +7,7 @@ import EmotionSelector from '@/components/diary/EmotionSelector';
 import MoodSelector from '@/components/diary/MoodSelector';
 import SelectorView from '@/components/diary/SelectorView';
 import TopicSelector from '@/components/diary/TopicSelector';
-import { Colors } from '@/constants';
+import { COLORS } from '@/constants';
 import { type ITopic } from '@/models/interfaces';
 import { type Mood } from '@/models/types';
 
@@ -86,7 +86,7 @@ export default SubjectEmotionScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.BLACK,
+    backgroundColor: COLORS.BLACK,
     paddingHorizontal: 16,
     paddingTop: 20,
   },

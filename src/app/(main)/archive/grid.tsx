@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
-import { Colors } from '@/constants';
+import { COLORS } from '@/constants';
 import dummy_archive_main from '@/data/dummy_archive_main.json';
 import MonthlyMainArchive from '@/components/archive/MonthlyMainArchive';
 import RouteSwitcher from '@/components/archive/RouteSwitcher';
@@ -37,7 +37,7 @@ const GridScreen = () => {
           </View>
         )}
         contentContainerStyle={styles.contentContainer}
-        style={{ backgroundColor: Colors.BLACK }}
+        style={{ backgroundColor: COLORS.BLACK }}
       />
     </View>
   );
@@ -48,7 +48,7 @@ export default GridScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.BLACK,
+    backgroundColor: COLORS.BLACK,
   },
   header: {
     height: 50,

@@ -8,7 +8,7 @@ import {
   Modal,
 } from 'react-native';
 import { colorWithOpacity } from '@/utils/color-utils';
-import { Colors, Fonts } from '@/constants';
+import { COLORS, FONTS } from '@/constants';
 import { ArrowDownSvg } from 'assets/images/mypage';
 
 interface DropdownComponentProps {
@@ -50,7 +50,7 @@ const DropDownToggle = ({
       <Pressable onPress={toggleDropdown}>
         <View style={styles.title}>
           <Text style={styles.buttonText}>{selectedValue} </Text>
-          <ArrowDownSvg fill={Colors.WHITE} />
+          <ArrowDownSvg fill={COLORS.WHITE} />
         </View>
       </Pressable>
       {isDropdownVisible && (
@@ -92,13 +92,13 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     alignSelf: 'center',
-    color: Colors.WHITE,
-    ...Fonts.B1_SB,
+    color: COLORS.WHITE,
+    ...FONTS.B1_SB,
   },
 
   modalOverlay: {
     flex: 1,
-    backgroundColor: colorWithOpacity(Colors.BLACK, 0.5),
+    backgroundColor: colorWithOpacity(COLORS.BLACK, 0.5),
     paddingTop: 170,
     alignItems: 'center',
   },
@@ -114,11 +114,11 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 16,
     borderBottomWidth: 1,
-    borderColor: colorWithOpacity(Colors.WHITE, 0.1),
+    borderColor: colorWithOpacity(COLORS.WHITE, 0.1),
   },
   itemText: {
-    color: Colors.WHITE,
-    ...Fonts.B1,
+    color: COLORS.WHITE,
+    ...FONTS.B1,
   },
   lastItem: {
     borderBottomWidth: 0,

@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import CustomAlertModal from '@/components/common/CustomAlertModal';
-import { Colors, Fonts } from '@/constants';
+import { COLORS, FONTS } from '@/constants';
 import useDraftStore from '@/store/useDraftStore';
 import { useModalStore } from '@/store/useModalStore';
 import { colorWithOpacity } from '@/utils/color-utils';
@@ -113,7 +113,7 @@ export default DraftScreen;
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    backgroundColor: Colors.BLACK,
+    backgroundColor: COLORS.BLACK,
     flex: 1,
     paddingTop: 22,
     gap: 10,
@@ -121,10 +121,10 @@ const styles = StyleSheet.create({
   totalText: {
     paddingHorizontal: 16,
     color: 'white',
-    ...Fonts.LB,
+    ...FONTS.LB,
   },
   number: {
-    color: Colors.PURPLE,
+    color: COLORS.PURPLE,
   },
   draftListContainer: {
     flex: 1,
@@ -135,26 +135,26 @@ const styles = StyleSheet.create({
   infoView: {
     gap: 4,
     borderBottomWidth: 1,
-    borderColor: Colors.GREY1,
+    borderColor: COLORS.GREY1,
     paddingVertical: 10,
   },
   selectedDraft: {
-    backgroundColor: colorWithOpacity(Colors.WHITE, 0.1), // 선택된 항목의 배경 색상
+    backgroundColor: colorWithOpacity(COLORS.WHITE, 0.1), // 선택된 항목의 배경 색상
   },
   titleView: {
     flexDirection: 'row',
     gap: 10,
   },
   title: {
-    color: Colors.WHITE,
-    ...Fonts.B2_SB,
+    color: COLORS.WHITE,
+    ...FONTS.B2_SB,
   },
   music: {
-    color: Colors.PURPLE,
-    ...Fonts.B2_SB,
+    color: COLORS.PURPLE,
+    ...FONTS.B2_SB,
   },
   date: {
-    color: Colors.GREY1,
-    ...Fonts.BTN,
+    color: COLORS.GREY1,
+    ...FONTS.BTN,
   },
 });

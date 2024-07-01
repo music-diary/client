@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 import { useDimStore } from '@/store/useDimStore';
-import { Colors } from '@/constants';
+import { COLORS } from '@/constants';
 import { colorWithOpacity } from '@/utils/color-utils';
 
 const DImOverlay = () => {
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     left: 0,
     width: '100%',
     height: '100%',
-    backgroundColor: colorWithOpacity(Colors.BLACK, 0.7),
+    backgroundColor: colorWithOpacity(COLORS.BLACK, 0.7),
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 1000,

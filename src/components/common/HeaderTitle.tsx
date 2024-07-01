@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { Colors, Fonts } from '@/constants';
+import { COLORS, FONTS } from '@/constants';
 
 const HeaderTitle = ({ title }: { title: string }) => {
   return (
@@ -13,7 +13,7 @@ export default HeaderTitle;
 
 const styles = StyleSheet.create({
   title: {
-    color: Colors.WHITE,
-    ...Fonts.H1,
+    color: COLORS.WHITE,
+    ...FONTS.H1,
   },
 });

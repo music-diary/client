@@ -1,8 +1,8 @@
 // 사용 x -> 추후 편지쓰기 기능 추가시 활용 가능
 
 // import { ScrollView, StyleSheet, Text, View } from 'react-native';
-// import Colors from '@/constants/Colors';
-// import Fonts from '@/constants/Fonts';
+// import COLORS from '@/constants/COLORS';
+// import FONTS from '@/constants/FONTS';
 // import CircleAlbum from '@/components/common/CircleAlbum';
 // const MonthlyLetterList = () => {
 //   const colors = [
@@ -52,7 +52,7 @@
 //   card: {
 //     height: 120,
 //     width: 100,
-//     backgroundColor: Colors.bg_light,
+//     backgroundColor: COLORS.bg_light,
 //     borderRadius: 10,
 //     alignItems: 'center',
 //     paddingTop: 15,
@@ -61,7 +61,7 @@
 //   },
 //   cardText: {
 //     marginTop: 13,
-//     color: Colors.white,
-//     ...Fonts.lb,
+//     color: COLORS.white,
+//     ...FONTS.lb,
 //   },
 // });

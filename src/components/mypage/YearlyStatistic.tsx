@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Colors } from '@/constants';
+import { COLORS } from '@/constants';
 import DropDownToggle from '@/components/mypage/DropDownToggle';
 import MyFilling from '@/components/mypage/MyFilling';
 import MusicPreference from '@/components/mypage/MusicPreference';
@@ -55,7 +55,7 @@ export default YearlyStatisticPage;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.BLACK,
+    backgroundColor: COLORS.BLACK,
     paddingBottom: 50,
   },
   dropdown: {

@@ -8,7 +8,7 @@ import {
   TouchableWithoutFeedback,
   type GestureResponderEvent,
 } from 'react-native';
-import { Colors, Fonts } from '@/constants';
+import { COLORS, FONTS } from '@/constants';
 import { useDimStore } from '@/store/useDimStore';
 
 interface BottomSheetModalProps {
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   modalContent: {
-    backgroundColor: Colors.GREY3,
+    backgroundColor: COLORS.GREY3,
     paddingTop: 20,
     paddingBottom: 34, // safe area bottom 설정,
     paddingHorizontal: 16,
@@ -113,11 +113,11 @@ const styles = StyleSheet.create({
     // t1 수정해야함
     fontSize: 16,
     fontWeight: 'bold',
-    color: Colors.WHITE,
+    color: COLORS.WHITE,
   },
   buttonText: {
-    color: Colors.PURPLE,
-    ...Fonts.B1_SB,
+    color: COLORS.PURPLE,
+    ...FONTS.B1_SB,
   },
   bodyContent: {},
 });

@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Colors } from '@/constants';
+import { COLORS } from '@/constants';
 import { useModalToggleStore } from '@/store/useModalStore';
 
 const HeaderRightMore = () => {
@@ -13,7 +13,7 @@ const HeaderRightMore = () => {
       <Feather
         name={isModalOpen ? 'x' : 'more-horizontal'}
         size={18}
-        color={Colors.WHITE}
+        color={COLORS.WHITE}
       />
     </TouchableOpacity>
   );

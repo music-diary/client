@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { Colors, Fonts } from '@/constants';
+import { COLORS, FONTS } from '@/constants';
 import CircleAlbum from '@/components/common/CircleAlbum';
 import { ArrowInSvg, ArrowOutSvg } from 'assets/images/archive';
 import { colorWithOpacity, getColorForMood } from '@/utils/color-utils';
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
-    backgroundColor: Colors.BOX,
+    backgroundColor: COLORS.BOX,
     marginTop: 1,
     paddingTop: 30,
     paddingBottom: 20,
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     paddingBottom: 23,
     marginBottom: 16,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.GREY1,
+    borderBottomColor: COLORS.GREY1,
   },
   sing: {
     flexDirection: 'column',
@@ -110,20 +110,20 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   greyBtnText: {
-    color: Colors.GREY1,
-    ...Fonts.BTN,
+    color: COLORS.GREY1,
+    ...FONTS.BTN,
   },
   b2sbText: {
-    color: Colors.WHITE,
-    ...Fonts.B2_SB,
+    color: COLORS.WHITE,
+    ...FONTS.B2_SB,
   },
   btnText: {
-    color: Colors.BLACK,
-    ...Fonts.BTN,
+    color: COLORS.BLACK,
+    ...FONTS.BTN,
   },
   lyricsText: {
-    color: Colors.PURPLE,
-    ...Fonts.B2_LINE2_SB,
+    color: COLORS.PURPLE,
+    ...FONTS.B2_LINE2_SB,
     paddingTop: 10,
     textAlign: 'center',
   },
@@ -138,9 +138,9 @@ const styles = StyleSheet.create({
     borderRadius: 30,
   },
   diaryContent: {
-    color: Colors.CONTENTS_LIGHT,
+    color: COLORS.CONTENTS_LIGHT,
     paddingTop: 16,
     textAlign: 'justify',
-    ...Fonts.B2_LINE2,
+    ...FONTS.B2_LINE2,
   },
 });

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { Colors, Fonts } from '@/constants';
+import { COLORS, FONTS } from '@/constants';
 import { ArrowButtonSvg } from 'assets/images/home';
 
 // toISOString()를 한국 시간으로 변환
@@ -135,8 +135,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   currentDate: {
-    color: Colors.WHITE,
-    ...Fonts.B2_SB,
+    color: COLORS.WHITE,
+    ...FONTS.B2_SB,
   },
   arrow: {
     flexDirection: 'row',
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
   },
   calendarBody: {
     height: 84,
-    backgroundColor: Colors.BG_LIGHT,
+    backgroundColor: COLORS.BG_LIGHT,
     borderRadius: 10,
     paddingTop: 16,
     paddingHorizontal: 15,
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
   dayText: {
     fontFamily: 'pret-sb',
     fontSize: 12,
-    color: Colors.WHITE,
+    color: COLORS.WHITE,
     textAlign: 'center',
   },
   dayToday: {
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: Colors.PURPLE,
+    backgroundColor: COLORS.PURPLE,
     justifyContent: 'center',
     textAlign: 'center',
   },
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
     width: 4,
     height: 4,
     borderRadius: 2,
-    backgroundColor: Colors.PURPLE,
+    backgroundColor: COLORS.PURPLE,
     position: 'absolute',
     top: 5,
     right: 5,

@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Svg, Circle } from 'react-native-svg';
 import { colorWithOpacity } from '@/utils/color-utils';
-import { Colors, Fonts } from '@/constants';
+import { COLORS, FONTS } from '@/constants';
 
 interface CircularGraphProps {
   month: number;
@@ -35,7 +35,7 @@ const CircularGraph = ({ month, diaryCount }: CircularGraphProps) => {
           strokeWidth={strokeWidth}
         />
         <Circle
-          stroke={Colors.PURPLE}
+          stroke={COLORS.PURPLE}
           fill="none"
           cx={center}
           cy={center}
@@ -74,12 +74,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   numberText: {
-    color: Colors.WHITE,
-    ...Fonts.H1,
+    color: COLORS.WHITE,
+    ...FONTS.H1,
   },
   percentText: {
     marginTop: 5,
-    color: colorWithOpacity(Colors.WHITE, 0.5),
-    ...Fonts.BTN,
+    color: colorWithOpacity(COLORS.WHITE, 0.5),
+    ...FONTS.BTN,
   },
 });

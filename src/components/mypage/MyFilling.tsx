@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
-import { Colors, Fonts } from '@/constants';
+import { COLORS, FONTS } from '@/constants';
 import { SmileySvg } from 'assets/images/mypage';
 import EmotionIcon from '@/components/mypage/EmotionIcon';
 import { colorWithOpacity } from '@/utils/color-utils';
@@ -29,9 +29,9 @@ const calculatePercentages = (
 };
 
 const fillingColors: Record<string, string> = {
-  좋았어요: Colors.GREEN,
-  괜찮아요: Colors.PURPLE,
-  슬펐어요: Colors.BLUE,
+  좋았어요: COLORS.GREEN,
+  괜찮아요: COLORS.PURPLE,
+  슬펐어요: COLORS.BLUE,
 };
 
 const MyFilling = ({ fillingData }: MyFillingDataProps) => {
@@ -91,7 +91,7 @@ export default MyFilling;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.GREY3,
+    backgroundColor: COLORS.GREY3,
     height: 250,
     width: containerWidth,
     borderRadius: 12,
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     gap: 12,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: colorWithOpacity(Colors.WHITE, 0.1),
+    borderColor: colorWithOpacity(COLORS.WHITE, 0.1),
   },
   title: {
     flexDirection: 'row',
@@ -108,18 +108,18 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   buttonText: {
-    color: Colors.PURPLE_BOX,
-    ...Fonts.BTN,
+    color: COLORS.PURPLE_BOX,
+    ...FONTS.BTN,
   },
   bodyText: {
     marginTop: 4,
-    color: colorWithOpacity(Colors.WHITE, 0.5),
+    color: colorWithOpacity(COLORS.WHITE, 0.5),
     textAlign: 'center',
-    ...Fonts.B2,
+    ...FONTS.B2,
   },
   highlight: {
     fontWeight: 'bold',
-    ...Fonts.B2,
+    ...FONTS.B2,
   },
   bottomContainer: {
     flexDirection: 'row',
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   btnText: {
-    color: colorWithOpacity(Colors.WHITE, 0.5),
-    ...Fonts.BTN,
+    color: colorWithOpacity(COLORS.WHITE, 0.5),
+    ...FONTS.BTN,
   },
 });

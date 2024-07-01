@@ -8,7 +8,7 @@ import {
   type ImageSourcePropType,
 } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
-import { Colors, Fonts } from '@/constants';
+import { COLORS, FONTS } from '@/constants';
 import { TooltipSvg } from 'assets/images/diary';
 
 interface CustomTooltipProps {
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
   },
   tooltip: {
     flexDirection: 'row',
-    backgroundColor: Colors.PURPLE,
+    backgroundColor: COLORS.PURPLE,
     paddingLeft: 14,
     paddingRight: 6.6,
     paddingVertical: 10,
@@ -90,8 +90,8 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   tooltipText: {
-    color: Colors.WHITE,
-    ...Fonts.B2,
+    color: COLORS.WHITE,
+    ...FONTS.B2,
   },
   tooltipArrow: {
     position: 'absolute',
@@ -105,6 +105,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 24,
     borderLeftColor: 'transparent',
     borderRightColor: 'transparent',
-    borderBottomColor: Colors.PURPLE,
+    borderBottomColor: COLORS.PURPLE,
   },
 });

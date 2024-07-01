@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { CalendarList, type DateData } from 'react-native-calendars';
 import { router } from 'expo-router';
-import { Colors } from '@/constants';
+import { COLORS } from '@/constants';
 import TempBlack from '@/components/archive/TempBlack';
 import dummyArchiveCalendar from '@/data/dummy_archive_calendar.json';
 import RouteSwitcher from '@/components/archive/RouteSwitcher';
@@ -94,10 +94,10 @@ const CalendarScreen = () => {
             hideExtraDays
             horizontal={false}
             theme={{
-              calendarBackground: Colors.BLACK,
-              monthTextColor: Colors.WHITE,
-              textSectionTitleColor: Colors.CONTENTS_LIGHT,
-              dayTextColor: Colors.WHITE,
+              calendarBackground: COLORS.BLACK,
+              monthTextColor: COLORS.WHITE,
+              textSectionTitleColor: COLORS.CONTENTS_LIGHT,
+              dayTextColor: COLORS.WHITE,
               textMonthFontFamily: 'pret-b',
             }}
             dayComponent={({ date, state }) =>
@@ -114,7 +114,7 @@ const CalendarScreen = () => {
         <>
           <ActivityIndicator
             style={styles.loadingContainer}
-            color={Colors.PURPLE}
+            color={COLORS.PURPLE}
           />
         </>
       )}
@@ -127,7 +127,7 @@ export default CalendarScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.BLACK,
+    backgroundColor: COLORS.BLACK,
   },
   routerContainer: {
     position: 'absolute',
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
   },
   whiteText: {
     textAlign: 'center',
-    color: Colors.WHITE,
+    color: COLORS.WHITE,
     zIndex: 1,
     opacity: 1,
   },
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     width: 40,
     borderRadius: 20,
     overflow: 'hidden',
-    backgroundColor: Colors.BLACK,
+    backgroundColor: COLORS.BLACK,
   },
   albumImageContainer: {
     position: 'absolute',

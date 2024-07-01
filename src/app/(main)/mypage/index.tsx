@@ -12,7 +12,7 @@ import { Feather, MaterialIcons } from '@expo/vector-icons';
 import DateTimePicker, {
   type DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
-import { Colors, Fonts } from '@/constants';
+import { COLORS, FONTS } from '@/constants';
 import BodyNavigator from '@/components/mypage/BodyNavigator';
 import CustomToggle from '@/components/common/CustomToggle';
 import MusicSelection from '@/components/home/MusicSelection';
@@ -122,13 +122,13 @@ const MypageScreen = () => {
             <DefaultProfileSvg />
           </View>
           <View style={styles.profileImageTop}>
-            <Feather name="star" color={Colors.WHITE} />
+            <Feather name="star" color={COLORS.WHITE} />
           </View>
           <Text style={styles.profileInfo}>
-            <Text style={{ color: Colors.PURPLE }}>Miya</Text>님과 함께한 지
+            <Text style={{ color: COLORS.PURPLE }}>Miya</Text>님과 함께한 지
             {'\n'}
             <View style={{ paddingVertical: 10 }} />
-            <Text style={{ color: Colors.PURPLE }}>60일</Text>이 되었어요
+            <Text style={{ color: COLORS.PURPLE }}>60일</Text>이 되었어요
           </Text>
         </View>
         <View style={styles.headerRight}>
@@ -162,7 +162,7 @@ const MypageScreen = () => {
             <MaterialIcons
               name="arrow-forward-ios"
               size={14}
-              color={Colors.WHITE}
+              color={COLORS.WHITE}
             />
           </TouchableOpacity>
         </View>
@@ -267,7 +267,7 @@ const MypageScreen = () => {
                 setTempDiaryTime(selectedDate);
               }
             }}
-            textColor={Colors.WHITE}
+            textColor={COLORS.WHITE}
           />
         </View>
       </CustomBottomSheetModal>
@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 16,
-    backgroundColor: Colors.BLACK,
+    backgroundColor: COLORS.BLACK,
   },
   header: {
     flexDirection: 'row',
@@ -290,7 +290,7 @@ const styles = StyleSheet.create({
     paddingBottom: 24,
   },
   headerLeft: {
-    backgroundColor: Colors.BLACK,
+    backgroundColor: COLORS.BLACK,
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -299,14 +299,14 @@ const styles = StyleSheet.create({
     height: 61,
     borderRadius: 31,
     borderWidth: 1,
-    borderColor: Colors.WHITE,
+    borderColor: COLORS.WHITE,
     overflow: 'hidden',
   },
   profileImageTop: {
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: Colors.PURPLE,
+    backgroundColor: COLORS.PURPLE,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
@@ -315,8 +315,8 @@ const styles = StyleSheet.create({
   },
   profileInfo: {
     paddingLeft: 16,
-    color: Colors.WHITE,
-    ...Fonts.T1,
+    color: COLORS.WHITE,
+    ...FONTS.T1,
   },
   headerRight: {
     flexDirection: 'row',
@@ -325,7 +325,7 @@ const styles = StyleSheet.create({
     marginTop: -24,
   },
   profileCorrection: {
-    backgroundColor: Colors.BG_LIGHT,
+    backgroundColor: COLORS.BG_LIGHT,
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 8,
@@ -333,8 +333,8 @@ const styles = StyleSheet.create({
     borderRadius: 37,
   },
   profileCorrectionText: {
-    color: Colors.WHITE,
-    ...Fonts.BTN,
+    color: COLORS.WHITE,
+    ...FONTS.BTN,
   },
   headerContent: {
     justifyContent: 'center',
@@ -342,13 +342,13 @@ const styles = StyleSheet.create({
     height: 90,
     marginTop: 7,
     gap: 6,
-    backgroundColor: Colors.GREY3,
+    backgroundColor: COLORS.GREY3,
     borderRadius: 10,
   },
   dateText: {
-    color: colorWithOpacity(Colors.WHITE, 0.5),
+    color: colorWithOpacity(COLORS.WHITE, 0.5),
     textAlign: 'left',
-    ...Fonts.B2_SB,
+    ...FONTS.B2_SB,
   },
 
   bodyRoute: {
@@ -357,25 +357,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   textB1: {
-    color: Colors.WHITE,
-    ...Fonts.B1,
+    color: COLORS.WHITE,
+    ...FONTS.B1,
   },
   textB1Gray1: {
-    color: Colors.GREY1,
-    ...Fonts.B1,
+    color: COLORS.GREY1,
+    ...FONTS.B1,
     paddingLeft: 14,
   },
   textB1Gray2: {
-    color: Colors.GREY1,
-    ...Fonts.B1,
+    color: COLORS.GREY1,
+    ...FONTS.B1,
   },
   textB2sb: {
-    color: Colors.WHITE,
-    ...Fonts.B2_SB,
+    color: COLORS.WHITE,
+    ...FONTS.B2_SB,
   },
   textB2: {
-    color: Colors.WHITE,
-    ...Fonts.B2,
+    color: COLORS.WHITE,
+    ...FONTS.B2,
   },
   musicFlavor: {
     flexDirection: 'row',
@@ -388,12 +388,12 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   musicFlavorText: {
-    color: Colors.PURPLE,
-    ...Fonts.B2,
+    color: COLORS.PURPLE,
+    ...FONTS.B2,
   },
   divider: {
     height: 1,
-    backgroundColor: Colors.CONTENTS_LIGHT,
+    backgroundColor: COLORS.CONTENTS_LIGHT,
     marginHorizontal: -16,
     marginVertical: 8,
   },
@@ -408,8 +408,8 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   secession: {
-    color: colorWithOpacity(Colors.PURPLE, 0.5),
-    ...Fonts.BTN,
+    color: colorWithOpacity(COLORS.PURPLE, 0.5),
+    ...FONTS.BTN,
     textDecorationLine: 'underline',
   },
   pickerContainer: {

@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import { useSplashStore } from '@/store/useSplashStore';
-import { Colors, Fonts } from '@/constants';
+import { COLORS, FONTS } from '@/constants';
 import useToastStore from '@/store/useToastStore';
 import CustomToast from './CustomToast';
 
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: Colors.BLACK,
+    backgroundColor: COLORS.BLACK,
     gap: 50,
   },
   image: {
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: 'center',
-    color: Colors.WHITE,
-    ...Fonts.T1,
+    color: COLORS.WHITE,
+    ...FONTS.T1,
   },
 });

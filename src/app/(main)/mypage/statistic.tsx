@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
-import { Colors } from '@/constants';
+import { COLORS } from '@/constants';
 import StaticRouter from '@/components/mypage/StatisticRouter';
 import MonthlyStatistic from '@/components/mypage/MonthlyStatistic';
 import YearlyStatistic from '@/components/mypage/YearlyStatistic';
@@ -25,6 +25,6 @@ export default StaticScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.BLACK,
+    backgroundColor: COLORS.BLACK,
   },
 });

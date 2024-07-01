@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Modal, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { Colors, Fonts } from '@/constants';
-import { termsCheckboxes } from '@/constants/data';
+import { COLORS, FONTS } from '@/constants';
+import { terms } from '@/constants/data';
 import { colorWithOpacity } from '@/utils/color-utils';
 import CustomBottomButton from '../common/CustomBottomButton';
 import TermsCheckbox from './TermsCheckbox';
@@ -18,7 +18,7 @@ const TermsModal = ({
   setModalVisible,
   onPress,
 }: TermsModalProps) => {
-  const [checkboxes, setCheckboxes] = useState(termsCheckboxes);
+  const [checkboxes, setCheckboxes] = useState(terms);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   const handleCheckAll = () => {
@@ -63,8 +63,8 @@ const TermsModal = ({
               styles.modalOverlay,
               {
                 backgroundColor: isButtonDisabled
-                  ? Colors.CONTENTS_LIGHT
-                  : Colors.PURPLE,
+                  ? COLORS.CONTENTS_LIGHT
+                  : COLORS.PURPLE,
               },
             ]}
           >
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     display: 'flex',
-    backgroundColor: Colors.GREY3,
+    backgroundColor: COLORS.GREY3,
     paddingTop: 32,
     width: '100%',
     borderTopLeftRadius: 10,
@@ -129,13 +129,13 @@ const styles = StyleSheet.create({
   termsTitleContainer: {
     display: 'flex',
     gap: 30,
-    borderBottomColor: colorWithOpacity(Colors.WHITE, 0.2),
+    borderBottomColor: colorWithOpacity(COLORS.WHITE, 0.2),
     borderBottomWidth: 1,
     paddingBottom: 24,
   },
   termsTitleText: {
-    ...Fonts.T1,
-    color: Colors.WHITE,
+    ...FONTS.T1,
+    color: COLORS.WHITE,
   },
   termsCheckboxContainer: {
     display: 'flex',

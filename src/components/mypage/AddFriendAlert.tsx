@@ -9,8 +9,8 @@
 //   StyleSheet,
 // } from 'react-native';
 // import * as Clipboard from 'expo-clipboard';
-// import Colors from '@/constants/Colors';
-// import Fonts from '@/constants/Fonts';
+// import COLORS from '@/constants/COLORS';
+// import FONTS from '@/constants/FONTS';
 
 // interface AddFriendAlertProps {
 //   isVisible: boolean; // 모달의 가시성 여부
@@ -50,7 +50,7 @@
 //           <TextInput
 //             style={styles.textInput}
 //             placeholder="아이디 입력"
-//             placeholderTextColor={Colors.contents_light}
+//             placeholderTextColor={COLORS.contents_light}
 //             value={nickname}
 //             onChangeText={setNickname}
 //           />
@@ -68,7 +68,7 @@
 
 // const styles = StyleSheet.create({
 //   modalContainer: {
-//     backgroundColor: Colors.box,
+//     backgroundColor: COLORS.box,
 //     padding: 30,
 //     borderRadius: 10,
 //     justifyContent: 'center',
@@ -84,7 +84,7 @@
 //   },
 //   myID: {
 //     flex: 1,
-//     borderColor: Colors.contents_light,
+//     borderColor: COLORS.contents_light,
 //     justifyContent: 'center',
 //     paddingHorizontal: 10,
 //     height: 32,
@@ -103,8 +103,8 @@
 //     height: 32,
 //     paddingHorizontal: 10,
 //     borderRadius: 8,
-//     borderColor: Colors.purple,
-//     color: Colors.white,
+//     borderColor: COLORS.purple,
+//     color: COLORS.white,
 //   },
 //   copyButton: {
 //     width: 45,
@@ -114,27 +114,27 @@
 //     marginLeft: 10,
 //     borderRadius: 6,
 //     borderWidth: 1,
-//     borderColor: Colors.contents_light,
+//     borderColor: COLORS.contents_light,
 //   },
 //   confirmButton: {
 //     width: 45,
 //     height: 32,
 //     alignItems: 'center',
 //     justifyContent: 'center',
-//     backgroundColor: Colors.purple,
+//     backgroundColor: COLORS.purple,
 //     borderRadius: 6,
 //   },
 //   b2sbText: {
-//     color: Colors.white,
-//     ...Fonts.b2_sb,
+//     color: COLORS.white,
+//     ...FONTS.b2_sb,
 //   },
 //   b2GrayText: {
-//     color: Colors.contents_light,
-//     ...Fonts.b2,
+//     color: COLORS.contents_light,
+//     ...FONTS.b2,
 //   },
 //   confirmText: {
-//     color: Colors.white,
-//     ...Fonts.b2,
+//     color: COLORS.white,
+//     ...FONTS.b2,
 //   },
 // });
 
