@@ -1,4 +1,4 @@
 export { genres } from './genres';
 export { genders } from './genders';
-export { termsCheckboxes } from './termsCheckboxes';
+export { terms } from './terms';
 export { templates } from './templates';

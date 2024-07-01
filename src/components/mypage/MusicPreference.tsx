@@ -1,6 +1,6 @@
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { MusicNotesSvg } from 'assets/images/mypage';
-import { Colors, Fonts } from '@/constants';
+import { COLORS, FONTS } from '@/constants';
 import { colorWithOpacity } from '@/utils/color-utils';
 import PreferenceGraph from '@/components/mypage/PreferenceGraph';
 import { genres } from '@/constants/data';
@@ -25,7 +25,7 @@ const MusicPreference = ({ musicCount, isYearly }: MusicPreferenceProps) => {
       return {
         label: genre ? genre.label : item.music,
         count: item.count,
-        color: genre ? genre.color : Colors.BLACK,
+        color: genre ? genre.color : COLORS.BLACK,
       };
     });
   };
@@ -67,7 +67,7 @@ export default MusicPreference;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.GREY3,
+    backgroundColor: COLORS.GREY3,
     height: 250,
     borderRadius: 12,
     paddingTop: 20,
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     gap: 12,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: colorWithOpacity(Colors.WHITE, 0.1),
+    borderColor: colorWithOpacity(COLORS.WHITE, 0.1),
   },
   title: {
     flexDirection: 'row',
@@ -83,13 +83,13 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   buttonText: {
-    color: Colors.PURPLE_BOX,
-    ...Fonts.BTN,
+    color: COLORS.PURPLE_BOX,
+    ...FONTS.BTN,
   },
   bodyText: {
     marginTop: 4,
-    color: colorWithOpacity(Colors.WHITE, 0.5),
-    ...Fonts.B2,
+    color: colorWithOpacity(COLORS.WHITE, 0.5),
+    ...FONTS.B2,
     textAlign: 'center',
   },
   highlight: {
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     marginRight: 4,
   },
   genreText: {
-    color: colorWithOpacity(Colors.WHITE, 0.5),
-    ...Fonts.BTN,
+    color: colorWithOpacity(COLORS.WHITE, 0.5),
+    ...FONTS.BTN,
   },
 });

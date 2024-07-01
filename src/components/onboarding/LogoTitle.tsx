@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { Colors } from '@/constants';
+import { COLORS } from '@/constants';
 
 const LogoTitle = () => {
   return (
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   title: {
-    color: Colors.WHITE,
+    color: COLORS.WHITE,
     fontFamily: 'pret-b',
     fontSize: 24,
   },

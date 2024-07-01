@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Link } from 'expo-router';
-import { Colors, Fonts } from '@/constants';
+import { COLORS, FONTS } from '@/constants';
 import CircleAlbum from '@/components/common/CircleAlbum';
 import { colorWithOpacity, getColorForMood } from '@/utils/color-utils';
 import { trimTitle } from '@/utils/text-utils';
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
-    backgroundColor: Colors.BOX,
+    backgroundColor: COLORS.BOX,
     width: 280,
     height: 335,
     marginTop: 8,
@@ -76,8 +76,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   b2LightText: {
-    color: Colors.GREY1,
-    ...Fonts.B2,
+    color: COLORS.GREY1,
+    ...FONTS.B2,
   },
   middleContainer: {
     paddingTop: 18,
@@ -90,16 +90,16 @@ const styles = StyleSheet.create({
     gap: 9,
   },
   lightLbText: {
-    color: Colors.CONTENTS_LIGHT,
-    ...Fonts.LB,
+    color: COLORS.CONTENTS_LIGHT,
+    ...FONTS.LB,
   },
   white10Text: {
-    color: Colors.BLACK,
-    ...Fonts.LB,
+    color: COLORS.BLACK,
+    ...FONTS.LB,
   },
   btnText: {
-    color: Colors.WHITE,
-    ...Fonts.BTN,
+    color: COLORS.WHITE,
+    ...FONTS.BTN,
   },
   emotionContainer: {
     paddingTop: 16,

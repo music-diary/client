@@ -6,7 +6,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import { Colors, Fonts } from '@/constants';
+import { COLORS, FONTS } from '@/constants';
 import { useDimStore } from '@/store/useDimStore';
 import { colorWithOpacity } from '@/utils/color-utils';
 
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     justifyContent: 'space-between',
-    backgroundColor: Colors.GREY3,
+    backgroundColor: COLORS.GREY3,
     paddingVertical: 36,
     paddingHorizontal: 22,
     width: '100%',
@@ -90,12 +90,12 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   title: {
-    color: Colors.WHITE,
-    ...Fonts.T1,
+    color: COLORS.WHITE,
+    ...FONTS.T1,
   },
   description: {
-    color: colorWithOpacity(Colors.WHITE, 0.7),
-    ...Fonts.B2_SB,
+    color: colorWithOpacity(COLORS.WHITE, 0.7),
+    ...FONTS.B2_SB,
   },
   buttonContainer: {
     display: 'flex',
@@ -108,24 +108,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: 50,
     borderWidth: 1,
-    borderColor: Colors.GREY1,
+    borderColor: COLORS.GREY1,
     borderRadius: 10,
     flex: 1,
   },
   cancelText: {
-    color: Colors.GREY1,
-    ...Fonts.B2,
+    color: COLORS.GREY1,
+    ...FONTS.B2,
   },
   confirmButton: {
     alignItems: 'center',
     justifyContent: 'center',
     height: 50,
-    backgroundColor: Colors.PURPLE,
+    backgroundColor: COLORS.PURPLE,
     borderRadius: 10,
     flex: 1,
   },
   confirmText: {
-    color: Colors.WHITE,
-    ...Fonts.B2,
+    color: COLORS.WHITE,
+    ...FONTS.B2,
   },
 });

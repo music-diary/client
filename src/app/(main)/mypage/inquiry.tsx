@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import { Colors, Fonts } from '@/constants';
+import { COLORS, FONTS } from '@/constants';
 import useKeyboardScrollViewScroll from '@/hooks/useKeyboardScrollViewScroll';
 import CustomCheckToggle from '@/components/common/CustomCheckToggle';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
@@ -66,7 +66,7 @@ const InquiryScreen = () => {
   return (
     <>
       <KeyboardAvoidingView
-        style={{ flex: 1, backgroundColor: Colors.BLACK }}
+        style={{ flex: 1, backgroundColor: COLORS.BLACK }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
       >
@@ -126,7 +126,7 @@ const InquiryScreen = () => {
             <TextInput
               style={styles.inputText}
               placeholder="이메일 주소를 입력해주세요."
-              placeholderTextColor={Colors.CONTENTS_LIGHT}
+              placeholderTextColor={COLORS.CONTENTS_LIGHT}
               keyboardType="email-address"
               onChangeText={handleEmailChange}
             />
@@ -181,7 +181,7 @@ export default InquiryScreen;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.BLACK,
+    backgroundColor: COLORS.BLACK,
     paddingHorizontal: 16,
 
     paddingBottom: 150,
@@ -189,14 +189,14 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   headerText: {
-    color: Colors.CONTENTS_LIGHT,
+    color: COLORS.CONTENTS_LIGHT,
 
-    ...Fonts.B2,
+    ...FONTS.B2,
   },
   titleText: {
-    color: Colors.WHITE,
+    color: COLORS.WHITE,
     marginTop: 27,
-    ...Fonts.B1_SB,
+    ...FONTS.B1_SB,
   },
   inputContainer: {
     marginTop: 12,
@@ -205,11 +205,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderWidth: 1,
     borderRadius: 6,
-    borderColor: Colors.CONTENTS_LIGHT,
+    borderColor: COLORS.CONTENTS_LIGHT,
   },
   inputText: {
-    color: Colors.WHITE,
-    ...Fonts.B2,
+    color: COLORS.WHITE,
+    ...FONTS.B2,
   },
   toggleContainer: {
     gap: 14,
@@ -224,12 +224,12 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     height: 165,
     borderWidth: 1,
-    borderColor: Colors.CONTENTS_LIGHT,
+    borderColor: COLORS.CONTENTS_LIGHT,
     borderRadius: 10,
-    color: Colors.WHITE,
+    color: COLORS.WHITE,
   },
   placeholder: {
-    color: Colors.CONTENTS_LIGHT,
+    color: COLORS.CONTENTS_LIGHT,
     position: 'absolute',
     top: 16,
     left: 16,
@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   lbText: {
-    color: Colors.CONTENTS_LIGHT,
-    ...Fonts.LB,
+    color: COLORS.CONTENTS_LIGHT,
+    ...FONTS.LB,
   },
 });

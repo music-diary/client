@@ -8,8 +8,8 @@
 //   TouchableOpacity,
 //   View,
 // } from 'react-native';
-// import Colors from '@/constants/Colors';
-// import Fonts from '@/constants/Fonts';
+// import COLORS from '@/constants/COLORS';
+// import FONTS from '@/constants/FONTS';
 // import CustomToggle from '@/components/common/CustomToggle';
 // // import FriendInfo from '@/components/mypage/FriendInfo';
 // import AddFriendAlert from '@/components/mypage/AddFriendAlert';
@@ -95,12 +95,12 @@
 // const styles = StyleSheet.create({
 //   container: {
 //     flex: 1,
-//     backgroundColor: Colors.black,
+//     backgroundColor: COLORS.black,
 //     paddingHorizontal: 16,
 //     paddingTop: 26,
 //   },
 //   profileContainer: {
-//     backgroundColor: Colors.bg_light,
+//     backgroundColor: COLORS.bg_light,
 //     paddingHorizontal: 20,
 //     paddingVertical: 12,
 //     borderRadius: 10,
@@ -113,20 +113,20 @@
 //     width: 60,
 //     height: 60,
 //     borderRadius: 30,
-//     backgroundColor: Colors.white,
+//     backgroundColor: COLORS.white,
 //   },
 //   profileName: {
-//     color: Colors.white,
+//     color: COLORS.white,
 //     fontFamily: 'pret-b',
 //     fontSize: 18,
 //   },
 //   profileID: {
-//     color: Colors.contents_light,
-//     ...Fonts.btn,
+//     color: COLORS.contents_light,
+//     ...FONTS.btn,
 //   },
 //   textB2: {
-//     color: Colors.white,
-//     ...Fonts.b2,
+//     color: COLORS.white,
+//     ...FONTS.b2,
 //   },
 //   profileFriend: {
 //     paddingTop: 20,
@@ -146,18 +146,18 @@
 //     alignItems: 'center',
 //   },
 //   textB1_sb: {
-//     color: Colors.white,
-//     ...Fonts.b1_sb,
+//     color: COLORS.white,
+//     ...FONTS.b1_sb,
 //   },
 //   textB2_sb: {
-//     color: Colors.purple,
-//     ...Fonts.b2_sb,
+//     color: COLORS.purple,
+//     ...FONTS.b2_sb,
 //     paddingLeft: 6,
 //     marginTop: 2,
 //   },
 //   addFriendText: {
-//     color: Colors.white,
-//     ...Fonts.btn,
+//     color: COLORS.white,
+//     ...FONTS.btn,
 //     textDecorationLine: 'underline',
 //   },
 //   friendList: {

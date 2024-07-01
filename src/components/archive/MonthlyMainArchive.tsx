@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { Link } from 'expo-router';
 import { BadSvg, HappySvg, SosoSvg } from 'assets/images/common';
-import { Colors, Fonts } from '@/constants';
+import { COLORS, FONTS } from '@/constants';
 import { colorWithOpacity } from '@/utils/color-utils';
 import { trimTitle } from '@/utils/text-utils';
 
@@ -28,11 +28,11 @@ interface DiaryEntryProps {
 const getBackgroundColor = (mood: string) => {
   switch (mood) {
     case 'Neutral':
-      return Colors.BLUE;
+      return COLORS.BLUE;
     case 'Positive':
-      return Colors.PURPLE;
+      return COLORS.PURPLE;
     case 'Negative':
-      return Colors.GREEN;
+      return COLORS.GREEN;
 
     default:
       return '#f5f5f5';
@@ -45,19 +45,19 @@ const EmotionImage = ({ mood }: { mood: string }) => {
     case 'Positive':
       return (
         <View style={styles.emotion}>
-          <HappySvg width={120} height={120} fill={Colors.GREEN} />
+          <HappySvg width={120} height={120} fill={COLORS.GREEN} />
         </View>
       );
     case 'Negative':
       return (
         <View style={styles.emotion}>
-          <BadSvg width={125} height={125} fill={Colors.BLUE} />
+          <BadSvg width={125} height={125} fill={COLORS.BLUE} />
         </View>
       );
     case 'Neutral':
       return (
         <View style={styles.emotion}>
-          <SosoSvg width={125} height={125} fill={Colors.PURPLE} />
+          <SosoSvg width={125} height={125} fill={COLORS.PURPLE} />
         </View>
       );
     default:
@@ -122,8 +122,8 @@ const styles = StyleSheet.create({
     borderRadius: 9,
   },
   month: {
-    color: Colors.WHITE,
-    ...Fonts.B1_SB,
+    color: COLORS.WHITE,
+    ...FONTS.B1_SB,
   },
   emotionContainer: {
     flex: 1,
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 9,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colorWithOpacity(Colors.WHITE, 0.2),
+    backgroundColor: colorWithOpacity(COLORS.WHITE, 0.2),
     position: 'absolute',
     bottom: 0,
     left: 0,
@@ -170,12 +170,12 @@ const styles = StyleSheet.create({
     width: 90,
   },
   songTitle: {
-    color: Colors.BLACK,
-    ...Fonts.BTN,
+    color: COLORS.BLACK,
+    ...FONTS.BTN,
   },
   artist: {
     paddingTop: 2,
-    color: Colors.BLACK,
-    ...Fonts.LB,
+    color: COLORS.BLACK,
+    ...FONTS.LB,
   },
 });

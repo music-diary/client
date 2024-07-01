@@ -1,13 +1,13 @@
 import { Dimensions, View, StyleSheet } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
-import { Colors, Fonts } from '@/constants';
+import { COLORS, FONTS } from '@/constants';
 import { type LineGraphDataProps } from '@/models/interfaces';
 
 const ContainerWidth = Dimensions.get('window').width - 34;
 const LineGraph = ({ data }: LineGraphDataProps) => {
   const chartConfig = {
-    backgroundGradientFrom: Colors.GREY3,
-    backgroundGradientTo: Colors.GREY3,
+    backgroundGradientFrom: COLORS.GREY3,
+    backgroundGradientTo: COLORS.GREY3,
     decimalPlaces: 0,
     color: (opacity = 0.5) => `rgba(120, 80, 248, ${opacity})`, // 그래프 선 색상
     labelColor: (opacity = 0.2) => `rgba(256, 256, 256, ${opacity})`, // 라벨 색상
@@ -15,7 +15,7 @@ const LineGraph = ({ data }: LineGraphDataProps) => {
       r: '2',
     },
     propsForLabels: {
-      ...Fonts.LB,
+      ...FONTS.LB,
     },
     strokeWidth: 2,
   };

@@ -1,4 +1,4 @@
-export const termsCheckboxes = [
+export const terms = [
   {
     id: 'check1',
     title: '(필수) 만 14세 이상입니다.',

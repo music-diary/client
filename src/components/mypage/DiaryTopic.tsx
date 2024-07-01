@@ -1,5 +1,5 @@
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
-import { Colors, Fonts } from '@/constants';
+import { COLORS, FONTS } from '@/constants';
 import { BookOpenSvg } from 'assets/images/mypage';
 import { colorWithOpacity } from '@/utils/color-utils';
 import { type ITopic } from '@/models/interfaces';
@@ -57,7 +57,7 @@ export default DiaryTopic;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.GREY3,
+    backgroundColor: COLORS.GREY3,
     height: 250,
     width: containerWidth,
     borderRadius: 12,
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     gap: 10,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: colorWithOpacity(Colors.WHITE, 0.1),
+    borderColor: colorWithOpacity(COLORS.WHITE, 0.1),
   },
   title: {
     flexDirection: 'row',
@@ -74,13 +74,13 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   buttonText: {
-    color: Colors.PURPLE_BOX,
-    ...Fonts.BTN,
+    color: COLORS.PURPLE_BOX,
+    ...FONTS.BTN,
   },
   bodyText: {
     paddingVertical: 6,
-    color: colorWithOpacity(Colors.WHITE, 0.5),
-    ...Fonts.B2,
+    color: colorWithOpacity(COLORS.WHITE, 0.5),
+    ...FONTS.B2,
     textAlign: 'center',
   },
   highlight: {
@@ -93,13 +93,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 8,
-    backgroundColor: colorWithOpacity(Colors.WHITE, 0.2),
+    backgroundColor: colorWithOpacity(COLORS.WHITE, 0.2),
     borderWidth: 1.5,
-    borderColor: colorWithOpacity(Colors.WHITE, 0.1),
+    borderColor: colorWithOpacity(COLORS.WHITE, 0.1),
     borderRadius: 22,
   },
   b2sbText: {
-    color: Colors.WHITE,
-    ...Fonts.B2_SB,
+    color: COLORS.WHITE,
+    ...FONTS.B2_SB,
   },
 });

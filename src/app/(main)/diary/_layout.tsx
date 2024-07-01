@@ -2,7 +2,7 @@ import { Stack } from 'expo-router';
 import HeaderRight from '@/components/diary/HeaderRight';
 import HeaderRightDraft from '@/components/diary/HeaderRightDraft';
 import HeaderTitle from '@/components/common/HeaderTitle';
-import { Colors } from '@/constants';
+import { COLORS } from '@/constants';
 import CustomBackButton from '@/components/common/CustomBackButton';
 
 export default function DiaryLayout() {
@@ -10,9 +10,9 @@ export default function DiaryLayout() {
     <Stack
       screenOptions={{
         headerStyle: {
-          backgroundColor: Colors.BLACK,
+          backgroundColor: COLORS.BLACK,
         },
-        headerTintColor: Colors.WHITE,
+        headerTintColor: COLORS.WHITE,
         headerTitle: () => <HeaderTitle title="일기쓰기" />,
         headerRight: () => <HeaderRight />,
         headerLeft: () => <CustomBackButton />,

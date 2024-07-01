@@ -1,7 +1,7 @@
 import React from 'react';
 import { Svg, Path, Rect, Defs, ClipPath } from 'react-native-svg';
 import { View, StyleSheet, Text } from 'react-native';
-import { Colors, Fonts } from '@/constants';
+import { COLORS, FONTS } from '@/constants';
 
 interface HappyIconProps {
   percentage: number;
@@ -34,7 +34,7 @@ const EmotionIcon = ({ percentage, color, emotion }: HappyIconProps) => {
           fillRule="evenodd"
           clipRule="evenodd"
           d={pathD}
-          fill={Colors.CONTENTS_LIGHT}
+          fill={COLORS.CONTENTS_LIGHT}
         />
         <Path
           fillRule="evenodd"
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   percentageText: {
     position: 'absolute',
     top: 40,
-    color: Colors.GREY3,
-    ...Fonts.H1,
+    color: COLORS.GREY3,
+    ...FONTS.H1,
   },
 });

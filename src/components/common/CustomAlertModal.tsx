@@ -6,7 +6,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import { Colors, Fonts } from '@/constants';
+import { COLORS, FONTS } from '@/constants';
 import { useModalStore } from '@/store/useModalStore';
 import { colorWithOpacity } from '@/utils/color-utils';
 
@@ -81,8 +81,8 @@ const CustomAlertModal = ({
                 style={[
                   styles.rightButton,
                   isDelete
-                    ? { backgroundColor: Colors.RED }
-                    : { backgroundColor: Colors.PURPLE },
+                    ? { backgroundColor: COLORS.RED }
+                    : { backgroundColor: COLORS.PURPLE },
                 ]}
               >
                 <Text style={styles.rightText}>{rightButtonText}</Text>
@@ -101,12 +101,12 @@ const styles = StyleSheet.create({
   overlay: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: colorWithOpacity(Colors.BLACK, 0.7),
+    backgroundColor: colorWithOpacity(COLORS.BLACK, 0.7),
     paddingHorizontal: 28,
   },
   container: {
     display: 'flex',
-    backgroundColor: Colors.BOX,
+    backgroundColor: COLORS.BOX,
     paddingVertical: 18,
     paddingHorizontal: 20,
     width: '100%',
@@ -122,34 +122,34 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 1,
     borderRadius: 6,
-    borderColor: Colors.GREY1,
+    borderColor: COLORS.GREY1,
     paddingVertical: 10,
     flex: 1,
   },
   b2Text: {
-    color: Colors.WHITE,
-    ...Fonts.B2_LINE2,
+    color: COLORS.WHITE,
+    ...FONTS.B2_LINE2,
   },
   middleText: {
     textAlign: 'center',
-    color: Colors.WHITE,
+    color: COLORS.WHITE,
     marginBottom: 6,
-    ...Fonts.B2,
+    ...FONTS.B2,
   },
   leftText: {
-    color: Colors.GREY1,
-    ...Fonts.B2,
+    color: COLORS.GREY1,
+    ...FONTS.B2,
   },
   rightButton: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: Colors.PURPLE,
+    backgroundColor: COLORS.PURPLE,
     borderRadius: 6,
     paddingVertical: 10,
     flex: 1,
   },
   rightText: {
-    color: Colors.WHITE,
-    ...Fonts.B2,
+    color: COLORS.WHITE,
+    ...FONTS.B2,
   },
 });

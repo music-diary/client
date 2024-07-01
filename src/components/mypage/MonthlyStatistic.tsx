@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';
-import { Colors } from '@/constants';
+import { COLORS } from '@/constants';
 import DropDownToggle from '@/components/mypage/DropDownToggle';
 import DiaryNumber from '@/components/mypage/DiaryNumber';
 import MyFilling from '@/components/mypage/MyFilling';
@@ -68,7 +68,7 @@ export default MonthlyStatistic;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.BLACK,
+    backgroundColor: COLORS.BLACK,
     paddingBottom: 50,
   },
   dropdown: {

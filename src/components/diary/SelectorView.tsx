@@ -1,6 +1,6 @@
 import { type PropsWithChildren } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Colors, Fonts } from '@/constants';
+import { COLORS, FONTS } from '@/constants';
 
 interface SelectorViewProps {
   title: string;
@@ -51,24 +51,24 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   title: {
-    color: Colors.WHITE,
-    ...Fonts.T1,
+    color: COLORS.WHITE,
+    ...FONTS.T1,
   },
   dot: {
     width: 5,
     height: 5,
-    backgroundColor: Colors.PURPLE,
+    backgroundColor: COLORS.PURPLE,
     borderRadius: 5,
   },
   descriptionContainer: {
     gap: 4,
   },
   description: {
-    color: Colors.WHITE,
-    ...Fonts.BTN,
+    color: COLORS.WHITE,
+    ...FONTS.BTN,
   },
   subDescription: {
-    color: Colors.WHITE,
+    color: COLORS.WHITE,
     fontFamily: 'pret-sb',
     fontSize: 12,
   },

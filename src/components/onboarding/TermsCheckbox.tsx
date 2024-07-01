@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Checkbox } from 'expo-checkbox';
-import { Colors, Fonts } from '@/constants';
+import { COLORS, FONTS } from '@/constants';
 
 interface TermsCheckboxProps {
   value: boolean;
@@ -24,9 +24,9 @@ const TermsCheckbox = ({
           style={styles.checkbox}
           value={value}
           onValueChange={setValue}
-          color={Colors.PURPLE}
+          color={COLORS.PURPLE}
         />
-        <Text style={[styles.title, type === 'all' && Fonts.B2_SB]}>
+        <Text style={[styles.title, type === 'all' && FONTS.B2_SB]}>
           {title}
         </Text>
       </View>
@@ -60,11 +60,11 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   title: {
-    ...Fonts.B2,
-    color: Colors.WHITE,
+    ...FONTS.B2,
+    color: COLORS.WHITE,
   },
   openTerms: {
-    ...Fonts.BTN,
-    color: Colors.GREY1,
+    ...FONTS.BTN,
+    color: COLORS.GREY1,
   },
 });

@@ -2,7 +2,7 @@ import { router } from 'expo-router';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
-import { Colors, Fonts } from '@/constants';
+import { COLORS, FONTS } from '@/constants';
 
 const CompleteScreen = () => {
   const handleNext = () => {
@@ -26,7 +26,7 @@ export default CompleteScreen;
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    backgroundColor: Colors.BLACK,
+    backgroundColor: COLORS.BLACK,
     flex: 1,
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     gap: 60,
   },
   welcomeText: {
-    color: Colors.WHITE,
-    ...Fonts.H1,
+    color: COLORS.WHITE,
+    ...FONTS.H1,
   },
 });

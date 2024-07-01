@@ -1,9 +1,9 @@
 import React from 'react';
 import { ActivityIndicator, StyleSheet } from 'react-native';
-import { Colors } from '@/constants';
+import { COLORS } from '@/constants';
 
 const TempBlack = () => {
-  return <ActivityIndicator style={styles.container} color={Colors.PURPLE} />;
+  return <ActivityIndicator style={styles.container} color={COLORS.PURPLE} />;
 };
 
 export default TempBlack;
@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: Colors.BLACK,
+    backgroundColor: COLORS.BLACK,
     zIndex: 10,
   },
 });

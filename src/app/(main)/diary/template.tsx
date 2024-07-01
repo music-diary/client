@@ -14,7 +14,7 @@ import Animated, {
   type SharedValue,
 } from 'react-native-reanimated';
 import { router, useLocalSearchParams } from 'expo-router';
-import { Colors, Fonts } from '@/constants';
+import { COLORS, FONTS } from '@/constants';
 import { type Template } from '@/models/types';
 import { type ITemplate } from '@/models/interfaces';
 import { templates } from '@/constants/data';
@@ -98,7 +98,7 @@ const TemplateScreen = () => {
           <AntDesign
             name="pluscircleo"
             size={16}
-            color={Colors.CONTENTS_LIGHT}
+            color={COLORS.CONTENTS_LIGHT}
           />
           <Text style={styles.description}>버튼을 누르면 바로 적용돼요!</Text>
         </View>
@@ -122,7 +122,7 @@ const TemplateScreen = () => {
                 onPress={() => handleSetTemplate(template.type)}
                 name="pluscircleo"
                 size={16}
-                color={Colors.WHITE}
+                color={COLORS.WHITE}
               />
             </View>
             {/* <View style={styles.templatePreviewContainer}>
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: Colors.BLACK,
+    backgroundColor: COLORS.BLACK,
     paddingHorizontal: 16,
     paddingTop: 20,
   },
@@ -167,8 +167,8 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   title: {
-    color: Colors.WHITE,
-    ...Fonts.T1,
+    color: COLORS.WHITE,
+    ...FONTS.T1,
   },
   descriptionContainer: {
     flexDirection: 'row',
@@ -176,8 +176,8 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   description: {
-    color: Colors.CONTENTS_LIGHT,
-    ...Fonts.BTN,
+    color: COLORS.CONTENTS_LIGHT,
+    ...FONTS.BTN,
   },
   templateContainer: {
     height: '100%',
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingLeft: 12,
     paddingRight: 8,
-    backgroundColor: Colors.BOX,
+    backgroundColor: COLORS.BOX,
     borderRadius: 10,
     // flexDirection: 'co',
     // justifyContent: 'space-between',
@@ -201,12 +201,12 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   templateName: {
-    color: Colors.WHITE,
-    ...Fonts.B1_SB,
+    color: COLORS.WHITE,
+    ...FONTS.B1_SB,
   },
   templateDescription: {
-    color: Colors.WHITE,
-    ...Fonts.B2,
+    color: COLORS.WHITE,
+    ...FONTS.B2,
   },
   templatePreviewContainer: {
     marginTop: 20,
@@ -216,14 +216,14 @@ const styles = StyleSheet.create({
   templateBorder: {
     width: '100%',
     height: 1,
-    backgroundColor: Colors.WHITE,
+    backgroundColor: COLORS.WHITE,
     opacity: 0.3,
   },
   templateDescView: {
     gap: 10,
   },
   templatePreviewInfo: {
-    color: Colors.CONTENTS_LIGHT,
-    ...Fonts.B2,
+    color: COLORS.CONTENTS_LIGHT,
+    ...FONTS.B2,
   },
 });

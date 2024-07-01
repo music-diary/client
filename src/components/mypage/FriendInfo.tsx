@@ -3,8 +3,8 @@
 // import React, { useState } from 'react';
 // import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 // import { Feather } from '@expo/vector-icons';
-// import Colors from '@/constants/Colors';
-// import Fonts from '@/constants/Fonts';
+// import COLORS from '@/constants/COLORS';
+// import FONTS from '@/constants/FONTS';
 // import CustomAlert from '@/components/common/CustomAlert';
 
 // interface FriendInfoProps {
@@ -30,7 +30,7 @@
 //       <View style={styles.friendInfo}>
 //         {profileImage ? (
 //           <View
-//             style={[styles.profileImage, { backgroundColor: Colors.purple }]}
+//             style={[styles.profileImage, { backgroundColor: COLORS.purple }]}
 //           />
 //         ) : (
 //           <View style={styles.profileImage} />
@@ -38,7 +38,7 @@
 //         <Text style={styles.name}>{profileName}</Text>
 //       </View>
 //       <TouchableOpacity onPress={openModal}>
-//         <Feather name="minus-circle" size={20} color={Colors.contents_light} />
+//         <Feather name="minus-circle" size={20} color={COLORS.contents_light} />
 //         <CustomAlert
 //           isVisible={isModalVisible}
 //           onConfirm={handleConfirm} // 확인 버튼 눌렀을 때 실행할 함수
@@ -70,11 +70,11 @@
 //     width: 32,
 //     height: 32,
 //     borderRadius: 16,
-//     backgroundColor: Colors.white,
+//     backgroundColor: COLORS.white,
 //     marginRight: 10,
 //   },
 //   name: {
-//     color: Colors.white,
-//     ...Fonts.b1_sb,
+//     color: COLORS.white,
+//     ...FONTS.b1_sb,
 //   },
 // });

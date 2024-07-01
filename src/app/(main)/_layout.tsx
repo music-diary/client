@@ -2,7 +2,7 @@ import { Tabs, usePathname } from 'expo-router';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import { Foundation, Feather, FontAwesome6 } from '@expo/vector-icons';
 import { useClientOnlyValue } from '@/hooks/useClientOnlyValue';
-import { Colors } from '@/constants';
+import { COLORS } from '@/constants';
 import BottomBarIcon from '@/components/common/BottomBarIcon';
 
 const ratio = 435 / 375;
@@ -21,8 +21,8 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors.PURPLE,
-        tabBarInactiveTintColor: Colors.WHITE,
+        tabBarActiveTintColor: COLORS.PURPLE,
+        tabBarInactiveTintColor: COLORS.WHITE,
         headerShown: useClientOnlyValue(false, true),
         tabBarShowLabel: false,
         tabBarStyle: hide
@@ -33,7 +33,7 @@ export default function TabLayout() {
         tabBarBackground: () => (
           <View style={styles.layout}>
             <BottomBarIcon
-              color={Colors.GREY3}
+              color={COLORS.GREY3}
               width={currentWidth}
               height={currentHeight}
             />
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     bottom: 34,
     // shadow 설정
-    shadowColor: Colors.BLACK,
+    shadowColor: COLORS.BLACK,
     shadowOpacity: 0.9,
     shadowOffset: {
       width: 0,
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   middleItem: {
-    backgroundColor: Colors.PURPLE,
+    backgroundColor: COLORS.PURPLE,
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',
