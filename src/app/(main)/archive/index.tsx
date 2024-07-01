@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, ScrollView, Text, View } from 'react-native';
-import { Colors } from '@/constants';
+import { COLORS } from '@/constants';
 import dummy_archive_month from '@/data/dummy_archive_month.json';
 import DailyMainArchive from '@/components/archive/DailyMainArchive';
 import dummy_archive_recommend from '@/data/dummy_archive_recommend.json';
@@ -74,7 +74,7 @@ export default ArchiveScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.BLACK,
+    backgroundColor: COLORS.BLACK,
     paddingLeft: 16,
     paddingTop: 20,
   },
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     height: 50,
   },
   headerText: {
-    color: Colors.WHITE,
+    color: COLORS.WHITE,
     fontFamily: 'pret-b',
     fontSize: 18,
   },

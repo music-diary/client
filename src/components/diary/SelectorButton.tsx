@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Colors, Fonts } from '@/constants';
+import { COLORS, FONTS } from '@/constants';
 import { type Mood } from '@/models/types';
 
 interface SelectorButtonProps {
@@ -16,9 +16,9 @@ const SelectorButton = ({
   isSelected,
 }: SelectorButtonProps) => {
   const colorMap = {
-    happy: Colors.GREEN,
-    soso: Colors.PURPLE,
-    bad: Colors.BLUE,
+    happy: COLORS.GREEN,
+    soso: COLORS.PURPLE,
+    bad: COLORS.BLUE,
   };
 
   const buttonStyle = {
@@ -33,7 +33,7 @@ const SelectorButton = ({
       <Text
         style={[
           styles.type,
-          isSelected && mood === 'happy' && { color: Colors.BLACK },
+          isSelected && mood === 'happy' && { color: COLORS.BLACK },
         ]}
       >
         {type}
@@ -51,13 +51,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderRadius: 38,
     borderWidth: 1,
-    borderColor: Colors.WHITE,
+    borderColor: COLORS.WHITE,
   },
   type: {
     justifyContent: 'center',
     alignItems: 'center',
-    color: Colors.WHITE,
-    ...Fonts.B2_SB,
+    color: COLORS.WHITE,
+    ...FONTS.B2_SB,
   },
   opacityView: {
     borderRadius: 38,

@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Colors, Fonts } from '@/constants';
+import { COLORS, FONTS } from '@/constants';
 
 interface TopicButtonProps {
   type: string;
@@ -19,13 +19,13 @@ const TopicButton = ({
       <View
         style={[
           styles.opacityView,
-          isSelected ? { backgroundColor: Colors.WHITE } : null,
+          isSelected ? { backgroundColor: COLORS.WHITE } : null,
         ]}
       />
       <View style={styles.emoji}>
         <Text>{emoji}</Text>
       </View>
-      <Text style={[styles.type, isSelected ? { color: Colors.BLACK } : null]}>
+      <Text style={[styles.type, isSelected ? { color: COLORS.BLACK } : null]}>
         {type}
       </Text>
     </TouchableOpacity>
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderRadius: 38,
     borderWidth: 1,
-    borderColor: Colors.WHITE,
+    borderColor: COLORS.WHITE,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
@@ -52,8 +52,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   type: {
-    color: Colors.WHITE,
-    ...Fonts.B2_SB,
+    color: COLORS.WHITE,
+    ...FONTS.B2_SB,
   },
   opacityView: {
     borderRadius: 38,

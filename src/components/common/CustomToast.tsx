@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Animated, Dimensions, StyleSheet, Text } from 'react-native';
 import useToastStore from '@/store/useToastStore';
-import { Colors, Fonts } from '@/constants';
+import { COLORS, FONTS } from '@/constants';
 
 const { width, height } = Dimensions.get('window');
 
@@ -74,15 +74,15 @@ const styles = StyleSheet.create({
     paddingBottom: 100,
   },
   toast: {
-    backgroundColor: Colors.GREY3,
+    backgroundColor: COLORS.GREY3,
     borderRadius: 10,
     paddingVertical: 20,
     paddingHorizontal: 32,
     alignItems: 'flex-end',
-    ...Fonts.B2_SB,
+    ...FONTS.B2_SB,
   },
   text: {
-    color: Colors.WHITE,
-    ...Fonts.B2_SB,
+    color: COLORS.WHITE,
+    ...FONTS.B2_SB,
   },
 });

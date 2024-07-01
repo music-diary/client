@@ -1,16 +1,16 @@
 import { Stack } from 'expo-router';
 import HeaderTitle from '@/components/common/HeaderTitle';
 import CustomBackButton from '@/components/common/CustomBackButton';
-import { Colors } from '@/constants';
+import { COLORS } from '@/constants';
 
 export default function MypageLayout() {
   return (
     <Stack
       screenOptions={{
         headerStyle: {
-          backgroundColor: Colors.BLACK,
+          backgroundColor: COLORS.BLACK,
         },
-        headerTintColor: Colors.WHITE,
+        headerTintColor: COLORS.WHITE,
         headerTitle: '',
       }}
     >

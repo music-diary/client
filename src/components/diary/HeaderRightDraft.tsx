@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from 'expo-router';
-import { Colors, Fonts } from '@/constants';
+import { COLORS, FONTS } from '@/constants';
 import useDraftStore from '@/store/useDraftStore';
 import { useModalStore } from '@/store/useModalStore';
 import CustomBackButton from '../common/CustomBackButton';
@@ -45,15 +45,15 @@ export default HeaderRightDraft;
 
 const styles = StyleSheet.create({
   editText: {
-    color: Colors.PURPLE,
-    ...Fonts.B1_SB,
+    color: COLORS.PURPLE,
+    ...FONTS.B1_SB,
   },
   deleteText: {
-    color: Colors.RED,
-    ...Fonts.B1_SB,
+    color: COLORS.RED,
+    ...FONTS.B1_SB,
   },
   cancelText: {
-    color: Colors.GREY1,
-    ...Fonts.B1_SB,
+    color: COLORS.GREY1,
+    ...FONTS.B1_SB,
   },
 });

@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Colors, Fonts } from '@/constants';
+import { COLORS, FONTS } from '@/constants';
 import DailyDiaryCard from '@/components/archive/DailyDiaryCard';
 import CustomAlertModal from '@/components/common/CustomAlertModal';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
@@ -110,7 +110,7 @@ const CardScreen = () => {
 
   return (
     <>
-      <View style={{ flex: 1, backgroundColor: Colors.BLACK }}>
+      <View style={{ flex: 1, backgroundColor: COLORS.BLACK }}>
         <ScrollView style={styles.container}>
           <Text style={styles.b1LightText}>3월 2일</Text>
           <View style={styles.cardContainer}>
@@ -134,7 +134,7 @@ const CardScreen = () => {
               mode="time"
               display="spinner"
               onChange={onChange}
-              textColor={Colors.WHITE}
+              textColor={COLORS.WHITE}
             />
           </View>
         ) : (
@@ -170,12 +170,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 16,
-    backgroundColor: Colors.BLACK,
+    backgroundColor: COLORS.BLACK,
   },
   b1LightText: {
     paddingTop: 20,
-    color: Colors.CONTENTS_LIGHT,
-    ...Fonts.B1,
+    color: COLORS.CONTENTS_LIGHT,
+    ...FONTS.B1,
   },
   cardContainer: {
     marginTop: 10,
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 50,
     borderRadius: 10,
-    backgroundColor: Colors.GREY3,
+    backgroundColor: COLORS.GREY3,
   },
   pickerHeader: {
     paddingHorizontal: 16,
@@ -197,11 +197,11 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   pickerTitle: {
-    color: Colors.WHITE,
-    ...Fonts.T1,
+    color: COLORS.WHITE,
+    ...FONTS.T1,
   },
   btnText: {
-    color: Colors.PURPLE,
-    ...Fonts.B1_SB,
+    color: COLORS.PURPLE,
+    ...FONTS.B1_SB,
   },
 });

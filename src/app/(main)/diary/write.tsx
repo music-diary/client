@@ -16,7 +16,7 @@ import CustomBottomButton from '@/components/common/CustomBottomButton';
 import CustomSplash from '@/components/common/CustomSplash';
 import SelectorButton from '@/components/diary/SelectorButton';
 import TopicButton from '@/components/diary/TopicButton';
-import { Colors, Fonts } from '@/constants';
+import { COLORS, FONTS } from '@/constants';
 import { templates } from '@/constants/data';
 import { type ITopic } from '@/models/interfaces';
 import { type Mood } from '@/models/types';
@@ -83,7 +83,7 @@ const WriteScreen = () => {
   return (
     <>
       <KeyboardAvoidingView
-        style={{ flex: 1, backgroundColor: Colors.BLACK }}
+        style={{ flex: 1, backgroundColor: COLORS.BLACK }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
       >
@@ -139,7 +139,7 @@ const WriteScreen = () => {
                 <TextInput
                   placeholder="일기제목"
                   style={[styles.inputTitle, { marginBottom: 0 }]}
-                  placeholderTextColor={Colors.CONTENTS_LIGHT}
+                  placeholderTextColor={COLORS.CONTENTS_LIGHT}
                 />
                 {Object.entries(template.preview).map(([key, value]) => (
                   <View key={key}>
@@ -154,7 +154,7 @@ const WriteScreen = () => {
                           styles.inputDiary,
                           { height: 150, marginBottom: 0 },
                         ]}
-                        placeholderTextColor={Colors.CONTENTS_LIGHT}
+                        placeholderTextColor={COLORS.CONTENTS_LIGHT}
                       />
                       <Text style={styles.inputDiaryCount}>0/200</Text>
                     </View>
@@ -166,7 +166,7 @@ const WriteScreen = () => {
                 <TextInput
                   placeholder="일기제목"
                   style={styles.inputTitle}
-                  placeholderTextColor={Colors.CONTENTS_LIGHT}
+                  placeholderTextColor={COLORS.CONTENTS_LIGHT}
                 />
                 <View style={styles.inputDiaryView}>
                   <TextInput
@@ -175,7 +175,7 @@ const WriteScreen = () => {
                     multiline={true}
                     textAlignVertical="top"
                     style={styles.inputDiary}
-                    placeholderTextColor={Colors.CONTENTS_LIGHT}
+                    placeholderTextColor={COLORS.CONTENTS_LIGHT}
                   />
                   <Text style={styles.inputDiaryCount}>0/500</Text>
                 </View>
@@ -227,7 +227,7 @@ export default WriteScreen;
 const styles = StyleSheet.create({
   container: {
     rowGap: 44,
-    backgroundColor: Colors.BLACK,
+    backgroundColor: COLORS.BLACK,
     paddingHorizontal: 16,
     paddingTop: 20,
     paddingBottom: 150,
@@ -252,27 +252,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    color: Colors.WHITE,
-    ...Fonts.T1,
+    color: COLORS.WHITE,
+    ...FONTS.T1,
   },
   description: {
-    color: Colors.WHITE,
-    ...Fonts.B2_SB,
+    color: COLORS.WHITE,
+    ...FONTS.B2_SB,
   },
   infoText: {
-    color: Colors.CONTENTS_LIGHT,
-    ...Fonts.BTN,
+    color: COLORS.CONTENTS_LIGHT,
+    ...FONTS.BTN,
   },
   inputTitle: {
     padding: 10,
-    color: Colors.CONTENTS_LIGHT,
-    backgroundColor: Colors.BOX,
+    color: COLORS.CONTENTS_LIGHT,
+    backgroundColor: COLORS.BOX,
     borderRadius: 10,
-    ...Fonts.B1_SB,
+    ...FONTS.B1_SB,
   },
   inputDiaryView: {
     flex: 1,
-    color: Colors.CONTENTS_LIGHT,
+    color: COLORS.CONTENTS_LIGHT,
     gap: 10,
   },
   inputDiary: {
@@ -280,20 +280,20 @@ const styles = StyleSheet.create({
     paddingTop: 14,
     paddingBottom: 14,
     paddingHorizontal: 12,
-    color: Colors.CONTENTS_LIGHT,
-    backgroundColor: Colors.BOX,
+    color: COLORS.CONTENTS_LIGHT,
+    backgroundColor: COLORS.BOX,
     borderRadius: 10,
-    ...Fonts.B2,
+    ...FONTS.B2,
   },
   inputDiaryCount: {
     alignSelf: 'flex-end',
-    color: Colors.CONTENTS_LIGHT,
-    ...Fonts.LB,
+    color: COLORS.CONTENTS_LIGHT,
+    ...FONTS.LB,
   },
 
   previewName: {
-    color: Colors.WHITE,
-    ...Fonts.B2,
+    color: COLORS.WHITE,
+    ...FONTS.B2,
     marginBottom: 10,
   },
 });

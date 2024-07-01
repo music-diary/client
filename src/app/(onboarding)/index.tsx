@@ -13,7 +13,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRequestPhoneVerification } from '@/api/hooks/useAuth';
 import Header from '@/components/onboarding/Header';
-import { Colors, Fonts } from '@/constants';
+import { COLORS, FONTS } from '@/constants';
 
 const SignUpScreen = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -63,7 +63,7 @@ const SignUpScreen = () => {
             style={styles.inputPhoneNumber}
             autoFocus={true}
             placeholder="-를 제외한 번호를 입력해주세요."
-            placeholderTextColor={Colors.CONTENTS_LIGHT}
+            placeholderTextColor={COLORS.CONTENTS_LIGHT}
             value={phoneNumber}
             onChangeText={handlePhoneNumberChange}
             keyboardType="phone-pad"
@@ -72,7 +72,7 @@ const SignUpScreen = () => {
         </View>
         <InputAccessoryView
           nativeID="phoneNumber"
-          backgroundColor={isButtonDisabled ? Colors.BG_LIGHT : Colors.PURPLE}
+          backgroundColor={isButtonDisabled ? COLORS.BG_LIGHT : COLORS.PURPLE}
         >
           <TouchableOpacity
             style={styles.verifyButton}
@@ -84,8 +84,8 @@ const SignUpScreen = () => {
                 styles.verifyText,
                 {
                   color: isButtonDisabled
-                    ? Colors.CONTENTS_LIGHT
-                    : Colors.WHITE,
+                    ? COLORS.CONTENTS_LIGHT
+                    : COLORS.WHITE,
                 },
               ]}
             >
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     gap: 60,
-    backgroundColor: Colors.BLACK,
+    backgroundColor: COLORS.BLACK,
     flex: 1,
   },
   keyboardAvoidingContainer: {
@@ -117,15 +117,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   inputLabel: {
-    color: Colors.WHITE,
-    ...Fonts.B2_SB,
+    color: COLORS.WHITE,
+    ...FONTS.B2_SB,
   },
   inputPhoneNumber: {
-    color: Colors.WHITE,
-    borderBottomColor: Colors.GREY1,
+    color: COLORS.WHITE,
+    borderBottomColor: COLORS.GREY1,
     borderBottomWidth: 1,
     paddingBottom: 8,
-    ...Fonts.B2_LINE2,
+    ...FONTS.B2_LINE2,
   },
   verifyButton: {
     alignItems: 'center',
@@ -133,6 +133,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   verifyText: {
-    ...Fonts.B1_SB,
+    ...FONTS.B1_SB,
   },
 });

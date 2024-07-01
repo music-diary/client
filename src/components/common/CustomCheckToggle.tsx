@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Colors, Fonts } from '@/constants';
+import { COLORS, FONTS } from '@/constants';
 
 interface CustomCheckToggleProps {
   index: number; // index
@@ -41,13 +41,13 @@ const CustomCheckToggle = ({
 
   const toggleContainerStyle = {
     ...styles.toggleContainer,
-    backgroundColor: isSelected ? Colors.PURPLE : Colors.BLACK,
-    borderColor: isSelected ? Colors.PURPLE : Colors.WHITE,
+    backgroundColor: isSelected ? COLORS.PURPLE : COLORS.BLACK,
+    borderColor: isSelected ? COLORS.PURPLE : COLORS.WHITE,
   };
 
   const toggleCircleBackgroundColor = animation.interpolate({
     inputRange: [0, 1],
-    outputRange: [Colors.BLACK, Colors.WHITE],
+    outputRange: [COLORS.BLACK, COLORS.WHITE],
   });
 
   return (
@@ -85,8 +85,8 @@ const styles = StyleSheet.create({
   },
   text: {
     marginLeft: 6,
-    color: Colors.WHITE,
-    ...Fonts.B1_SB,
+    color: COLORS.WHITE,
+    ...FONTS.B1_SB,
   },
 });
 

@@ -5,7 +5,7 @@ import DateTimePicker, {
   type DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
 import { router } from 'expo-router';
-import { Colors, Fonts } from '@/constants';
+import { COLORS, FONTS } from '@/constants';
 import CustomCheckToggle from '@/components/common/CustomCheckToggle';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
 import { PhotoSvg, DefaultProfileSvg } from 'assets/images/mypage';
@@ -89,20 +89,20 @@ const EditScreen = () => {
           {/* 닉네임 */}
           <View style={styles.titleName}>
             <Text style={styles.btnText}>
-              닉네임 <Text style={{ color: Colors.PINK }}>*</Text>
+              닉네임 <Text style={{ color: COLORS.PINK }}>*</Text>
             </Text>
             <TextInput
               style={styles.inputNickname}
               onChangeText={onChangeNickname}
               value={nickname}
               placeholder="(기존 닉네임)"
-              placeholderTextColor={Colors.CONTENTS_LIGHT}
+              placeholderTextColor={COLORS.CONTENTS_LIGHT}
             />
           </View>
           {/* 생년월일 */}
           <View style={styles.titleName}>
             <Text style={styles.btnText}>
-              생년월일 <Text style={{ color: Colors.PINK }}>*</Text>
+              생년월일 <Text style={{ color: COLORS.PINK }}>*</Text>
             </Text>
             <TouchableOpacity
               style={styles.birthdayContainer}
@@ -114,7 +114,7 @@ const EditScreen = () => {
           {/* 성별 */}
           <View style={styles.titleName}>
             <Text style={styles.btnText}>
-              성별 <Text style={{ color: Colors.PINK }}>*</Text>
+              성별 <Text style={{ color: COLORS.PINK }}>*</Text>
             </Text>
             <View style={styles.checkboxContainer}>
               <CustomCheckToggle
@@ -164,7 +164,7 @@ const EditScreen = () => {
             onChange={onChange}
             maximumDate={new Date()}
             minimumDate={new Date(1900, 0, 1)} // 최소 날짜는 1900년 1월
-            textColor={Colors.WHITE}
+            textColor={COLORS.WHITE}
             locale="ko" // 한국어 설정
           />
         </View>
@@ -178,7 +178,7 @@ export default EditScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.BLACK,
+    backgroundColor: COLORS.BLACK,
     paddingHorizontal: 16,
   },
 
@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
     height: 101,
     borderRadius: 51,
     borderWidth: 1,
-    borderColor: Colors.WHITE,
+    borderColor: COLORS.WHITE,
   },
   cameraContainer: {
     position: 'absolute',
@@ -201,15 +201,15 @@ const styles = StyleSheet.create({
     height: 30,
     borderRadius: 15,
     borderWidth: 1,
-    borderColor: Colors.BLACK,
-    backgroundColor: Colors.WHITE,
+    borderColor: COLORS.BLACK,
+    backgroundColor: COLORS.WHITE,
     justifyContent: 'center',
     alignItems: 'center',
     paddingLeft: 1,
   },
   deleteText: {
-    color: Colors.CONTENTS_LIGHT,
-    ...Fonts.BTN,
+    color: COLORS.CONTENTS_LIGHT,
+    ...FONTS.BTN,
     marginTop: 11,
   },
   body: {
@@ -217,23 +217,23 @@ const styles = StyleSheet.create({
   },
   titleName: { gap: 10 },
   btnText: {
-    color: Colors.WHITE,
-    ...Fonts.BTN,
+    color: COLORS.WHITE,
+    ...FONTS.BTN,
   },
   birthdayContainer: {
     borderWidth: 1,
-    borderColor: Colors.GREY1,
+    borderColor: COLORS.GREY1,
     borderRadius: 6,
     padding: 10,
     paddingVertical: 10,
   },
   inputNickname: {
     borderWidth: 1,
-    borderColor: Colors.GREY1,
+    borderColor: COLORS.GREY1,
     borderRadius: 6,
     padding: 10,
-    color: Colors.GREY1,
-    ...Fonts.BTN,
+    color: COLORS.GREY1,
+    ...FONTS.BTN,
     paddingVertical: 10,
   },
   checkboxContainer: {
@@ -242,8 +242,8 @@ const styles = StyleSheet.create({
     paddingBottom: 30,
   },
   dateText: {
-    color: Colors.GREY1,
-    ...Fonts.BTN,
+    color: COLORS.GREY1,
+    ...FONTS.BTN,
   },
   birthContainer: {
     alignItems: 'center',

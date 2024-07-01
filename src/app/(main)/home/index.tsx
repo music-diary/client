@@ -6,7 +6,7 @@ import { ProfileSvg } from 'assets/images/home';
 import WeekCalendar from '@/components/home/WeekCalender';
 import MonthlyMusicList from '@/components/home/MonthlyMusicList';
 import CharacterAnimation from '@/components/home/CharacterAnimation';
-import { Colors, Fonts } from '@/constants';
+import { COLORS, FONTS } from '@/constants';
 import TopDescription from '@/components/home/TopDescription';
 import NewUserDescription from '@/components/home/NewUserDescription';
 
@@ -50,7 +50,7 @@ const HomeScreen = () => {
               {diaryCount > 0 ? (
                 <Text style={styles.bodyMent}>
                   이번달 Miya님은{'\n'}
-                  <Text style={{ color: Colors.GREEN }}>긍정적인</Text> 감정의
+                  <Text style={{ color: COLORS.GREEN }}>긍정적인</Text> 감정의
                   노래를 가장 많이 들었어요
                 </Text>
               ) : (
@@ -77,15 +77,15 @@ const HomeScreen = () => {
 
 const styles = StyleSheet.create({
   topSafeArea: {
-    backgroundColor: Colors.PURPLE,
+    backgroundColor: COLORS.PURPLE,
   },
   container: {
     flex: 1,
-    backgroundColor: Colors.BLACK,
+    backgroundColor: COLORS.BLACK,
   },
   top: {
     paddingHorizontal: 16,
-    backgroundColor: Colors.PURPLE,
+    backgroundColor: COLORS.PURPLE,
     paddingBottom: 50,
     marginTop: -200,
     paddingTop: 200,
@@ -98,10 +98,10 @@ const styles = StyleSheet.create({
   },
   logoText: {
     color: '#FAFAFA',
-    ...Fonts.H1,
+    ...FONTS.H1,
   },
   body: {
-    backgroundColor: Colors.BLACK,
+    backgroundColor: COLORS.BLACK,
     marginTop: -50,
     borderTopLeftRadius: 18,
     borderTopRightRadius: 18,
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     paddingBottom: 23,
   },
   bodyMent: {
-    color: Colors.WHITE,
+    color: COLORS.WHITE,
     fontFamily: 'pret-b',
     fontSize: 16,
     lineHeight: 24,

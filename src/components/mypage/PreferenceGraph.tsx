@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Svg, Circle } from 'react-native-svg';
-import { Colors, Fonts } from '@/constants';
+import { COLORS, FONTS } from '@/constants';
 
 interface PreferenceGraphProps {
   data: Array<{ label: string; count: number; color: string }>;
@@ -68,12 +68,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   btnText: {
-    color: Colors.GREY1,
-    ...Fonts.BTN,
+    color: COLORS.GREY1,
+    ...FONTS.BTN,
   },
   totalText: {
     marginTop: 5,
-    color: Colors.WHITE,
-    ...Fonts.B1_SB,
+    color: COLORS.WHITE,
+    ...FONTS.B1_SB,
   },
 });

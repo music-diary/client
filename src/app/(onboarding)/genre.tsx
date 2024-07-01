@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSignUp } from '@/api/hooks/useAuth';
 import GenreRecModal from '@/components/onboarding/GenreRecModal';
 import Header from '@/components/onboarding/Header';
-import { Colors, Fonts } from '@/constants';
+import { COLORS, FONTS } from '@/constants';
 import { genres } from '@/constants/data';
 import { type IGenre } from '@/models/interfaces';
 import { type SignUpSchema } from '@/models/schemas';
@@ -131,13 +131,13 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     gap: 28,
-    backgroundColor: Colors.BLACK,
+    backgroundColor: COLORS.BLACK,
     flex: 1,
   },
   genreButton: {
     alignItems: 'center',
     justifyContent: 'center',
-    borderColor: Colors.CONTENTS_LIGHT,
+    borderColor: COLORS.CONTENTS_LIGHT,
     borderWidth: 1,
     borderRadius: 38,
     paddingHorizontal: 16,
@@ -145,8 +145,8 @@ const styles = StyleSheet.create({
   },
 
   genreType: {
-    color: Colors.WHITE,
-    ...Fonts.B2_SB,
+    color: COLORS.WHITE,
+    ...FONTS.B2_SB,
   },
 
   genreListContainer: {
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   selectedGenreButton: {
-    backgroundColor: Colors.PURPLE,
-    borderColor: Colors.PURPLE,
+    backgroundColor: COLORS.PURPLE,
+    borderColor: COLORS.PURPLE,
   },
 });
