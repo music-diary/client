@@ -67,8 +67,8 @@ function RootLayoutNav() {
     //   router.navigate('intro');
     // }
     if (!isAuthenticated) {
-      // router.navigate('(onboarding)/genre');
-      router.navigate('(main)/diary/music');
+      router.navigate('(onboarding)/phone-verify');
+      // router.navigate('(main)/diary/card');
     } else {
       router.navigate('(main)');
     }

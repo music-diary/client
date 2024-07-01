@@ -62,8 +62,8 @@ const TermsModal = ({
             style={[
               styles.modalOverlay,
               {
-                backgroundColor: isButtonDisabled
-                  ? COLORS.CONTENTS_LIGHT
+                borderBottomColor: isButtonDisabled
+                  ? COLORS.GREY2
                   : COLORS.PURPLE,
               },
             ]}
@@ -114,6 +114,7 @@ const styles = StyleSheet.create({
   modalOverlay: {
     flex: 1,
     justifyContent: 'flex-end',
+    borderBottomWidth: 1,
   },
   modalContainer: {
     display: 'flex',
