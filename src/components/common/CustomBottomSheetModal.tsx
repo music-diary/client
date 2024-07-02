@@ -8,6 +8,7 @@ import {
   TouchableWithoutFeedback,
   type GestureResponderEvent,
 } from 'react-native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS, FONTS } from '@/constants';
 import { useDimStore } from '@/store/useDimStore';
 
@@ -69,22 +70,28 @@ const CustomBottomSheetModal = ({
       onRequestClose={handleClose}
     >
       <TouchableWithoutFeedback onPress={handleOuterPress}>
-        <View style={styles.modalContainer}>
-          <TouchableWithoutFeedback onPress={handleContentPress}>
-            <View style={styles.modalContent}>
-              <View style={styles.buttonContainer}>
-                <TouchableOpacity onPress={handleClose}>
-                  <Text style={styles.buttonText}>취소</Text>
-                </TouchableOpacity>
-                <Text style={styles.titleText}>{title}</Text>
-                <TouchableOpacity onPress={handleSave}>
-                  <Text style={styles.buttonText}>저장</Text>
-                </TouchableOpacity>
+        <SafeAreaProvider>
+          <SafeAreaView edges={['top']} style={styles.modalContainer}>
+            <TouchableWithoutFeedback onPress={handleContentPress}>
+              <View style={styles.modalContent}>
+                <View style={styles.buttonContainer}>
+                  <TouchableOpacity onPress={handleClose}>
+                    <Text style={styles.buttonText}>취소</Text>
+                  </TouchableOpacity>
+                  <Text style={styles.titleText}>{title}</Text>
+                  <TouchableOpacity onPress={handleSave}>
+                    <Text style={styles.buttonText}>저장</Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.bodyContent}>{children}</View>
               </View>
-              <View style={styles.bodyContent}>{children}</View>
-            </View>
-          </TouchableWithoutFeedback>
-        </View>
+            </TouchableWithoutFeedback>
+          </SafeAreaView>
+          <SafeAreaView
+            edges={['bottom']}
+            style={{ backgroundColor: COLORS.GREY3 }}
+          />
+        </SafeAreaProvider>
       </TouchableWithoutFeedback>
     </Modal>
   );
@@ -98,7 +105,6 @@ const styles = StyleSheet.create({
   modalContent: {
     backgroundColor: COLORS.GREY3,
     paddingTop: 20,
-    paddingBottom: 34, // safe area bottom 설정,
     paddingHorizontal: 16,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,

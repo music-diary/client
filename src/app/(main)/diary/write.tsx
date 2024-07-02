@@ -111,7 +111,9 @@ const WriteScreen = () => {
             )}
           </View>
           <View style={styles.emotionContainer}>
-            <Text style={styles.description}>그래서 내 기분은</Text>
+            <Text style={styles.description}>
+              {topicList.length > 0 ? '그래서' : '오늘'} 내 기분은
+            </Text>
             <View style={styles.buttonContainer}>
               {emotionList.map((value, index) => (
                 <SelectorButton
