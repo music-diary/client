@@ -1,66 +1,73 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import DateTimePicker, {
   type DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
 import { router, useFocusEffect, useNavigation } from 'expo-router';
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import { COLORS, FONTS } from '@/constants';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import DailyDiaryCard from '@/components/archive/DailyDiaryCard';
 import CustomAlertModal from '@/components/common/CustomAlertModal';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
+import CustomBottomSheetModal from '@/components/common/CustomBottomSheetModal';
 import CustomSplash from '@/components/common/CustomSplash';
+import { COLORS, FONTS } from '@/constants';
+import { splashOptions } from '@/constants/data';
 import dummy_archive_day from '@/data/dummy_archive_day.json';
 import { useModalStore } from '@/store/useModalStore';
 import { useSplashStore } from '@/store/useSplashStore';
-import useToastStore from '@/store/useToastStore';
-import {
-  ArchiveCheerSvg,
-  ArchiveIdeaSvg,
-  ArchiveSaveSvg,
-} from 'assets/images/splash';
+import { type SplashKey } from '@/models/types';
 import { type DailyDiaryData } from '../archive/day/[day]';
 
-const splashOptions = [
-  {
-    svg: ArchiveCheerSvg,
-    description: '당신의 하루를 뮤다가 응원해요',
-  },
-  {
-    svg: ArchiveSaveSvg,
-    description: '오늘의 ost가 뮤다에 소중히 담겼어요',
-  },
-  {
-    svg: ArchiveIdeaSvg,
-    description: '이 노래가 떠오를 때 언제든지 놀러오세요',
-  },
-];
-
 const CardScreen = () => {
-  const { openModal, closeModal } = useModalStore();
   const dailyDiaryData: DailyDiaryData[] = dummy_archive_day;
-  const showToast = useToastStore((state) => state.showToast);
-  const [isFirstDiary, setIsFirstDiary] = useState(true);
+  const [isFirstDiary] = useState(true);
   const [showPicker, setShowPicker] = useState(false);
   const [tempDate, setTempDate] = useState<Date>(new Date());
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [splashKey, setSplashKey] = useState<SplashKey>('cheer');
+  const [splashConfig, setSplashConfig] = useState(splashOptions[splashKey]);
 
-  const { openSplash } = useSplashStore();
+  const { openModal, closeModal } = useModalStore();
+  const { openSplash, closeSplash } = useSplashStore();
+
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    setSplashConfig(splashOptions[splashKey] || splashOptions.cheer);
+  }, [splashKey]);
+
+  useFocusEffect(
+    useCallback(() => {
+      const state = navigation.getState();
+      console.log('Current Navigation State:', state);
+    }, [navigation]),
+  );
+
+  const handleSave = () => {
+    if (isFirstDiary) {
+      openModal('push-notification');
+    } else {
+      const randomKey = getRandomSplashKey(['cheer', 'save', 'idea']);
+      setSplashKey(randomKey);
+      openSplash('archive-save');
+    }
+  };
 
   const handleNoPushNotification = () => {
     closeModal();
-    return router.replace('/(main)/archive/grid');
+    setSplashKey('idea');
+    openSplash('archive-save');
   };
 
   const handlePushNotification = () => {
-    // 알림 시간 설정 오픈
+    setTimeout(() => setShowPicker(true), 200); // 모달이 닫힌 후 200ms 후에 피커를 엽니다.
     closeModal();
-    setShowPicker(true);
+  };
+
+  const handleCloseSplash = () => {
+    closeModal();
+    closeSplash();
+    setShowPicker(false);
+    router.replace('/(main)/archive');
   };
 
   const onChange = (_: DateTimePickerEvent, date?: Date) => {
@@ -71,43 +78,22 @@ const CardScreen = () => {
 
   const cancelDateSelection = () => {
     setSelectedDate(new Date());
-    setShowPicker(false);
-    return router.replace('/(main)/archive/grid');
+    setSplashKey('idea');
+    openSplash('archive-save');
   };
 
   const confirmDateSelection = () => {
     setSelectedDate(tempDate);
-    setShowPicker(false);
-
-    // 일기 푸시 알림 설정 로직 작성 예정
-
-    showToast('일기 알림이 설정되었습니다', 2000, () =>
-      router.replace('/(main)/archive/grid'),
-    );
-  };
-
-  // 스택 히스토리 확인용
-  const navigation = useNavigation();
-  useFocusEffect(
-    useCallback(() => {
-      const state = navigation.getState();
-      console.log('Current Navigation State:', state);
-    }, []),
-  );
-
-  const randomIndex = Math.floor(Math.random() * splashOptions.length);
-  const { svg, description } = splashOptions[randomIndex];
-
-  const handleSave = () => {
-    // 아카이브 저장
-    // 첫번째 일기 작성시 푸시 알림 설정
-    if (isFirstDiary) {
-      openModal('push-notification');
-    }
-    // 스플래시 오픈
+    setSplashKey('alarm');
     openSplash('archive-save');
   };
 
+  const getRandomSplashKey = (keys: SplashKey[]) => {
+    const randomIndex = Math.floor(Math.random() * keys.length);
+    return keys[randomIndex];
+  };
+
+  // Render
   return (
     <>
       <View style={{ flex: 1, backgroundColor: COLORS.BLACK }}>
@@ -117,48 +103,42 @@ const CardScreen = () => {
             <DailyDiaryCard {...dailyDiaryData[0]} />
           </View>
         </ScrollView>
-
-        {showPicker ? (
-          <View style={styles.pickerContainer}>
-            <View style={styles.pickerHeader}>
-              <TouchableOpacity onPress={cancelDateSelection}>
-                <Text style={styles.btnText}>취소</Text>
-              </TouchableOpacity>
-              <Text style={styles.pickerTitle}>일기 알림</Text>
-              <TouchableOpacity onPress={confirmDateSelection}>
-                <Text style={styles.btnText}>저장</Text>
-              </TouchableOpacity>
-            </View>
-            <DateTimePicker
-              value={tempDate}
-              mode="time"
-              display="spinner"
-              onChange={onChange}
-              textColor={COLORS.WHITE}
-            />
-          </View>
-        ) : (
-          <CustomBottomButton
-            isActive={true}
-            onPress={handleSave} // 버튼 클릭 이벤트 핸들러
-            label="아카이브에 저장"
-          />
-        )}
-        <CustomAlertModal
-          name="push-notification"
-          title="매일 일기 쓰는 시간에 맞춰 알려드릴까요?"
-          leftButtonText="괜찮아요"
-          rightButtonText="네, 알려주세요"
-          onLeftButtonPress={handleNoPushNotification}
-          onRightButtonPress={handlePushNotification}
-        />
       </View>
+      <CustomBottomButton
+        isActive={true}
+        onPress={handleSave}
+        label="아카이브에 저장"
+      />
+      <CustomBottomSheetModal
+        title="일기 알림"
+        visible={showPicker}
+        onCancel={cancelDateSelection}
+        onSave={confirmDateSelection}
+      >
+        <View style={styles.pickerContainer}>
+          <DateTimePicker
+            value={tempDate}
+            mode="time"
+            display="spinner"
+            onChange={onChange}
+            textColor={COLORS.WHITE}
+          />
+        </View>
+      </CustomBottomSheetModal>
+      <CustomAlertModal
+        name="push-notification"
+        title="매일 일기 쓰는 시간에 맞춰 알려드릴까요?"
+        leftButtonText="괜찮아요"
+        rightButtonText="네, 알려주세요"
+        onLeftButtonPress={handleNoPushNotification}
+        onRightButtonPress={handlePushNotification}
+      />
       <CustomSplash
         name="archive-save"
-        description={description}
+        description={splashConfig.description}
         toastMessage="아카이브에 저장되었습니다"
-        svg={svg}
-        onClose={() => router.replace('/(main)/archive')}
+        svg={splashConfig.svg}
+        onClose={handleCloseSplash}
       />
     </>
   );
@@ -181,27 +161,9 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 130,
   },
-  // DatePicker
   pickerContainer: {
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 20,
-    paddingBottom: 50,
-    borderRadius: 10,
-    backgroundColor: COLORS.GREY3,
-  },
-  pickerHeader: {
-    paddingHorizontal: 16,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-  },
-  pickerTitle: {
-    color: COLORS.WHITE,
-    ...FONTS.T1,
-  },
-  btnText: {
-    color: COLORS.PURPLE,
-    ...FONTS.B1_SB,
   },
 });
