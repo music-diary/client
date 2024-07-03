@@ -1,19 +1,26 @@
 import { useEffect, useState } from 'react';
 import { router, useLocalSearchParams } from 'expo-router';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ActivityIndicator,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSignUp } from '@/api/hooks/useAuth';
 import GenreRecModal from '@/components/onboarding/GenreRecModal';
 import Header from '@/components/onboarding/Header';
 import { COLORS, FONTS } from '@/constants';
-import { genres } from '@/constants/data';
 import { type IGenre } from '@/models/interfaces';
 import { type SignUpSchema } from '@/models/schemas';
 import { type Gender } from '@/models/types';
 import { useDimStore } from '@/store/useDimStore';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
+import { useGenres } from '@/api/hooks/useGenres';
 
 const GenreScreen = () => {
+  const { data: genres, error, isLoading } = useGenres();
   const { phoneNumber, name, birth, gender, isAgreedMarketing } =
     useLocalSearchParams();
 
@@ -86,6 +93,22 @@ const GenreScreen = () => {
     });
   };
 
+  if (isLoading) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <ActivityIndicator size="small" color={COLORS.WHITE} />
+      </SafeAreaView>
+    );
+  }
+
+  if (!genres || error) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <Text style={styles.errorText}>장르를 불러오지 못했어요.</Text>
+      </SafeAreaView>
+    );
+  }
+
   return (
     <>
       <SafeAreaView edges={['top']} style={styles.container}>
@@ -98,8 +121,10 @@ const GenreScreen = () => {
             const isSelected = selectedGenre.some((g) => g.name === genre.name);
             return (
               <TouchableOpacity
-                key={genre.name}
-                onPress={() => handleSelectGenre({ name: genre.name })}
+                key={genre.id}
+                onPress={() =>
+                  handleSelectGenre({ id: genre.id, name: genre.name })
+                }
                 style={[
                   styles.genreButton,
                   isSelected ? styles.selectedGenreButton : null, // 조건부 스타일 적용
@@ -143,12 +168,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 9,
   },
-
   genreType: {
     color: COLORS.WHITE,
     ...FONTS.B2_SB,
   },
-
   genreListContainer: {
     display: 'flex',
     flexDirection: 'row',
@@ -160,5 +183,11 @@ const styles = StyleSheet.create({
   selectedGenreButton: {
     backgroundColor: COLORS.PURPLE,
     borderColor: COLORS.PURPLE,
+  },
+  errorText: {
+    color: COLORS.RED,
+    ...FONTS.B1,
+    textAlign: 'center',
+    marginTop: 20,
   },
 });
