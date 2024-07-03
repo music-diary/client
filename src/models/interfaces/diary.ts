@@ -7,7 +7,10 @@ export interface ITopic {
 }
 
 export interface IGenre {
+  id: string;
+  label?: string;
   name: string;
+  color?: string;
 }
 
 export interface ITemplate {
