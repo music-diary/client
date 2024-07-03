@@ -11,4 +11,5 @@ export const API_ENDPOINTS = {
     ID: '/users/:id',
     ALL: '/users',
   },
+  GENRES: '/genres',
 };
