@@ -1,22 +1,27 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Checkbox } from 'expo-checkbox';
+import { openBrowserAsync } from 'expo-web-browser';
 import { COLORS, FONTS } from '@/constants';
 
 interface TermsCheckboxProps {
   value: boolean;
   setValue: (value: boolean) => void;
   title: string;
+  url: string;
   type?: string;
-  handleOpenTerms?: () => void;
 }
 
 const TermsCheckbox = ({
   value,
   setValue,
   title,
+  url,
   type,
-  handleOpenTerms,
 }: TermsCheckboxProps) => {
+  const handleOpenTerms = () => {
+    openBrowserAsync(url);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
@@ -30,7 +35,7 @@ const TermsCheckbox = ({
           {title}
         </Text>
       </View>
-      {type !== 'all' && (
+      {url.length > 0 && (
         <TouchableOpacity onPress={handleOpenTerms}>
           <Text style={styles.openTerms}>보기</Text>
         </TouchableOpacity>
