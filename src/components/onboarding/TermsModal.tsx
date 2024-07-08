@@ -80,6 +80,7 @@ const TermsModal = ({
                     setValue={handleCheckAll}
                     title="약관 전체동의"
                     type="all"
+                    url=""
                   />
                 </View>
                 <View style={styles.termsCheckboxContainer}>
@@ -90,6 +91,7 @@ const TermsModal = ({
                       setValue={(value) =>
                         handleCheckboxChange(checkbox.id, value)
                       }
+                      url={checkbox.url}
                       title={checkbox.title}
                     />
                   ))}
