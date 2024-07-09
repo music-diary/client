@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { AntDesign } from '@expo/vector-icons';
+import { router, useLocalSearchParams } from 'expo-router';
 import {
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
+  type LayoutChangeEvent,
 } from 'react-native';
 import Animated, {
   useAnimatedStyle,
@@ -13,33 +15,20 @@ import Animated, {
   withTiming,
   type SharedValue,
 } from 'react-native-reanimated';
-import { router, useLocalSearchParams } from 'expo-router';
 import { COLORS, FONTS } from '@/constants';
-import { type Template } from '@/models/types';
 import { type ITemplate } from '@/models/interfaces';
-import { templates } from '@/constants/data';
+import { type Template } from '@/models/types';
+// import { templates } from '@/constants/data';
+// import { useTemplates } from '@/api/hooks/useDiaries';
 
 const TemplateScreen = () => {
   const params = useLocalSearchParams();
-
-  // 동시에 열릴때 사용할 수 있는 방법
-  // const [expanded, setExpanded] = useState<{ [key in TemplateType]?: boolean }>(
-  //   {},
-  // );
-  // const handlePreview = (type: TemplateType) => {
-  //   // 선택된 타입에 대한 상태를 토글합니다.
-  //   setExpanded((prev: { [key in TemplateType]?: boolean }) => ({
-  //     ...prev,
-  //     [type]: !prev[type],
-  //   }));
-  //   // 선택된 타입에 대한 높이 값을 애니메이션합니다.
-  //   heightValues[type].value = withTiming(expanded[type] ? 0 : 300, {
-  //     duration: 300,
-  //   });
-  // };
-
-  // 하나만 열릴때 사용할 수 있는 방법
+  const templates = JSON.parse(params.templates as string) as ITemplate[];
+  const contentRefs = useRef<{ [key in Template]?: View | null }>({});
   const [expanded, setExpanded] = useState<Template | null>(null);
+  const [heights, setHeights] = useState<{ [key in Template]: number }>(
+    {} as { [key in Template]: number },
+  );
 
   const heightValues = templates.reduce<{
     [key in Template]: SharedValue<number>;
@@ -60,7 +49,7 @@ const TemplateScreen = () => {
     });
 
   const handlePreview = (template: ITemplate) => {
-    const { type, height } = template;
+    const { type } = template;
     const isExpanded = expanded === type;
 
     setExpanded(isExpanded ? null : type);
@@ -77,9 +66,9 @@ const TemplateScreen = () => {
           });
         }
       });
-      // Open the selected panel
-      // height는 나중에 높이를 계산해서 useRef로 수정해야함
-      heightValues[type].value = withTiming(height, { duration: 300 });
+
+      const contentHeight = heights[type] || 0;
+      heightValues[type].value = withTiming(contentHeight, { duration: 300 });
     }
   };
 
@@ -90,65 +79,106 @@ const TemplateScreen = () => {
     });
   };
 
-  return (
-    <ScrollView style={styles.container}>
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}>다양한 템플릿을 활용해보세요</Text>
-        <View style={styles.descriptionContainer}>
-          <AntDesign
-            name="pluscircleo"
-            size={16}
-            color={COLORS.CONTENTS_LIGHT}
-          />
-          <Text style={styles.description}>버튼을 누르면 바로 적용돼요!</Text>
-        </View>
-      </View>
+  const onLayout = (type: Template) => (event: LayoutChangeEvent) => {
+    const { height } = event.nativeEvent.layout;
+    setHeights((prevHeights) => ({
+      ...prevHeights,
+      [type]: height + 20,
+    }));
+  };
 
-      <View style={styles.templateContainer}>
-        {templates.map((template, index) => (
-          <TouchableOpacity
-            key={index}
-            onPress={() => handlePreview(template)}
-            style={[styles.templateView, index === 4 && { marginBottom: 100 }]}
-          >
-            <View style={styles.templateInfoContainer}>
-              <View style={styles.templateInfoView}>
-                <Text style={styles.templateName}>{template.name}</Text>
-                <Text style={styles.templateDescription}>
-                  {template.description}
-                </Text>
-              </View>
-              <AntDesign
-                onPress={() => handleSetTemplate(template.type)}
-                name="pluscircleo"
-                size={16}
-                color={COLORS.WHITE}
-              />
-            </View>
-            {/* <View style={styles.templatePreviewContainer}>
-              <View style={styles.templateBorder} />
-              {Object.entries(template.preview).map(([key, value]) => (
-                <View key={key} style={styles.templateDescView}>
-                  <Text style={styles.templateName}>{key}</Text>
-                  <Text style={styles.templatePreviewInfo}>{value}</Text>
+  // if (isLoading) {
+  //   return (
+  //     <View style={styles.loaderContainer}>
+  //       <ActivityIndicator size="large" color={COLORS.WHITE} />
+  //     </View>
+  //   );
+  // }
+
+  // if (error) {
+  //   return (
+  //     <View style={styles.errorContainer}>
+  //       <Text style={styles.errorText}>Failed to load templates</Text>
+  //     </View>
+  //   );
+  // }
+
+  return (
+    <>
+      <ScrollView style={styles.container}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>다양한 템플릿을 활용해보세요</Text>
+          <View style={styles.descriptionContainer}>
+            <AntDesign
+              name="pluscircleo"
+              size={16}
+              color={COLORS.CONTENTS_LIGHT}
+            />
+            <Text style={styles.description}>버튼을 누르면 바로 적용돼요!</Text>
+          </View>
+        </View>
+
+        <View style={styles.templateContainer}>
+          {templates.map((template, index) => (
+            <TouchableOpacity
+              key={index}
+              onPress={() => handlePreview(template)}
+              style={[
+                styles.templateView,
+                index === 4 && { marginBottom: 100 },
+              ]}
+            >
+              <View style={styles.templateInfoContainer}>
+                <View style={styles.templateInfoView}>
+                  <Text style={styles.templateName}>{template.name}</Text>
+                  <Text style={styles.templateDescription}>
+                    {template.description}
+                  </Text>
                 </View>
-              ))}
-            </View> */}
-            <Animated.View style={animatedStyles(template.type)}>
-              <View style={styles.templatePreviewContainer}>
-                <View style={styles.templateBorder} />
-                {Object.entries(template.preview).map(([key, value]) => (
-                  <View key={key} style={styles.templateDescView}>
-                    <Text style={styles.templateName}>{key}</Text>
-                    <Text style={styles.templatePreviewInfo}>{value}</Text>
-                  </View>
-                ))}
+                <AntDesign
+                  onPress={() => handleSetTemplate(template.type)}
+                  name="pluscircleo"
+                  size={16}
+                  color={COLORS.WHITE}
+                />
               </View>
-            </Animated.View>
-          </TouchableOpacity>
+              <Animated.View style={animatedStyles(template.type)}>
+                <View style={styles.templatePreviewContainer}>
+                  <View style={styles.templateBorder} />
+                  {Object.entries(template.templateContent).map(
+                    ([key, value]) => (
+                      <View key={key} style={styles.templateDescView}>
+                        <Text style={styles.templateName}>{key}</Text>
+                        <Text style={styles.templatePreviewInfo}>{value}</Text>
+                      </View>
+                    ),
+                  )}
+                </View>
+              </Animated.View>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </ScrollView>
+      {/* Hidden view to measure content height */}
+      <View style={styles.hiddenContainer}>
+        {templates.map((template, index) => (
+          <View
+            key={index}
+            ref={(el) => (contentRefs.current[template.type] = el)}
+            style={styles.templatePreviewContainer}
+            onLayout={onLayout(template.type)}
+          >
+            <View style={styles.templateBorder} />
+            {Object.entries(template.templateContent).map(([key, value]) => (
+              <View key={key} style={styles.templateDescView}>
+                <Text style={styles.templateName}>{key}</Text>
+                <Text style={styles.templatePreviewInfo}>{value}</Text>
+              </View>
+            ))}
+          </View>
         ))}
       </View>
-    </ScrollView>
+    </>
   );
 };
 
@@ -190,8 +220,6 @@ const styles = StyleSheet.create({
     paddingRight: 8,
     backgroundColor: COLORS.BOX,
     borderRadius: 10,
-    // flexDirection: 'co',
-    // justifyContent: 'space-between',
   },
   templateInfoContainer: {
     flexDirection: 'row',
@@ -225,5 +253,10 @@ const styles = StyleSheet.create({
   templatePreviewInfo: {
     color: COLORS.CONTENTS_LIGHT,
     ...FONTS.B2,
+  },
+  hiddenContainer: {
+    position: 'absolute',
+    top: -9999,
+    left: -9999,
   },
 });

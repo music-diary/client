@@ -7,6 +7,29 @@ import { API_ENDPOINTS } from '../endpoints';
 
 const AUTH = API_ENDPOINTS.AUTH;
 
+// 임시 로그인
+export const login = async () => {
+  try {
+    const { headers, data } = await apiClient.post(AUTH.LOGIN, {
+      id: 'f38eb524-c87a-4653-ac47-7cfbebf5e43b',
+    });
+
+    const authorizationHeader = headers.authorization as string | undefined;
+    const token = extractToken(authorizationHeader);
+
+    if (token) {
+      useAppStore.getState().login(token);
+    } else {
+      console.error('Invalid Authorization header format');
+    }
+
+    return data;
+  } catch (error) {
+    console.error('SignUp error:', error);
+    throw error;
+  }
+};
+
 const requestPhoneVerification = async (phoneNumber: string) => {
   const { data } = await apiClient.post(AUTH.PHONE, {
     phoneNumber,

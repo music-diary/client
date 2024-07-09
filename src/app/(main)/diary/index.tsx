@@ -8,13 +8,13 @@ import MoodSelector from '@/components/diary/MoodSelector';
 import SelectorView from '@/components/diary/SelectorView';
 import TopicSelector from '@/components/diary/TopicSelector';
 import { COLORS } from '@/constants';
-import { type ITopic } from '@/models/interfaces';
-import { type Mood } from '@/models/types';
+import { type IEmotion, type ITopic } from '@/models/interfaces';
+import { isEmptyObject } from '@/utils/common-utils';
 
 const SubjectEmotionScreen = () => {
-  const [mood, setMood] = useState<Mood | null>(null);
-  const [emotions, setEmotions] = useState<string[]>([]);
-  const [detailedEmotions, setDetailedEmotions] = useState<string[]>([]);
+  const [mood, setMood] = useState<IEmotion>({} as IEmotion);
+  const [emotions, setEmotions] = useState<IEmotion[]>([]);
+  const [detailedEmotions, setDetailedEmotions] = useState<IEmotion[]>([]);
   const [topics, setTopics] = useState<ITopic[]>([]);
 
   const handleNext = () => {
@@ -22,7 +22,7 @@ const SubjectEmotionScreen = () => {
     router.push({
       pathname: '/diary/write',
       params: {
-        mood,
+        mood: JSON.stringify(mood),
         emotions: JSON.stringify(emotions),
         detailedEmotions: JSON.stringify(detailedEmotions),
         topics: JSON.stringify(topics),
@@ -36,7 +36,7 @@ const SubjectEmotionScreen = () => {
         <SelectorView title="오늘 하루는 어땠나요?" required>
           <MoodSelector state={mood} setState={setMood} />
         </SelectorView>
-        {mood && (
+        {!isEmptyObject(mood) && (
           <SelectorView
             title="어떤 감정이 느껴지시나요?"
             description="최대 2개까지 선택 가능해요"
@@ -49,7 +49,7 @@ const SubjectEmotionScreen = () => {
             />
           </SelectorView>
         )}
-        {mood && emotions.length > 0 && (
+        {!isEmptyObject(mood) && emotions.length > 0 && (
           <SelectorView
             title="조금 더 자세히 알려주세요"
             description="최대 3개까지 선택 가능해요"
@@ -62,18 +62,18 @@ const SubjectEmotionScreen = () => {
             />
           </SelectorView>
         )}
-        {emotions.length > 0 && (
+        {!isEmptyObject(mood) && emotions.length > 0 && (
           <SelectorView
             title="오늘은 어떤 주제를 기록하고 싶으신가요?"
             description="선택하신 내용을 기반으로 음악을 추천해 드릴게요"
             subDescription="*최대 2개까지 선택 가능해요"
           >
-            <TopicSelector state={topics} setState={setTopics} />
+            <TopicSelector mood={mood} state={topics} setState={setTopics} />
           </SelectorView>
         )}
       </ScrollView>
       <CustomBottomButton
-        isActive={emotions.length > 0}
+        isActive={!isEmptyObject(mood) && emotions.length > 0}
         onPress={handleNext} // 버튼 클릭 이벤트 핸들러
         label="완료"
       />
