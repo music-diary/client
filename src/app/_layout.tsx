@@ -15,6 +15,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import DImOverlay from '@/components/common/DImOverlay';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { useAppStore } from '@/store/useAppStore';
+// import { login } from '@/api/hooks/useAuth';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -29,6 +30,14 @@ export const unstable_settings = {
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
+/**
+ * FIXME:
+ * useFont 정리
+ * pret, pret-r, pret-b, pret-sb
+ * 명칭 정리 필요.
+ * pret-r -> pret 혹은 pret-r
+ * pret -> pret-m
+ */
 export default function RootLayout() {
   const [loaded, error] = useFonts({
     pret: require(`assets/fonts/Pretendard-Medium.otf`),
@@ -58,17 +67,20 @@ export default function RootLayout() {
 function RootLayoutNav() {
   const [queryClient] = useState(() => new QueryClient());
 
-  const { isAuthenticated } = useAppStore();
+  const { isAuthenticated, logout } = useAppStore();
 
   const colorScheme = useColorScheme();
 
   useEffect(() => {
+    // 임시 로그인 처리 (isAuthenticated가 true로 바뀜)
+    // login();
+    // logout();
     // if (isFirstLaunch) {
     //   router.navigate('intro');
     // }
     if (!isAuthenticated) {
-      router.navigate('(onboarding)/phone-verify');
-      // router.navigate('(main)/diary/card');
+      router.navigate('(onboarding)');
+      // router.navigate('(main)');
     } else {
       router.navigate('(main)');
     }

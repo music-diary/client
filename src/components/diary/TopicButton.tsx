@@ -2,14 +2,14 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { COLORS, FONTS } from '@/constants';
 
 interface TopicButtonProps {
-  type: string;
+  label: string;
   emoji: string;
   onPress?: () => void;
   isSelected?: boolean;
 }
 
 const TopicButton = ({
-  type,
+  label,
   emoji,
   onPress,
   isSelected,
@@ -25,8 +25,8 @@ const TopicButton = ({
       <View style={styles.emoji}>
         <Text>{emoji}</Text>
       </View>
-      <Text style={[styles.type, isSelected ? { color: COLORS.BLACK } : null]}>
-        {type}
+      <Text style={[styles.label, isSelected ? { color: COLORS.BLACK } : null]}>
+        {label}
       </Text>
     </TouchableOpacity>
   );
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     height: 20,
     justifyContent: 'center',
   },
-  type: {
+  label: {
     color: COLORS.WHITE,
     ...FONTS.B2_SB,
   },

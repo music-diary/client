@@ -1,63 +1,50 @@
 import { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { useEmotions } from '@/api/hooks/useDiaries';
+import { type IEmotion } from '@/models/interfaces';
 import { type Mood } from '@/models/types';
 import SelectorButton from './SelectorButton';
 
-const emotionGroupList = {
-  happy: [
-    '행복한',
-    '기대하는',
-    '감사한',
-    '편안한',
-    '후련한',
-    '추억하는',
-    '벅차오르는',
-  ],
-  soso: ['평범한', '무관심한', '고민되는', '묘한', '신기한', '회상하는'],
-  bad: [
-    '불편한',
-    '미련남은',
-    '부끄러운',
-    '황당한',
-    '미안한',
-    '슬픈',
-    '우울한',
-    '화나는',
-    '혐오스러운',
-    '두려운',
-  ],
-};
-
 interface EmotionSelectorProps {
-  mood: Mood;
-  state: string[];
-  setState: React.Dispatch<React.SetStateAction<string[]>>;
+  mood: IEmotion;
+  state: IEmotion[];
+  setState: React.Dispatch<React.SetStateAction<IEmotion[]>>;
 }
 
 const EmotionSelector = ({ mood, state, setState }: EmotionSelectorProps) => {
-  const emotionList = emotionGroupList[mood as keyof typeof emotionGroupList];
+  const { data: emotions, isLoading } = useEmotions();
+  if (isLoading || !emotions) return null;
 
   useEffect(() => {
     setState([]); // mood가 바뀔 때 선택된 감정 초기화
-  }, [mood]);
+  }, [mood, setState]);
 
-  const setEmotion = (emotion: string) => {
-    if (state.includes(emotion)) {
-      setState(state.filter((e) => e !== emotion));
+  const setEmotion = (emotion: IEmotion) => {
+    if (state.some((e) => e.id === emotion.id)) {
+      setState(state.filter((e) => e.id !== emotion.id));
     } else if (state.length < 2) {
-      setState([...state, emotion]);
+      setState((prev) => {
+        const newState = [...prev, emotion];
+        return newState.sort(
+          (a, b) =>
+            emotions.findIndex((e) => e.id === a.id) -
+            emotions.findIndex((e) => e.id === b.id),
+        );
+      });
     }
   };
+
+  const emotionList = emotions.filter((e) => e.parentId === mood.id);
 
   return (
     <View style={styles.container}>
       {emotionList.map((emotion) => (
         <SelectorButton
-          key={emotion}
-          mood={mood}
-          type={emotion}
+          key={emotion.id}
+          moodName={mood.name as Mood}
+          type={emotion.label}
           onPress={() => setEmotion(emotion)}
-          isSelected={state.includes(emotion)}
+          isSelected={state.some((e) => e.id === emotion.id)}
         />
       ))}
     </View>
