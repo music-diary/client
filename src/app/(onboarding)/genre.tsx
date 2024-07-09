@@ -80,7 +80,6 @@ const GenreScreen = () => {
       isGenreSuggested,
       isAgreedMarketing: isAgreedMarketing === 'true',
     };
-    console.log('userData:', userData);
 
     signUp(userData, {
       onSuccess: (data) => {
@@ -101,7 +100,7 @@ const GenreScreen = () => {
     );
   }
 
-  if (!genres || error) {
+  if (genres.length === 0 || error) {
     return (
       <SafeAreaView style={styles.container}>
         <Text style={styles.errorText}>장르를 불러오지 못했어요.</Text>

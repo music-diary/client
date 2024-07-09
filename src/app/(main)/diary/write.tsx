@@ -17,19 +17,23 @@ import CustomSplash from '@/components/common/CustomSplash';
 import SelectorButton from '@/components/diary/SelectorButton';
 import TopicButton from '@/components/diary/TopicButton';
 import { COLORS, FONTS } from '@/constants';
-import { templates } from '@/constants/data';
-import { type ITopic } from '@/models/interfaces';
+// import { templates } from '@/constants/data';
+import { type IEmotion, type ITopic } from '@/models/interfaces';
 import { type Mood } from '@/models/types';
 import { useModalStore } from '@/store/useModalStore';
 import { useSplashStore } from '@/store/useSplashStore';
 import GroupSvg from 'assets/images/splash/group-dot.svg';
+// import { useTemplates } from '@/api/hooks/useDiaries';
+import { templates } from '@/constants/data';
 
 const WriteScreen = () => {
   const params = useLocalSearchParams();
-  const { mood, emotions, detailedEmotions, topics, type } = params;
+  // const { data: templates } = useTemplates();
+  const { mood: m, emotions, detailedEmotions: de, topics, type } = params;
 
-  const emotionList: string[] = JSON.parse(emotions as string);
-  const detailedEmotionList: string[] = JSON.parse(detailedEmotions as string);
+  const mood = JSON.parse(m as string);
+  const emotionList: IEmotion[] = JSON.parse(emotions as string);
+  const detailedEmotionList: IEmotion[] = JSON.parse(de as string);
   const topicList: ITopic[] = JSON.parse(topics as string);
 
   const { openSplash } = useSplashStore();
@@ -64,7 +68,10 @@ const WriteScreen = () => {
   }, []);
 
   const handleTemplate = () => {
-    router.push({ pathname: '/diary/template', params });
+    router.push({
+      pathname: '/diary/template',
+      params: { ...params, templates: JSON.stringify(templates) },
+    });
   };
 
   const handleDraft = () => {
@@ -101,7 +108,7 @@ const WriteScreen = () => {
                   {topicList.map((topic, index) => (
                     <TopicButton
                       key={topic.id}
-                      type={topic.name}
+                      label={topic.label}
                       emoji={topic.emoji}
                       isSelected={true}
                     />
@@ -115,19 +122,24 @@ const WriteScreen = () => {
               {topicList.length > 0 ? '그래서' : '오늘'} 내 기분은
             </Text>
             <View style={styles.buttonContainer}>
-              {emotionList.map((value, index) => (
+              <SelectorButton
+                moodName={mood.name as Mood}
+                type={mood.label}
+                isSelected
+              />
+              {emotionList.map((emotion) => (
                 <SelectorButton
-                  key={value + index}
-                  mood={mood as Mood}
-                  type={value}
+                  key={emotion.id}
+                  moodName={mood.name as Mood}
+                  type={emotion.label}
                   isSelected
                 />
               ))}
-              {detailedEmotionList.map((value, index) => (
+              {detailedEmotionList.map((emotion) => (
                 <SelectorButton
-                  key={value + index}
-                  mood={mood as Mood}
-                  type={value}
+                  key={emotion.id}
+                  moodName={mood.name as Mood}
+                  type={emotion.label}
                   isSelected
                 />
               ))}
@@ -143,25 +155,27 @@ const WriteScreen = () => {
                   style={[styles.inputTitle, { marginBottom: 0 }]}
                   placeholderTextColor={COLORS.CONTENTS_LIGHT}
                 />
-                {Object.entries(template.preview).map(([key, value]) => (
-                  <View key={key}>
-                    <Text style={styles.previewName}>{key}</Text>
-                    <View style={styles.inputDiaryView}>
-                      <TextInput
-                        placeholder={value}
-                        maxLength={200}
-                        multiline={true}
-                        textAlignVertical="top"
-                        style={[
-                          styles.inputDiary,
-                          { height: 150, marginBottom: 0 },
-                        ]}
-                        placeholderTextColor={COLORS.CONTENTS_LIGHT}
-                      />
-                      <Text style={styles.inputDiaryCount}>0/200</Text>
+                {Object.entries(template.templateContent).map(
+                  ([key, value]) => (
+                    <View key={key}>
+                      <Text style={styles.previewName}>{key}</Text>
+                      <View style={styles.inputDiaryView}>
+                        <TextInput
+                          placeholder={value}
+                          maxLength={200}
+                          multiline={true}
+                          textAlignVertical="top"
+                          style={[
+                            styles.inputDiary,
+                            { height: 150, marginBottom: 0 },
+                          ]}
+                          placeholderTextColor={COLORS.CONTENTS_LIGHT}
+                        />
+                        <Text style={styles.inputDiaryCount}>0/200</Text>
+                      </View>
                     </View>
-                  </View>
-                ))}
+                  ),
+                )}
               </>
             ) : (
               <>

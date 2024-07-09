@@ -34,3 +34,12 @@ export const getToken = async (): Promise<string | null> => {
     return null;
   }
 };
+
+/**
+ * 객체가 빈 객체인지 확인하는 함수
+ * @param {object} obj - 확인할 객체
+ * @returns {boolean} - 객체가 빈 객체이면 true, 그렇지 않으면 false
+ */
+export const isEmptyObject = (obj: object): boolean => {
+  return Object.keys(obj).length === 0 && obj.constructor === Object;
+};

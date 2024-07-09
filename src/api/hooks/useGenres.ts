@@ -11,5 +11,6 @@ export const useGenres = () => {
   return useQuery({
     queryKey: ['genres'],
     queryFn: getGenres,
+    initialData: [],
   });
 };
