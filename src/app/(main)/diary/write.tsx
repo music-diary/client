@@ -17,18 +17,16 @@ import CustomSplash from '@/components/common/CustomSplash';
 import SelectorButton from '@/components/diary/SelectorButton';
 import TopicButton from '@/components/diary/TopicButton';
 import { COLORS, FONTS } from '@/constants';
-// import { templates } from '@/constants/data';
 import { type IEmotion, type ITopic } from '@/models/interfaces';
 import { type Mood } from '@/models/types';
 import { useModalStore } from '@/store/useModalStore';
 import { useSplashStore } from '@/store/useSplashStore';
 import GroupSvg from 'assets/images/splash/group-dot.svg';
-// import { useTemplates } from '@/api/hooks/useDiaries';
-import { templates } from '@/constants/data';
+import { useTemplates } from '@/api/hooks/useDiaries';
 
 const WriteScreen = () => {
   const params = useLocalSearchParams();
-  // const { data: templates } = useTemplates();
+  const { data: templates } = useTemplates();
   const { mood: m, emotions, detailedEmotions: de, topics, type } = params;
 
   const mood = JSON.parse(m as string);
@@ -41,7 +39,11 @@ const WriteScreen = () => {
   const template = templates.find((t) => t.type === type);
   const scrollViewRef = useRef<ScrollView>(null);
 
-  const [hh] = useState(true);
+  const [title, setTitle] = useState('');
+  const [diaryContent, setDiaryContent] = useState('');
+  const [templateContents, setTemplateContents] = useState<
+    Record<string, string>
+  >({});
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -56,7 +58,6 @@ const WriteScreen = () => {
     const keyboardDidHideListener = Keyboard.addListener(
       'keyboardDidHide',
       () => {
-        // setKeyboardShow(false);
         scrollViewRef.current?.scrollTo({ y: 0, animated: true });
       },
     );
@@ -75,16 +76,24 @@ const WriteScreen = () => {
   };
 
   const handleDraft = () => {
-    // 0. 모달 닫기
     closeModal();
-    // 1. 임시 저장
-    // 2. 스플래시 화면 띄우기
     openSplash('draft-save');
   };
 
   const handleMusicRecommendation = () => {
     // 저장 로직 태울 예정
     router.push('/diary/music');
+  };
+
+  const isButtonActive = () => {
+    if (type && template) {
+      return (
+        title.length > 0 &&
+        Object.values(templateContents).some((content) => content.length > 0)
+      );
+    } else {
+      return title.length > 0 && diaryContent.length > 0;
+    }
   };
 
   return (
@@ -105,12 +114,12 @@ const WriteScreen = () => {
               <>
                 <Text style={styles.description}>오늘 어떤 일이 있었냐면</Text>
                 <View style={styles.buttonContainer}>
-                  {topicList.map((topic, index) => (
+                  {topicList.map((topic) => (
                     <TopicButton
                       key={topic.id}
                       label={topic.label}
                       emoji={topic.emoji}
-                      isSelected={true}
+                      isSelected
                     />
                   ))}
                 </View>
@@ -154,28 +163,37 @@ const WriteScreen = () => {
                   placeholder="일기제목"
                   style={[styles.inputTitle, { marginBottom: 0 }]}
                   placeholderTextColor={COLORS.CONTENTS_LIGHT}
+                  value={title}
+                  onChangeText={setTitle}
                 />
-                {Object.entries(template.templateContent).map(
-                  ([key, value]) => (
-                    <View key={key}>
-                      <Text style={styles.previewName}>{key}</Text>
+                {template.templateContents
+                  .sort((a, b) => a.order - b.order)
+                  .map((content) => (
+                    <View key={content.id}>
+                      <Text style={styles.previewName}>{content.name}</Text>
                       <View style={styles.inputDiaryView}>
                         <TextInput
-                          placeholder={value}
+                          placeholder={content.label}
                           maxLength={200}
-                          multiline={true}
+                          multiline
                           textAlignVertical="top"
                           style={[
                             styles.inputDiary,
                             { height: 150, marginBottom: 0 },
                           ]}
                           placeholderTextColor={COLORS.CONTENTS_LIGHT}
+                          value={templateContents[content.name] || ''}
+                          onChangeText={(text) =>
+                            setTemplateContents((prev) => ({
+                              ...prev,
+                              [content.name]: text,
+                            }))
+                          }
                         />
                         <Text style={styles.inputDiaryCount}>0/200</Text>
                       </View>
                     </View>
-                  ),
-                )}
+                  ))}
               </>
             ) : (
               <>
@@ -183,15 +201,19 @@ const WriteScreen = () => {
                   placeholder="일기제목"
                   style={styles.inputTitle}
                   placeholderTextColor={COLORS.CONTENTS_LIGHT}
+                  value={title}
+                  onChangeText={setTitle}
                 />
                 <View style={styles.inputDiaryView}>
                   <TextInput
                     placeholder="오늘 하루에 대해 적어보세요"
                     maxLength={500}
-                    multiline={true}
+                    multiline
                     textAlignVertical="top"
                     style={styles.inputDiary}
                     placeholderTextColor={COLORS.CONTENTS_LIGHT}
+                    value={diaryContent}
+                    onChangeText={setDiaryContent}
                   />
                   <Text style={styles.inputDiaryCount}>0/500</Text>
                 </View>
@@ -214,8 +236,8 @@ const WriteScreen = () => {
         </ScrollView>
       </KeyboardAvoidingView>
       <CustomBottomButton
-        isActive={hh}
-        onPress={handleMusicRecommendation} // 버튼 클릭 이벤트 핸들러
+        isActive={isButtonActive()}
+        onPress={handleMusicRecommendation}
         label="노래 추천받기"
       />
       <CustomAlertModal

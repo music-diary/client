@@ -18,8 +18,6 @@ import Animated, {
 import { COLORS, FONTS } from '@/constants';
 import { type ITemplate } from '@/models/interfaces';
 import { type Template } from '@/models/types';
-// import { templates } from '@/constants/data';
-// import { useTemplates } from '@/api/hooks/useDiaries';
 
 const TemplateScreen = () => {
   const params = useLocalSearchParams();
@@ -55,10 +53,10 @@ const TemplateScreen = () => {
     setExpanded(isExpanded ? null : type);
 
     if (isExpanded) {
-      // Close the current panel
+      // 현재 패널 닫기
       heightValues[type].value = withTiming(0, { duration: 300 });
     } else {
-      // Close all other panels
+      // 다른 모든 패널 닫기
       Object.keys(heightValues).forEach((key) => {
         if (key !== type) {
           heightValues[key as Template].value = withTiming(0, {
@@ -75,7 +73,7 @@ const TemplateScreen = () => {
   const handleSetTemplate = (type: Template) => {
     router.navigate({
       pathname: '/diary/write',
-      params: { type, ...params },
+      params: { ...params, type },
     });
   };
 
@@ -86,22 +84,6 @@ const TemplateScreen = () => {
       [type]: height + 20,
     }));
   };
-
-  // if (isLoading) {
-  //   return (
-  //     <View style={styles.loaderContainer}>
-  //       <ActivityIndicator size="large" color={COLORS.WHITE} />
-  //     </View>
-  //   );
-  // }
-
-  // if (error) {
-  //   return (
-  //     <View style={styles.errorContainer}>
-  //       <Text style={styles.errorText}>Failed to load templates</Text>
-  //     </View>
-  //   );
-  // }
 
   return (
     <>
@@ -145,21 +127,23 @@ const TemplateScreen = () => {
               <Animated.View style={animatedStyles(template.type)}>
                 <View style={styles.templatePreviewContainer}>
                   <View style={styles.templateBorder} />
-                  {Object.entries(template.templateContent).map(
-                    ([key, value]) => (
-                      <View key={key} style={styles.templateDescView}>
-                        <Text style={styles.templateName}>{key}</Text>
-                        <Text style={styles.templatePreviewInfo}>{value}</Text>
+                  {(template.templateContents || [])
+                    .sort((a, b) => a.order - b.order)
+                    .map((content) => (
+                      <View key={content.id} style={styles.templateDescView}>
+                        <Text style={styles.templateName}>{content.name}</Text>
+                        <Text style={styles.templatePreviewInfo}>
+                          {content.label}
+                        </Text>
                       </View>
-                    ),
-                  )}
+                    ))}
                 </View>
               </Animated.View>
             </TouchableOpacity>
           ))}
         </View>
       </ScrollView>
-      {/* Hidden view to measure content height */}
+      {/* 내용 높이를 측정하기 위한 숨김 뷰 */}
       <View style={styles.hiddenContainer}>
         {templates.map((template, index) => (
           <View
@@ -169,12 +153,16 @@ const TemplateScreen = () => {
             onLayout={onLayout(template.type)}
           >
             <View style={styles.templateBorder} />
-            {Object.entries(template.templateContent).map(([key, value]) => (
-              <View key={key} style={styles.templateDescView}>
-                <Text style={styles.templateName}>{key}</Text>
-                <Text style={styles.templatePreviewInfo}>{value}</Text>
-              </View>
-            ))}
+            {(template.templateContents || [])
+              .sort((a, b) => a.order - b.order)
+              .map((content) => (
+                <View key={content.id} style={styles.templateDescView}>
+                  <Text style={styles.templateName}>{content.name}</Text>
+                  <Text style={styles.templatePreviewInfo}>
+                    {content.label}
+                  </Text>
+                </View>
+              ))}
           </View>
         ))}
       </View>

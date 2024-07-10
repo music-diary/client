@@ -18,7 +18,6 @@ const SubjectEmotionScreen = () => {
   const [topics, setTopics] = useState<ITopic[]>([]);
 
   const handleNext = () => {
-    if (mood == null) return;
     router.push({
       pathname: '/diary/write',
       params: {
