@@ -23,6 +23,7 @@ import { useModalStore } from '@/store/useModalStore';
 import { useSplashStore } from '@/store/useSplashStore';
 import GroupSvg from 'assets/images/splash/group-dot.svg';
 import { useTemplates } from '@/api/hooks/useDiaries';
+import SelectorButtonGroup from '@/components/diary/SelectorButtonGroup';
 
 const WriteScreen = () => {
   const params = useLocalSearchParams();
@@ -120,40 +121,18 @@ const WriteScreen = () => {
                       label={topic.label}
                       emoji={topic.emoji}
                       isSelected
+                      disabled
                     />
                   ))}
                 </View>
               </>
             )}
           </View>
-          <View style={styles.emotionContainer}>
-            <Text style={styles.description}>
-              {topicList.length > 0 ? '그래서' : '오늘'} 내 기분은
-            </Text>
-            <View style={styles.buttonContainer}>
-              <SelectorButton
-                moodName={mood.name as Mood}
-                type={mood.label}
-                isSelected
-              />
-              {emotionList.map((emotion) => (
-                <SelectorButton
-                  key={emotion.id}
-                  moodName={mood.name as Mood}
-                  type={emotion.label}
-                  isSelected
-                />
-              ))}
-              {detailedEmotionList.map((emotion) => (
-                <SelectorButton
-                  key={emotion.id}
-                  moodName={mood.name as Mood}
-                  type={emotion.label}
-                  isSelected
-                />
-              ))}
-            </View>
-          </View>
+          <SelectorButtonGroup
+            description={topicList.length > 0 ? '그래서' : '오늘'}
+            moodName={mood.name as Mood}
+            emotions={[mood, ...emotionList, ...detailedEmotionList]}
+          />
           <View
             style={[styles.inputContainer, { gap: type && template ? 20 : 16 }]}
           >
@@ -271,9 +250,6 @@ const styles = StyleSheet.create({
     paddingBottom: 150,
   },
   subjectContainer: {
-    gap: 16,
-  },
-  emotionContainer: {
     gap: 16,
   },
   buttonContainer: {

@@ -8,6 +8,7 @@ interface SelectorButtonProps {
   type: string;
   onPress?: () => void;
   isSelected?: boolean;
+  disabled?: boolean;
 }
 
 const SelectorButton = ({
@@ -15,6 +16,7 @@ const SelectorButton = ({
   type,
   onPress,
   isSelected,
+  disabled,
 }: SelectorButtonProps) => {
   const buttonStyle = {
     backgroundColor: isSelected
@@ -23,7 +25,11 @@ const SelectorButton = ({
   };
 
   return (
-    <TouchableOpacity onPress={onPress} style={styles.button}>
+    <TouchableOpacity
+      style={styles.button}
+      onPress={onPress}
+      disabled={disabled}
+    >
       <View style={[styles.opacityView, buttonStyle]} />
       <Text
         style={[
