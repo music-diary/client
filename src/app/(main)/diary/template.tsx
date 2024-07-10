@@ -18,6 +18,8 @@ import Animated, {
 import { COLORS, FONTS } from '@/constants';
 import { type ITemplate } from '@/models/interfaces';
 import { type Template } from '@/models/types';
+import HiddenTemplateView from '@/components/diary/HiddenTemplateView';
+import TemplateContent from '@/components/diary/TemplateContent';
 
 const TemplateScreen = () => {
   const params = useLocalSearchParams();
@@ -126,46 +128,19 @@ const TemplateScreen = () => {
               </View>
               <Animated.View style={animatedStyles(template.type)}>
                 <View style={styles.templatePreviewContainer}>
-                  <View style={styles.templateBorder} />
-                  {(template.templateContents || [])
-                    .sort((a, b) => a.order - b.order)
-                    .map((content) => (
-                      <View key={content.id} style={styles.templateDescView}>
-                        <Text style={styles.templateName}>{content.name}</Text>
-                        <Text style={styles.templatePreviewInfo}>
-                          {content.label}
-                        </Text>
-                      </View>
-                    ))}
+                  <TemplateContent content={template.templateContents} />
                 </View>
               </Animated.View>
             </TouchableOpacity>
           ))}
         </View>
       </ScrollView>
-      {/* 내용 높이를 측정하기 위한 숨김 뷰 */}
-      <View style={styles.hiddenContainer}>
-        {templates.map((template, index) => (
-          <View
-            key={index}
-            ref={(el) => (contentRefs.current[template.type] = el)}
-            style={styles.templatePreviewContainer}
-            onLayout={onLayout(template.type)}
-          >
-            <View style={styles.templateBorder} />
-            {(template.templateContents || [])
-              .sort((a, b) => a.order - b.order)
-              .map((content) => (
-                <View key={content.id} style={styles.templateDescView}>
-                  <Text style={styles.templateName}>{content.name}</Text>
-                  <Text style={styles.templatePreviewInfo}>
-                    {content.label}
-                  </Text>
-                </View>
-              ))}
-          </View>
-        ))}
-      </View>
+
+      <HiddenTemplateView
+        templates={templates}
+        contentRefs={contentRefs}
+        onLayout={onLayout}
+      />
     </>
   );
 };
@@ -228,23 +203,5 @@ const styles = StyleSheet.create({
     marginTop: 20,
     borderTopWidth: 1,
     gap: 20,
-  },
-  templateBorder: {
-    width: '100%',
-    height: 1,
-    backgroundColor: COLORS.WHITE,
-    opacity: 0.3,
-  },
-  templateDescView: {
-    gap: 10,
-  },
-  templatePreviewInfo: {
-    color: COLORS.CONTENTS_LIGHT,
-    ...FONTS.B2,
-  },
-  hiddenContainer: {
-    position: 'absolute',
-    top: -9999,
-    left: -9999,
   },
 });
