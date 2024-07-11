@@ -12,7 +12,7 @@ const apiClient = axios.create({
 
 apiClient.interceptors.request.use(
   async (config) => {
-    const token = await getToken(); // AsyncStorage에서 토큰 가져오기
+    const token = getToken();
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { router } from 'expo-router';
 import { ScrollView, StyleSheet } from 'react-native';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
@@ -10,12 +10,27 @@ import TopicSelector from '@/components/diary/TopicSelector';
 import { COLORS } from '@/constants';
 import { type IEmotion, type ITopic } from '@/models/interfaces';
 import { isEmptyObject } from '@/utils/common-utils';
+import { createDiary } from '@/api/hooks/useDiaries';
 
 const SubjectEmotionScreen = () => {
   const [mood, setMood] = useState<IEmotion>({} as IEmotion);
   const [emotions, setEmotions] = useState<IEmotion[]>([]);
   const [detailedEmotions, setDetailedEmotions] = useState<IEmotion[]>([]);
   const [topics, setTopics] = useState<ITopic[]>([]);
+  const [diaryId, setDiaryId] = useState<string>('');
+
+  useEffect(() => {
+    const fetchDiaryId = async () => {
+      try {
+        const id = await createDiary();
+        setDiaryId(id);
+      } catch (error) {
+        console.error('Failed to create diary:', error);
+      }
+    };
+
+    fetchDiaryId();
+  }, []);
 
   const handleNext = () => {
     router.push({
@@ -25,6 +40,7 @@ const SubjectEmotionScreen = () => {
         emotions: JSON.stringify(emotions),
         detailedEmotions: JSON.stringify(detailedEmotions),
         topics: JSON.stringify(topics),
+        diaryId,
       },
     });
   };

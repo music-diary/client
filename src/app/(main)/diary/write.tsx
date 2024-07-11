@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { router, useLocalSearchParams } from 'expo-router';
 import {
-  Keyboard,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -11,34 +10,42 @@ import {
   View,
 } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
+import { usePatchDiary, useTemplates } from '@/api/hooks/useDiaries';
 import CustomAlertModal from '@/components/common/CustomAlertModal';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
 import CustomSplash from '@/components/common/CustomSplash';
-import SelectorButton from '@/components/diary/SelectorButton';
+import SelectorButtonGroup from '@/components/diary/SelectorButtonGroup';
 import TopicButton from '@/components/diary/TopicButton';
 import { COLORS, FONTS } from '@/constants';
 import { type IEmotion, type ITopic } from '@/models/interfaces';
 import { type Mood } from '@/models/types';
 import { useModalStore } from '@/store/useModalStore';
 import { useSplashStore } from '@/store/useSplashStore';
+import { createDiaryData } from '@/utils/diary-utils';
+import { useKeyboardListeners } from '@/utils/keyboard-utils';
 import GroupSvg from 'assets/images/splash/group-dot.svg';
-import { useTemplates } from '@/api/hooks/useDiaries';
-import SelectorButtonGroup from '@/components/diary/SelectorButtonGroup';
 
 const WriteScreen = () => {
   const params = useLocalSearchParams();
   const { data: templates } = useTemplates();
-  const { mood: m, emotions, detailedEmotions: de, topics, type } = params;
+
+  const {
+    mood: m,
+    emotions,
+    detailedEmotions: de,
+    topics,
+    type,
+    diaryId,
+  } = params;
+
+  const scrollViewRef = useRef<ScrollView>(null);
 
   const mood = JSON.parse(m as string);
   const emotionList: IEmotion[] = JSON.parse(emotions as string);
   const detailedEmotionList: IEmotion[] = JSON.parse(de as string);
   const topicList: ITopic[] = JSON.parse(topics as string);
 
-  const { openSplash } = useSplashStore();
-  const { closeModal } = useModalStore();
   const template = templates.find((t) => t.type === type);
-  const scrollViewRef = useRef<ScrollView>(null);
 
   const [title, setTitle] = useState('');
   const [diaryContent, setDiaryContent] = useState('');
@@ -46,28 +53,19 @@ const WriteScreen = () => {
     Record<string, string>
   >({});
 
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener(
-      'keyboardDidShow',
-      (e) => {
-        scrollViewRef.current?.scrollTo({
-          y: e.endCoordinates.height,
-          animated: true,
-        });
-      },
-    );
-    const keyboardDidHideListener = Keyboard.addListener(
-      'keyboardDidHide',
-      () => {
-        scrollViewRef.current?.scrollTo({ y: 0, animated: true });
-      },
-    );
+  const { openSplash } = useSplashStore();
+  const { closeModal } = useModalStore();
 
-    return () => {
-      keyboardDidShowListener.remove();
-      keyboardDidHideListener.remove();
-    };
-  }, []);
+  useKeyboardListeners(scrollViewRef);
+
+  const { mutate: patchDiary } = usePatchDiary({
+    onSuccess: () => {
+      router.push('/diary/music');
+    },
+    onError: () => {
+      console.error('Failed to patch diary');
+    },
+  });
 
   const handleTemplate = () => {
     router.push({
@@ -82,8 +80,16 @@ const WriteScreen = () => {
   };
 
   const handleMusicRecommendation = () => {
-    // 저장 로직 태울 예정
-    router.push('/diary/music');
+    const diaryData = createDiaryData({
+      title,
+      diaryContent,
+      type: type as string,
+      template,
+      templateContents,
+      topicList,
+      emotions: [...emotionList, ...detailedEmotionList],
+    });
+    patchDiary({ id: diaryId as string, payload: diaryData });
   };
 
   const isButtonActive = () => {

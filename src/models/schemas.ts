@@ -15,3 +15,8 @@ export interface SignUpSchema {
   isGenreSuggested: boolean;
   isAgreedMarketing: boolean;
 }
+
+export interface PathDiarySchema {
+  id: string;
+  payload: Record<string, any>;
+}

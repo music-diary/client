@@ -18,6 +18,6 @@ export const API_ENDPOINTS = {
     TOPICS: '/diaries/topics',
     TEMPLATES: '/diaries/templates',
     ID: '/diaries/:id',
-    ALL: '/diaries',
+    CREATE: '/diaries',
   },
 };

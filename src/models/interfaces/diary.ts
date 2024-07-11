@@ -20,6 +20,7 @@ export interface IEmotion {
   label: string;
   parentId: string;
   level: number;
+  order: number;
 }
 
 export interface ITemplate {
