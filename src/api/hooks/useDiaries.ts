@@ -1,23 +1,28 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import {
   type IEmotion,
   type ITemplate,
   type ITopic,
 } from '@/models/interfaces';
+import { type PathDiarySchema } from '@/models/schemas';
 import apiClient from '../client';
 import { API_ENDPOINTS } from '../endpoints';
 
 const DIARIES = API_ENDPOINTS.DIARIES;
 
-// const fetchDiaries = async () => {
-//   const { data } = await apiClient.get(DIARIES.ALL);
-//   return data;
-// };
+export const createDiary = async (): Promise<string> => {
+  const payload = { status: 'EDIT' };
+  const { data } = await apiClient.post(DIARIES.CREATE, payload);
+  return data.diaryId;
+};
 
-// const fetchDiary = async (id: string) => {
-//   const { data } = await apiClient.get(DIARIES.ID.replace(':id', id));
-//   return data;
-// };
+const patchDiary = async ({ id, payload }: PathDiarySchema) => {
+  const { data } = await apiClient.patch(
+    DIARIES.ID.replace(':id', id),
+    payload,
+  );
+  return data;
+};
 
 const getAllEmotions = async (): Promise<IEmotion[]> => {
   const { data } = await apiClient.get(DIARIES.EMOTIONS);
@@ -74,5 +79,12 @@ export const useTemplates = () => {
     queryKey: ['templates'],
     queryFn: getTemplates,
     initialData: [],
+  });
+};
+
+export const usePatchDiary = (options = {}) => {
+  return useMutation({
+    mutationFn: patchDiary,
+    ...options,
   });
 };

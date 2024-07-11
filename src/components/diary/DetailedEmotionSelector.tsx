@@ -5,6 +5,10 @@ import { type Mood } from '@/models/types';
 import { type IEmotion } from '@/models/interfaces';
 import SelectorButton from './SelectorButton';
 
+interface IEmotionWithParentOrder extends IEmotion {
+  parentOrder?: number;
+}
+
 interface DetailedEmotionSelectorProps {
   mood: IEmotion;
   emotions: IEmotion[];
@@ -29,7 +33,7 @@ const DetailedEmotionSelector = ({
       acc[emotion.parentId].push(emotion);
       return acc;
     },
-    {} as Record<string, IEmotion[]>,
+    {} as Record<string, IEmotionWithParentOrder[]>,
   );
 
   useEffect(() => {
@@ -40,19 +44,25 @@ const DetailedEmotionSelector = ({
     if (state.some((e) => e.id === emotion.id)) {
       setState(state.filter((e) => e.id !== emotion.id));
     } else if (state.length < 3) {
-      setState([...state, emotion]);
+      const { parentOrder, ...emotionWithoutParentOrder } =
+        emotion as IEmotionWithParentOrder;
+      setState([...state, emotionWithoutParentOrder]);
     }
   };
 
   // emotions의 순서에 따라 combinedEmotionList를 정렬
-  const combinedEmotionList = emotions.flatMap((emotion) => {
-    const detailedList = detailedEmotionGroupList[emotion.id] || [];
-    return detailedList.map((detailEmotion) => ({
-      ...detailEmotion,
-      parentOrder: emotions.findIndex((e) => e.id === emotion.id),
-    }));
-  });
-  combinedEmotionList.sort((a, b) => a.parentOrder - b.parentOrder);
+  const combinedEmotionList: IEmotionWithParentOrder[] = emotions.flatMap(
+    (emotion) => {
+      const detailedList = detailedEmotionGroupList[emotion.id] || [];
+      return detailedList.map((detailEmotion) => ({
+        ...detailEmotion,
+        parentOrder: emotions.findIndex((e) => e.id === emotion.id),
+      }));
+    },
+  );
+  combinedEmotionList.sort(
+    (a, b) => (a.parentOrder ?? 0) - (b.parentOrder ?? 0),
+  );
 
   return (
     <View style={styles.container}>

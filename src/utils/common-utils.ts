@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useAppStore } from '@/store/useAppStore';
 
 /**
  * Authorization 헤더에서 Bearer 토큰을 추출하는 함수
@@ -22,17 +22,12 @@ export const extractToken = (
 };
 
 /**
- * AsyncStorage에서 저장된 토큰을 가져오는 함수
- * @returns 저장된 토큰 값 또는 null (오류 발생 시)
+ * useAppStore에서 현재 저장된 토큰을 가져오는 함수
+ * @returns 현재 저장된 토큰 값 또는 null
  */
-export const getToken = async (): Promise<string | null> => {
-  try {
-    const token = await AsyncStorage.getItem('authToken');
-    return token;
-  } catch (error) {
-    console.error('Error getting token from AsyncStorage:', error);
-    return null;
-  }
+export const getToken = (): string | null => {
+  const token = useAppStore.getState().token;
+  return token;
 };
 
 /**

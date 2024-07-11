@@ -6,6 +6,7 @@ interface TopicButtonProps {
   emoji: string;
   onPress?: () => void;
   isSelected?: boolean;
+  disabled?: boolean;
 }
 
 const TopicButton = ({
@@ -13,9 +14,14 @@ const TopicButton = ({
   emoji,
   onPress,
   isSelected,
+  disabled,
 }: TopicButtonProps) => {
   return (
-    <TouchableOpacity onPress={onPress} style={styles.button}>
+    <TouchableOpacity
+      style={styles.button}
+      onPress={onPress}
+      disabled={disabled}
+    >
       <View
         style={[
           styles.opacityView,
