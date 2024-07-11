@@ -20,6 +20,7 @@ export interface IEmotion {
   label: string;
   parentId: string;
   level: number;
+  order: number;
 }
 
 export interface ITemplate {
@@ -27,5 +28,14 @@ export interface ITemplate {
   name: string;
   description: string;
   type: Template;
-  templateContent: Record<string, string>;
+  templateContents: ITemplateContent[];
+}
+
+export interface ITemplateContent {
+  id: string;
+  templateId: string;
+  content: string | null;
+  order: number;
+  name: string;
+  label: string;
 }

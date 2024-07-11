@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { router, useLocalSearchParams } from 'expo-router';
 import {
-  Keyboard,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -11,61 +10,62 @@ import {
   View,
 } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
+import { usePatchDiary, useTemplates } from '@/api/hooks/useDiaries';
 import CustomAlertModal from '@/components/common/CustomAlertModal';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
 import CustomSplash from '@/components/common/CustomSplash';
-import SelectorButton from '@/components/diary/SelectorButton';
+import SelectorButtonGroup from '@/components/diary/SelectorButtonGroup';
 import TopicButton from '@/components/diary/TopicButton';
 import { COLORS, FONTS } from '@/constants';
-// import { templates } from '@/constants/data';
 import { type IEmotion, type ITopic } from '@/models/interfaces';
 import { type Mood } from '@/models/types';
 import { useModalStore } from '@/store/useModalStore';
 import { useSplashStore } from '@/store/useSplashStore';
+import { createDiaryData } from '@/utils/diary-utils';
+import { useKeyboardListeners } from '@/utils/keyboard-utils';
 import GroupSvg from 'assets/images/splash/group-dot.svg';
-// import { useTemplates } from '@/api/hooks/useDiaries';
-import { templates } from '@/constants/data';
 
 const WriteScreen = () => {
   const params = useLocalSearchParams();
-  // const { data: templates } = useTemplates();
-  const { mood: m, emotions, detailedEmotions: de, topics, type } = params;
+  const { data: templates } = useTemplates();
+
+  const {
+    mood: m,
+    emotions,
+    detailedEmotions: de,
+    topics,
+    type,
+    diaryId,
+  } = params;
+
+  const scrollViewRef = useRef<ScrollView>(null);
 
   const mood = JSON.parse(m as string);
   const emotionList: IEmotion[] = JSON.parse(emotions as string);
   const detailedEmotionList: IEmotion[] = JSON.parse(de as string);
   const topicList: ITopic[] = JSON.parse(topics as string);
 
+  const template = templates.find((t) => t.type === type);
+
+  const [title, setTitle] = useState('');
+  const [diaryContent, setDiaryContent] = useState('');
+  const [templateContents, setTemplateContents] = useState<
+    Record<string, string>
+  >({});
+
   const { openSplash } = useSplashStore();
   const { closeModal } = useModalStore();
-  const template = templates.find((t) => t.type === type);
-  const scrollViewRef = useRef<ScrollView>(null);
 
-  const [hh] = useState(true);
+  useKeyboardListeners(scrollViewRef);
 
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener(
-      'keyboardDidShow',
-      (e) => {
-        scrollViewRef.current?.scrollTo({
-          y: e.endCoordinates.height,
-          animated: true,
-        });
-      },
-    );
-    const keyboardDidHideListener = Keyboard.addListener(
-      'keyboardDidHide',
-      () => {
-        // setKeyboardShow(false);
-        scrollViewRef.current?.scrollTo({ y: 0, animated: true });
-      },
-    );
-
-    return () => {
-      keyboardDidShowListener.remove();
-      keyboardDidHideListener.remove();
-    };
-  }, []);
+  const { mutate: patchDiary } = usePatchDiary({
+    onSuccess: () => {
+      router.push('/diary/music');
+    },
+    onError: () => {
+      console.error('Failed to patch diary');
+    },
+  });
 
   const handleTemplate = () => {
     router.push({
@@ -75,16 +75,32 @@ const WriteScreen = () => {
   };
 
   const handleDraft = () => {
-    // 0. 모달 닫기
     closeModal();
-    // 1. 임시 저장
-    // 2. 스플래시 화면 띄우기
     openSplash('draft-save');
   };
 
   const handleMusicRecommendation = () => {
-    // 저장 로직 태울 예정
-    router.push('/diary/music');
+    const diaryData = createDiaryData({
+      title,
+      diaryContent,
+      type: type as string,
+      template,
+      templateContents,
+      topicList,
+      emotions: [...emotionList, ...detailedEmotionList],
+    });
+    patchDiary({ id: diaryId as string, payload: diaryData });
+  };
+
+  const isButtonActive = () => {
+    if (type && template) {
+      return (
+        title.length > 0 &&
+        Object.values(templateContents).some((content) => content.length > 0)
+      );
+    } else {
+      return title.length > 0 && diaryContent.length > 0;
+    }
   };
 
   return (
@@ -105,46 +121,24 @@ const WriteScreen = () => {
               <>
                 <Text style={styles.description}>오늘 어떤 일이 있었냐면</Text>
                 <View style={styles.buttonContainer}>
-                  {topicList.map((topic, index) => (
+                  {topicList.map((topic) => (
                     <TopicButton
                       key={topic.id}
                       label={topic.label}
                       emoji={topic.emoji}
-                      isSelected={true}
+                      isSelected
+                      disabled
                     />
                   ))}
                 </View>
               </>
             )}
           </View>
-          <View style={styles.emotionContainer}>
-            <Text style={styles.description}>
-              {topicList.length > 0 ? '그래서' : '오늘'} 내 기분은
-            </Text>
-            <View style={styles.buttonContainer}>
-              <SelectorButton
-                moodName={mood.name as Mood}
-                type={mood.label}
-                isSelected
-              />
-              {emotionList.map((emotion) => (
-                <SelectorButton
-                  key={emotion.id}
-                  moodName={mood.name as Mood}
-                  type={emotion.label}
-                  isSelected
-                />
-              ))}
-              {detailedEmotionList.map((emotion) => (
-                <SelectorButton
-                  key={emotion.id}
-                  moodName={mood.name as Mood}
-                  type={emotion.label}
-                  isSelected
-                />
-              ))}
-            </View>
-          </View>
+          <SelectorButtonGroup
+            description={topicList.length > 0 ? '그래서' : '오늘'}
+            moodName={mood.name as Mood}
+            emotions={[mood, ...emotionList, ...detailedEmotionList]}
+          />
           <View
             style={[styles.inputContainer, { gap: type && template ? 20 : 16 }]}
           >
@@ -154,28 +148,37 @@ const WriteScreen = () => {
                   placeholder="일기제목"
                   style={[styles.inputTitle, { marginBottom: 0 }]}
                   placeholderTextColor={COLORS.CONTENTS_LIGHT}
+                  value={title}
+                  onChangeText={setTitle}
                 />
-                {Object.entries(template.templateContent).map(
-                  ([key, value]) => (
-                    <View key={key}>
-                      <Text style={styles.previewName}>{key}</Text>
+                {template.templateContents
+                  .sort((a, b) => a.order - b.order)
+                  .map((content) => (
+                    <View key={content.id}>
+                      <Text style={styles.previewName}>{content.name}</Text>
                       <View style={styles.inputDiaryView}>
                         <TextInput
-                          placeholder={value}
+                          placeholder={content.label}
                           maxLength={200}
-                          multiline={true}
+                          multiline
                           textAlignVertical="top"
                           style={[
                             styles.inputDiary,
                             { height: 150, marginBottom: 0 },
                           ]}
                           placeholderTextColor={COLORS.CONTENTS_LIGHT}
+                          value={templateContents[content.name] || ''}
+                          onChangeText={(text) =>
+                            setTemplateContents((prev) => ({
+                              ...prev,
+                              [content.name]: text,
+                            }))
+                          }
                         />
                         <Text style={styles.inputDiaryCount}>0/200</Text>
                       </View>
                     </View>
-                  ),
-                )}
+                  ))}
               </>
             ) : (
               <>
@@ -183,15 +186,19 @@ const WriteScreen = () => {
                   placeholder="일기제목"
                   style={styles.inputTitle}
                   placeholderTextColor={COLORS.CONTENTS_LIGHT}
+                  value={title}
+                  onChangeText={setTitle}
                 />
                 <View style={styles.inputDiaryView}>
                   <TextInput
                     placeholder="오늘 하루에 대해 적어보세요"
                     maxLength={500}
-                    multiline={true}
+                    multiline
                     textAlignVertical="top"
                     style={styles.inputDiary}
                     placeholderTextColor={COLORS.CONTENTS_LIGHT}
+                    value={diaryContent}
+                    onChangeText={setDiaryContent}
                   />
                   <Text style={styles.inputDiaryCount}>0/500</Text>
                 </View>
@@ -214,8 +221,8 @@ const WriteScreen = () => {
         </ScrollView>
       </KeyboardAvoidingView>
       <CustomBottomButton
-        isActive={hh}
-        onPress={handleMusicRecommendation} // 버튼 클릭 이벤트 핸들러
+        isActive={isButtonActive()}
+        onPress={handleMusicRecommendation}
         label="노래 추천받기"
       />
       <CustomAlertModal
@@ -249,9 +256,6 @@ const styles = StyleSheet.create({
     paddingBottom: 150,
   },
   subjectContainer: {
-    gap: 16,
-  },
-  emotionContainer: {
     gap: 16,
   },
   buttonContainer: {
