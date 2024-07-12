@@ -1,34 +1,4 @@
-import { useAppStore } from '@/store/useAppStore';
-
-/**
- * Authorization 헤더에서 Bearer 토큰을 추출하는 함수
- * @param authorizationHeader - Authorization 헤더 값
- * @returns 토큰 값 또는 null (유효하지 않은 경우)
- */
-export const extractToken = (
-  authorizationHeader: string | undefined,
-): string | null => {
-  if (!authorizationHeader || typeof authorizationHeader !== 'string') {
-    return null;
-  }
-
-  const parts = authorizationHeader.trim().split(' ');
-
-  if (parts.length !== 2 || parts[0] !== 'Bearer') {
-    return null;
-  }
-
-  return parts[1];
-};
-
-/**
- * useAppStore에서 현재 저장된 토큰을 가져오는 함수
- * @returns 현재 저장된 토큰 값 또는 null
- */
-export const getToken = (): string | null => {
-  const token = useAppStore.getState().token;
-  return token;
-};
+import axios from 'axios';
 
 /**
  * 객체가 빈 객체인지 확인하는 함수
@@ -37,4 +7,18 @@ export const getToken = (): string | null => {
  */
 export const isEmptyObject = (obj: object): boolean => {
   return Object.keys(obj).length === 0 && obj.constructor === Object;
+};
+
+/**
+ * 에러를 핸들링하는 함수
+ * @param {unknown} error - 발생한 에러
+ * @param {string} message - 추가할 메시지
+ */
+export const handleError = (error: unknown, message: string): void => {
+  if (axios.isAxiosError(error)) {
+    console.error(`${message}:`, error.response?.data || error.message);
+  } else {
+    console.error(`${message}:`, error);
+  }
+  throw error;
 };
