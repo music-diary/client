@@ -16,8 +16,24 @@ export const useAppStore = create<AppState>()(
     (set) => ({
       isAuthenticated: false,
       token: null,
-      login: (token) => set({ isAuthenticated: true, token }),
-      logout: () => set({ isAuthenticated: false, token: null }),
+      login: (token) => {
+        AsyncStorage.setItem('authToken', token)
+          .then(() => {
+            set({ isAuthenticated: true, token });
+          })
+          .catch((error) => {
+            console.error('Failed to save the token:', error);
+          });
+      },
+      logout: () => {
+        AsyncStorage.removeItem('authToken')
+          .then(() => {
+            set({ isAuthenticated: false, token: null });
+          })
+          .catch((error) => {
+            console.error('Failed to remove the token:', error);
+          });
+      },
       isFirstLaunch: true,
       setFirstLaunch: (isFirstLaunch: boolean) => set({ isFirstLaunch }),
     }),
