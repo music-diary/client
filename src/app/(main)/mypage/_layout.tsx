@@ -12,6 +12,7 @@ export default function MypageLayout() {
         },
         headerTintColor: COLORS.WHITE,
         headerTitle: '',
+        animation: 'fade',
       }}
     >
       <Stack.Screen

@@ -1,67 +1,61 @@
 import { useMutation } from '@tanstack/react-query';
-import { extractToken } from '@/utils/common-utils';
-import { useAppStore } from '@/store/useAppStore';
-import { type VerifyPhoneSchema, type SignUpSchema } from '@/models/schemas';
+import { type SignUpSchema, type VerifyPhoneSchema } from '@/models/schemas';
+import { handleLogin } from '@/utils/auth-utils';
+import { handleError } from '@/utils/common-utils';
 import apiClient from '../client';
 import { API_ENDPOINTS } from '../endpoints';
 
 const AUTH = API_ENDPOINTS.AUTH;
 
-// 임시 로그인
 export const login = async () => {
   try {
     const { headers, data } = await apiClient.post(AUTH.LOGIN, {
       id: 'f38eb524-c87a-4653-ac47-7cfbebf5e43b',
     });
 
-    const authorizationHeader = headers.authorization as string | undefined;
-    const token = extractToken(authorizationHeader);
-
-    if (token) {
-      useAppStore.getState().login(token);
-    } else {
-      console.error('Invalid Authorization header format');
-    }
+    await handleLogin(headers);
 
     return data;
   } catch (error) {
-    console.error('SignUp error:', error);
-    throw error;
+    handleError(error, 'Login error');
   }
 };
 
 const requestPhoneVerification = async (phoneNumber: string) => {
-  const { data } = await apiClient.post(AUTH.PHONE, {
-    phoneNumber,
-  });
-  return data;
+  try {
+    const { data } = await apiClient.post(AUTH.PHONE, {
+      phoneNumber,
+    });
+    return data;
+  } catch (error) {
+    handleError(error, 'Request Phone Verification error');
+  }
 };
 
 const verifyPhone = async (verificationData: VerifyPhoneSchema) => {
-  const { data } = await apiClient.post(
-    AUTH.PHONE_VERIFICATION,
-    verificationData,
-  );
-  return data;
+  try {
+    const { headers, data } = await apiClient.post(
+      AUTH.PHONE_VERIFICATION,
+      verificationData,
+    );
+
+    if (data.userId) {
+      await handleLogin(headers);
+    }
+
+    return data;
+  } catch (error) {
+    handleError(error, 'Verify Phone error');
+  }
 };
 
 const signUp = async (userData: SignUpSchema) => {
   try {
     const { headers, data } = await apiClient.post(AUTH.SIGN_UP, userData);
-
-    const authorizationHeader = headers.authorization as string | undefined;
-    const token = extractToken(authorizationHeader);
-
-    if (token) {
-      useAppStore.getState().login(token);
-    } else {
-      console.error('Invalid Authorization header format');
-    }
-
+    await handleLogin(headers);
     return data;
   } catch (error) {
-    console.error('SignUp error:', error);
-    throw error;
+    handleError(error, 'SignUp error');
   }
 };
 
