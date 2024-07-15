@@ -41,7 +41,7 @@ const Tooltip = ({ tooltipText }: CustomTooltipProps) => {
                 <Text style={styles.tooltipText}>
                   마음에 드는 가사를 하이라이트해 보세요.
                   {'\n'}
-                  최대 3줄까지 선택해 일기 카드에 넣을 수 있어요.
+                  최대 3줄까지 일기 카드에 들어가요.
                 </Text>
               </>
               <AntDesign
@@ -71,11 +71,12 @@ const styles = StyleSheet.create({
   },
   tooltipContainer: {
     position: 'absolute',
-    top: '52%', // Image 컴포넌트 아래로 위치 조정
-    left: '31.6%',
+    top: '49.6%', // Image 컴포넌트 아래로 위치 조정
+    left: '35%',
     transform: [{ translateX: -50 }], // 가로축 중앙 정렬
   },
   tooltip: {
+    gap: 10,
     flexDirection: 'row',
     backgroundColor: COLORS.PURPLE,
     paddingLeft: 14,
@@ -90,19 +91,20 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   tooltipText: {
+    textAlign: 'center',
     color: COLORS.WHITE,
     ...FONTS.B2,
   },
   tooltipArrow: {
     position: 'absolute',
-    top: -20, // 변경된 tooltip 위치에 맞게 조정
+    top: -10, // Adjusted according to the tooltip position
     left: '50%',
-    marginLeft: -10,
+    marginLeft: -7,
     width: 0,
     height: 0,
-    borderLeftWidth: 6,
-    borderRightWidth: 6,
-    borderBottomWidth: 24,
+    borderLeftWidth: 7,
+    borderRightWidth: 7,
+    borderBottomWidth: 14,
     borderLeftColor: 'transparent',
     borderRightColor: 'transparent',
     borderBottomColor: COLORS.PURPLE,
