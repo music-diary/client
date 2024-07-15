@@ -14,3 +14,9 @@ export default {
   GREY2: '#696478',
   GREY3: '#34323B',
 };
+
+/**
+ * TODO:
+ * PURPLE_BOX -> PURPLE_LIGHT
+ *
+ */

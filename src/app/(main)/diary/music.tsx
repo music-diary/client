@@ -13,6 +13,7 @@ import Carousel, {
   Pagination,
   type ICarouselInstance,
 } from 'react-native-reanimated-carousel';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import CustomAlertModal from '@/components/common/CustomAlertModal';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
 import LoadingView from '@/components/diary/LoadingView';
@@ -112,7 +113,7 @@ const MusicRecommendationScreen = () => {
     <LoadingView />
   ) : (
     <>
-      <View style={styles.container}>
+      <SafeAreaView edges={['bottom']} style={styles.container}>
         <Text style={styles.headerTitle}>
           오늘의 윤경 님에게 어울리는 곡들이에요
         </Text>
@@ -150,18 +151,22 @@ const MusicRecommendationScreen = () => {
                   <Text style={styles.tooltipTitle}>가사</Text>
                   <Tooltip />
                 </View>
-                <ScrollView style={styles.lyricsContainer}>
+                <ScrollView>
                   {lyricsData.map((line, index) => (
                     <TouchableOpacity
                       key={index}
                       onPress={() => handleLyricPress(index)}
-                      style={[
-                        styles.lyricLine,
-                        selectedLyrics.includes(index) &&
-                          styles.selectedLyricLine,
-                      ]}
+                      style={styles.lyricLine}
                     >
-                      <Text style={styles.lyricsText}>{line}</Text>
+                      <Text
+                        style={[
+                          styles.lyricsText,
+                          selectedLyrics.includes(index) &&
+                            styles.selectedLyricLine,
+                        ]}
+                      >
+                        {line}
+                      </Text>
                     </TouchableOpacity>
                   ))}
                 </ScrollView>
@@ -173,24 +178,26 @@ const MusicRecommendationScreen = () => {
         <Pagination.Basic
           progress={progress}
           data={colors.map((color) => ({ color }))}
-          dotStyle={{ backgroundColor: 'rgba(0,0,0,0.2)', borderRadius: 10 }}
-          containerStyle={{ gap: 5, marginBottom: 10, borderRadius: 100 }}
+          dotStyle={styles.dot}
+          containerStyle={{ gap: 5 }}
           onPress={onPressPagination}
           renderItem={(item) => (
             <View
               style={{
-                backgroundColor: 'purple',
+                backgroundColor: COLORS.PURPLE,
                 flex: 1,
               }}
             />
           )}
         />
-      </View>
+      </SafeAreaView>
+
       <CustomBottomButton
         isActive={selectedLyrics.length > 0}
         onPress={handleNext} // 버튼 클릭 이벤트 핸들러
         label="다음"
       />
+
       <CustomAlertModal
         name="music-cancel"
         title="작성을 그만두시겠어요?"
@@ -208,10 +215,9 @@ export default MusicRecommendationScreen;
 
 const styles = StyleSheet.create({
   container: {
-    display: 'flex',
     backgroundColor: COLORS.BLACK,
-    flex: 1,
     alignItems: 'center',
+    flex: 1,
     paddingTop: 20,
   },
   headerTitle: {
@@ -219,7 +225,6 @@ const styles = StyleSheet.create({
     ...FONTS.B1_SB,
   },
   cardContainer: {
-    height: '100%',
     flex: 1,
     backgroundColor: COLORS.GREY3,
     borderRadius: 10,
@@ -261,21 +266,21 @@ const styles = StyleSheet.create({
     color: COLORS.WHITE,
     ...FONTS.B1_SB,
   },
-  lyricsContainer: {
-    flex: 1,
-    backgroundColor: 'purple',
-    padding: 10,
-    borderRadius: 10,
-  },
   lyricLine: {
-    padding: 10,
     borderRadius: 5,
   },
   selectedLyricLine: {
-    backgroundColor: COLORS.CONTENTS_LIGHT,
+    color: COLORS.PURPLE_BOX,
   },
   lyricsText: {
+    textAlign: 'center',
     color: COLORS.WHITE,
-    ...FONTS.B2,
+    ...FONTS.B2_LINE2,
+  },
+  dot: {
+    backgroundColor: COLORS.GREY1,
+    borderRadius: 10,
+    width: 6,
+    height: 6,
   },
 });
