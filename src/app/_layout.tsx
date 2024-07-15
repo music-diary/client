@@ -67,7 +67,7 @@ export default function RootLayout() {
 function RootLayoutNav() {
   const [queryClient] = useState(() => new QueryClient());
 
-  const { isAuthenticated, logout } = useAppStore();
+  const { isAuthenticated } = useAppStore();
 
   const colorScheme = useColorScheme();
 
