@@ -20,98 +20,136 @@ import { useAppStore } from '@/store/useAppStore';
 import { ChartPieSvg, DefaultProfileSvg } from 'assets/images/mypage';
 import { colorWithOpacity } from '@/utils/color-utils';
 import CustomBottomSheetModal from '@/components/common/CustomBottomSheetModal';
-import { formatToMeridiemTime, formatToYearMonth } from '@/utils/date-utils';
+import {
+  calculateDaysSince,
+  formatToMeridiemTime,
+  formatToYearMonth,
+} from '@/utils/date-utils';
 import CustomAlertModal from '@/components/common/CustomAlertModal';
 import { useModalStore } from '@/store/useModalStore';
+import { useGetUserInfo, usePatchUser } from '@/api/hooks/useUsers';
 
 const MypageScreen = () => {
+  const { data: userInfo, isLoading, isError } = useGetUserInfo();
+  const patchUserMutation = usePatchUser();
+
   const { logout } = useAppStore();
-  const today = new Date();
+
   const router = useRouter();
 
-  /* 토글 설정 */
+  // 사용자 정보 상태
+  const userName = userInfo.name;
+  const [isGenreSuggested, setIsGenreSuggested] = useState(
+    userInfo.isGenreSuggested || false,
+  );
+  const [isAgreedMarketing, setIsAgreedMarketing] = useState(
+    userInfo.isAgreedMarketing || false,
+  );
+  const [isDiaryToggled, setIsDiaryToggled] = useState(
+    userInfo.IsAgreedDiaryAlarm || false,
+  );
+  const [diaryTime, setDiaryTime] = useState<Date>(
+    new Date(userInfo.diaryAlarmTime),
+  );
+  const [tempDiaryTime, setTempDiaryTime] = useState<Date>(diaryTime);
 
-  // 장르 추천 토글
-  const [isGenreToggled, setIsGenreToggled] = useState<boolean>(false);
+  const [selectedGenres, setSelectedGenres] = useState<string[]>(
+    userInfo?.genres ? userInfo.genres.map((g) => g.genres.label) : [],
+  );
+  const [tempSelectedGenres, setTempSelectedGenres] =
+    useState<string[]>(selectedGenres);
+
+  const [isMusicFlavorToggled, setIsMusicFlavorToggled] =
+    useState<boolean>(false);
+  const [isDiaryModalVisible, setDiaryModalVisible] = useState<boolean>(false);
+  const { openModal, closeModal } = useModalStore();
+
   const handleToggleChange = (state: boolean) => {
-    setIsGenreToggled(state);
+    setIsGenreSuggested(state);
   };
 
-  // 일기 알림 토글
-  const [isDiaryModalVisible, setDiaryModalVisible] = useState<boolean>(false); // 일기 알림 모달 관리
-  const [isDiaryToggled, setIsDiaryToggled] = useState<boolean>(true);
   const handleDiaryToggleChange = (state: boolean) => {
     setIsDiaryToggled(state);
     setDiaryModalVisible(state);
   };
 
-  // 기타 알림 토글
-  const [marketingToggled, setMarketingToggled] = useState<boolean>(false);
   const handleEtcToggleChange = (state: boolean) => {
-    setMarketingToggled(state);
+    setIsAgreedMarketing(state);
   };
 
-  /* onPress시 라우터 이동 설정 */
-  // 통계 페이지로 이동
-  const onPressStatistics = () => {
-    router.push('/(main)/mypage/statistic');
-  };
-
-  // onPress시 edit Profile로 이동
-  const onPressEditProfile = () => {
-    router.push('/(main)/mypage/edit');
-  };
-  // onPress시 inquiry(문의사항)으로 이동
-  const onPressInquiry = () => {
-    router.push('/(main)/mypage/inquiry');
-  };
-  // onPress시 withdrawal(회원탈퇴)으로 이동
-  const onPressWithdrawal = () => {
-    router.push('/(main)/mypage/withdrawal');
-  };
-
-  /* 모달 설정 */
-  // 내 음악 취향 선택
-  const [isMusicFlavorToggled, setIsMusicFlavorToggled] =
-    useState<boolean>(false);
   const handleMusicFlavorToggleChange = () => {
     setIsMusicFlavorToggled(!isMusicFlavorToggled);
   };
-  // 음악 취향 상태 관리 (현재는 임시로 pop, 랩/힙합 선택된 상태로 설정)
-  const [selectedGenres, setSelectedGenres] = useState<string[]>([
-    'POP',
-    '랩/힙합',
-  ]);
-  // 임시로 선택된 장르 상태 관리
-  const [tempSelectedGenres, setTempSelectedGenres] =
-    useState<string[]>(selectedGenres);
 
   const handleSave = () => {
     setSelectedGenres(tempSelectedGenres);
     handleMusicFlavorToggleChange();
   };
 
-  // 일기 알람 시간 설정
-  const [diaryTime, setDiaryTime] = useState<Date>(today);
-  const [tempDiaryTime, setTempDiaryTime] = useState<Date>(diaryTime);
   const handleDiaryTimeChange = () => {
     setDiaryTime(tempDiaryTime);
     setDiaryModalVisible(false);
   };
-  const formattedDiaryTime = formatToMeridiemTime(diaryTime);
 
-  // 로그아웃 모달
-  const { openModal, closeModal } = useModalStore();
+  const handleUpdateUser = () => {
+    if (userInfo) {
+      patchUserMutation.mutate({
+        id: userInfo.id,
+        payload: {
+          name: userName,
+          birthDay: userInfo.birthDay,
+          gender: userInfo.gender,
+          isGenreSuggested,
+          isAgreedMarketing,
+          profileImageKey: userInfo.profileImageKey,
+          profileImageUrl: userInfo.profileImageUrl,
+          IsAgreedDiaryAlarm: isDiaryToggled,
+          diaryAlarmTime: '1970-01-01T20:30:00.000Z',
+          genres: userInfo.genres.map((g) => ({
+            genres: {
+              id: g.genres.id,
+              label: g.genres.label,
+              name: g.genres.name,
+              color: g.genres.color,
+              order: g.genres.order,
+            },
+          })),
+        },
+      });
+    }
+  };
+
   const openLogoutModal = () => openModal('logout-confirm-modal');
   const handleConfirm = () => {
     console.log(
       '🚀 ~ file: index.tsx:56 ~ handleConfirm ~ console:',
       '로그 아웃',
     );
-    // 여기에 삭제 작업을 수행하는 코드를 추가하면 됨
     logout();
     closeModal();
   };
+
+  // 라우팅 핸들러
+  const onPressStatistics = () => {
+    router.push('/(main)/mypage/statistic');
+  };
+
+  const onPressEditProfile = () => {
+    router.push('/(main)/mypage/edit');
+  };
+
+  const onPressInquiry = () => {
+    router.push('/(main)/mypage/inquiry');
+  };
+
+  const onPressWithdrawal = () => {
+    router.push('/(main)/mypage/withdrawal');
+  };
+
+  if (isLoading) return <Text>Loading...</Text>;
+  if (isError) return <Text>Error occurred while fetching data.</Text>;
+
+  const formattedDiaryTime = formatToMeridiemTime(diaryTime);
 
   return (
     <ScrollView style={styles.container}>
@@ -125,10 +163,13 @@ const MypageScreen = () => {
             <Feather name="star" color={COLORS.WHITE} />
           </View>
           <Text style={styles.profileInfo}>
-            <Text style={{ color: COLORS.PURPLE }}>Miya</Text>님과 함께한 지
-            {'\n'}
+            <Text style={{ color: COLORS.PURPLE }}>{userInfo.name}</Text> 님과
+            함께한 지{'\n'}
             <View style={{ paddingVertical: 10 }} />
-            <Text style={{ color: COLORS.PURPLE }}>60일</Text>이 되었어요
+            <Text style={{ color: COLORS.PURPLE }}>
+              {calculateDaysSince(userInfo.createdAt)}{' '}
+            </Text>
+            일이 되었어요
           </Text>
         </View>
         <View style={styles.headerRight}>
@@ -158,7 +199,9 @@ const MypageScreen = () => {
             style={styles.musicFlavor}
             onPress={handleMusicFlavorToggleChange}
           >
-            <Text style={styles.musicFlavorText}>팝, 힙합 외 2</Text>
+            <Text style={styles.musicFlavorText}>
+              {selectedGenres.join(', ')}
+            </Text>
             <MaterialIcons
               name="arrow-forward-ios"
               size={14}
@@ -169,7 +212,7 @@ const MypageScreen = () => {
         <View style={styles.bodyRoute}>
           <Text style={styles.textB1}>다양한 장르 추천받기</Text>
           <CustomToggle
-            isToggled={isGenreToggled}
+            isToggled={isGenreSuggested}
             onToggleChange={handleToggleChange}
           />
         </View>
@@ -192,7 +235,7 @@ const MypageScreen = () => {
           <View style={styles.bodyRoute}>
             <Text style={styles.textB1Gray2}>마케팅 알림</Text>
             <CustomToggle
-              isToggled={marketingToggled}
+              isToggled={isAgreedMarketing}
               onToggleChange={handleEtcToggleChange}
             />
           </View>
@@ -242,6 +285,7 @@ const MypageScreen = () => {
         }}
         onSave={() => {
           handleSave();
+          handleUpdateUser();
         }}
       >
         <MusicSelection
@@ -255,6 +299,7 @@ const MypageScreen = () => {
         visible={isDiaryModalVisible}
         onSave={() => {
           handleDiaryTimeChange();
+          handleUpdateUser();
         }}
       >
         <View style={styles.pickerContainer}>

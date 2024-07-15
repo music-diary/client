@@ -24,3 +24,11 @@ export function formatToDate(date: Date): string {
   const formattedDay = String(day).padStart(2, '0');
   return `${year}-${formattedMonth}-${formattedDay}`;
 }
+
+export function calculateDaysSince(startDate: string): number {
+  const start = new Date(startDate);
+  const now = new Date();
+  const diffTime = Math.abs(now.getTime() - start.getTime());
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return diffDays;
+}

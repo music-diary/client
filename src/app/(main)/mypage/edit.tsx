@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import DateTimePicker, {
@@ -8,19 +8,26 @@ import { router } from 'expo-router';
 import { COLORS, FONTS } from '@/constants';
 import CustomCheckToggle from '@/components/common/CustomCheckToggle';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
-import { PhotoSvg, DefaultProfileSvg } from 'assets/images/mypage';
+import { DefaultProfileSvg } from 'assets/images/mypage';
 import CustomBottomSheetModal from '@/components/common/CustomBottomSheetModal';
 import { formatToDate } from '@/utils/date-utils';
+import { useGetUserInfo, usePatchUser } from '@/api/hooks/useUsers';
 
 const EditScreen = () => {
-  const myName = 'Miya';
-  const [nickname, setNickname] = useState(myName);
+  const { data: userInfo, isLoading, isError } = useGetUserInfo();
+  const patchUserMutation = usePatchUser();
+
+  // 데이터 로딩 중 표시
+  if (isLoading) return <Text>Loading...</Text>;
+  if (isError) return <Text>Error occurred while fetching data.</Text>;
+
+  const [nickname, setNickname] = useState(userInfo.name);
   const onChangeNickname = (inputText: string) => {
     setNickname(inputText);
   };
 
   // 달력
-  const birthday = new Date(2000, 1, 21); // 2월은 1로 설정
+  const birthday = new Date(userInfo.birthDay);
   const [selectedDate, setSelectedDate] = useState<Date>(birthday);
   const [tempDate, setTempDate] = useState<Date>(birthday);
   const [showPicker, setShowPicker] = useState<boolean>(false);
@@ -39,34 +46,45 @@ const EditScreen = () => {
   };
 
   // 성별 토글
-  const [selectedToggle, setSelectedToggle] = useState<number | null>(0);
-  const initialToggle = useRef<number | null>(selectedToggle);
+  const genderOptions = ['FEMALE', 'MALE', 'NONE'];
+  const [selectedToggle, setSelectedToggle] = useState<number>(
+    genderOptions.indexOf(userInfo.gender),
+  );
   const handleToggleChange = (index: number) => {
-    if (selectedToggle !== index) {
-      setSelectedToggle(index);
-    }
+    setSelectedToggle(index);
   };
 
   // 하단 버튼 활성화 조건
-  const [isButtonActive, setButtonActive] = useState(true);
+  const [isButtonActive, setButtonActive] = useState(false);
 
   useEffect(() => {
-    const isNicknameChanged = nickname !== myName;
+    const isNicknameChanged = nickname !== userInfo.name;
     const isDateChanged =
       selectedDate.toLocaleDateString() !== birthday.toLocaleDateString();
-    const isToggleChanged = selectedToggle !== initialToggle.current;
+    const isToggleChanged = genderOptions[selectedToggle] !== userInfo.gender;
 
-    if (isNicknameChanged || isDateChanged || isToggleChanged) {
-      setButtonActive(true);
-    } else {
-      setButtonActive(false);
-    }
+    setButtonActive(isNicknameChanged || isDateChanged || isToggleChanged);
   }, [nickname, selectedDate, selectedToggle]);
 
   const handleButtonPress = () => {
-    console.log('Button pressed!'); // 완료 버튼 누르면 실행 -> 추후 api 연결
-    router.back(); // 스택 하나 뒤로 이동
+    patchUserMutation.mutate({
+      id: userInfo.id,
+      payload: {
+        name: nickname,
+        birthDay: selectedDate.toISOString(),
+        gender: genderOptions[selectedToggle],
+        isGenreSuggested: userInfo.isGenreSuggested,
+        isAgreedMarketing: userInfo.isAgreedMarketing,
+        profileImageKey: userInfo.profileImageKey,
+        profileImageUrl: userInfo.profileImageUrl,
+        IsAgreedDiaryAlarm: userInfo.IsAgreedDiaryAlarm,
+        diaryAlarmTime: userInfo.diaryAlarmTime,
+        genres: userInfo.genres,
+      },
+    });
+    router.back();
   };
+
   return (
     <>
       <ScrollView style={styles.container}>
@@ -74,15 +92,15 @@ const EditScreen = () => {
         <View style={styles.profile}>
           <View style={styles.profileImage}>
             <DefaultProfileSvg width={100} height={100} />
-            <TouchableOpacity>
+            {/* <TouchableOpacity>
               <View style={styles.cameraContainer}>
                 <PhotoSvg />
               </View>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
-          <TouchableOpacity>
+          {/* <TouchableOpacity>
             <Text style={styles.deleteText}>이미지 삭제</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
         {/* body */}
         <View style={styles.body}>
@@ -193,25 +211,25 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLORS.WHITE,
   },
-  cameraContainer: {
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-    borderWidth: 1,
-    borderColor: COLORS.BLACK,
-    backgroundColor: COLORS.WHITE,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingLeft: 1,
-  },
-  deleteText: {
-    color: COLORS.CONTENTS_LIGHT,
-    ...FONTS.BTN,
-    marginTop: 11,
-  },
+  // cameraContainer: {
+  //   position: 'absolute',
+  //   bottom: 0,
+  //   right: 0,
+  //   width: 30,
+  //   height: 30,
+  //   borderRadius: 15,
+  //   borderWidth: 1,
+  //   borderColor: COLORS.BLACK,
+  //   backgroundColor: COLORS.WHITE,
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   paddingLeft: 1,
+  // },
+  // deleteText: {
+  //   color: COLORS.CONTENTS_LIGHT,
+  //   ...FONTS.BTN,
+  //   marginTop: 11,
+  // },
   body: {
     gap: 30,
   },

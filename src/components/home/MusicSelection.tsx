@@ -1,21 +1,17 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  SafeAreaView,
+  ActivityIndicator,
+} from 'react-native';
 import { COLORS, FONTS } from '@/constants';
+import { useGenres } from '@/api/hooks/useGenres';
+import LoadingIndicator from '../common/LoadingIndicator';
+import ErrorDisplay from '../common/ErrorDisplay';
 
-const musicList = [
-  '발라드',
-  '댄스',
-  '랩/힙합',
-  'R&B',
-  '인디',
-  '록/메탈',
-  'POP',
-  '뉴에이지',
-  '포크/블루스',
-  '일렉트로니카',
-  'OST',
-  '재즈',
-  'J-pop',
-];
 interface MusicSelectionProps {
   selectedGenres: string[];
   setSelectedGenres: (genres: string[]) => void;
@@ -25,6 +21,8 @@ const MusicSelection = ({
   selectedGenres,
   setSelectedGenres,
 }: MusicSelectionProps) => {
+  const { data: genres, error, isLoading } = useGenres();
+
   const toggleSelection = (item: string) => {
     if (selectedGenres.includes(item)) {
       if (selectedGenres.length === 1) {
@@ -40,20 +38,30 @@ const MusicSelection = ({
     }
   };
 
+  // 로딩 및 에러 처리
+  if (isLoading) {
+    return <LoadingIndicator />;
+  }
+  if (!genres || genres.length === 0 || error) {
+    return <ErrorDisplay message="장르를 불러오지 못했어요." />;
+  }
+
   return (
     <View style={styles.grid}>
-      {musicList.map((item, index) => {
-        const isSelected = selectedGenres.includes(item);
+      {genres.map((genre) => {
+        if (!genre.label) return null;
+
+        const isSelected = selectedGenres.includes(genre.label);
         return (
           <TouchableOpacity
-            key={index}
+            key={genre.id}
             style={[styles.item, isSelected && styles.selectedItem]}
-            onPress={() => toggleSelection(item)}
+            onPress={() => toggleSelection(genre.label ?? '')}
           >
             <Text
               style={[styles.itemText, isSelected && styles.selectedItemText]}
             >
-              {item}
+              {genre.label ?? ''}
             </Text>
           </TouchableOpacity>
         );

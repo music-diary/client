@@ -11,6 +11,8 @@ export const API_ENDPOINTS = {
     SELF: '/users/self',
     ID: '/users/:id',
     ALL: '/users',
+    INFO: '/users/me',
+    UPDATE: '/users/:id',
   },
   GENRES: '/genres',
   DIARIES: {
