@@ -21,6 +21,7 @@ import Tooltip from '@/components/diary/Tooltip';
 import { COLORS, FONTS } from '@/constants';
 import { useModalStore } from '@/store/useModalStore';
 import { colorWithOpacity } from '@/utils/color-utils';
+import YouTubePlayer from '@/components/diary/YoutubePlayer';
 
 const PAGE_WIDTH = Dimensions.get('window').width;
 const PAGE_HEIGHT = Dimensions.get('window').height;
@@ -141,7 +142,7 @@ const MusicRecommendationScreen = () => {
           data={colors}
           renderItem={({ index }) => (
             <Animated.View style={styles.cardContainer}>
-              <View style={styles.youtube}></View>
+              <YouTubePlayer videoId="smdmEhkIRVc" />
               <View style={styles.musicInfo}>
                 <Text style={styles.singer}>비비</Text>
                 <Text style={styles.title}>밤양갱</Text>
@@ -234,11 +235,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
   },
-  youtube: {
-    width: 276,
-    height: 155,
-    backgroundColor: 'red',
-  },
+  // youtube: {
+  //   width: 276,
+  //   height: 155,
+  //   backgroundColor: 'red',
+  // },
   musicInfo: {
     alignItems: 'center',
     gap: 6,
