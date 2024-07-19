@@ -39,7 +39,7 @@ export interface UserSchema {
   createdAt: string;
   updatedAt: string;
   deletedAt: string | null;
-  genres: Array<{ genres: IUserGenre }>;
+  genres: Array<{ genre: IUserGenre }>;
 }
 
 export interface PathUserSchema {

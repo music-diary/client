@@ -54,7 +54,7 @@ const MypageScreen = () => {
   const [tempDiaryTime, setTempDiaryTime] = useState<Date>(diaryTime);
 
   const [selectedGenres, setSelectedGenres] = useState<string[]>(
-    userInfo?.genres ? userInfo.genres.map((g) => g.genres.label) : [],
+    userInfo?.genres ? userInfo.genres.map((g) => g.genre.label) : [],
   );
   const [tempSelectedGenres, setTempSelectedGenres] =
     useState<string[]>(selectedGenres);
@@ -107,11 +107,11 @@ const MypageScreen = () => {
           diaryAlarmTime: '1970-01-01T20:30:00.000Z',
           genres: userInfo.genres.map((g) => ({
             genres: {
-              id: g.genres.id,
-              label: g.genres.label,
-              name: g.genres.name,
-              color: g.genres.color,
-              order: g.genres.order,
+              id: g.genre.id,
+              label: g.genre.label,
+              name: g.genre.name,
+              color: g.genre.color,
+              order: g.genre.order,
             },
           })),
         },
