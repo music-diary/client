@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Text,
   View,
@@ -22,12 +22,16 @@ import { colorWithOpacity } from '@/utils/color-utils';
 import CustomBottomSheetModal from '@/components/common/CustomBottomSheetModal';
 import {
   calculateDaysSince,
+  convertToTimeString,
   formatToMeridiemTime,
   formatToYearMonth,
+  parseTime,
 } from '@/utils/date-utils';
 import CustomAlertModal from '@/components/common/CustomAlertModal';
 import { useModalStore } from '@/store/useModalStore';
 import { useGetUserInfo, usePatchUser } from '@/api/hooks/useUsers';
+import { type IGenre } from '@/models/interfaces';
+import { type UserPayload } from '@/models/schemas';
 
 const MypageScreen = () => {
   const { data: userInfo, isLoading, isError } = useGetUserInfo();
@@ -38,26 +42,32 @@ const MypageScreen = () => {
   const router = useRouter();
 
   // 사용자 정보 상태
-  const userName = userInfo.name;
+  const userName = userInfo?.name || '';
   const [isGenreSuggested, setIsGenreSuggested] = useState(
-    userInfo.isGenreSuggested || false,
+    userInfo?.isGenreSuggested || false,
   );
   const [isAgreedMarketing, setIsAgreedMarketing] = useState(
-    userInfo.isAgreedMarketing || false,
+    userInfo?.isAgreedMarketing || false,
   );
   const [isDiaryToggled, setIsDiaryToggled] = useState(
-    userInfo.IsAgreedDiaryAlarm || false,
+    userInfo?.IsAgreedDiaryAlarm || false,
   );
   const [diaryTime, setDiaryTime] = useState<Date>(
-    new Date(userInfo.diaryAlarmTime),
+    userInfo?.diaryAlarmTime
+      ? parseTime(userInfo.diaryAlarmTime)
+      : parseTime('11:00'),
   );
+
   const [tempDiaryTime, setTempDiaryTime] = useState<Date>(diaryTime);
 
-  const [selectedGenres, setSelectedGenres] = useState<string[]>(
-    userInfo?.genres ? userInfo.genres.map((g) => g.genre.label) : [],
+  const [selectedGenres, setSelectedGenres] = useState<IGenre[]>(
+    userInfo?.genre
+      ? userInfo.genre.map((g) => ({ id: g.id, label: g.label, name: g.name }))
+      : [],
   );
+
   const [tempSelectedGenres, setTempSelectedGenres] =
-    useState<string[]>(selectedGenres);
+    useState<IGenre[]>(selectedGenres);
 
   const [isMusicFlavorToggled, setIsMusicFlavorToggled] =
     useState<boolean>(false);
@@ -84,47 +94,39 @@ const MypageScreen = () => {
   const handleSave = () => {
     setSelectedGenres(tempSelectedGenres);
     handleMusicFlavorToggleChange();
+    handleUpdateUser(); // 선택된 장르를 저장 후 업데이트
   };
 
   const handleDiaryTimeChange = () => {
     setDiaryTime(tempDiaryTime);
     setDiaryModalVisible(false);
+    handleUpdateUser(); // 선택된 시간 업데이트
   };
 
   const handleUpdateUser = () => {
-    if (userInfo) {
-      patchUserMutation.mutate({
-        id: userInfo.id,
-        payload: {
-          name: userName,
-          birthDay: userInfo.birthDay,
-          gender: userInfo.gender,
-          isGenreSuggested,
-          isAgreedMarketing,
-          profileImageKey: userInfo.profileImageKey,
-          profileImageUrl: userInfo.profileImageUrl,
-          IsAgreedDiaryAlarm: isDiaryToggled,
-          diaryAlarmTime: '1970-01-01T20:30:00.000Z',
-          genres: userInfo.genres.map((g) => ({
-            genres: {
-              id: g.genre.id,
-              label: g.genre.label,
-              name: g.genre.name,
-              color: g.genre.color,
-              order: g.genre.order,
-            },
-          })),
-        },
-      });
-    }
+    const updatedGenres = tempSelectedGenres.map((genre) => ({
+      id: genre.id,
+    }));
+    const updatedTime = convertToTimeString(tempDiaryTime);
+    const payload: UserPayload = {
+      name: userName,
+      birthDay: userInfo.birthDay,
+      gender: userInfo.gender,
+      isGenreSuggested,
+      isAgreedMarketing,
+      IsAgreedDiaryAlarm: isDiaryToggled,
+      diaryAlarmTime: updatedTime,
+      genres: updatedGenres,
+    };
+    patchUserMutation.mutate({ id: userInfo.id, payload });
   };
+
+  useEffect(() => {
+    handleUpdateUser();
+  }, [isGenreSuggested, isAgreedMarketing, isDiaryToggled]);
 
   const openLogoutModal = () => openModal('logout-confirm-modal');
   const handleConfirm = () => {
-    console.log(
-      '🚀 ~ file: index.tsx:56 ~ handleConfirm ~ console:',
-      '로그 아웃',
-    );
     logout();
     closeModal();
   };
@@ -150,6 +152,10 @@ const MypageScreen = () => {
   if (isError) return <Text>Error occurred while fetching data.</Text>;
 
   const formattedDiaryTime = formatToMeridiemTime(diaryTime);
+
+  const selectedGenreLabels = selectedGenres
+    .map((genre) => genre.label)
+    .join(', ');
 
   return (
     <ScrollView style={styles.container}>
@@ -199,9 +205,7 @@ const MypageScreen = () => {
             style={styles.musicFlavor}
             onPress={handleMusicFlavorToggleChange}
           >
-            <Text style={styles.musicFlavorText}>
-              {selectedGenres.join(', ')}
-            </Text>
+            <Text style={styles.musicFlavorText}>{selectedGenreLabels}</Text>
             <MaterialIcons
               name="arrow-forward-ios"
               size={14}
@@ -246,7 +250,6 @@ const MypageScreen = () => {
           <BodyNavigator content="문의 사항" onPress={onPressInquiry} />
         </View>
         {/* 바디2-2 */}
-        <View style={styles.divider} />
         <View style={styles.body2}>
           <BodyNavigator content="서비스 소개" onPress={() => {}} />
           <BodyNavigator content="오픈 라이센스" onPress={() => {}} />
@@ -285,7 +288,6 @@ const MypageScreen = () => {
         }}
         onSave={() => {
           handleSave();
-          handleUpdateUser();
         }}
       >
         <MusicSelection
@@ -299,12 +301,11 @@ const MypageScreen = () => {
         visible={isDiaryModalVisible}
         onSave={() => {
           handleDiaryTimeChange();
-          handleUpdateUser();
         }}
       >
         <View style={styles.pickerContainer}>
           <DateTimePicker
-            value={diaryTime}
+            value={tempDiaryTime}
             mode="time"
             display="spinner"
             onChange={(event: DateTimePickerEvent, selectedDate?: Date) => {

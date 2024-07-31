@@ -1,20 +1,14 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  SafeAreaView,
-  ActivityIndicator,
-} from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { COLORS, FONTS } from '@/constants';
 import { useGenres } from '@/api/hooks/useGenres';
+import { type IGenre } from '@/models/interfaces';
 import LoadingIndicator from '../common/LoadingIndicator';
 import ErrorDisplay from '../common/ErrorDisplay';
 
 interface MusicSelectionProps {
-  selectedGenres: string[];
-  setSelectedGenres: (genres: string[]) => void;
+  selectedGenres: IGenre[];
+  setSelectedGenres: (genres: IGenre[]) => void;
 }
 
 const MusicSelection = ({
@@ -23,12 +17,13 @@ const MusicSelection = ({
 }: MusicSelectionProps) => {
   const { data: genres, error, isLoading } = useGenres();
 
-  const toggleSelection = (item: string) => {
-    if (selectedGenres.includes(item)) {
+  const toggleSelection = (item: IGenre) => {
+    const exists = selectedGenres.find((genre) => genre.id === item.id);
+    if (exists) {
       if (selectedGenres.length === 1) {
         return;
       }
-      setSelectedGenres(selectedGenres.filter((genre) => genre !== item));
+      setSelectedGenres(selectedGenres.filter((genre) => genre.id !== item.id));
     } else {
       if (selectedGenres.length >= 3) {
         // 3개 이상 선택한 경우
@@ -51,12 +46,12 @@ const MusicSelection = ({
       {genres.map((genre) => {
         if (!genre.label) return null;
 
-        const isSelected = selectedGenres.includes(genre.label);
+        const isSelected = !!selectedGenres.find((g) => g.id === genre.id);
         return (
           <TouchableOpacity
             key={genre.id}
             style={[styles.item, isSelected && styles.selectedItem]}
-            onPress={() => toggleSelection(genre.label ?? '')}
+            onPress={() => toggleSelection(genre)}
           >
             <Text
               style={[styles.itemText, isSelected && styles.selectedItemText]}

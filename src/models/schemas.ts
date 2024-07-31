@@ -39,10 +39,21 @@ export interface UserSchema {
   createdAt: string;
   updatedAt: string;
   deletedAt: string | null;
-  genres: Array<{ genre: IUserGenre }>;
+  genre: IUserGenre[];
+}
+
+export interface UserPayload {
+  name: string;
+  birthDay: string;
+  gender: Gender;
+  isGenreSuggested: boolean;
+  isAgreedMarketing: boolean;
+  IsAgreedDiaryAlarm: boolean;
+  diaryAlarmTime: string;
+  genres: Array<{ id: string }>;
 }
 
 export interface PathUserSchema {
   id: string;
-  payload: Record<string, any>;
+  payload: UserPayload;
 }
