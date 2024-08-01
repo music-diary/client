@@ -39,7 +39,7 @@ const verifyPhone = async (verificationData: VerifyPhoneSchema) => {
       verificationData,
     );
 
-    if (data.userId) {
+    if (data.user.id) {
       await handleLogin(headers);
     }
 
