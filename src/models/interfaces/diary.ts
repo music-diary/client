@@ -39,3 +39,15 @@ export interface ITemplateContent {
   name: string;
   label: string;
 }
+
+export interface IMusic {
+  id: string;
+  title: string;
+  artist: string;
+  albumUrl: string;
+  selectedLyric: number | null;
+  lyric: string;
+  selected: boolean;
+  youtubeUrl: string;
+  editorPick: boolean | null;
+}

@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import { router } from 'expo-router';
+import { useRef, useState } from 'react';
+import { router, useLocalSearchParams } from 'expo-router';
 import {
   Dimensions,
   StyleSheet,
@@ -14,6 +14,7 @@ import Carousel, {
   type ICarouselInstance,
 } from 'react-native-reanimated-carousel';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import YoutubeIframe from 'react-native-youtube-iframe';
 import CustomAlertModal from '@/components/common/CustomAlertModal';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
 import LoadingView from '@/components/diary/LoadingView';
@@ -21,67 +22,26 @@ import Tooltip from '@/components/diary/Tooltip';
 import { COLORS, FONTS } from '@/constants';
 import { useModalStore } from '@/store/useModalStore';
 import { colorWithOpacity } from '@/utils/color-utils';
-import YouTubePlayer from '@/components/diary/YoutubePlayer';
+import { useMusicRecommendation } from '@/api/hooks/useDiaries';
+import { extractVideoId } from '@/utils/music-utils';
 
 const PAGE_WIDTH = Dimensions.get('window').width;
 const PAGE_HEIGHT = Dimensions.get('window').height;
-const colors = [
-  '#26292E',
-  '#899F9C',
-  '#B3C680',
-  '#5C6265',
-  '#F5D399',
-  '#F1F1F1',
-];
-
-const lyricsData = [
-  '가사 1번째 줄입니다.',
-  '가사 2번째 줄입니다.',
-  '가사 3번째 줄입니다.',
-  '가사 4번째 줄입니다.',
-  '가사 5번째 줄입니다.',
-  '가사 1번째 줄입니다.',
-  '가사 2번째 줄입니다.',
-  '가사 3번째 줄입니다.',
-  '가사 4번째 줄입니다.',
-  '가사 5번째 줄입니다.',
-  '가사 1번째 줄입니다.',
-  '가사 2번째 줄입니다.',
-  '가사 3번째 줄입니다.',
-  '가사 4번째 줄입니다.',
-  '가사 5번째 줄입니다.',
-  '가사 1번째 줄입니다.',
-  '가사 2번째 줄입니다.',
-  '가사 3번째 줄입니다.',
-  '가사 4번째 줄입니다.',
-  '가사 5번째 줄입니다.',
-  '가사 1번째 줄입니다.',
-  '가사 2번째 줄입니다.',
-  '가사 3번째 줄입니다.',
-  '가사 4번째 줄입니다.',
-  '가사 5번째 줄입니다.',
-  '가사 1번째 줄입니다.',
-  '가사 2번째 줄입니다.',
-  '가사 3번째 줄입니다.',
-  '가사 4번째 줄입니다.',
-  '가사 5번째 줄입니다.',
-];
 
 const MusicRecommendationScreen = () => {
   const ref = useRef<ICarouselInstance>(null);
-  const { closeModal } = useModalStore();
-  const [isVertical, setIsVertical] = useState(false);
-  const [autoPlay, setAutoPlay] = useState(false);
-  const [pagingEnabled, setPagingEnabled] = useState<boolean>(true);
-  const [snapEnabled, setSnapEnabled] = useState<boolean>(true);
-  const progress = useSharedValue<number>(0);
-  const [loading, setLoading] = useState(true);
+  const { diaryId } = useLocalSearchParams();
 
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 3000);
-  }, []);
+  const { closeModal } = useModalStore();
+  const progress = useSharedValue<number>(0);
 
   const [selectedLyrics, setSelectedLyrics] = useState<number[]>([]);
+
+  const {
+    data: musicData,
+    error,
+    isFetching,
+  } = useMusicRecommendation(diaryId as string);
 
   const handleLyricPress = (index: number) => {
     setSelectedLyrics((prevSelected) => {
@@ -110,9 +70,17 @@ const MusicRecommendationScreen = () => {
     router.push('/');
   };
 
-  return loading ? (
-    <LoadingView />
-  ) : (
+  if (isFetching) return <LoadingView />;
+
+  if (musicData.length === 0 || error) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <Text style={styles.errorText}>음악 추천을 불러오지 못했어요.</Text>
+      </SafeAreaView>
+    );
+  }
+
+  return (
     <>
       <SafeAreaView edges={['bottom']} style={styles.container}>
         <Text style={styles.headerTitle}>
@@ -129,9 +97,6 @@ const MusicRecommendationScreen = () => {
             width: PAGE_WIDTH,
           }}
           loop
-          pagingEnabled={pagingEnabled}
-          snapEnabled={snapEnabled}
-          autoPlay={autoPlay}
           autoPlayInterval={1500}
           onProgressChange={progress}
           mode="parallax"
@@ -139,13 +104,17 @@ const MusicRecommendationScreen = () => {
             parallaxScrollingScale: 0.9,
             parallaxScrollingOffset: 50,
           }}
-          data={colors}
-          renderItem={({ index }) => (
+          data={musicData}
+          renderItem={({ item }) => (
             <Animated.View style={styles.cardContainer}>
-              <YouTubePlayer videoId="smdmEhkIRVc" />
+              <YoutubeIframe
+                height={200}
+                play={false}
+                videoId={extractVideoId(item.youtubeUrl)}
+              />
               <View style={styles.musicInfo}>
-                <Text style={styles.singer}>비비</Text>
-                <Text style={styles.title}>밤양갱</Text>
+                <Text style={styles.singer}>{item.artist}</Text>
+                <Text style={styles.title}>{item.title}</Text>
               </View>
               <View style={styles.lyricsSection}>
                 <View style={styles.tooltipContainer}>
@@ -153,7 +122,7 @@ const MusicRecommendationScreen = () => {
                   <Tooltip />
                 </View>
                 <ScrollView>
-                  {lyricsData.map((line, index) => (
+                  {item.lyric.split('\n').map((line: string, index: number) => (
                     <TouchableOpacity
                       key={index}
                       onPress={() => handleLyricPress(index)}
@@ -178,7 +147,7 @@ const MusicRecommendationScreen = () => {
 
         <Pagination.Basic
           progress={progress}
-          data={colors.map((color) => ({ color }))}
+          data={musicData}
           dotStyle={styles.dot}
           containerStyle={{ gap: 5 }}
           onPress={onPressPagination}
@@ -232,14 +201,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colorWithOpacity(COLORS.WHITE, 0.1),
     gap: 20,
-    alignItems: 'center',
     padding: 20,
+    width: '100%',
   },
-  // youtube: {
-  //   width: 276,
-  //   height: 155,
-  //   backgroundColor: 'red',
-  // },
   musicInfo: {
     alignItems: 'center',
     gap: 6,
@@ -283,5 +247,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: 6,
     height: 6,
+  },
+  errorText: {
+    color: COLORS.RED,
+    ...FONTS.B1,
+    textAlign: 'center',
+    marginTop: 20,
   },
 });
