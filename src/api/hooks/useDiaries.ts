@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import {
+  type IMusic,
   type IEmotion,
   type ITemplate,
   type ITopic,
@@ -37,6 +38,18 @@ const getTopics = async (): Promise<ITopic[]> => {
 const getTemplates = async (): Promise<ITemplate[]> => {
   const { data } = await apiClient.get(DIARIES.TEMPLATES);
   return data.templates;
+};
+
+const getMusicRecommendation = async (diaryId: string): Promise<IMusic[]> => {
+  const { data } = await apiClient.get(DIARIES.MUSIC.replace(':id', diaryId));
+  return data.data;
+};
+
+export const usePatchDiary = (options = {}) => {
+  return useMutation({
+    mutationFn: patchDiary,
+    ...options,
+  });
 };
 
 const useAllEmotions = (select: (data: IEmotion[]) => IEmotion[]) => {
@@ -82,9 +95,10 @@ export const useTemplates = () => {
   });
 };
 
-export const usePatchDiary = (options = {}) => {
-  return useMutation({
-    mutationFn: patchDiary,
-    ...options,
+export const useMusicRecommendation = (diaryId: string) => {
+  return useQuery({
+    queryKey: ['music', diaryId],
+    queryFn: async () => await getMusicRecommendation(diaryId),
+    initialData: [],
   });
 };

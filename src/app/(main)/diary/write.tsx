@@ -60,7 +60,7 @@ const WriteScreen = () => {
 
   const { mutate: patchDiary } = usePatchDiary({
     onSuccess: () => {
-      router.push('/diary/music');
+      router.push({ pathname: '/diary/music', params: { diaryId } });
     },
     onError: () => {
       console.error('Failed to patch diary');

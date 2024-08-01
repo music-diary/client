@@ -21,5 +21,6 @@ export const API_ENDPOINTS = {
     TEMPLATES: '/diaries/templates',
     ID: '/diaries/:id',
     CREATE: '/diaries',
+    MUSIC: 'diaries/:id/musics/ai',
   },
 };
