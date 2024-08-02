@@ -4,6 +4,7 @@ import { COLORS, FONTS } from '@/constants';
 import { colorWithOpacity } from '@/utils/color-utils';
 import PreferenceGraph from '@/components/mypage/PreferenceGraph';
 import { genres } from '@/constants/data';
+import { trimTitle } from '@/utils/text-utils';
 
 const containerWidth = Dimensions.get('window').width / 2 - 24;
 const containerYearlyWidth = Dimensions.get('window').width - 32;
@@ -41,21 +42,26 @@ const MusicPreference = ({ musicCount, isYearly }: MusicPreferenceProps) => {
         <MusicNotesSvg />
         <Text style={styles.buttonText}>내 음악취향</Text>
       </View>
-      <Text style={styles.bodyText}>
-        <Text style={styles.highlight}>
+      <View>
+        <Text
+          style={[styles.bodyText, styles.highlight]}
+          numberOfLines={1}
+          ellipsizeMode="tail"
+        >
           {getGenreLabel(musicCount[0].music)},{' '}
           {getGenreLabel(musicCount[1].music)},{' '}
           {getGenreLabel(musicCount[2].music)}
-          {'\n'}
         </Text>
-        장르를 많이 기록했어요.
-      </Text>
+        <Text style={styles.bodyText}>장르를 많이 기록했어요.</Text>
+      </View>
+
       <PreferenceGraph data={graphData} total={graphTotal} />
       <View style={styles.genreContainer}>
         {graphData.map((genre, index) => (
           <View key={index} style={styles.genreItem}>
             <View style={[styles.icon, { backgroundColor: genre.color }]} />
-            <Text style={styles.genreText}>{genre.label}</Text>
+            {/* <Text style={styles.genreText}>{genre.label}</Text> */}
+            <Text style={styles.genreText}>{trimTitle(genre.label, 3)}</Text>
           </View>
         ))}
       </View>
@@ -87,7 +93,6 @@ const styles = StyleSheet.create({
     ...FONTS.BTN,
   },
   bodyText: {
-    marginTop: 4,
     color: colorWithOpacity(COLORS.WHITE, 0.5),
     ...FONTS.B2,
     textAlign: 'center',
