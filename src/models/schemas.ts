@@ -1,5 +1,5 @@
-import { type IUserGenre, type IGenre } from './interfaces';
-import { type Status, type Gender, type Role } from './types';
+import { type IGenre, type IUserGenre, type IDiary } from './interfaces';
+import { type Gender, type Role, type Status } from './types';
 
 export interface VerifyPhoneSchema {
   phoneNumber: string;
@@ -16,9 +16,9 @@ export interface SignUpSchema {
   isAgreedMarketing: boolean;
 }
 
-export interface PathDiarySchema {
+export interface PatchDiarySchema {
   id: string;
-  payload: Record<string, any>;
+  payload: IDiary;
 }
 
 export interface UserSchema {

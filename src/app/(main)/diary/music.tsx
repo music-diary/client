@@ -22,20 +22,24 @@ import Tooltip from '@/components/diary/Tooltip';
 import { COLORS, FONTS } from '@/constants';
 import { useModalStore } from '@/store/useModalStore';
 import { colorWithOpacity } from '@/utils/color-utils';
-import { useMusicRecommendation } from '@/api/hooks/useDiaries';
+import { useMusicRecommendation, usePatchDiary } from '@/api/hooks/useDiaries';
 import { extractVideoId } from '@/utils/music-utils';
+import { type IDiary, type IMusic } from '@/models/interfaces';
 
 const PAGE_WIDTH = Dimensions.get('window').width;
 const PAGE_HEIGHT = Dimensions.get('window').height;
 
 const MusicRecommendationScreen = () => {
-  const ref = useRef<ICarouselInstance>(null);
-  const { diaryId } = useLocalSearchParams();
+  const { diaryId, diaryData } = useLocalSearchParams();
 
+  const parsedDiaryData: IDiary = JSON.parse(diaryData as string);
+
+  const ref = useRef<ICarouselInstance>(null);
   const { closeModal } = useModalStore();
   const progress = useSharedValue<number>(0);
-
-  const [selectedLyrics, setSelectedLyrics] = useState<number[]>([]);
+  const [selectedLyrics, setSelectedLyrics] = useState<
+    Record<number, number[]>
+  >({});
 
   const {
     data: musicData,
@@ -43,19 +47,54 @@ const MusicRecommendationScreen = () => {
     isFetching,
   } = useMusicRecommendation(diaryId as string);
 
-  const handleLyricPress = (index: number) => {
-    setSelectedLyrics((prevSelected) => {
-      if (prevSelected.includes(index)) {
-        return prevSelected.filter((i) => i !== index);
-      } else if (prevSelected.length < 3) {
-        return [...prevSelected, index];
+  const { mutate: patchDiary } = usePatchDiary({
+    onSuccess: () => {
+      router.push('/diary/card');
+    },
+    onError: () => {
+      console.error('Failed to patch diary');
+    },
+  });
+
+  const handleLyricPress = (musicIndex: number, lyricIndex: number) => {
+    setSelectedLyrics((prev) => {
+      const currentSelections = prev[musicIndex] || [];
+
+      if (currentSelections.includes(lyricIndex)) {
+        return {
+          ...prev,
+          [musicIndex]: currentSelections.filter((i) => i !== lyricIndex),
+        };
       }
-      return prevSelected;
+
+      if (currentSelections.length < 3) {
+        return {
+          ...prev,
+          [musicIndex]: [...currentSelections, lyricIndex],
+        };
+      }
+
+      return prev;
     });
   };
 
   const handleNext = () => {
-    router.push('/diary/card');
+    const updatedMusicData: IMusic[] = musicData.map((music, index) => ({
+      ...music,
+      selectedLyric: music.lyric
+        .split('\n')
+        .filter((_, idx) => selectedLyrics[index]?.includes(idx))
+        .join('\n'),
+      selected: selectedLyrics[index]?.length > 0 || false, // 가사가 선택된 경우 true로 설정
+    }));
+
+    const updatedDiaryData: IDiary = {
+      ...parsedDiaryData,
+      status: 'EDIT', // 음악 추천 후 상태 업데이트
+      musics: updatedMusicData,
+    };
+
+    patchDiary({ id: diaryId as string, payload: updatedDiaryData });
   };
 
   const onPressPagination = (index: number) => {
@@ -105,7 +144,7 @@ const MusicRecommendationScreen = () => {
             parallaxScrollingOffset: 50,
           }}
           data={musicData}
-          renderItem={({ item }) => (
+          renderItem={({ item, index }) => (
             <Animated.View style={styles.cardContainer}>
               <YoutubeIframe
                 height={200}
@@ -122,23 +161,25 @@ const MusicRecommendationScreen = () => {
                   <Tooltip />
                 </View>
                 <ScrollView>
-                  {item.lyric.split('\n').map((line: string, index: number) => (
-                    <TouchableOpacity
-                      key={index}
-                      onPress={() => handleLyricPress(index)}
-                      style={styles.lyricLine}
-                    >
-                      <Text
-                        style={[
-                          styles.lyricsText,
-                          selectedLyrics.includes(index) &&
-                            styles.selectedLyricLine,
-                        ]}
+                  {item.lyric
+                    .split('\n')
+                    .map((line: string, lineIndex: number) => (
+                      <TouchableOpacity
+                        key={lineIndex}
+                        onPress={() => handleLyricPress(index, lineIndex)}
+                        style={styles.lyricLine}
                       >
-                        {line}
-                      </Text>
-                    </TouchableOpacity>
-                  ))}
+                        <Text
+                          style={[
+                            styles.lyricsText,
+                            selectedLyrics[index]?.includes(lineIndex) &&
+                              styles.selectedLyricLine,
+                          ]}
+                        >
+                          {line}
+                        </Text>
+                      </TouchableOpacity>
+                    ))}
                 </ScrollView>
               </View>
             </Animated.View>
@@ -163,7 +204,9 @@ const MusicRecommendationScreen = () => {
       </SafeAreaView>
 
       <CustomBottomButton
-        isActive={selectedLyrics.length > 0}
+        isActive={Object.values(selectedLyrics).some(
+          (lyrics) => lyrics.length > 0,
+        )}
         onPress={handleNext} // 버튼 클릭 이벤트 핸들러
         label="다음"
       />
