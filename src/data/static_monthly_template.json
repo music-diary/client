@@ -1,6 +1,6 @@
 {
   "date": "2024-08",
-  "diaryCount": 3,
+  "diaryCount": 5,
   "emotion": [
     {
       "rootId": "ba1cf935-5979-4b30-af3c-3d3b4acf751b",
@@ -28,7 +28,11 @@
     },
     {
       "genre": "fork",
-      "count": 1
+      "count": 2
+    },
+    {
+      "genre": "pop",
+      "count": 3
     }
   ],
   "topics": [

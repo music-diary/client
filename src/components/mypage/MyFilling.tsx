@@ -7,6 +7,7 @@ import { colorWithOpacity } from '@/utils/color-utils';
 import { useMoods } from '@/api/hooks/useDiaries';
 import { emotionColor } from '@/constants/data';
 import { translateLabel } from '@/utils/label-utils';
+import DataNotFound from '../common/DataNotFound';
 
 const containerWidth = Dimensions.get('window').width / 2 - 24;
 
@@ -35,22 +36,18 @@ const calculatePercentages = (data: EmotionData[]) => {
 
 const MyFilling = ({ emotionData = [] }: MyFillingDataProps) => {
   const { data: moods } = useMoods();
-  console.log('🚀 ~ file: MyFilling.tsx:47 ~ MyFilling ~ moods:', moods);
-
-  if (emotionData.length === 0 || !moods) {
-    return (
-      <View style={styles.container}>
-        <Text
-          style={[FONTS.B2, { color: colorWithOpacity(COLORS.WHITE, 0.5) }]}
-        >
-          No data available
-        </Text>
-      </View>
-    );
-  }
 
   const percentages = calculatePercentages(emotionData);
   const mostFrequent = percentages[0];
+
+  // 에러 케이스
+  if (emotionData.length === 0 || !moods) {
+    return (
+      <View style={styles.container}>
+        <DataNotFound />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -111,7 +108,6 @@ const styles = StyleSheet.create({
     ...FONTS.BTN,
   },
   bodyText: {
-    marginTop: 4,
     color: colorWithOpacity(COLORS.WHITE, 0.5),
     textAlign: 'center',
     ...FONTS.B2,

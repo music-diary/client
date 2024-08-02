@@ -91,7 +91,7 @@ const MonthlyStatistic = () => {
             <MyFilling key="myFilling" emotionData={templateData.emotion} />,
             <MusicPreference
               key="musicPreference"
-              musicCount={selectedData.MusicPreferenceData.musicCount}
+              genreCounts={templateData.genreCounts}
             />,
 
             <DiaryTopic key="diaryTopic" topics={templateData.topics} />,

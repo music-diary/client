@@ -3,6 +3,7 @@ import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { COLORS, FONTS } from '@/constants';
 import { BookOpenSvg } from 'assets/images/mypage';
 import { colorWithOpacity } from '@/utils/color-utils';
+import DataNotFound from '../common/DataNotFound';
 
 const containerWidth = Dimensions.get('window').width / 2 - 24;
 
@@ -27,6 +28,14 @@ interface DiaryTopicProps {
 }
 
 const DiaryTopic = ({ topics }: DiaryTopicProps) => {
+  // 에러 케이스
+  if (topics.length === 0) {
+    return (
+      <View style={styles.container}>
+        <DataNotFound />
+      </View>
+    );
+  }
   // 가장 빈도 높은 순으로 sort
   const sortedTopics = topics.sort(
     (a, b) => b.topic._count.diaries - a.topic._count.diaries,
@@ -40,10 +49,10 @@ const DiaryTopic = ({ topics }: DiaryTopicProps) => {
       </View>
       <Text style={styles.bodyText}>
         <Text style={styles.highlight}>
-          {sortedTopics[0].topic.label}, {sortedTopics[1].topic.label},{' '}
+          {sortedTopics[0].topic.label}, {sortedTopics[1].topic.label},{'\n'}
           {sortedTopics[2].topic.label}
         </Text>
-        에 대해 많이 기록했어요.
+        에 대해 {'\n'} 많이 기록했어요.
       </Text>
 
       {sortedTopics.map((topic) => (
@@ -81,7 +90,7 @@ const styles = StyleSheet.create({
     ...FONTS.BTN,
   },
   bodyText: {
-    paddingVertical: 6,
+    paddingBottom: 6,
     color: colorWithOpacity(COLORS.WHITE, 0.5),
     ...FONTS.B2,
     textAlign: 'center',

@@ -1,65 +1,78 @@
 export const genres = [
   {
+    id: '1',
     label: '발라드',
     name: 'ballade',
     color: '#FFD700',
   },
   {
+    id: '2',
     label: '댄스',
     name: 'dance',
     color: '#FF69B4',
   },
   {
+    id: '3',
     label: '랩/힙합',
     name: 'hip-hop',
     color: '#FF4500',
   },
   {
+    id: '4',
     label: 'R&B',
     name: 'rnb',
     color: '#FF1493',
   },
   {
+    id: '5',
     label: '인디',
     name: 'indie',
     color: '#0099FF',
   },
   {
+    id: '6',
     label: '록/메탈',
     name: 'rock',
     color: '#FF3BAB',
   },
   {
+    id: '7',
     label: 'POP',
     name: 'pop',
     color: '#7850F8',
   },
   {
+    id: '8',
     label: '뉴에이지',
     name: 'new-age',
     color: '#00FF00',
   },
   {
+    id: '9',
     label: '포크/블루스',
     name: 'fork',
     color: '#FF0000',
   },
   {
+    id: '10',
     label: '일렉트로니카',
     name: 'electronica',
     color: '#FF00FF',
   },
   {
+    id: '11',
     label: 'OST',
     name: 'ost',
     color: '#00FFFF',
   },
   {
+    id: '12',
     label: '재즈',
     name: 'jazz',
     color: '#FF6347',
   },
   {
+    id: '13',
     label: 'J-pop',
     name: 'j-pop',
     color: '#FFA500',
