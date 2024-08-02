@@ -12,13 +12,16 @@ export default function MypageLayout() {
         },
         headerTintColor: COLORS.WHITE,
         headerTitle: '',
+        contentStyle: {
+          backgroundColor: COLORS.BLACK,
+        },
       }}
     >
       <Stack.Screen
         name="index"
         options={{
           title: '마이페이지',
-          headerTitle: () => <HeaderTitle title="일기쓰기" />,
+          headerTitle: () => <HeaderTitle title="마이페이지" />,
         }}
       />
       <Stack.Screen

@@ -5,6 +5,7 @@ import DateTimePicker, {
   type DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
 import { router } from 'expo-router';
+import { useQueryClient } from '@tanstack/react-query';
 import { COLORS, FONTS } from '@/constants';
 import CustomCheckToggle from '@/components/common/CustomCheckToggle';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
@@ -12,10 +13,18 @@ import { DefaultProfileSvg } from 'assets/images/mypage';
 import CustomBottomSheetModal from '@/components/common/CustomBottomSheetModal';
 import { formatToDate } from '@/utils/date-utils';
 import { useGetUserInfo, usePatchUser } from '@/api/hooks/useUsers';
+import { type Gender } from '@/models/types';
+import { type UserPayload } from '@/models/schemas';
 
 const EditScreen = () => {
+  const queryClient = useQueryClient();
   const { data: userInfo, isLoading, isError } = useGetUserInfo();
-  const patchUserMutation = usePatchUser();
+  const patchUserMutation = usePatchUser({
+    onSuccess: (data: UserPayload) => {
+      queryClient.invalidateQueries({ queryKey: ['userInfo'] });
+      router.back();
+    },
+  });
 
   // 데이터 로딩 중 표시
   if (isLoading) return <Text>Loading...</Text>;
@@ -46,7 +55,8 @@ const EditScreen = () => {
   };
 
   // 성별 토글
-  const genderOptions = ['FEMALE', 'MALE', 'NONE'];
+  const genderOptions: Gender[] = ['FEMALE', 'MALE', 'OTHER'];
+
   const [selectedToggle, setSelectedToggle] = useState<number>(
     genderOptions.indexOf(userInfo.gender),
   );
@@ -67,22 +77,17 @@ const EditScreen = () => {
   }, [nickname, selectedDate, selectedToggle]);
 
   const handleButtonPress = () => {
-    patchUserMutation.mutate({
-      id: userInfo.id,
-      payload: {
-        name: nickname,
-        birthDay: selectedDate.toISOString(),
-        gender: genderOptions[selectedToggle],
-        isGenreSuggested: userInfo.isGenreSuggested,
-        isAgreedMarketing: userInfo.isAgreedMarketing,
-        profileImageKey: userInfo.profileImageKey,
-        profileImageUrl: userInfo.profileImageUrl,
-        IsAgreedDiaryAlarm: userInfo.IsAgreedDiaryAlarm,
-        diaryAlarmTime: userInfo.diaryAlarmTime,
-        genres: userInfo.genres,
-      },
-    });
-    router.back();
+    const payload: UserPayload = {
+      name: nickname,
+      birthDay: selectedDate.toISOString(),
+      gender: genderOptions[selectedToggle],
+      isGenreSuggested: userInfo.isGenreSuggested,
+      isAgreedMarketing: userInfo.isAgreedMarketing,
+      IsAgreedDiaryAlarm: userInfo.IsAgreedDiaryAlarm,
+      diaryAlarmTime: userInfo.diaryAlarmTime,
+      genres: userInfo.genre.map((g) => ({ id: g.id })),
+    };
+    patchUserMutation.mutate({ id: userInfo.id, payload });
   };
 
   return (
@@ -92,15 +97,7 @@ const EditScreen = () => {
         <View style={styles.profile}>
           <View style={styles.profileImage}>
             <DefaultProfileSvg width={100} height={100} />
-            {/* <TouchableOpacity>
-              <View style={styles.cameraContainer}>
-                <PhotoSvg />
-              </View>
-            </TouchableOpacity> */}
           </View>
-          {/* <TouchableOpacity>
-            <Text style={styles.deleteText}>이미지 삭제</Text>
-          </TouchableOpacity> */}
         </View>
         {/* body */}
         <View style={styles.body}>
@@ -211,25 +208,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLORS.WHITE,
   },
-  // cameraContainer: {
-  //   position: 'absolute',
-  //   bottom: 0,
-  //   right: 0,
-  //   width: 30,
-  //   height: 30,
-  //   borderRadius: 15,
-  //   borderWidth: 1,
-  //   borderColor: COLORS.BLACK,
-  //   backgroundColor: COLORS.WHITE,
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   paddingLeft: 1,
-  // },
-  // deleteText: {
-  //   color: COLORS.CONTENTS_LIGHT,
-  //   ...FONTS.BTN,
-  //   marginTop: 11,
-  // },
   body: {
     gap: 30,
   },

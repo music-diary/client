@@ -32,3 +32,18 @@ export function calculateDaysSince(startDate: string): number {
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   return diffDays;
 }
+
+export const parseTime = (timeStr: string): Date => {
+  const [hours, minutes] = timeStr.split(':').map(Number);
+  const date = new Date();
+  date.setUTCHours(hours - 9, minutes, 0, 0); // UTC 시간 기준으로 설정
+  return date;
+};
+
+export const convertToTimeString = (date: Date): string => {
+  const kstOffset = 9 * 60 * 60 * 1000; // 9시간을 밀리초로 변환
+  const kstDate = new Date(date.getTime() + kstOffset); // KST 시간으로 변환
+  const hours = kstDate.getUTCHours().toString().padStart(2, '0');
+  const minutes = kstDate.getUTCMinutes().toString().padStart(2, '0');
+  return `${hours}:${minutes}`;
+}; 
