@@ -10,6 +10,7 @@ import {
 import { colorWithOpacity } from '@/utils/color-utils';
 import { COLORS, FONTS } from '@/constants';
 import { ArrowDownSvg } from 'assets/images/mypage';
+import { formatDateString } from '@/utils/date-utils';
 
 interface DropdownComponentProps {
   data: string[];
@@ -36,12 +37,9 @@ const DropDownToggle = ({
   const renderItem = ({ item, index }: { item: string; index: number }) => (
     <Pressable
       onPress={() => handleSelect(item)}
-      style={[
-        styles.item,
-        index === data.length - 1 && styles.lastItem, // 마지막 항목일 경우 스타일 적용
-      ]}
+      style={[styles.item, index === data.length - 1 && styles.lastItem]}
     >
-      <Text style={styles.itemText}>{item}</Text>
+      <Text style={styles.itemText}>{formatDateString(item)}</Text>
     </Pressable>
   );
 
@@ -49,7 +47,9 @@ const DropDownToggle = ({
     <View style={styles.container}>
       <Pressable onPress={toggleDropdown}>
         <View style={styles.title}>
-          <Text style={styles.buttonText}>{selectedValue} </Text>
+          <Text style={styles.buttonText}>
+            {formatDateString(selectedValue)}
+          </Text>
           <ArrowDownSvg fill={COLORS.WHITE} />
         </View>
       </Pressable>

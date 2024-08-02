@@ -27,6 +27,10 @@ export const useGetUserInfo = () => {
   });
 };
 
+export const useUserCreatedInfo = () => {
+  return useGetUserInfo().data.createdAt;
+};
+
 const patchUser = async ({ id, payload }: PathUserSchema) => {
   const { data } = await apiClient.patch(
     USERS.UPDATE.replace(':id', id),

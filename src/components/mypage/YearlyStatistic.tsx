@@ -1,50 +1,71 @@
-import { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { useMemo, useState } from 'react';
+import { StyleSheet, View, Text } from 'react-native';
 import { COLORS } from '@/constants';
 import DropDownToggle from '@/components/mypage/DropDownToggle';
 import MyFilling from '@/components/mypage/MyFilling';
 import MusicPreference from '@/components/mypage/MusicPreference';
 import DiaryTopic from '@/components/mypage/DiaryTopic';
-import yearlyData from '@/data/dummy_statistic_yearly.json';
 import DiaryYearlyGraph from '@/components/mypage/DiaryYearlyGraph';
-import { type YearlyStatistic } from '@/models/interfaces';
+import { useUserCreatedInfo } from '@/api/hooks/useUsers';
+import { generateYearArray } from '@/utils/date-utils';
+import NoDiaryStatistic from '@/components/mypage/NoDiaryStatistic';
+import YearlyNoDataTemplate from '@/components/mypage/YearlyNoDataTemplate';
+import { useGetYearlyStatistics } from '@/api/hooks/useStatistic';
+import MoreInfo from './MoreInfo';
 
 const YearlyStatisticPage = () => {
-  const [selectedValue, setSelectedValue] = useState(yearlyData[0].year);
-  const [selectedData, setSelectedData] = useState<YearlyStatistic>(
-    yearlyData[0],
-  );
+  const createdDate = useUserCreatedInfo();
+
+  const yearsArray = useMemo(() => {
+    if (!createdDate) return [];
+    return generateYearArray(createdDate);
+  }, [createdDate]);
+
+  const [selectedData, setSelectedData] = useState(yearsArray[0]);
+
+  const { data: yearlyStatistics, isError } =
+    useGetYearlyStatistics(selectedData);
+
+  if (!yearlyStatistics) return null;
+  if (isError) return <Text>Error occurred while fetching data.</Text>;
 
   const handleSelect = (value: string) => {
-    setSelectedValue(value);
-    const newData = yearlyData.find((data) => data.year === value);
-    if (newData) {
-      setSelectedData(newData);
-    }
+    setSelectedData(value);
   };
+
+  if (yearlyStatistics.diaries.length === 0) {
+    return (
+      <View>
+        <View style={styles.dropdown}>
+          <DropDownToggle
+            data={yearsArray}
+            selectedValue={selectedData}
+            onSelect={handleSelect}
+          />
+        </View>
+        <NoDiaryStatistic />
+        <YearlyNoDataTemplate />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
       <View style={styles.dropdown}>
         <DropDownToggle
-          data={yearlyData.map((data) => data.year)}
-          selectedValue={selectedValue}
+          data={yearsArray}
+          selectedValue={selectedData}
           onSelect={handleSelect}
         />
       </View>
       <View style={styles.bodyContainer}>
-        <DiaryYearlyGraph
-          average={selectedData.DiaryYearNumberData.average}
-          monthlyData={selectedData.DiaryYearNumberData.monthlyData}
-        />
-        <MusicPreference
-          musicCount={selectedData.MusicPreferenceData.musicCount}
-          isYearly
-        />
+        <DiaryYearlyGraph monthlyData={yearlyStatistics.diaries[0].months} />
+        <MusicPreference genreCounts={yearlyStatistics.genreCounts} isYearly />
         <View style={styles.twoColumnContainer}>
-          <MyFilling fillingData={selectedData.MyFillingData.fillingData} />
-          <DiaryTopic Topic={selectedData.DiaryTopicData.Topic} />
+          <MyFilling emotionData={yearlyStatistics.emotions} />
+          <DiaryTopic topics={yearlyStatistics.topics} />
         </View>
+        <MoreInfo />
       </View>
     </View>
   );

@@ -3,15 +3,43 @@ import { ConfettiSvg } from 'assets/images/mypage';
 import { COLORS, FONTS } from '@/constants';
 import { colorWithOpacity } from '@/utils/color-utils';
 import CircularGraph from '@/components/mypage/CircularGraph';
+import LoadingIndicator from '@/components/common/LoadingIndicator';
 
 const containerWidth = Dimensions.get('window').width / 2 - 24;
 
+const extractMonth = (dateString: string): number => {
+  if (!dateString) {
+    return 0;
+  }
+  const parts = dateString.split('-');
+
+  if (parts.length !== 2) {
+    throw new Error('Invalid date format. Expected YYYY-MM');
+  }
+  const month = parseInt(parts[1], 10);
+  if (isNaN(month) || month < 1 || month > 12) {
+    throw new Error('Invalid month value');
+  }
+  return month;
+};
+
 interface DiaryNumberProps {
-  month: number;
+  month: string;
   diaryCount: number;
 }
 
 const DiaryNumber = ({ month, diaryCount }: DiaryNumberProps) => {
+  const monthNumber = extractMonth(month);
+
+  // 에러케이스 -> 로딩 케이스
+  if (!month || diaryCount === -1) {
+    return (
+      <View style={styles.container}>
+        <LoadingIndicator />
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.title}>
@@ -23,7 +51,7 @@ const DiaryNumber = ({ month, diaryCount }: DiaryNumberProps) => {
         음악일기를 썼어요.
       </Text>
       <View style={styles.graphContainer}>
-        <CircularGraph month={month} diaryCount={diaryCount} />
+        <CircularGraph month={monthNumber} diaryCount={diaryCount} />
       </View>
     </View>
   );
