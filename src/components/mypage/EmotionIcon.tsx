@@ -12,7 +12,6 @@ interface HappyIconProps {
 const EmotionIcon = ({ percentage, color, emotion }: HappyIconProps) => {
   const iconSize = 44;
   const clipHeight = iconSize - (iconSize * percentage) / 100;
-  console.log(emotion);
   const pathD =
     // 좋았어요, 슬펐어요, 괜찮아요에 따라 Path의 d값을 다르게 설정
     emotion === '좋았어요!'

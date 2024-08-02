@@ -4,9 +4,7 @@ import { COLORS, FONTS } from '@/constants';
 import { colorWithOpacity } from '@/utils/color-utils';
 import PreferenceGraph from '@/components/mypage/PreferenceGraph';
 import { trimTitle } from '@/utils/text-utils';
-import { useGenres } from '@/api/hooks/useGenres'; // useGenres hook 가져오기
-import LoadingIndicator from '../common/LoadingIndicator';
-import { IGenre } from '@/models/interfaces';
+import { useGenres } from '@/api/hooks/useGenres';
 import { getGenreLabel } from '@/utils/label-utils';
 import DataNotFound from '../common/DataNotFound';
 

@@ -1,13 +1,32 @@
+import React, { useMemo } from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { COLORS, FONTS } from '@/constants';
 import { ConfettiSvg } from 'assets/images/mypage';
 import { colorWithOpacity } from '@/utils/color-utils';
 import LineGraph from '@/components/mypage/LineGraph';
-import { type DiaryYearNumberData } from '@/models/interfaces';
 
 const containerWidth = Dimensions.get('window').width - 32;
 
-const DiaryYearlyGraph = ({ average, monthlyData }: DiaryYearNumberData) => {
+interface MonthlyData {
+  month: string;
+  count: number;
+}
+
+interface DiaryYearlyGraphProps {
+  monthlyData: MonthlyData[];
+}
+
+const DiaryYearlyGraph = ({ monthlyData }: DiaryYearlyGraphProps) => {
+  const average = useMemo(() => {
+    const total = monthlyData.reduce((sum, { count }) => sum + count, 0);
+    return Math.round(total / monthlyData.length);
+  }, [monthlyData]);
+
+  const transformedData = monthlyData.map(({ month, count }) => ({
+    month: new Date(month).getMonth() + 1,
+    count,
+  }));
+
   return (
     <View style={styles.container}>
       <View style={styles.title}>
@@ -23,7 +42,7 @@ const DiaryYearlyGraph = ({ average, monthlyData }: DiaryYearNumberData) => {
           월 평균 <Text style={styles.boxHighlight}>{average}회</Text> 작성
         </Text>
       </View>
-      <LineGraph data={monthlyData} />
+      <LineGraph data={transformedData} />
     </View>
   );
 };

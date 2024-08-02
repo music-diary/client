@@ -41,19 +41,38 @@ const DiaryTopic = ({ topics }: DiaryTopicProps) => {
     (a, b) => b.topic._count.diaries - a.topic._count.diaries,
   );
 
+  const topTopics = sortedTopics.slice(0, 3);
+
+  const renderTopTopics = () => {
+    if (topTopics.length === 3) {
+      return (
+        <Text style={styles.bodyText}>
+          <Text style={styles.highlight}>
+            {topTopics[0].topic.label}, {topTopics[1].topic.label}
+          </Text>
+          {'\n'}
+          <Text style={styles.highlight}>{topTopics[2].topic.label}</Text>에
+          대해{'\n'} 많이 기록했어요.
+        </Text>
+      );
+    }
+    return (
+      <Text style={styles.bodyText}>
+        <Text style={styles.highlight}>
+          {topTopics.map((topic) => topic.topic.label).join(', ')}
+        </Text>
+        에{'\n'} 대해 많이 기록했어요.
+      </Text>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.title}>
         <BookOpenSvg />
         <Text style={styles.buttonText}>일기 주제</Text>
       </View>
-      <Text style={styles.bodyText}>
-        <Text style={styles.highlight}>
-          {sortedTopics[0].topic.label}, {sortedTopics[1].topic.label},{'\n'}
-          {sortedTopics[2].topic.label}
-        </Text>
-        에 대해 {'\n'} 많이 기록했어요.
-      </Text>
+      <Text style={styles.bodyText}>{renderTopTopics()}</Text>
 
       {sortedTopics.map((topic) => (
         <View key={topic.topic.id} style={styles.contentContainer}>

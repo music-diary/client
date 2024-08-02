@@ -7,37 +7,12 @@ import MyFilling from '@/components/mypage/MyFilling';
 import MusicPreference from '@/components/mypage/MusicPreference';
 import DiaryTopic from '@/components/mypage/DiaryTopic';
 import MoreInfo from '@/components/mypage/MoreInfo';
-import monthlyData from '@/data/dummy_statistic_monthly.json';
 import { useUserCreatedInfo } from '@/api/hooks/useUsers';
 import templateData from '@/data/static_monthly_template.json';
+import { generateMonthArray } from '@/utils/date-utils';
 import NoDiaryStatistic from './NoDiaryStatistic';
 
-const generateMonthArray = (createdDate: string): string[] => {
-  const months = [];
-  let currentDate = new Date();
-  const startDate = new Date(createdDate);
-
-  // Set to the first day of the current month for accurate calculations
-  currentDate.setDate(1);
-  startDate.setDate(1);
-
-  while (currentDate >= startDate) {
-    const month = currentDate.getMonth() + 1;
-    const year = currentDate.getFullYear();
-    months.push(`${year}-${month < 10 ? '0' : ''}${month}`);
-    currentDate = new Date(currentDate.setMonth(currentDate.getMonth() - 1)); // currentDate를 여기서 변경
-  }
-
-  // '2024-09' 추가
-  months.push('2024년 09월');
-
-  return months;
-};
-
 const MonthlyStatistic = () => {
-  const [selectedValue, setSelectedValue] = useState(monthlyData[0].month);
-  const [selectedData, setSelectedData] = useState(monthlyData[0]);
-
   const createdDate = useUserCreatedInfo();
 
   const monthsArray = useMemo(() => {
@@ -45,24 +20,20 @@ const MonthlyStatistic = () => {
     return generateMonthArray(createdDate);
   }, [createdDate]);
 
-  console.log(monthsArray);
+  const [selectedData, setSelectedData] = useState(monthsArray[0]);
 
   const handleSelect = (value: string) => {
-    setSelectedValue(value);
-    const newData = monthlyData.find((data) => data.month === value);
-    if (newData) {
-      setSelectedData(newData);
-    }
+    setSelectedData(value);
   };
 
-  // 일기를 쓰지 않은 경우
-  if (selectedData.DiaryNumberData.diaryCount === 0) {
+  // 일기가 없는 경우 (추후 수정해야함)
+  if (selectedData === '일기 없음') {
     return (
       <View>
         <View style={styles.dropdown}>
           <DropDownToggle
             data={monthsArray}
-            selectedValue={selectedValue}
+            selectedValue={selectedData}
             onSelect={handleSelect}
           />
         </View>
@@ -75,8 +46,8 @@ const MonthlyStatistic = () => {
     <View style={styles.container}>
       <View style={styles.dropdown}>
         <DropDownToggle
-          data={monthlyData.map((data) => data.month)}
-          selectedValue={selectedValue}
+          data={monthsArray}
+          selectedValue={selectedData}
           onSelect={handleSelect}
         />
       </View>
