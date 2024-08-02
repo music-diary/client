@@ -22,20 +22,16 @@ const MonthlyStatistic = () => {
   }, [createdDate]);
 
   const [selectedData, setSelectedData] = useState(monthsArray[0]);
-  const {
-    data: monthlyStatistics,
-    isLoading,
-    isError,
-  } = useGetMonthlyStatistics(selectedData);
+  const { data: monthlyStatistics, isError } =
+    useGetMonthlyStatistics(selectedData);
 
-  if (isLoading) return <Text>Loading...</Text>;
+  if (!monthlyStatistics) return null;
   if (isError) return <Text>Error occurred while fetching data.</Text>;
 
   const handleSelect = (value: string) => {
     setSelectedData(value);
   };
 
-  // 일기가 없는 경우 (추후 수정해야함)
   if (monthlyStatistics.diaryCount === 0) {
     return (
       <View>

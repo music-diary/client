@@ -1,4 +1,10 @@
-import { type IUserGenre, type IGenre } from './interfaces';
+import {
+  type IUserGenre,
+  type IGenre,
+  type IStatisticEmotion,
+  type IStatisticTopic,
+  type IDiaryYear,
+} from './interfaces';
 import { type Status, type Gender, type Role } from './types';
 
 export interface VerifyPhoneSchema {
@@ -56,4 +62,20 @@ export interface UserPayload {
 export interface PathUserSchema {
   id: string;
   payload: UserPayload;
+}
+
+export interface MonthlyStatisticsSchema {
+  date: string;
+  diaryCount: number;
+  emotions: IStatisticEmotion[];
+  genreCounts: Array<{ genre: string; count: number }>;
+  topics: IStatisticTopic[];
+}
+
+export interface YearlyStatisticsSchema {
+  year: string;
+  diaries: IDiaryYear[];
+  emotions: IStatisticEmotion[];
+  genreCounts: Array<{ genre: string; count: number }>;
+  topics: IStatisticTopic[];
 }

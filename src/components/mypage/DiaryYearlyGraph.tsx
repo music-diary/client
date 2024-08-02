@@ -4,19 +4,24 @@ import { COLORS, FONTS } from '@/constants';
 import { ConfettiSvg } from 'assets/images/mypage';
 import { colorWithOpacity } from '@/utils/color-utils';
 import LineGraph from '@/components/mypage/LineGraph';
+import LoadingIndicator from '../common/LoadingIndicator';
 
 const containerWidth = Dimensions.get('window').width - 32;
 
-interface MonthlyData {
-  month: string;
-  count: number;
-}
-
 interface DiaryYearlyGraphProps {
-  monthlyData: MonthlyData[];
+  monthlyData: Array<{ month: string; count: number }>;
 }
 
 const DiaryYearlyGraph = ({ monthlyData }: DiaryYearlyGraphProps) => {
+  // 에러케이스 + 로딩케이스
+  if (monthlyData.length === 0) {
+    return (
+      <View style={styles.container}>
+        <LoadingIndicator />
+      </View>
+    );
+  }
+
   const average = useMemo(() => {
     const total = monthlyData.reduce((sum, { count }) => sum + count, 0);
     return Math.round(total / monthlyData.length);

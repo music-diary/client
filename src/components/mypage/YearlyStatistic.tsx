@@ -6,7 +6,6 @@ import MyFilling from '@/components/mypage/MyFilling';
 import MusicPreference from '@/components/mypage/MusicPreference';
 import DiaryTopic from '@/components/mypage/DiaryTopic';
 import DiaryYearlyGraph from '@/components/mypage/DiaryYearlyGraph';
-import yearlyStatistics from '@/data/static_yearly_template.json';
 import { useUserCreatedInfo } from '@/api/hooks/useUsers';
 import { generateYearArray } from '@/utils/date-utils';
 import NoDiaryStatistic from '@/components/mypage/NoDiaryStatistic';
@@ -24,21 +23,16 @@ const YearlyStatisticPage = () => {
 
   const [selectedData, setSelectedData] = useState(yearsArray[0]);
 
-  const {
-    data: yearlyStatistics,
-    isLoading,
-    isError,
-  } = useGetYearlyStatistics(selectedData);
+  const { data: yearlyStatistics, isError } =
+    useGetYearlyStatistics(selectedData);
 
-  if (isLoading && yearlyStatistics === undefined)
-    return <Text>Loading...</Text>;
+  if (!yearlyStatistics) return null;
   if (isError) return <Text>Error occurred while fetching data.</Text>;
 
   const handleSelect = (value: string) => {
     setSelectedData(value);
   };
 
-  // 일기가 없는 경우 (추후 수정해야함)
   if (yearlyStatistics.diaries.length === 0) {
     return (
       <View>

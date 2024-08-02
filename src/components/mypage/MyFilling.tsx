@@ -7,22 +7,16 @@ import { colorWithOpacity } from '@/utils/color-utils';
 import { useMoods } from '@/api/hooks/useDiaries';
 import { emotionColor } from '@/constants/data';
 import { translateLabel } from '@/utils/label-utils';
-import DataNotFound from '../common/DataNotFound';
+import LoadingIndicator from '@/components/common/LoadingIndicator';
+import { type IStatisticEmotion } from '@/models/interfaces';
 
 const containerWidth = Dimensions.get('window').width / 2 - 24;
 
-interface EmotionData {
-  rootId: string;
-  rootIdName: string;
-  count: number;
-  topEmotions: string[];
-}
-
 interface MyFillingDataProps {
-  emotionData: EmotionData[];
+  emotionData: IStatisticEmotion[];
 }
 
-const calculatePercentages = (data: EmotionData[]) => {
+const calculatePercentages = (data: IStatisticEmotion[]) => {
   const total = data.reduce((acc, item) => acc + item.count, 0);
   return data
     .map((item) => ({
@@ -34,17 +28,17 @@ const calculatePercentages = (data: EmotionData[]) => {
     .sort((a, b) => b.percentage - a.percentage);
 };
 
-const MyFilling = ({ emotionData = [] }: MyFillingDataProps) => {
+const MyFilling = ({ emotionData }: MyFillingDataProps) => {
   const { data: moods } = useMoods();
 
   const percentages = calculatePercentages(emotionData);
   const mostFrequent = percentages[0];
 
-  // 에러 케이스
+  // 에러 케이스 + 로딩 케이스
   if (emotionData.length === 0 || !moods) {
     return (
       <View style={styles.container}>
-        <DataNotFound />
+        <LoadingIndicator />
       </View>
     );
   }

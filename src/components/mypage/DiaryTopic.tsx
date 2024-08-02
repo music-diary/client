@@ -3,36 +3,21 @@ import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { COLORS, FONTS } from '@/constants';
 import { BookOpenSvg } from 'assets/images/mypage';
 import { colorWithOpacity } from '@/utils/color-utils';
-import DataNotFound from '../common/DataNotFound';
+import LoadingIndicator from '@/components/common/LoadingIndicator';
+import { type IStatisticTopic } from '@/models/interfaces';
 
 const containerWidth = Dimensions.get('window').width / 2 - 24;
 
 interface DiaryTopicProps {
-  topics: Array<{
-    id: string;
-    userId: string;
-    diaryId: string;
-    topicId: string;
-    musicId: string | null;
-    createdAt: string;
-    updatedAt: string;
-    topic: {
-      id: string;
-      label: string;
-      emoji: string;
-      _count: {
-        diaries: number;
-      };
-    };
-  }>;
+  topics: IStatisticTopic[];
 }
 
 const DiaryTopic = ({ topics }: DiaryTopicProps) => {
-  // 에러 케이스
+  // 에러 케이스 + 로딩 케이스
   if (topics.length === 0) {
     return (
       <View style={styles.container}>
-        <DataNotFound />
+        <LoadingIndicator />
       </View>
     );
   }

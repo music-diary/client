@@ -3,6 +3,7 @@ import { ConfettiSvg } from 'assets/images/mypage';
 import { COLORS, FONTS } from '@/constants';
 import { colorWithOpacity } from '@/utils/color-utils';
 import CircularGraph from '@/components/mypage/CircularGraph';
+import LoadingIndicator from '@/components/common/LoadingIndicator';
 
 const containerWidth = Dimensions.get('window').width / 2 - 24;
 
@@ -29,6 +30,15 @@ interface DiaryNumberProps {
 
 const DiaryNumber = ({ month, diaryCount }: DiaryNumberProps) => {
   const monthNumber = extractMonth(month);
+
+  // 에러케이스 -> 로딩 케이스
+  if (!month || diaryCount === -1) {
+    return (
+      <View style={styles.container}>
+        <LoadingIndicator />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>

@@ -6,7 +6,7 @@ import PreferenceGraph from '@/components/mypage/PreferenceGraph';
 import { trimTitle } from '@/utils/text-utils';
 import { useGenres } from '@/api/hooks/useGenres';
 import { getGenreLabel } from '@/utils/label-utils';
-import DataNotFound from '../common/DataNotFound';
+import LoadingIndicator from '@/components/common/LoadingIndicator';
 
 const containerWidth = Dimensions.get('window').width / 2 - 24;
 
@@ -39,11 +39,11 @@ const MusicPreference = ({
 
   const componentWidth = isYearly ? containerYearlyWidth : containerWidth;
 
-  // 에러 케이스
+  // 에러 케이스 + 로딩케이스
   if (!genres || genreCounts.length === 0) {
     return (
       <View style={[styles.container, { width: componentWidth }]}>
-        <DataNotFound />
+        <LoadingIndicator />
       </View>
     );
   }
