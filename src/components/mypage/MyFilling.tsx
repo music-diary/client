@@ -4,44 +4,53 @@ import { COLORS, FONTS } from '@/constants';
 import { SmileySvg } from 'assets/images/mypage';
 import EmotionIcon from '@/components/mypage/EmotionIcon';
 import { colorWithOpacity } from '@/utils/color-utils';
+import { useMoods } from '@/api/hooks/useDiaries';
+import { emotionColor } from '@/constants/data';
+import { translateLabel } from '@/utils/label-utils';
 
 const containerWidth = Dimensions.get('window').width / 2 - 24;
 
-interface FillingData {
-  filling: string;
+interface EmotionData {
+  rootId: string;
+  rootIdName: string;
   count: number;
+  topEmotions: string[];
 }
 
 interface MyFillingDataProps {
-  fillingData: FillingData[];
+  emotionData: EmotionData[];
 }
 
-const calculatePercentages = (
-  data: FillingData[],
-): Array<{ filling: string; percentage: number }> => {
+const calculatePercentages = (data: EmotionData[]) => {
   const total = data.reduce((acc, item) => acc + item.count, 0);
   return data
     .map((item) => ({
-      filling: item.filling,
-      percentage: (item.count / total) * 100,
+      rootId: item.rootId,
+      rootIdName: item.rootIdName,
+      percentage: total ? (item.count / total) * 100 : 0,
+      topEmotions: item.topEmotions,
     }))
     .sort((a, b) => b.percentage - a.percentage);
 };
 
-const fillingColors: Record<string, string> = {
-  좋았어요: COLORS.GREEN,
-  괜찮아요: COLORS.PURPLE,
-  슬펐어요: COLORS.BLUE,
-};
+const MyFilling = ({ emotionData = [] }: MyFillingDataProps) => {
+  const { data: moods } = useMoods();
+  console.log('🚀 ~ file: MyFilling.tsx:47 ~ MyFilling ~ moods:', moods);
 
-const MyFilling = ({ fillingData }: MyFillingDataProps) => {
-  if (fillingData.length === 0) {
-    return null; // No data
+  if (emotionData.length === 0 || !moods) {
+    return (
+      <View style={styles.container}>
+        <Text
+          style={[FONTS.B2, { color: colorWithOpacity(COLORS.WHITE, 0.5) }]}
+        >
+          No data available
+        </Text>
+      </View>
+    );
   }
 
-  const percentages = calculatePercentages(fillingData);
+  const percentages = calculatePercentages(emotionData);
   const mostFrequent = percentages[0];
-  const otherFillings = percentages.slice(1);
 
   return (
     <View style={styles.container}>
@@ -53,35 +62,25 @@ const MyFilling = ({ fillingData }: MyFillingDataProps) => {
         <Text
           style={[
             styles.highlight,
-            { color: fillingColors[mostFrequent.filling] },
+            { color: emotionColor[mostFrequent.rootIdName] },
           ]}
         >
-          {mostFrequent.filling}
+          {translateLabel(mostFrequent.rootIdName, moods)}
+          <Text style={{ color: colorWithOpacity(COLORS.WHITE, 0.5) }}>
+            {' '}
+            중
+          </Text>
           {'\n'}
+          {mostFrequent.topEmotions.join(', ')}
         </Text>
         감정을 많이 느꼇어요.
       </Text>
       <View style={styles.iconContainer}>
         <EmotionIcon
           percentage={mostFrequent.percentage}
-          color={fillingColors[mostFrequent.filling]}
-          emotion={mostFrequent.filling}
+          color={emotionColor[mostFrequent.rootIdName]}
+          emotion={translateLabel(mostFrequent.rootIdName, moods)}
         />
-      </View>
-      <View style={styles.bottomContainer}>
-        {otherFillings.map((fillingData, index) => (
-          <View key={index} style={styles.dot}>
-            <View
-              style={[
-                styles.circleContainer,
-                { backgroundColor: fillingColors[fillingData.filling] },
-              ]}
-            />
-            <Text
-              style={styles.btnText}
-            >{` ${fillingData.percentage.toFixed(0)}%`}</Text>
-          </View>
-        ))}
       </View>
     </View>
   );
@@ -121,28 +120,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     ...FONTS.B2,
   },
-  bottomContainer: {
-    flexDirection: 'row',
-    gap: 16,
-  },
-  dot: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
+
   iconContainer: {
     paddingTop: 8,
-  },
-  circleContainer: {
-    flexDirection: 'row',
-    gap: 4,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-  },
-  btnText: {
-    color: colorWithOpacity(COLORS.WHITE, 0.5),
-    ...FONTS.BTN,
   },
 });
