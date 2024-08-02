@@ -65,7 +65,7 @@ export const generateMonthArray = (createdDate: string): string[] => {
   }
 
   // '2024-09' 추가 (임시)
-  months.push('일기 없음');
+  months.push('2024-09');
   return months;
 };
 
@@ -85,7 +85,7 @@ export const generateYearArray = (createdDate: string): string[] => {
   }
 
   // '2025' 추가 (임시)
-  years.push('일기 없음');
+  years.push('2025');
 
   return years;
 };
@@ -101,6 +101,6 @@ export const formatDateString = (input: string): string => {
     const [year] = parts;
     return `${year}년`;
   } else {
-    throw new Error('Invalid input format');
+    return 'Invalid date';
   }
 };

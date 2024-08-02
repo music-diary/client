@@ -23,7 +23,7 @@ const MonthlyNoDataTemplate = () => {
                 month={templateData.date}
                 diaryCount={templateData.diaryCount}
               />,
-              <MyFilling key="myFilling" emotionData={templateData.emotion} />,
+              <MyFilling key="myFilling" emotionData={templateData.emotions} />,
               <MusicPreference
                 key="musicPreference"
                 genreCounts={templateData.genreCounts}

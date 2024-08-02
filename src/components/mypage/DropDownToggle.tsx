@@ -37,10 +37,7 @@ const DropDownToggle = ({
   const renderItem = ({ item, index }: { item: string; index: number }) => (
     <Pressable
       onPress={() => handleSelect(item)}
-      style={[
-        styles.item,
-        index === data.length - 1 && styles.lastItem, // 마지막 항목일 경우 스타일 적용
-      ]}
+      style={[styles.item, index === data.length - 1 && styles.lastItem]}
     >
       <Text style={styles.itemText}>{formatDateString(item)}</Text>
     </Pressable>

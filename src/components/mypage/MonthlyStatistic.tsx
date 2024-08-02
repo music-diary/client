@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { StyleSheet, View, FlatList } from 'react-native';
+import { StyleSheet, View, FlatList, Text } from 'react-native';
 import { COLORS } from '@/constants';
 import DropDownToggle from '@/components/mypage/DropDownToggle';
 import DiaryNumber from '@/components/mypage/DiaryNumber';
@@ -8,10 +8,10 @@ import MusicPreference from '@/components/mypage/MusicPreference';
 import DiaryTopic from '@/components/mypage/DiaryTopic';
 import MoreInfo from '@/components/mypage/MoreInfo';
 import { useUserCreatedInfo } from '@/api/hooks/useUsers';
-import templateData from '@/data/static_monthly_template.json';
 import { generateMonthArray } from '@/utils/date-utils';
 import NoDiaryStatistic from '@/components/mypage/NoDiaryStatistic';
 import MonthlyNoDataTemplate from '@/components/mypage/MonthlyNoDataTemplate';
+import { useGetMonthlyStatistics } from '@/api/hooks/useStatistic';
 
 const MonthlyStatistic = () => {
   const createdDate = useUserCreatedInfo();
@@ -22,13 +22,21 @@ const MonthlyStatistic = () => {
   }, [createdDate]);
 
   const [selectedData, setSelectedData] = useState(monthsArray[0]);
+  const {
+    data: monthlyStatistics,
+    isLoading,
+    isError,
+  } = useGetMonthlyStatistics(selectedData);
+
+  if (isLoading) return <Text>Loading...</Text>;
+  if (isError) return <Text>Error occurred while fetching data.</Text>;
 
   const handleSelect = (value: string) => {
     setSelectedData(value);
   };
 
   // 일기가 없는 경우 (추후 수정해야함)
-  if (selectedData === '일기 없음') {
+  if (monthlyStatistics.diaryCount === 0) {
     return (
       <View>
         <View style={styles.dropdown}>
@@ -58,16 +66,19 @@ const MonthlyStatistic = () => {
           data={[
             <DiaryNumber
               key="diary1"
-              month={templateData.date}
-              diaryCount={templateData.diaryCount}
+              month={monthlyStatistics.date}
+              diaryCount={monthlyStatistics.diaryCount}
             />,
-            <MyFilling key="myFilling" emotionData={templateData.emotion} />,
+            <MyFilling
+              key="myFilling"
+              emotionData={monthlyStatistics.emotions}
+            />,
             <MusicPreference
               key="musicPreference"
-              genreCounts={templateData.genreCounts}
+              genreCounts={monthlyStatistics.genreCounts}
             />,
 
-            <DiaryTopic key="diaryTopic" topics={templateData.topics} />,
+            <DiaryTopic key="diaryTopic" topics={monthlyStatistics.topics} />,
             <MoreInfo key="moreInfo" />,
           ]}
           renderItem={({ item }) => <View style={styles.item}>{item}</View>}

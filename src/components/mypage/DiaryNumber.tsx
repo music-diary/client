@@ -7,7 +7,11 @@ import CircularGraph from '@/components/mypage/CircularGraph';
 const containerWidth = Dimensions.get('window').width / 2 - 24;
 
 const extractMonth = (dateString: string): number => {
+  if (!dateString) {
+    return 0;
+  }
   const parts = dateString.split('-');
+
   if (parts.length !== 2) {
     throw new Error('Invalid date format. Expected YYYY-MM');
   }

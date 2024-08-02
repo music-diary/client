@@ -1,16 +1,17 @@
 import { useMemo, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { COLORS } from '@/constants';
 import DropDownToggle from '@/components/mypage/DropDownToggle';
 import MyFilling from '@/components/mypage/MyFilling';
 import MusicPreference from '@/components/mypage/MusicPreference';
 import DiaryTopic from '@/components/mypage/DiaryTopic';
 import DiaryYearlyGraph from '@/components/mypage/DiaryYearlyGraph';
-import templateData from '@/data/static_yearly_template.json';
+import yearlyStatistics from '@/data/static_yearly_template.json';
 import { useUserCreatedInfo } from '@/api/hooks/useUsers';
 import { generateYearArray } from '@/utils/date-utils';
 import NoDiaryStatistic from '@/components/mypage/NoDiaryStatistic';
 import YearlyNoDataTemplate from '@/components/mypage/YearlyNoDataTemplate';
+import { useGetYearlyStatistics } from '@/api/hooks/useStatistic';
 import MoreInfo from './MoreInfo';
 
 const YearlyStatisticPage = () => {
@@ -23,12 +24,22 @@ const YearlyStatisticPage = () => {
 
   const [selectedData, setSelectedData] = useState(yearsArray[0]);
 
+  const {
+    data: yearlyStatistics,
+    isLoading,
+    isError,
+  } = useGetYearlyStatistics(selectedData);
+
+  if (isLoading && yearlyStatistics === undefined)
+    return <Text>Loading...</Text>;
+  if (isError) return <Text>Error occurred while fetching data.</Text>;
+
   const handleSelect = (value: string) => {
     setSelectedData(value);
   };
 
   // 일기가 없는 경우 (추후 수정해야함)
-  if (selectedData === '일기 없음') {
+  if (yearlyStatistics.diaries.length === 0) {
     return (
       <View>
         <View style={styles.dropdown}>
@@ -54,11 +65,11 @@ const YearlyStatisticPage = () => {
         />
       </View>
       <View style={styles.bodyContainer}>
-        <DiaryYearlyGraph monthlyData={templateData.diaries[0].months} />
-        <MusicPreference genreCounts={templateData.genreCounts} isYearly />
+        <DiaryYearlyGraph monthlyData={yearlyStatistics.diaries[0].months} />
+        <MusicPreference genreCounts={yearlyStatistics.genreCounts} isYearly />
         <View style={styles.twoColumnContainer}>
-          <MyFilling emotionData={templateData.emotions} />
-          <DiaryTopic topics={templateData.topics} />
+          <MyFilling emotionData={yearlyStatistics.emotions} />
+          <DiaryTopic topics={yearlyStatistics.topics} />
         </View>
         <MoreInfo />
       </View>

@@ -70,7 +70,7 @@ const MyFilling = ({ emotionData = [] }: MyFillingDataProps) => {
           {'\n'}
           {mostFrequent.topEmotions.join(', ')}
         </Text>
-        감정을 많이 느꼇어요.
+        {'\n'}감정을 많이 느꼇어요.
       </Text>
       <View style={styles.iconContainer}>
         <EmotionIcon

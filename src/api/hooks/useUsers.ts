@@ -1,6 +1,5 @@
 import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import { type PathUserSchema, type UserSchema } from '@/models/schemas';
-import data from '@/data/data';
 import apiClient from '../client';
 import { API_ENDPOINTS } from '../endpoints';
 

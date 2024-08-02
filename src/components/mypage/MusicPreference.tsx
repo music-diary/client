@@ -9,6 +9,7 @@ import { getGenreLabel } from '@/utils/label-utils';
 import DataNotFound from '../common/DataNotFound';
 
 const containerWidth = Dimensions.get('window').width / 2 - 24;
+
 const containerYearlyWidth = Dimensions.get('window').width - 32;
 
 interface MusicPreferenceProps {
@@ -16,16 +17,19 @@ interface MusicPreferenceProps {
   isYearly?: boolean;
 }
 
-const MusicPreference = ({ genreCounts, isYearly }: MusicPreferenceProps) => {
+const MusicPreference = ({
+  genreCounts = [],
+  isYearly,
+}: MusicPreferenceProps) => {
   const { data: genres } = useGenres();
 
   const generateGraphData = () => {
     return genreCounts.map((item) => {
       const genre = genres.find((g) => g.name === item.genre);
       return {
-        label: genre?.label || item.genre,
+        label: genre?.label ?? item.genre,
         count: item.count,
-        color: genre?.color || COLORS.BLACK,
+        color: genre?.color ?? COLORS.BLACK,
       };
     });
   };
@@ -38,7 +42,7 @@ const MusicPreference = ({ genreCounts, isYearly }: MusicPreferenceProps) => {
   // 에러 케이스
   if (!genres || genreCounts.length === 0) {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, { width: componentWidth }]}>
         <DataNotFound />
       </View>
     );
