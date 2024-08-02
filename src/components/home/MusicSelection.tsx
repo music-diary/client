@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { COLORS, FONTS } from '@/constants';
 import { useGenres } from '@/api/hooks/useGenres';
 import { type IGenre } from '@/models/interfaces';
+import { colorWithOpacity } from '@/utils/color-utils';
 import LoadingIndicator from '../common/LoadingIndicator';
 import ErrorDisplay from '../common/ErrorDisplay';
 
@@ -42,38 +43,49 @@ const MusicSelection = ({
   }
 
   return (
-    <View style={styles.grid}>
-      {genres.map((genre) => {
-        if (!genre.label) return null;
+    <>
+      <Text style={styles.warningText}>
+        최소 1개부터 최대 3개까지 선택 가능해요
+      </Text>
+      <View style={styles.grid}>
+        {genres.map((genre) => {
+          if (!genre.label) return null;
 
-        const isSelected = !!selectedGenres.find((g) => g.id === genre.id);
-        return (
-          <TouchableOpacity
-            key={genre.id}
-            style={[styles.item, isSelected && styles.selectedItem]}
-            onPress={() => toggleSelection(genre)}
-          >
-            <Text
-              style={[styles.itemText, isSelected && styles.selectedItemText]}
+          const isSelected = !!selectedGenres.find((g) => g.id === genre.id);
+          return (
+            <TouchableOpacity
+              key={genre.id}
+              style={[styles.item, isSelected && styles.selectedItem]}
+              onPress={() => toggleSelection(genre)}
             >
-              {genre.label ?? ''}
-            </Text>
-          </TouchableOpacity>
-        );
-      })}
-    </View>
+              <Text
+                style={[styles.itemText, isSelected && styles.selectedItemText]}
+              >
+                {genre.label ?? ''}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+    </>
   );
 };
 
 export default MusicSelection;
 
 const styles = StyleSheet.create({
+  warningText: {
+    paddingTop: 25,
+    paddingHorizontal: 25,
+    color: colorWithOpacity(COLORS.WHITE, 0.7),
+    ...FONTS.BTN,
+  },
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'flex-start',
     paddingHorizontal: 16,
-    paddingTop: 36,
+    paddingTop: 15,
     paddingBottom: 28,
   },
   item: {

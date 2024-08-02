@@ -1,54 +1,70 @@
+import React from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { COLORS, FONTS } from '@/constants';
 import { BookOpenSvg } from 'assets/images/mypage';
 import { colorWithOpacity } from '@/utils/color-utils';
-import { type ITopic } from '@/models/interfaces';
+import LoadingIndicator from '@/components/common/LoadingIndicator';
+import { type IStatisticTopic } from '@/models/interfaces';
 
 const containerWidth = Dimensions.get('window').width / 2 - 24;
 
-const topicList: ITopic[] = [
-  { id: '1', emoji: '👨‍👩‍👦‍👦', name: '가족' },
-  { id: '2', emoji: '💗', name: '연애' },
-  { id: '3', emoji: '💔', name: '이별' },
-  { id: '4', emoji: '🙌', name: '자존감' },
-  { id: '5', emoji: '🤝', name: '인간관계' },
-  { id: '6', emoji: '🎓', name: '공부' },
-  { id: '7', emoji: '💰', name: '돈' },
-  { id: '8', emoji: '🏫', name: '학교' },
-  { id: '9', emoji: '💼', name: '일' },
-  { id: '10', emoji: '💪', name: '건강' },
-  { id: '11', emoji: '❌', name: '이유없음' },
-];
 interface DiaryTopicProps {
-  Topic: string[];
+  topics: IStatisticTopic[];
 }
 
-const DiaryTopic = ({ Topic }: DiaryTopicProps) => {
+const DiaryTopic = ({ topics }: DiaryTopicProps) => {
+  // 에러 케이스 + 로딩 케이스
+  if (topics.length === 0) {
+    return (
+      <View style={styles.container}>
+        <LoadingIndicator />
+      </View>
+    );
+  }
+  // 가장 빈도 높은 순으로 sort
+  const sortedTopics = topics.sort(
+    (a, b) => b.topic._count.diaries - a.topic._count.diaries,
+  );
+
+  const topTopics = sortedTopics.slice(0, 3);
+
+  const renderTopTopics = () => {
+    if (topTopics.length === 3) {
+      return (
+        <Text style={styles.bodyText}>
+          <Text style={styles.highlight}>
+            {topTopics[0].topic.label}, {topTopics[1].topic.label}
+          </Text>
+          {'\n'}
+          <Text style={styles.highlight}>{topTopics[2].topic.label}</Text>에
+          대해{'\n'} 많이 기록했어요.
+        </Text>
+      );
+    }
+    return (
+      <Text style={styles.bodyText}>
+        <Text style={styles.highlight}>
+          {topTopics.map((topic) => topic.topic.label).join(', ')}
+        </Text>
+        에{'\n'} 대해 많이 기록했어요.
+      </Text>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.title}>
         <BookOpenSvg />
         <Text style={styles.buttonText}>일기 주제</Text>
       </View>
-      <Text style={styles.bodyText}>
-        <Text style={styles.highlight}>
-          {Topic[0]}, {Topic[1]}, {Topic[2]}
-        </Text>
-        에 대해 많이 기록했어요.
-      </Text>
+      <Text style={styles.bodyText}>{renderTopTopics()}</Text>
 
-      {Topic.map((topic) => {
-        const topicData = topicList.find((t) => t.name === topic);
-        if (topicData) {
-          return (
-            <View key={topicData.id} style={styles.contentContainer}>
-              <Text>{topicData.emoji}</Text>
-              <Text style={styles.b2sbText}>{topicData.name}</Text>
-            </View>
-          );
-        }
-        return null;
-      })}
+      {sortedTopics.map((topic) => (
+        <View key={topic.topic.id} style={styles.contentContainer}>
+          <Text>{topic.topic.emoji}</Text>
+          <Text style={styles.b2sbText}>{topic.topic.label}</Text>
+        </View>
+      ))}
     </View>
   );
 };
@@ -78,7 +94,7 @@ const styles = StyleSheet.create({
     ...FONTS.BTN,
   },
   bodyText: {
-    paddingVertical: 6,
+    paddingBottom: 6,
     color: colorWithOpacity(COLORS.WHITE, 0.5),
     ...FONTS.B2,
     textAlign: 'center',

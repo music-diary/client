@@ -1,4 +1,10 @@
-import { Dimensions, Pressable, StyleSheet, Text, View } from 'react-native';
+import {
+  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { router } from 'expo-router';
 import { COLORS, FONTS } from '@/constants';
 import { colorWithOpacity } from '@/utils/color-utils';
@@ -13,9 +19,9 @@ const MoreInfo = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.b2Text}>더 정확한 분석을 위해</Text>
-      <Pressable style={styles.button} onPress={onPress}>
+      <TouchableOpacity style={styles.button} onPress={onPress}>
         <Text style={styles.b2sbText}>일기쓰러 가기</Text>
-      </Pressable>
+      </TouchableOpacity>
     </View>
   );
 };

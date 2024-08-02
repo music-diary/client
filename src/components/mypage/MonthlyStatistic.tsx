@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, FlatList } from 'react-native';
+import React, { useMemo, useState } from 'react';
+import { StyleSheet, View, FlatList, Text } from 'react-native';
 import { COLORS } from '@/constants';
 import DropDownToggle from '@/components/mypage/DropDownToggle';
 import DiaryNumber from '@/components/mypage/DiaryNumber';
@@ -7,26 +7,53 @@ import MyFilling from '@/components/mypage/MyFilling';
 import MusicPreference from '@/components/mypage/MusicPreference';
 import DiaryTopic from '@/components/mypage/DiaryTopic';
 import MoreInfo from '@/components/mypage/MoreInfo';
-import monthlyData from '@/data/dummy_statistic_monthly.json';
+import { useUserCreatedInfo } from '@/api/hooks/useUsers';
+import { generateMonthArray } from '@/utils/date-utils';
+import NoDiaryStatistic from '@/components/mypage/NoDiaryStatistic';
+import MonthlyNoDataTemplate from '@/components/mypage/MonthlyNoDataTemplate';
+import { useGetMonthlyStatistics } from '@/api/hooks/useStatistic';
 
 const MonthlyStatistic = () => {
-  const [selectedValue, setSelectedValue] = useState(monthlyData[0].month);
-  const [selectedData, setSelectedData] = useState(monthlyData[0]);
+  const createdDate = useUserCreatedInfo();
+
+  const monthsArray = useMemo(() => {
+    if (!createdDate) return [];
+    return generateMonthArray(createdDate);
+  }, [createdDate]);
+
+  const [selectedData, setSelectedData] = useState(monthsArray[0]);
+  const { data: monthlyStatistics, isError } =
+    useGetMonthlyStatistics(selectedData);
+
+  if (!monthlyStatistics) return null;
+  if (isError) return <Text>Error occurred while fetching data.</Text>;
 
   const handleSelect = (value: string) => {
-    setSelectedValue(value);
-    const newData = monthlyData.find((data) => data.month === value);
-    if (newData) {
-      setSelectedData(newData);
-    }
+    setSelectedData(value);
   };
+
+  if (monthlyStatistics.diaryCount === 0) {
+    return (
+      <View>
+        <View style={styles.dropdown}>
+          <DropDownToggle
+            data={monthsArray}
+            selectedValue={selectedData}
+            onSelect={handleSelect}
+          />
+        </View>
+        <NoDiaryStatistic />
+        <MonthlyNoDataTemplate />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
       <View style={styles.dropdown}>
         <DropDownToggle
-          data={monthlyData.map((data) => data.month)}
-          selectedValue={selectedValue}
+          data={monthsArray}
+          selectedValue={selectedData}
           onSelect={handleSelect}
         />
       </View>
@@ -35,21 +62,19 @@ const MonthlyStatistic = () => {
           data={[
             <DiaryNumber
               key="diary1"
-              month={selectedData.DiaryNumberData.month}
-              diaryCount={selectedData.DiaryNumberData.diaryCount}
+              month={monthlyStatistics.date}
+              diaryCount={monthlyStatistics.diaryCount}
             />,
             <MyFilling
-              key="filling1"
-              fillingData={selectedData.MyFillingData.fillingData}
+              key="myFilling"
+              emotionData={monthlyStatistics.emotions}
             />,
             <MusicPreference
               key="musicPreference"
-              musicCount={selectedData.MusicPreferenceData.musicCount}
+              genreCounts={monthlyStatistics.genreCounts}
             />,
-            <DiaryTopic
-              key="diaryTopic"
-              Topic={selectedData.DiaryTopicData.Topic}
-            />,
+
+            <DiaryTopic key="diaryTopic" topics={monthlyStatistics.topics} />,
             <MoreInfo key="moreInfo" />,
           ]}
           renderItem={({ item }) => <View style={styles.item}>{item}</View>}
