@@ -9,8 +9,9 @@ import DiaryYearlyGraph from '@/components/mypage/DiaryYearlyGraph';
 import templateData from '@/data/static_yearly_template.json';
 import { useUserCreatedInfo } from '@/api/hooks/useUsers';
 import { generateYearArray } from '@/utils/date-utils';
+import NoDiaryStatistic from '@/components/mypage/NoDiaryStatistic';
+import YearlyNoDataTemplate from '@/components/mypage/YearlyNoDataTemplate';
 import MoreInfo from './MoreInfo';
-import NoDiaryStatistic from './NoDiaryStatistic';
 
 const YearlyStatisticPage = () => {
   const createdDate = useUserCreatedInfo();
@@ -38,6 +39,7 @@ const YearlyStatisticPage = () => {
           />
         </View>
         <NoDiaryStatistic />
+        <YearlyNoDataTemplate />
       </View>
     );
   }

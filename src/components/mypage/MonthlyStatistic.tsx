@@ -10,7 +10,8 @@ import MoreInfo from '@/components/mypage/MoreInfo';
 import { useUserCreatedInfo } from '@/api/hooks/useUsers';
 import templateData from '@/data/static_monthly_template.json';
 import { generateMonthArray } from '@/utils/date-utils';
-import NoDiaryStatistic from './NoDiaryStatistic';
+import NoDiaryStatistic from '@/components/mypage/NoDiaryStatistic';
+import MonthlyNoDataTemplate from '@/components/mypage/MonthlyNoDataTemplate';
 
 const MonthlyStatistic = () => {
   const createdDate = useUserCreatedInfo();
@@ -38,6 +39,7 @@ const MonthlyStatistic = () => {
           />
         </View>
         <NoDiaryStatistic />
+        <MonthlyNoDataTemplate />
       </View>
     );
   }

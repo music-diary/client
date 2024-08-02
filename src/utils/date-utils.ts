@@ -89,3 +89,18 @@ export const generateYearArray = (createdDate: string): string[] => {
 
   return years;
 };
+
+// form > 2024-08 -> 2024년 08월 / 2024 -> 2024년
+export const formatDateString = (input: string): string => {
+  const parts = input.split('-');
+
+  if (parts.length === 2) {
+    const [year, month] = parts;
+    return `${year}년 ${month}월`;
+  } else if (parts.length === 1) {
+    const [year] = parts;
+    return `${year}년`;
+  } else {
+    throw new Error('Invalid input format');
+  }
+};
