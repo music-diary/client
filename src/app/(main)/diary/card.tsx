@@ -2,8 +2,14 @@ import React, { useCallback, useEffect, useState } from 'react';
 import DateTimePicker, {
   type DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
-import { router, useFocusEffect, useNavigation } from 'expo-router';
+import {
+  router,
+  useFocusEffect,
+  useLocalSearchParams,
+  useNavigation,
+} from 'expo-router';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { usePatchDiary } from '@/api/hooks/useDiaries';
 import DailyDiaryCard from '@/components/archive/DailyDiaryCard';
 import CustomAlertModal from '@/components/common/CustomAlertModal';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
@@ -11,15 +17,14 @@ import CustomBottomSheetModal from '@/components/common/CustomBottomSheetModal';
 import CustomSplash from '@/components/common/CustomSplash';
 import { COLORS, FONTS } from '@/constants';
 import { splashOptions } from '@/constants/data';
-import dummy_archive_day from '@/data/dummy_archive_day.json';
+import { type SplashKey } from '@/models/types';
 import { useModalStore } from '@/store/useModalStore';
 import { useSplashStore } from '@/store/useSplashStore';
-import { type SplashKey } from '@/models/types';
-import { type DailyDiaryData } from '../archive/day/[day]';
 
 const CardScreen = () => {
-  const dailyDiaryData: DailyDiaryData[] = dummy_archive_day;
-  const [isFirstDiary] = useState(true);
+  const { diaryId } = useLocalSearchParams(); // URL에서 diaryData 가져오기
+
+  const [isFirstDiary] = useState(false);
   const [showPicker, setShowPicker] = useState(false);
   const [tempDate, setTempDate] = useState<Date>(new Date());
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
@@ -31,6 +36,15 @@ const CardScreen = () => {
 
   const navigation = useNavigation();
 
+  const { mutate: patchDiary } = usePatchDiary({
+    onSuccess: () => {
+      router.push({ pathname: '/(main)/archive' });
+    },
+    onError: () => {
+      console.error('Failed to patch diary');
+    },
+  });
+
   useEffect(() => {
     setSplashConfig(splashOptions[splashKey] || splashOptions.cheer);
   }, [splashKey]);
@@ -38,7 +52,6 @@ const CardScreen = () => {
   useFocusEffect(
     useCallback(() => {
       const state = navigation.getState();
-      console.log('Current Navigation State:', state);
     }, [navigation]),
   );
 
@@ -67,6 +80,7 @@ const CardScreen = () => {
     closeModal();
     closeSplash();
     setShowPicker(false);
+    patchDiary({ id: diaryId as string, payload: { status: 'DONE' } });
     router.replace('/(main)/archive');
   };
 
@@ -100,7 +114,7 @@ const CardScreen = () => {
         <ScrollView style={styles.container}>
           <Text style={styles.b1LightText}>3월 2일</Text>
           <View style={styles.cardContainer}>
-            <DailyDiaryCard {...dailyDiaryData[0]} />
+            <DailyDiaryCard diaryId={diaryId as string} />
           </View>
         </ScrollView>
       </View>

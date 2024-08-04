@@ -17,7 +17,7 @@ import CustomSplash from '@/components/common/CustomSplash';
 import SelectorButtonGroup from '@/components/diary/SelectorButtonGroup';
 import TopicButton from '@/components/diary/TopicButton';
 import { COLORS, FONTS } from '@/constants';
-import { type IEmotion, type ITopic } from '@/models/interfaces';
+import { type IDiary, type IEmotion, type ITopic } from '@/models/interfaces';
 import { type Mood } from '@/models/types';
 import { useModalStore } from '@/store/useModalStore';
 import { useSplashStore } from '@/store/useSplashStore';
@@ -49,6 +49,7 @@ const WriteScreen = () => {
 
   const [title, setTitle] = useState('');
   const [diaryContent, setDiaryContent] = useState('');
+  const [diaryData, setDiaryData] = useState<IDiary>({} as IDiary); // diaryData 상태 추가
   const [templateContents, setTemplateContents] = useState<
     Record<string, string>
   >({});
@@ -60,7 +61,10 @@ const WriteScreen = () => {
 
   const { mutate: patchDiary } = usePatchDiary({
     onSuccess: () => {
-      router.push({ pathname: '/diary/music', params: { diaryId } });
+      router.push({
+        pathname: '/diary/music',
+        params: { diaryId, diaryData: JSON.stringify(diaryData) },
+      });
     },
     onError: () => {
       console.error('Failed to patch diary');
@@ -80,7 +84,7 @@ const WriteScreen = () => {
   };
 
   const handleMusicRecommendation = () => {
-    const diaryData = createDiaryData({
+    const generatedDiaryData = createDiaryData({
       title,
       diaryContent,
       type: type as string,
@@ -88,8 +92,10 @@ const WriteScreen = () => {
       templateContents,
       topicList,
       emotions: [...emotionList, ...detailedEmotionList],
+      status: 'EDIT' as 'EDIT' | 'DONE',
     });
-    patchDiary({ id: diaryId as string, payload: diaryData });
+    setDiaryData(generatedDiaryData);
+    patchDiary({ id: diaryId as string, payload: generatedDiaryData });
   };
 
   const isButtonActive = () => {
