@@ -1,11 +1,14 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import {
-  type IMusic,
   type IEmotion,
+  type IMusic,
   type ITemplate,
   type ITopic,
 } from '@/models/interfaces';
-import { type PathDiarySchema } from '@/models/schemas';
+import {
+  type DiaryResponseSchema,
+  type PatchDiarySchema,
+} from '@/models/schemas';
 import apiClient from '../client';
 import { API_ENDPOINTS } from '../endpoints';
 
@@ -17,12 +20,17 @@ export const createDiary = async (): Promise<string> => {
   return data.diaryId;
 };
 
-const patchDiary = async ({ id, payload }: PathDiarySchema) => {
+const patchDiary = async ({ id, payload }: PatchDiarySchema) => {
   const { data } = await apiClient.patch(
     DIARIES.ID.replace(':id', id),
     payload,
   );
   return data;
+};
+
+const getDiary = async (id: string): Promise<DiaryResponseSchema> => {
+  const { data } = await apiClient.get(DIARIES.ID.replace(':id', id));
+  return data.diary;
 };
 
 const getAllEmotions = async (): Promise<IEmotion[]> => {
@@ -49,6 +57,14 @@ export const usePatchDiary = (options = {}) => {
   return useMutation({
     mutationFn: patchDiary,
     ...options,
+  });
+};
+
+export const useDiary = (id: string) => {
+  return useQuery({
+    queryKey: ['diary', id],
+    queryFn: async () => await getDiary(id),
+    initialData: {} as DiaryResponseSchema,
   });
 };
 

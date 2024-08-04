@@ -1,11 +1,12 @@
 import {
-  type IUserGenre,
   type IGenre,
+  type IUserGenre,
   type IStatisticEmotion,
   type IStatisticTopic,
   type IDiaryYear,
 } from './interfaces';
-import { type Status, type Gender, type Role } from './types';
+import { type IDiary, type IEmotion } from './interfaces/diary';
+import { type Gender, type Role, type Status } from './types';
 
 export interface VerifyPhoneSchema {
   phoneNumber: string;
@@ -22,9 +23,9 @@ export interface SignUpSchema {
   isAgreedMarketing: boolean;
 }
 
-export interface PathDiarySchema {
+export interface PatchDiarySchema {
   id: string;
-  payload: Record<string, any>;
+  payload: Partial<IDiary>;
 }
 
 export interface UserSchema {
@@ -78,4 +79,13 @@ export interface YearlyStatisticsSchema {
   emotions: IStatisticEmotion[];
   genreCounts: Array<{ genre: string; count: number }>;
   topics: IStatisticTopic[];
+}
+
+export interface DiaryResponseSchema extends Omit<IDiary, 'emotions'> {
+  emotions: Array<{
+    emotions: IEmotion;
+    parent?: IEmotion | null; // 상위 감정 객체
+    parentId?: string | null; // 상위 감정의 ID
+    rootId?: string; // 최상위 감정의 ID
+  }>;
 }

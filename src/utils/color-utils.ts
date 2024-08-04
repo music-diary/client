@@ -9,8 +9,8 @@ export const colorWithOpacity = (hex: string, alpha: number) => {
 };
 
 const moods = [
-  { value: 'happy', color: COLORS.GREEN },
-  { value: 'soso', color: COLORS.PURPLE },
+  { value: 'good', color: COLORS.GREEN },
+  { value: 'normal', color: COLORS.PURPLE },
   { value: 'bad', color: COLORS.BLUE },
 ];
 
