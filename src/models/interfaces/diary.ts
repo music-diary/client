@@ -19,6 +19,7 @@ export interface IEmotion {
   name: string;
   label: string;
   parentId: string;
+  parent: IEmotion;
   level: number;
   order: number;
 }
@@ -58,7 +59,7 @@ export interface IDiary {
   title: string;
   status: 'EDIT' | 'DONE';
   topics: Array<{ id: string }>;
-  emotions: Array<{ id: string }>;
+  emotions: IEmotion[];
   templates?: ITemplate | null;
   musics?: IMusic[];
   content?: string | null;

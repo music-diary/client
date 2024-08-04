@@ -1,36 +1,33 @@
 import { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { COLORS, FONTS } from '@/constants';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useDiary } from '@/api/hooks/useDiaries';
 import CircleAlbum from '@/components/common/CircleAlbum';
-import { ArrowInSvg, ArrowOutSvg } from 'assets/images/archive';
+import { COLORS, FONTS } from '@/constants';
+import { type IMusic } from '@/models/interfaces'; // 추가
 import { colorWithOpacity, getColorForMood } from '@/utils/color-utils';
+import { getMoodFromEmotions } from '@/utils/emotion-utils';
+import { ArrowInSvg, ArrowOutSvg } from 'assets/images/archive';
 
-interface DiaryDataProps {
-  albumCoverUrl: string;
-  songTitle: string;
-  artist: string;
-  diaryTitle: string;
-  emotions: string[];
-  lyrics: string;
-  diaryContent: string;
-  feeling: string;
-}
-
-const DailyMainArchive = ({
-  albumCoverUrl,
-  songTitle,
-  artist,
-  diaryTitle,
-  emotions,
-  lyrics,
-  diaryContent,
-  feeling,
-}: DiaryDataProps) => {
+const DailyMainArchive = ({ diaryId }: { diaryId: string }) => {
   const [expanded, setExpanded] = useState(false);
+  // 다이어리 조회
+  const { data: diaryData, error, isFetching } = useDiary(diaryId);
+  if (isFetching) return <Text>Loading...</Text>;
+  if (error) return <Text>Error!</Text>;
+
+  const { title, content, emotions, musics } = diaryData ?? {};
+  console.log('diaryData:', diaryData);
+
+  const mood = getMoodFromEmotions(emotions);
 
   const handlePress = () => {
     setExpanded(!expanded);
   };
+
+  const mainMusic: IMusic =
+    musics && musics.length > 0
+      ? musics.find((music) => music.selected) ?? musics[0] // 선택된 음악이 없으면 첫 번째 음악 사용
+      : ({} as IMusic); // 빈 객체를 기본값으로 사용
 
   return (
     <View style={styles.cardContainer}>
@@ -39,30 +36,30 @@ const DailyMainArchive = ({
       </TouchableOpacity>
       <View style={styles.divider}>
         <CircleAlbum
-          color={colorWithOpacity(getColorForMood(feeling), 0.3)}
-          imageSource={albumCoverUrl}
+          color={colorWithOpacity(getColorForMood(mood), 0.3)}
+          imageSource={mainMusic.albumUrl}
           diameter={240}
         />
         <View style={styles.middleContainer}>
           <View style={styles.sing}>
-            <Text style={styles.greyBtnText}>{artist}</Text>
-            <Text style={styles.b2sbText}>{songTitle}</Text>
-            <Text style={styles.lyricsText}>{lyrics}</Text>
+            <Text style={styles.greyBtnText}>{mainMusic.artist}</Text>
+            <Text style={styles.b2sbText}>{mainMusic.title}</Text>
+            <Text style={styles.lyricsText}>{mainMusic.selectedLyric}</Text>
           </View>
         </View>
       </View>
-      <Text style={styles.b2sbText}>{diaryTitle}</Text>
-      {expanded && <Text style={styles.diaryContent}>{diaryContent}</Text>}
+      <Text style={styles.b2sbText}>{title}</Text>
+      {expanded && <Text style={styles.diaryContent}>{content}</Text>}
       <View style={styles.emotionContainer}>
-        {emotions.map((emotion, index) => (
+        {emotions.map((data, index) => (
           <View
             key={index}
             style={[
               styles.emotionCircle,
-              { backgroundColor: getColorForMood(feeling) },
+              { backgroundColor: getColorForMood(mood) }, // 감정의 색상 사용
             ]}
           >
-            <Text style={styles.btnText}>{emotion}</Text>
+            <Text style={styles.btnText}>{data.emotions.label}</Text>
           </View>
         ))}
       </View>

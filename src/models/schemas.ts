@@ -1,4 +1,5 @@
-import { type IGenre, type IUserGenre, type IDiary } from './interfaces';
+import { type IGenre, type IUserGenre } from './interfaces';
+import { type IDiary, type IEmotion } from './interfaces/diary';
 import { type Gender, type Role, type Status } from './types';
 
 export interface VerifyPhoneSchema {
@@ -18,7 +19,7 @@ export interface SignUpSchema {
 
 export interface PatchDiarySchema {
   id: string;
-  payload: IDiary;
+  payload: Partial<IDiary>;
 }
 
 export interface UserSchema {
@@ -45,4 +46,13 @@ export interface UserSchema {
 export interface PathUserSchema {
   id: string;
   payload: Record<string, any>;
+}
+
+export interface DiaryResponseSchema extends Omit<IDiary, 'emotions'> {
+  emotions: Array<{
+    emotions: IEmotion;
+    parent?: IEmotion | null; // 상위 감정 객체
+    parentId?: string | null; // 상위 감정의 ID
+    rootId?: string; // 최상위 감정의 ID
+  }>;
 }

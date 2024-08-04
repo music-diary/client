@@ -37,6 +37,8 @@ const MusicRecommendationScreen = () => {
   const ref = useRef<ICarouselInstance>(null);
   const { closeModal } = useModalStore();
   const progress = useSharedValue<number>(0);
+  const [musicDiaryData, setMusicDiaryData] = useState<IDiary>({} as IDiary); // diaryData 상태 추가
+
   const [selectedLyrics, setSelectedLyrics] = useState<
     Record<number, number[]>
   >({});
@@ -49,7 +51,7 @@ const MusicRecommendationScreen = () => {
 
   const { mutate: patchDiary } = usePatchDiary({
     onSuccess: () => {
-      router.push('/diary/card');
+      router.push({ pathname: '/diary/card', params: { diaryId } });
     },
     onError: () => {
       console.error('Failed to patch diary');
@@ -90,10 +92,11 @@ const MusicRecommendationScreen = () => {
 
     const updatedDiaryData: IDiary = {
       ...parsedDiaryData,
-      status: 'EDIT', // 음악 추천 후 상태 업데이트
+      status: 'EDIT',
       musics: updatedMusicData,
     };
 
+    setMusicDiaryData(updatedDiaryData);
     patchDiary({ id: diaryId as string, payload: updatedDiaryData });
   };
 
