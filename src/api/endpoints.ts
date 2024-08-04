@@ -13,6 +13,10 @@ export const API_ENDPOINTS = {
     ALL: '/users',
     INFO: '/users/me',
     UPDATE: '/users/:id',
+    STATISTICS: {
+      MONTH: '/users/statistics?type=month&month=:value',
+      YEAR: '/users/statistics?type=year&year=:value',
+    },
   },
   GENRES: '/genres',
   DIARIES: {

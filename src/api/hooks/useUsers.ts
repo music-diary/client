@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useSuspenseQuery } from '@tanstack/react-query';
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import { type PathUserSchema, type UserSchema } from '@/models/schemas';
 import apiClient from '../client';
 import { API_ENDPOINTS } from '../endpoints';
@@ -17,7 +17,6 @@ export const useGetUser = () => {
 
 const getUserInfo = async (): Promise<UserSchema> => {
   const { data } = await apiClient.get(API_ENDPOINTS.USERS.INFO);
-  console.log('🚀 ~ file: useUsers.ts:20 ~ getUserInfo ~ data:', data.user);
   return data.user;
 };
 
@@ -26,6 +25,10 @@ export const useGetUserInfo = () => {
     queryKey: ['userInfo'],
     queryFn: getUserInfo,
   });
+};
+
+export const useUserCreatedInfo = () => {
+  return useGetUserInfo().data.createdAt;
 };
 
 const patchUser = async ({ id, payload }: PathUserSchema) => {

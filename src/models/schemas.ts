@@ -1,4 +1,10 @@
-import { type IGenre, type IUserGenre } from './interfaces';
+import {
+  type IGenre,
+  type IUserGenre,
+  type IStatisticEmotion,
+  type IStatisticTopic,
+  type IDiaryYear,
+} from './interfaces';
 import { type IDiary, type IEmotion } from './interfaces/diary';
 import { type Gender, type Role, type Status } from './types';
 
@@ -40,12 +46,39 @@ export interface UserSchema {
   createdAt: string;
   updatedAt: string;
   deletedAt: string | null;
-  genres: Array<{ genres: IUserGenre }>;
+  genre: IUserGenre[];
+}
+
+export interface UserPayload {
+  name: string;
+  birthDay: string;
+  gender: Gender;
+  isGenreSuggested: boolean;
+  isAgreedMarketing: boolean;
+  IsAgreedDiaryAlarm: boolean;
+  diaryAlarmTime: string;
+  genres: Array<{ id: string }>;
 }
 
 export interface PathUserSchema {
   id: string;
-  payload: Record<string, any>;
+  payload: UserPayload;
+}
+
+export interface MonthlyStatisticsSchema {
+  date: string;
+  diaryCount: number;
+  emotions: IStatisticEmotion[];
+  genreCounts: Array<{ genre: string; count: number }>;
+  topics: IStatisticTopic[];
+}
+
+export interface YearlyStatisticsSchema {
+  year: string;
+  diaries: IDiaryYear[];
+  emotions: IStatisticEmotion[];
+  genreCounts: Array<{ genre: string; count: number }>;
+  topics: IStatisticTopic[];
 }
 
 export interface DiaryResponseSchema extends Omit<IDiary, 'emotions'> {

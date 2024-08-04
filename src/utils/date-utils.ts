@@ -32,3 +32,75 @@ export function calculateDaysSince(startDate: string): number {
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   return diffDays;
 }
+
+export const parseTime = (timeStr: string): Date => {
+  const [hours, minutes] = timeStr.split(':').map(Number);
+  const date = new Date();
+  date.setUTCHours(hours - 9, minutes, 0, 0); // UTC 시간 기준으로 설정
+  return date;
+};
+
+export const convertToTimeString = (date: Date): string => {
+  const kstOffset = 9 * 60 * 60 * 1000; // 9시간을 밀리초로 변환
+  const kstDate = new Date(date.getTime() + kstOffset); // KST 시간으로 변환
+  const hours = kstDate.getUTCHours().toString().padStart(2, '0');
+  const minutes = kstDate.getUTCMinutes().toString().padStart(2, '0');
+  return `${hours}:${minutes}`;
+};
+
+// form > 2024-03-24T07:03:00.000Z 데이터가 들어오면 ['2024-03', '...', '2024-08'] 반환
+export const generateMonthArray = (createdDate: string): string[] => {
+  const months = [];
+  let currentDate = new Date();
+  const startDate = new Date(createdDate);
+
+  currentDate.setDate(1);
+  startDate.setDate(1);
+
+  while (currentDate >= startDate) {
+    const month = currentDate.getMonth() + 1;
+    const year = currentDate.getFullYear();
+    months.push(`${year}-${month < 10 ? '0' : ''}${month}`);
+    currentDate = new Date(currentDate.setMonth(currentDate.getMonth() - 1));
+  }
+
+  // '2024-09' 추가 (임시)
+  months.push('2024-09');
+  return months;
+};
+
+// form > 2024-03-24T07:03:00.000Z 데이터가 들어오면 ['2023', '2024'] 반환
+export const generateYearArray = (createdDate: string): string[] => {
+  const years = [];
+  const currentDate = new Date();
+  const startDate = new Date(createdDate);
+
+  currentDate.setMonth(0);
+  startDate.setMonth(0);
+
+  while (currentDate.getFullYear() >= startDate.getFullYear()) {
+    const year = currentDate.getFullYear();
+    years.push(`${year}`);
+    currentDate.setFullYear(currentDate.getFullYear() - 1);
+  }
+
+  // '2025' 추가 (임시)
+  years.push('2025');
+
+  return years;
+};
+
+// form > 2024-08 -> 2024년 08월 / 2024 -> 2024년
+export const formatDateString = (input: string): string => {
+  const parts = input.split('-');
+
+  if (parts.length === 2) {
+    const [year, month] = parts;
+    return `${year}년 ${month}월`;
+  } else if (parts.length === 1) {
+    const [year] = parts;
+    return `${year}년`;
+  } else {
+    return 'Invalid date';
+  }
+};

@@ -3,29 +3,33 @@ import { MusicNotesSvg } from 'assets/images/mypage';
 import { COLORS, FONTS } from '@/constants';
 import { colorWithOpacity } from '@/utils/color-utils';
 import PreferenceGraph from '@/components/mypage/PreferenceGraph';
-import { genres } from '@/constants/data';
+import { trimTitle } from '@/utils/text-utils';
+import { useGenres } from '@/api/hooks/useGenres';
+import { getGenreLabel } from '@/utils/label-utils';
+import LoadingIndicator from '@/components/common/LoadingIndicator';
 
 const containerWidth = Dimensions.get('window').width / 2 - 24;
+
 const containerYearlyWidth = Dimensions.get('window').width - 32;
 
 interface MusicPreferenceProps {
-  musicCount: Array<{ music: string; count: number }>;
+  genreCounts: Array<{ genre: string; count: number }>;
   isYearly?: boolean;
 }
 
-const getGenreLabel = (music: string) => {
-  const genre = genres.find((genre) => genre.name === music);
-  return genre ? genre.label : music;
-};
+const MusicPreference = ({
+  genreCounts = [],
+  isYearly,
+}: MusicPreferenceProps) => {
+  const { data: genres } = useGenres();
 
-const MusicPreference = ({ musicCount, isYearly }: MusicPreferenceProps) => {
   const generateGraphData = () => {
-    return musicCount.map((item) => {
-      const genre = genres.find((genre) => genre.name === item.music);
+    return genreCounts.map((item) => {
+      const genre = genres.find((g) => g.name === item.genre);
       return {
-        label: genre ? genre.label : item.music,
+        label: genre?.label ?? item.genre,
         count: item.count,
-        color: genre ? genre.color : COLORS.BLACK,
+        color: genre?.color ?? COLORS.BLACK,
       };
     });
   };
@@ -35,27 +39,43 @@ const MusicPreference = ({ musicCount, isYearly }: MusicPreferenceProps) => {
 
   const componentWidth = isYearly ? containerYearlyWidth : containerWidth;
 
+  // 에러 케이스 + 로딩케이스
+  if (!genres || genreCounts.length === 0) {
+    return (
+      <View style={[styles.container, { width: componentWidth }]}>
+        <LoadingIndicator />
+      </View>
+    );
+  }
+
   return (
     <View style={[styles.container, { width: componentWidth }]}>
       <View style={styles.title}>
         <MusicNotesSvg />
         <Text style={styles.buttonText}>내 음악취향</Text>
       </View>
-      <Text style={styles.bodyText}>
-        <Text style={styles.highlight}>
-          {getGenreLabel(musicCount[0].music)},{' '}
-          {getGenreLabel(musicCount[1].music)},{' '}
-          {getGenreLabel(musicCount[2].music)}
-          {'\n'}
+      <View>
+        <Text
+          style={[styles.bodyText, styles.highlight]}
+          numberOfLines={1}
+          ellipsizeMode="tail"
+        >
+          {genreCounts
+            .slice(0, 3)
+            .map((item) => getGenreLabel(item.genre, genres))
+            .join(', ')}
         </Text>
-        장르를 많이 기록했어요.
-      </Text>
+        <Text style={styles.bodyText}>장르를 많이 추천받았어요</Text>
+      </View>
+
       <PreferenceGraph data={graphData} total={graphTotal} />
       <View style={styles.genreContainer}>
         {graphData.map((genre, index) => (
           <View key={index} style={styles.genreItem}>
             <View style={[styles.icon, { backgroundColor: genre.color }]} />
-            <Text style={styles.genreText}>{genre.label}</Text>
+            <Text style={styles.genreText}>
+              {trimTitle(genre.label ?? '', 3)}
+            </Text>
           </View>
         ))}
       </View>
@@ -87,7 +107,6 @@ const styles = StyleSheet.create({
     ...FONTS.BTN,
   },
   bodyText: {
-    marginTop: 4,
     color: colorWithOpacity(COLORS.WHITE, 0.5),
     ...FONTS.B2,
     textAlign: 'center',

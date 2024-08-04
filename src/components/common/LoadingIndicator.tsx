@@ -12,8 +12,6 @@ const LoadingIndicator = () => {
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    gap: 28,
-    backgroundColor: COLORS.BLACK,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',

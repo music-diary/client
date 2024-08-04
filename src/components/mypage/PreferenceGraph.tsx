@@ -4,7 +4,11 @@ import { Svg, Circle } from 'react-native-svg';
 import { COLORS, FONTS } from '@/constants';
 
 interface PreferenceGraphProps {
-  data: Array<{ label: string; count: number; color: string }>;
+  data: Array<{
+    label: string | undefined;
+    count: number;
+    color: string | undefined;
+  }>;
   total: number;
 }
 

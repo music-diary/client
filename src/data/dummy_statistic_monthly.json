@@ -6,7 +6,7 @@
       "diaryCount": 15
     },
     "DiaryTopicData": {
-      "Topic": ["인간관계", "연애", "자존감"]
+      "Topic": ["인간관계", "학교", "일"]
     },
     "MusicPreferenceData": {
       "musicCount": [
@@ -51,7 +51,7 @@
     "month": "2024년 3월",
     "DiaryNumberData": {
       "month": 3,
-      "diaryCount": 20
+      "diaryCount": 0
     },
     "DiaryTopicData": {
       "Topic": ["가족", "연애", "이별"]
