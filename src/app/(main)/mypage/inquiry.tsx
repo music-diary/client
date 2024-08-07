@@ -14,6 +14,8 @@ import CustomCheckToggle from '@/components/common/CustomCheckToggle';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
 import { useGetContactTypes, useSendInquiry } from '@/api/hooks/useUsers';
 import { type ContactTypeSchema } from '@/models/schemas';
+import { validateEmail } from '@/utils/text-utils';
+import { WarningCircleSvg } from 'assets/images/onboarding';
 
 const InquiryScreen = () => {
   // 문의 유형 가져오기
@@ -29,6 +31,7 @@ const InquiryScreen = () => {
   const [selectedToggle, setSelectedToggle] = useState<number | null>(null);
   const [email, setEmail] = useState<string>('');
   const [extraReason, setExtraReason] = useState<string>('');
+  const [emailError, setEmailError] = useState<string | null>(null);
   const maxCharacters = 200; // 글자 수 제한
   const [isButtonActive, setButtonActive] = useState(false);
 
@@ -38,6 +41,15 @@ const InquiryScreen = () => {
 
   const handleEmailChange = (text: string) => {
     setEmail(text);
+    setEmailError(null);
+  };
+
+  const handleEmailBlur = () => {
+    if (!validateEmail(email)) {
+      setEmailError('유효한 이메일 주소를 입력해주세요.');
+    } else {
+      setEmailError(null);
+    }
   };
 
   const handleExtraReasonChange = (text: string) => {
@@ -47,15 +59,15 @@ const InquiryScreen = () => {
   };
 
   useEffect(() => {
-    if (selectedToggle !== null && email.length > 0) {
+    if (selectedToggle !== null && validateEmail(email) && !emailError) {
       setButtonActive(true);
     } else {
       setButtonActive(false);
     }
-  }, [selectedToggle, email]);
+  }, [selectedToggle, email, emailError]);
 
   const handleButtonPress = () => {
-    if (selectedToggle !== null && ContactTypes) {
+    if (selectedToggle !== null && ContactTypes && !emailError) {
       const payload = {
         senderEmail: email,
         contactTypeId: ContactTypes[selectedToggle].id,
@@ -106,8 +118,18 @@ const InquiryScreen = () => {
               placeholderTextColor={COLORS.CONTENTS_LIGHT}
               keyboardType="email-address"
               onChangeText={handleEmailChange}
+              onBlur={handleEmailBlur}
+              onFocus={() => setEmailError(null)}
+              value={email}
             />
           </View>
+          {emailError && (
+            <View style={styles.verifyStatusView}>
+              <WarningCircleSvg />
+              <Text style={styles.validityInfoText}>{emailError}</Text>
+            </View>
+          )}
+
           <Text style={styles.titleText}>상세 내용을 입력해주세요.</Text>
 
           <View style={styles.inputBoxContainer}>
@@ -216,5 +238,17 @@ const styles = StyleSheet.create({
   lbText: {
     color: COLORS.CONTENTS_LIGHT,
     ...FONTS.LB,
+  },
+
+  verifyStatusView: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 5,
+    gap: 4,
+  },
+  validityInfoText: {
+    color: COLORS.PINK,
+    ...FONTS.BTN,
   },
 });
