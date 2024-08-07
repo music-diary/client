@@ -81,6 +81,7 @@ export interface YearlyStatisticsSchema {
   topics: IStatisticTopic[];
 }
 
+
 export interface ContactTypeSchema {
   id: string;
   name: string;
@@ -93,6 +94,8 @@ export interface ContactPayloadSchema {
   contactTypeId: string;
   message: string;
 }
+
+
 
 export interface DiaryResponseSchema extends Omit<IDiary, 'emotions'> {
   emotions: Array<{
