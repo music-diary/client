@@ -31,7 +31,7 @@ import CustomAlertModal from '@/components/common/CustomAlertModal';
 import { useModalStore } from '@/store/useModalStore';
 import { useGetUserInfo, usePatchUser } from '@/api/hooks/useUsers';
 import { type IGenre } from '@/models/interfaces';
-import { type UserPayload } from '@/models/schemas';
+import { type UserPayloadSchema } from '@/models/schemas';
 
 const MypageScreen = () => {
   const { data: userInfo, isLoading, isError } = useGetUserInfo();
@@ -108,7 +108,7 @@ const MypageScreen = () => {
       id: genre.id,
     }));
     const updatedTime = convertToTimeString(tempDiaryTime);
-    const payload: UserPayload = {
+    const payload: UserPayloadSchema = {
       name: userName,
       birthDay: userInfo.birthDay,
       gender: userInfo.gender,

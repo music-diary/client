@@ -1,7 +1,14 @@
-import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
-import { type PathUserSchema, type UserSchema } from '@/models/schemas';
+import { useMutation, useSuspenseQuery, useQuery } from '@tanstack/react-query';
+import {
+  type PathUserSchema,
+  type UserSchema,
+  type YearlyStatisticsSchema,
+  type MonthlyStatisticsSchema,
+  type ContactTypeSchema,
+  type ContactPayloadSchema,
+} from '@/models/schemas';
+import { API_ENDPOINTS } from '@/api/endpoints';
 import apiClient from '../client';
-import { API_ENDPOINTS } from '../endpoints';
 
 const USERS = API_ENDPOINTS.USERS;
 
@@ -15,6 +22,7 @@ export const useGetUser = () => {
   return useMutation({ mutationFn: getUser });
 };
 
+// 유저 정보 가져오기
 const getUserInfo = async (): Promise<UserSchema> => {
   const { data } = await apiClient.get(API_ENDPOINTS.USERS.INFO);
   return data.user;
@@ -27,10 +35,12 @@ export const useGetUserInfo = () => {
   });
 };
 
+// 유저 생성일 가져오기
 export const useUserCreatedInfo = () => {
   return useGetUserInfo().data.createdAt;
 };
 
+// 유저 정보 수정하기
 const patchUser = async ({ id, payload }: PathUserSchema) => {
   const { data } = await apiClient.patch(
     USERS.UPDATE.replace(':id', id),
@@ -47,6 +57,87 @@ export const usePatchUser = (options = {}) => {
     },
     onError: (error) => {
       console.log('Update failed:', error);
+    },
+    ...options,
+  });
+};
+
+// 월간 통계 데이터 가져오기
+const getMonthlyStatistics = async (
+  month: string,
+): Promise<MonthlyStatisticsSchema> => {
+  const url = API_ENDPOINTS.USERS.STATISTICS.MONTH.replace(':value', month);
+  const { data } = await apiClient.get(url);
+  return data.data;
+};
+
+// 연간 통계 데이터 가져오기
+const getYearlyStatistics = async (
+  year: string,
+): Promise<YearlyStatisticsSchema> => {
+  const url = API_ENDPOINTS.USERS.STATISTICS.YEAR.replace(':value', year);
+  const { data } = await apiClient.get(url);
+  return data.data;
+};
+
+export const useGetMonthlyStatistics = (month: string) => {
+  return useQuery({
+    queryKey: ['monthlyStatistics', month],
+    queryFn: async () => await getMonthlyStatistics(month),
+    placeholderData: {
+      date: '',
+      diaryCount: -1,
+      emotions: [],
+      genreCounts: [],
+      topics: [],
+    },
+  });
+};
+
+export const useGetYearlyStatistics = (year: string) => {
+  return useQuery({
+    queryKey: ['yearlyStatistics', year],
+    queryFn: async () => await getYearlyStatistics(year),
+    placeholderData: {
+      year: '',
+      diaries: [
+        {
+          year: '',
+          count: 0,
+          months: [],
+        },
+      ],
+      emotions: [],
+      genreCounts: [],
+      topics: [],
+    },
+  });
+};
+
+// 문의 유형 조회
+const getContactTypes = async (): Promise<ContactTypeSchema[]> => {
+  const { data } = await apiClient.get(USERS.CONTACT);
+  return data.contactTypes;
+};
+
+export const useGetContactTypes = () => {
+  return useQuery({
+    queryKey: ['contactTypes'],
+    queryFn: getContactTypes,
+  });
+};
+
+// 문의 유형 post
+const sendInquiry = async (payload: ContactPayloadSchema) => {
+  const { data } = await apiClient.post(USERS.CONTACT, payload);
+  return data;
+};
+
+export const useSendInquiry = (options = {}) => {
+  return useMutation({
+    mutationFn: sendInquiry,
+    onError: (error) => {
+      console.log('Send Inquiry error:', error);
     },
     ...options,
   });

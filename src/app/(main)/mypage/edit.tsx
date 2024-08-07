@@ -21,13 +21,13 @@ import CustomBottomSheetModal from '@/components/common/CustomBottomSheetModal';
 import { formatToDate } from '@/utils/date-utils';
 import { useGetUserInfo, usePatchUser } from '@/api/hooks/useUsers';
 import { type Gender } from '@/models/types';
-import { type UserPayload } from '@/models/schemas';
+import { type UserPayloadSchema } from '@/models/schemas';
 
 const EditScreen = () => {
   const queryClient = useQueryClient();
   const { data: userInfo, isLoading, isError } = useGetUserInfo();
   const patchUserMutation = usePatchUser({
-    onSuccess: (data: UserPayload) => {
+    onSuccess: (data: UserPayloadSchema) => {
       queryClient.invalidateQueries({ queryKey: ['userInfo'] });
       router.back();
     },
@@ -86,7 +86,7 @@ const EditScreen = () => {
   }, [nickname, selectedDate, selectedToggle]);
 
   const handleButtonPress = () => {
-    const payload: UserPayload = {
+    const payload: UserPayloadSchema = {
       name: nickname,
       birthDay: selectedDate.toISOString(),
       gender: genderOptions[selectedToggle],

@@ -17,6 +17,7 @@ export const API_ENDPOINTS = {
       MONTH: '/users/statistics?type=month&month=:value',
       YEAR: '/users/statistics?type=year&year=:value',
     },
+    CONTACT: '/users/contact',
   },
   GENRES: '/genres',
   DIARIES: {

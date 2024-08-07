@@ -7,11 +7,13 @@ import MyFilling from '@/components/mypage/MyFilling';
 import MusicPreference from '@/components/mypage/MusicPreference';
 import DiaryTopic from '@/components/mypage/DiaryTopic';
 import MoreInfo from '@/components/mypage/MoreInfo';
-import { useUserCreatedInfo } from '@/api/hooks/useUsers';
+import {
+  useUserCreatedInfo,
+  useGetMonthlyStatistics,
+} from '@/api/hooks/useUsers';
 import { generateMonthArray } from '@/utils/date-utils';
 import NoDiaryStatistic from '@/components/mypage/NoDiaryStatistic';
 import MonthlyNoDataTemplate from '@/components/mypage/MonthlyNoDataTemplate';
-import { useGetMonthlyStatistics } from '@/api/hooks/useStatistic';
 
 const MonthlyStatistic = () => {
   const createdDate = useUserCreatedInfo();
