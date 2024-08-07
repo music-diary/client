@@ -18,6 +18,8 @@ export const API_ENDPOINTS = {
       YEAR: '/users/statistics?type=year&year=:value',
     },
     CONTACT: '/users/contact',
+    WITHDRAWAL_LIST: '/users/withdrawal',
+    WITHDRAWAL: '/users/:id/withdrawal',
   },
   GENRES: '/genres',
   DIARIES: {

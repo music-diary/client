@@ -15,22 +15,39 @@ import useKeyboardScrollViewScroll from '@/hooks/useKeyboardScrollViewScroll';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
 import CustomAlertModal from '@/components/common/CustomAlertModal';
 import { useModalStore } from '@/store/useModalStore';
+import {
+  useGetWithdrawalList,
+  useUserId,
+  useWithdrawal,
+} from '@/api/hooks/useUsers';
+import { useAppStore } from '@/store/useAppStore';
+import { type WithdrawalType } from '@/models/interfaces';
 
 const WithdrawalScreen = () => {
+  const userId = useUserId();
+  const { logout } = useAppStore();
   const { openModal, closeModal } = useModalStore();
+
+  const { data: withdrawalTypes } = useGetWithdrawalList();
+
+  const withdrawMutation = useWithdrawal({
+    onSuccess: () => {
+      console.log('탈퇴 성공');
+      logout();
+      closeModal();
+      router.push('/onboarding');
+    },
+  });
+
   // 키보드 높이 조절 (커스텀 훅 사용)
   const scrollViewRef = useRef<ScrollView>(null);
   useKeyboardScrollViewScroll(scrollViewRef);
 
-  // 토글 선택 (중복 선택을 위해 배열로 초기화)
-  const [selectedToggles, setSelectedToggles] = useState<number[]>([]);
+  // 단일 토글 선택
+  const [selectedToggle, setSelectedToggle] = useState<string | null>(null);
 
-  const handleToggleChange = (index: number) => {
-    if (selectedToggles.includes(index)) {
-      setSelectedToggles(selectedToggles.filter((i) => i !== index));
-    } else {
-      setSelectedToggles([...selectedToggles, index]);
-    }
+  const handleToggleChange = (id: string) => {
+    setSelectedToggle(selectedToggle === id ? null : id);
   };
 
   // 기타 사유 입력란
@@ -45,32 +62,40 @@ const WithdrawalScreen = () => {
   // 하단 완료 버튼 + 최종 확인 모달
   const [isButtonActive, setButtonActive] = useState(false);
 
+  // "기타" 사유의 ID 찾기
+  const otherReasonId = withdrawalTypes?.find(
+    (type: WithdrawalType) => type.name === 'OTHER',
+  )?.id;
+
   // 하나라도 체크박스 선택 시 하단 탈퇴하기 버튼 활성화
   useEffect(() => {
     const hasSelectedOtherReason =
-      selectedToggles.includes(4) && extraReason.length > 0;
-    const hasSelectedAnyReason = selectedToggles.length > 0;
+      otherReasonId &&
+      selectedToggle === otherReasonId &&
+      extraReason.length > 0;
+    const hasSelectedAnyReason = selectedToggle !== null;
     if (
-      (hasSelectedAnyReason && !selectedToggles.includes(4)) ||
+      (hasSelectedAnyReason && selectedToggle !== otherReasonId) ||
       hasSelectedOtherReason
     ) {
       setButtonActive(true);
     } else {
       setButtonActive(false);
     }
-  }, [selectedToggles, extraReason]);
+  }, [selectedToggle, extraReason, otherReasonId]);
 
   const handleButtonPress = () => {
     openModal('withdrawal-confirm-modal');
   };
 
   const handleConfirm = () => {
-    // 여기에 삭제 작업을 수행하는 코드를 추가하면 됨 (일단 임시로 홈으로 보냄 + 0.5초의 지연)
-    setTimeout(() => {
-      console.log('삭제 확인');
-      router.push('/(main)/home');
-      closeModal();
-    }, 500);
+    if (selectedToggle) {
+      const payload = {
+        withdrawalReasonsId: selectedToggle,
+        content: selectedToggle === otherReasonId ? extraReason : '',
+      };
+      withdrawMutation.mutate({ id: userId, payload });
+    }
   };
 
   const FinalConfirmModal = () => {
@@ -104,38 +129,17 @@ const WithdrawalScreen = () => {
           </Text>
           {/* 탈퇴 사유 선택 */}
           <View style={styles.toggleContainer}>
-            <CustomCheckToggle
-              index={0}
-              isSelected={selectedToggles.includes(0)}
-              onToggleChange={handleToggleChange}
-              description="음악 추천이 마음에 들지 않아요"
-            />
-            <CustomCheckToggle
-              index={1}
-              isSelected={selectedToggles.includes(1)}
-              onToggleChange={handleToggleChange}
-              description="더 이상 일기를 쓰지 않아요"
-            />
-            <CustomCheckToggle
-              index={2}
-              isSelected={selectedToggles.includes(2)}
-              onToggleChange={handleToggleChange}
-              description="앱 사용법을 모르겠어요"
-            />
-            <CustomCheckToggle
-              index={3}
-              isSelected={selectedToggles.includes(3)}
-              onToggleChange={handleToggleChange}
-              description="새로운 계정으로 다시 시작하고 싶어요"
-            />
-            <CustomCheckToggle
-              index={4}
-              isSelected={selectedToggles.includes(4)}
-              onToggleChange={handleToggleChange}
-              description="기타"
-            />
+            {withdrawalTypes.map((type: WithdrawalType) => (
+              <CustomCheckToggle
+                key={type.id}
+                index={parseInt(type.id)}
+                isSelected={selectedToggle === type.id}
+                onToggleChange={() => handleToggleChange(type.id)}
+                description={type.label}
+              />
+            ))}
             {/* 기타 입력창 */}
-            {selectedToggles.includes(4) && (
+            {otherReasonId && selectedToggle === otherReasonId && (
               <>
                 <View style={styles.inputContainer}>
                   {/* Placeholder 스타일링 */}
