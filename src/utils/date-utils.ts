@@ -30,7 +30,7 @@ export function calculateDaysSince(startDate: string): number {
   const now = new Date();
   const diffTime = Math.abs(now.getTime() - start.getTime());
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  return diffDays;
+  return diffDays; 
 }
 
 export const parseTime = (timeStr: string): Date => {
@@ -54,9 +54,6 @@ export const generateMonthArray = (createdDate: string): string[] => {
   let currentDate = new Date();
   const startDate = new Date(createdDate);
 
-  currentDate.setDate(1);
-  startDate.setDate(1);
-
   while (currentDate >= startDate) {
     const month = currentDate.getMonth() + 1;
     const year = currentDate.getFullYear();
@@ -74,9 +71,6 @@ export const generateYearArray = (createdDate: string): string[] => {
   const years = [];
   const currentDate = new Date();
   const startDate = new Date(createdDate);
-
-  currentDate.setMonth(0);
-  startDate.setMonth(0);
 
   while (currentDate.getFullYear() >= startDate.getFullYear()) {
     const year = currentDate.getFullYear();
