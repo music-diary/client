@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
+import { router } from 'expo-router';
 import { COLORS, FONTS } from '@/constants';
 import useKeyboardScrollViewScroll from '@/hooks/useKeyboardScrollViewScroll';
 import CustomCheckToggle from '@/components/common/CustomCheckToggle';
@@ -16,12 +17,23 @@ import { useGetContactTypes, useSendInquiry } from '@/api/hooks/useUsers';
 import { type ContactTypeSchema } from '@/models/schemas';
 import { validateEmail } from '@/utils/text-utils';
 import { WarningCircleSvg } from 'assets/images/onboarding';
+import CustomAlertModal from '@/components/common/CustomAlertModal';
+import { useModalStore } from '@/store/useModalStore';
 
 const InquiryScreen = () => {
   // 문의 유형 가져오기
   const { data: ContactTypes } = useGetContactTypes();
   // 문의 전송 mutation
-  const sendInquiryMutation = useSendInquiry();
+  const sendInquiryMutation = useSendInquiry({
+    onSuccess: () => {
+      router.back();
+      closeModal();
+    },
+  });
+
+  // 모달 가져오기
+  const { openModal, closeModal } = useModalStore();
+  const openInquiryModal = () => openModal('open-inquiry');
 
   // 키보드 높이 조절 (커스텀 훅 사용)
   const scrollViewRef = useRef<ScrollView>(null);
@@ -66,7 +78,7 @@ const InquiryScreen = () => {
     }
   }, [selectedToggle, email, emailError]);
 
-  const handleButtonPress = () => {
+  const handleInquiryConfirm = () => {
     if (selectedToggle !== null && ContactTypes && !emailError) {
       const payload = {
         senderEmail: email,
@@ -168,8 +180,19 @@ const InquiryScreen = () => {
       </KeyboardAvoidingView>
       <CustomBottomButton
         isActive={isButtonActive}
-        onPress={handleButtonPress}
+        onPress={openInquiryModal}
         label="문의하기"
+      />
+
+      {/* 문의하기 클릭 시 alertModal 띄우기 */}
+      <CustomAlertModal
+        name="open-inquiry"
+        title="해당 내용으로 문의를 보내시겠어요?"
+        description="영업일 기준 7일 이내에 답변을 보내드려요."
+        leftButtonText="취소하기"
+        rightButtonText="문의하기"
+        onLeftButtonPress={closeModal}
+        onRightButtonPress={handleInquiryConfirm}
       />
     </>
   );

@@ -133,14 +133,12 @@ const sendInquiry = async (payload: ContactPayloadSchema) => {
   return data;
 };
 
-export const useSendInquiry = () => {
+export const useSendInquiry = (options = {}) => {
   return useMutation({
     mutationFn: sendInquiry,
-    onSuccess: (data) => {
-      console.log('Inquiry sent successfully:', data);
-    },
     onError: (error) => {
       console.log('Send Inquiry error:', error);
     },
+    ...options,
   });
 };
