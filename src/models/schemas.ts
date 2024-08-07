@@ -48,7 +48,7 @@ export interface UserSchema {
   genre: IUserGenre[];
 }
 
-export interface UserPayload {
+export interface UserPayloadSchema {
   name: string;
   birthDay: string;
   gender: Gender;
@@ -61,7 +61,7 @@ export interface UserPayload {
 
 export interface PathUserSchema {
   id: string;
-  payload: UserPayload;
+  payload: UserPayloadSchema;
 }
 
 export interface MonthlyStatisticsSchema {
@@ -78,4 +78,17 @@ export interface YearlyStatisticsSchema {
   emotions: IStatisticEmotion[];
   genreCounts: Array<{ genre: string; count: number }>;
   topics: IStatisticTopic[];
+}
+
+export interface ContactTypeSchema {
+  id: string;
+  name: string;
+  label: string;
+  order: number;
+}
+
+export interface ContactPayloadSchema {
+  senderEmail: string;
+  contactTypeId: string;
+  message: string;
 }

@@ -6,11 +6,13 @@ import MyFilling from '@/components/mypage/MyFilling';
 import MusicPreference from '@/components/mypage/MusicPreference';
 import DiaryTopic from '@/components/mypage/DiaryTopic';
 import DiaryYearlyGraph from '@/components/mypage/DiaryYearlyGraph';
-import { useUserCreatedInfo } from '@/api/hooks/useUsers';
+import {
+  useUserCreatedInfo,
+  useGetYearlyStatistics,
+} from '@/api/hooks/useUsers';
 import { generateYearArray } from '@/utils/date-utils';
 import NoDiaryStatistic from '@/components/mypage/NoDiaryStatistic';
 import YearlyNoDataTemplate from '@/components/mypage/YearlyNoDataTemplate';
-import { useGetYearlyStatistics } from '@/api/hooks/useStatistic';
 import MoreInfo from './MoreInfo';
 
 const YearlyStatisticPage = () => {
