@@ -1,4 +1,5 @@
 import {
+  type IDiary,
   type IEmotion,
   type ITemplate,
   type ITopic,
@@ -13,6 +14,7 @@ interface DiaryDataParams {
   templateContents: Record<string, string>;
   topicList: ITopic[];
   emotions: IEmotion[];
+  status: 'EDIT' | 'DONE';
 }
 
 const buildFinalTemplate = (
@@ -34,13 +36,14 @@ export const createDiaryData = ({
   templateContents,
   topicList,
   emotions,
-}: DiaryDataParams) => {
+  status,
+}: DiaryDataParams): IDiary => {
   const finalTemplate =
     type && template ? buildFinalTemplate(template, templateContents) : null;
 
   return {
     title,
-    status: 'EDIT',
+    status,
     topics: topicList.map((topic) => ({ id: topic.id })),
     emotions: getFinalEmotions(emotions),
     ...(finalTemplate

@@ -48,6 +48,8 @@ const initializeApp = async () => {
   const token = await AsyncStorage.getItem('authToken');
   if (token) {
     useAppStore.getState().login(token);
+  } else {
+    useAppStore.getState().logout();
   }
 };
 

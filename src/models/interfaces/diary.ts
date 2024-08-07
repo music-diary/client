@@ -19,6 +19,7 @@ export interface IEmotion {
   name: string;
   label: string;
   parentId: string;
+  parent: IEmotion;
   level: number;
   order: number;
 }
@@ -28,6 +29,8 @@ export interface ITemplate {
   name: string;
   description: string;
   type: Template;
+  order: number;
+  isExample: boolean;
   templateContents: ITemplateContent[];
 }
 
@@ -45,10 +48,20 @@ export interface IMusic {
   title: string;
   artist: string;
   albumUrl: string;
-  selectedLyric: number | null;
+  selectedLyric: string;
   lyric: string;
   selected: boolean;
   youtubeUrl: string;
-  editorPick: boolean | null;
+  editorPick: string;
+}
+
+export interface IDiary {
+  title: string;
+  status: 'EDIT' | 'DONE';
+  topics: Array<{ id: string }>;
+  emotions: IEmotion[];
+  templates?: ITemplate | null;
+  musics?: IMusic[];
+  content?: string | null;
 }
 
