@@ -82,8 +82,8 @@ function RootLayoutNav() {
       router.navigate('(onboarding)');
       // router.navigate('(main)');
     } else {
-      // router.navigate('(main)');
-      router.navigate('(main)/mypage/statistic');
+      router.navigate('(main)');
+      // router.navigate('(main)/mypage/statistic');
     }
   }, [isAuthenticated]);
 

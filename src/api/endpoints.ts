@@ -30,4 +30,8 @@ export const API_ENDPOINTS = {
     CREATE: '/diaries',
     MUSIC: 'diaries/:id/musics/ai',
   },
+  ARCHIVES: {
+    MUSIC_ARCHIVE:
+      '/musics/me/archive?start-at=:startAt&end-at=:endAt&group=:group',
+  },
 };

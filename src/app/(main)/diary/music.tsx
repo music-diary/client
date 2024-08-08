@@ -24,7 +24,7 @@ import { useModalStore } from '@/store/useModalStore';
 import { colorWithOpacity } from '@/utils/color-utils';
 import { useMusicRecommendation, usePatchDiary } from '@/api/hooks/useDiaries';
 import { extractVideoId } from '@/utils/music-utils';
-import { type IDiary, type IMusic } from '@/models/interfaces';
+import { type IDiary, type IArchiveMusic } from '@/models/interfaces';
 
 const PAGE_WIDTH = Dimensions.get('window').width;
 const PAGE_HEIGHT = Dimensions.get('window').height;
@@ -81,7 +81,7 @@ const MusicRecommendationScreen = () => {
   };
 
   const handleNext = () => {
-    const updatedMusicData: IMusic[] = musicData.map((music, index) => ({
+    const updatedMusicData: IArchiveMusic[] = musicData.map((music, index) => ({
       ...music,
       selectedLyric: music.lyric
         .split('\n')

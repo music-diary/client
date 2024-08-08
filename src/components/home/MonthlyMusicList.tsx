@@ -1,16 +1,47 @@
+import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { COLORS } from '@/constants';
 import { HappySvg } from 'assets/images/common';
+import { type IArchiveMusic } from '@/models/interfaces';
+import { emotionColor } from '@/constants/data';
+import { colorWithOpacity } from '@/utils/color-utils';
 import CircleAlbum from '../common/CircleAlbum';
 
-const MonthlyMusicList = () => {
-  const colors = [
-    'rgba(42,237,21, 0.3)',
-    'rgba(255,59,257, 0.3)',
-    'rgba(0,128,255, 0.3)',
-    'rgba(255,165,0, 0.3)',
-  ];
-  const length = 10;
+interface MonthlyMusicListProps {
+  musics: IArchiveMusic[];
+}
+
+const MonthlyMusicList = ({ musics }: MonthlyMusicListProps) => {
+  const selectedMusics = musics.filter((music) => music.selected);
+
+  // 선택된 음악 목록을 렌더링하는 함수
+  const renderMusic = (music: IArchiveMusic, index: number) => {
+    if (!music.diary || !Array.isArray(music.diary.emotions)) {
+      console.error(
+        `음악 ID ${music.id}에 대한 일기 데이터가 유효하지 않습니다.`,
+      );
+      return null;
+    }
+
+    const emotionName =
+      music.diary.emotions.find(
+        (emotion) => emotion.emotions.parent.level === 0,
+      )?.emotions.parent.name ?? 'normal';
+    const color =
+      colorWithOpacity(emotionColor[emotionName], 0.3) ||
+      colorWithOpacity(COLORS.GREEN, 0.3);
+
+    return (
+      <View style={styles.albumList} key={music.id}>
+        <CircleAlbum
+          order={selectedMusics.length - index}
+          color={color}
+          imageSource={music.albumUrl}
+          diameter={68}
+        />
+      </View>
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -23,16 +54,7 @@ const MonthlyMusicList = () => {
           horizontal={true}
           showsHorizontalScrollIndicator={false}
         >
-          {Array.from({ length }).map((_, index) => (
-            <View style={styles.albumList} key={index}>
-              <CircleAlbum
-                order={length - index}
-                color={colors[index % colors.length]}
-                imageSource={'https://picsum.photos/100/100'}
-                diameter={68}
-              />
-            </View>
-          ))}
+          {selectedMusics.map(renderMusic)}
         </ScrollView>
       </View>
     </View>
@@ -59,6 +81,7 @@ const styles = StyleSheet.create({
   },
   albumList: {
     marginLeft: -18,
+    alignItems: 'center',
   },
   body: {
     flexDirection: 'row',

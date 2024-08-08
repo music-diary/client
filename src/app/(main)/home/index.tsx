@@ -9,6 +9,7 @@ import CharacterAnimation from '@/components/home/CharacterAnimation';
 import { COLORS, FONTS } from '@/constants';
 import TopDescription from '@/components/home/TopDescription';
 import NewUserDescription from '@/components/home/NewUserDescription';
+import { useMusicArchive } from '@/api/hooks/useArchive';
 
 const HomeScreen = () => {
   // 월간 작성 개수 -> dummy data
@@ -16,7 +17,13 @@ const HomeScreen = () => {
   // 이름 -> dummy data
   const name = 'Miya';
 
-  // person클릭 시 마이페이지로 이동
+  const { data, error, isLoading } = useMusicArchive(
+    '2024-07-01',
+    '2024-07-31',
+    'month',
+  );
+
+  // person 클릭 시 마이페이지로 이동
   const handlePersonClick = () => {
     router.push('/(main)/mypage');
   };
@@ -60,8 +67,8 @@ const HomeScreen = () => {
                 </Text>
               )}
             </View>
-            {diaryCount > 0 ? (
-              <MonthlyMusicList />
+            {diaryCount > 0 && data ? (
+              <MonthlyMusicList musics={data.musics} />
             ) : (
               <NewUserDescription description="아직 작성한 일기가 없어요" />
             )}
