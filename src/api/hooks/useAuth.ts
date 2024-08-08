@@ -7,10 +7,10 @@ import { API_ENDPOINTS } from '../endpoints';
 
 const AUTH = API_ENDPOINTS.AUTH;
 
-export const login = async () => {
+export const tempLogin = async () => {
   try {
     const { headers, data } = await apiClient.post(AUTH.LOGIN, {
-      id: 'f38eb524-c87a-4653-ac47-7cfbebf5e43b',
+      id: 'cddf8b1e-55c7-4e95-8208-e91beaba823d',
     });
 
     await handleLogin(headers);
@@ -57,6 +57,10 @@ const signUp = async (userData: SignUpSchema) => {
   } catch (error) {
     handleError(error, 'SignUp error');
   }
+};
+
+export const useTempLogin = () => {
+  return useMutation({ mutationFn: tempLogin });
 };
 
 export const useRequestPhoneVerification = () => {

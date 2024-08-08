@@ -81,7 +81,6 @@ export interface YearlyStatisticsSchema {
   topics: IStatisticTopic[];
 }
 
-
 export interface ContactTypeSchema {
   id: string;
   name: string;
@@ -95,8 +94,6 @@ export interface ContactPayloadSchema {
   message: string;
 }
 
-
-
 export interface DiaryResponseSchema extends Omit<IDiary, 'emotions'> {
   emotions: Array<{
     emotions: IEmotion;
@@ -104,4 +101,13 @@ export interface DiaryResponseSchema extends Omit<IDiary, 'emotions'> {
     parentId?: string | null; // 상위 감정의 ID
     rootId?: string; // 최상위 감정의 ID
   }>;
+}
+
+export interface WithdrawalPayloadSchema {
+  withdrawalReasonsId: string;
+  content: string;
+}
+export interface PathWithdrawalSchema {
+  id: string;
+  payload: WithdrawalPayloadSchema;
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Text,
   View,
@@ -12,6 +12,7 @@ import { Feather, MaterialIcons } from '@expo/vector-icons';
 import DateTimePicker, {
   type DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
+import { openBrowserAsync } from 'expo-web-browser';
 import { COLORS, FONTS } from '@/constants';
 import BodyNavigator from '@/components/mypage/BodyNavigator';
 import CustomToggle from '@/components/common/CustomToggle';
@@ -32,6 +33,7 @@ import { useModalStore } from '@/store/useModalStore';
 import { useGetUserInfo, usePatchUser } from '@/api/hooks/useUsers';
 import { type IGenre } from '@/models/interfaces';
 import { type UserPayloadSchema } from '@/models/schemas';
+import { mypageTerms } from '@/constants/data/terms';
 
 const MypageScreen = () => {
   const { data: userInfo, isLoading, isError } = useGetUserInfo();
@@ -148,6 +150,10 @@ const MypageScreen = () => {
     router.push('/(main)/mypage/withdrawal');
   };
 
+  const handleOpenTerms = (url: string) => {
+    openBrowserAsync(url);
+  };
+
   if (isLoading) return <Text>Loading...</Text>;
   if (isError) return <Text>Error occurred while fetching data.</Text>;
 
@@ -251,10 +257,13 @@ const MypageScreen = () => {
         </View>
         {/* 바디2-2 */}
         <View style={styles.body2}>
-          <BodyNavigator content="서비스 소개" onPress={() => {}} />
-          <BodyNavigator content="오픈 라이센스" onPress={() => {}} />
-          <BodyNavigator content="개인정보처리방침" onPress={() => {}} />
-          <BodyNavigator content="이용 약관" onPress={() => {}} />
+          {mypageTerms.map((term) => (
+            <BodyNavigator
+              key={term.id}
+              content={term.title}
+              onPress={() => handleOpenTerms(term.url)}
+            />
+          ))}
         </View>
         {/* 바디3 */}
         <View style={styles.divider} />

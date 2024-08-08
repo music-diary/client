@@ -5,3 +5,10 @@ export interface IUserGenre {
   color: string;
   order: number;
 }
+
+export interface WithdrawalType {
+  id: string;
+  label: string;
+  name: string;
+  order: number;
+}

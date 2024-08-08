@@ -6,6 +6,7 @@ import {
   type MonthlyStatisticsSchema,
   type ContactTypeSchema,
   type ContactPayloadSchema,
+  type PathWithdrawalSchema,
 } from '@/models/schemas';
 import { API_ENDPOINTS } from '@/api/endpoints';
 import apiClient from '../client';
@@ -38,6 +39,11 @@ export const useGetUserInfo = () => {
 // 유저 생성일 가져오기
 export const useUserCreatedInfo = () => {
   return useGetUserInfo().data.createdAt;
+};
+
+// 유저 아이디 가져오기
+export const useUserId = () => {
+  return useGetUserInfo().data.id;
 };
 
 // 유저 정보 수정하기
@@ -124,6 +130,7 @@ export const useGetContactTypes = () => {
   return useQuery({
     queryKey: ['contactTypes'],
     queryFn: getContactTypes,
+    placeholderData: [],
   });
 };
 
@@ -138,6 +145,39 @@ export const useSendInquiry = (options = {}) => {
     mutationFn: sendInquiry,
     onError: (error) => {
       console.log('Send Inquiry error:', error);
+    },
+    ...options,
+  });
+};
+
+// 회원 탈퇴 목록 get
+const getWithdrawalList = async () => {
+  const { data } = await apiClient.get(USERS.WITHDRAWAL_LIST);
+  return data.withdrawalReasons;
+};
+
+export const useGetWithdrawalList = () => {
+  return useQuery({
+    queryKey: ['withdrawalList'],
+    queryFn: getWithdrawalList,
+    placeholderData: [],
+  });
+};
+
+// 회원 탈퇴 post
+const withdrawal = async ({ id, payload }: PathWithdrawalSchema) => {
+  const { data } = await apiClient.post(
+    USERS.WITHDRAWAL.replace(':id', id),
+    payload,
+  );
+  return data;
+};
+
+export const useWithdrawal = (options = {}) => {
+  return useMutation({
+    mutationFn: withdrawal,
+    onError: (error) => {
+      console.log('Withdrawal failed:', error);
     },
     ...options,
   });
