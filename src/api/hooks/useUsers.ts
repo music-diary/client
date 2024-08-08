@@ -123,8 +123,6 @@ export const useGetYearlyStatistics = (year: string) => {
 // 문의 유형 조회
 const getContactTypes = async (): Promise<ContactTypeSchema[]> => {
   const { data } = await apiClient.get(USERS.CONTACT);
-  // 3초 지연
-  await new Promise((resolve) => setTimeout(resolve, 3000));
   return data.contactTypes;
 };
 
