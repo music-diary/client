@@ -64,6 +64,12 @@ export default function TabLayout() {
           tabBarStyle: { display: 'none' },
           tabBarItemStyle: styles.middleItem,
         }}
+        listeners={({ navigation }) => ({
+          tabPress: (e) => {
+            e.preventDefault();
+            navigation.navigate('diary', { screen: 'index' });
+          },
+        })}
       />
       <Tabs.Screen
         name="archive"

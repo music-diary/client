@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
-import { router } from 'expo-router';
-import { ScrollView, StyleSheet } from 'react-native';
+import { useCallback, useState } from 'react';
+import { router, useFocusEffect } from 'expo-router';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { createDiary } from '@/api/hooks/useDiaries';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
 import DetailedEmotionSelector from '@/components/diary/DetailedEmotionSelector';
 import EmotionSelector from '@/components/diary/EmotionSelector';
@@ -10,7 +11,6 @@ import TopicSelector from '@/components/diary/TopicSelector';
 import { COLORS } from '@/constants';
 import { type IEmotion, type ITopic } from '@/models/interfaces';
 import { isEmptyObject } from '@/utils/common-utils';
-import { createDiary } from '@/api/hooks/useDiaries';
 
 const SubjectEmotionScreen = () => {
   const [mood, setMood] = useState<IEmotion>({} as IEmotion);
@@ -18,19 +18,32 @@ const SubjectEmotionScreen = () => {
   const [detailedEmotions, setDetailedEmotions] = useState<IEmotion[]>([]);
   const [topics, setTopics] = useState<ITopic[]>([]);
   const [diaryId, setDiaryId] = useState<string>('');
+  const [error, setError] = useState<string | null>(null); // 오류 상태
 
-  useEffect(() => {
-    const fetchDiaryId = async () => {
-      try {
-        const id = await createDiary();
-        setDiaryId(id);
-      } catch (error) {
-        console.error('Failed to create diary:', error);
+  /**
+   * TODO:
+   *
+   * 이부분 확인해봐야함
+   */
+  useFocusEffect(
+    useCallback(() => {
+      const fetchDiaryId = async () => {
+        try {
+          const id = await createDiary();
+          setDiaryId(id);
+          setError(null); // 오류 상태 초기화
+        } catch (error) {
+          console.error('Failed to create diary:', error);
+          setError('일기를 생성하는 데 실패했습니다. \n 다시 시도해 주세요.');
+        }
+      };
+
+      // diaryId가 없을 때만 새로 생성
+      if (!diaryId) {
+        fetchDiaryId();
       }
-    };
-
-    fetchDiaryId();
-  }, []);
+    }, [diaryId]),
+  );
 
   const handleNext = () => {
     router.push({
@@ -44,6 +57,21 @@ const SubjectEmotionScreen = () => {
       },
     });
   };
+
+  /**
+   * TODO:
+   *
+   * 로딩인디케이터 추가
+   */
+  if (error) {
+    return (
+      <View style={styles.container}>
+        <View style={styles.errorContainer}>
+          <Text style={styles.errorText}>{error}</Text>
+        </View>
+      </View>
+    );
+  }
 
   return (
     <>
@@ -104,5 +132,17 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.BLACK,
     paddingHorizontal: 16,
     paddingTop: 20,
+  },
+  errorContainer: {
+    marginVertical: 20,
+    paddingHorizontal: 16,
+    backgroundColor: COLORS.RED, // 오류 메시지 배경색
+    borderRadius: 8,
+    padding: 10,
+  },
+  errorText: {
+    color: COLORS.WHITE, // 오류 메시지 텍스트 색상
+    fontSize: 16,
+    textAlign: 'center',
   },
 });

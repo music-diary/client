@@ -92,7 +92,7 @@ const WriteScreen = () => {
       templateContents,
       topicList,
       emotions: [...emotionList, ...detailedEmotionList],
-      status: 'EDIT' as 'EDIT' | 'DONE',
+      status: 'EDIT',
     });
     setDiaryData(generatedDiaryData);
     patchDiary({ id: diaryId as string, payload: generatedDiaryData });

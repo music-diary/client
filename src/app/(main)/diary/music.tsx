@@ -15,33 +15,34 @@ import Carousel, {
 } from 'react-native-reanimated-carousel';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import YoutubeIframe from 'react-native-youtube-iframe';
+import { useMusicRecommendation, usePatchDiary } from '@/api/hooks/useDiaries';
 import CustomAlertModal from '@/components/common/CustomAlertModal';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
 import LoadingView from '@/components/diary/LoadingView';
 import Tooltip from '@/components/diary/Tooltip';
 import { COLORS, FONTS } from '@/constants';
+import { type IMusic } from '@/models/interfaces';
+import { type DiaryStatus } from '@/models/types';
 import { useModalStore } from '@/store/useModalStore';
 import { colorWithOpacity } from '@/utils/color-utils';
-import { useMusicRecommendation, usePatchDiary } from '@/api/hooks/useDiaries';
 import { extractVideoId } from '@/utils/music-utils';
-import { type IDiary, type IArchiveMusic } from '@/models/interfaces';
 
 const PAGE_WIDTH = Dimensions.get('window').width;
 const PAGE_HEIGHT = Dimensions.get('window').height;
 
 const MusicRecommendationScreen = () => {
-  const { diaryId, diaryData } = useLocalSearchParams();
-
-  const parsedDiaryData: IDiary = JSON.parse(diaryData as string);
+  const { diaryId } = useLocalSearchParams();
 
   const ref = useRef<ICarouselInstance>(null);
   const { closeModal } = useModalStore();
   const progress = useSharedValue<number>(0);
-  const [musicDiaryData, setMusicDiaryData] = useState<IDiary>({} as IDiary); // diaryData 상태 추가
 
   const [selectedLyrics, setSelectedLyrics] = useState<
     Record<number, number[]>
   >({});
+  const [selectedMusicIndex, setSelectedMusicIndex] = useState<number | null>(
+    null,
+  );
 
   const {
     data: musicData,
@@ -59,29 +60,38 @@ const MusicRecommendationScreen = () => {
   });
 
   const handleLyricPress = (musicIndex: number, lyricIndex: number) => {
-    setSelectedLyrics((prev) => {
-      const currentSelections = prev[musicIndex] || [];
+    if (selectedMusicIndex !== musicIndex) {
+      // 다른 음악의 가사를 선택하려고 하면 초기화
+      setSelectedLyrics({ [musicIndex]: [lyricIndex] });
+      setSelectedMusicIndex(musicIndex);
+    } else {
+      // 같은 음악의 가사를 선택할 때
+      setSelectedLyrics((prev) => {
+        const currentSelections = prev[musicIndex] || [];
 
-      if (currentSelections.includes(lyricIndex)) {
-        return {
-          ...prev,
-          [musicIndex]: currentSelections.filter((i) => i !== lyricIndex),
-        };
-      }
+        if (currentSelections.includes(lyricIndex)) {
+          // 이미 선택된 가사를 다시 선택하면 해제
+          return {
+            ...prev,
+            [musicIndex]: currentSelections.filter((i) => i !== lyricIndex),
+          };
+        }
 
-      if (currentSelections.length < 3) {
-        return {
-          ...prev,
-          [musicIndex]: [...currentSelections, lyricIndex],
-        };
-      }
+        if (currentSelections.length < 3) {
+          // 최대 세 줄까지 추가 선택 허용
+          return {
+            ...prev,
+            [musicIndex]: [...currentSelections, lyricIndex],
+          };
+        }
 
-      return prev;
-    });
+        return prev;
+      });
+    }
   };
 
   const handleNext = () => {
-    const updatedMusicData: IArchiveMusic[] = musicData.map((music, index) => ({
+    const updatedMusicData: IMusic[] = musicData.map((music, index) => ({
       ...music,
       selectedLyric: music.lyric
         .split('\n')
@@ -90,13 +100,29 @@ const MusicRecommendationScreen = () => {
       selected: selectedLyrics[index]?.length > 0 || false, // 가사가 선택된 경우 true로 설정
     }));
 
-    const updatedDiaryData: IDiary = {
-      ...parsedDiaryData,
-      status: 'EDIT',
-      musics: updatedMusicData,
+    if (selectedMusicIndex === null) {
+      console.error('No music selected.');
+      return;
+    }
+
+    const musicIndex = selectedMusicIndex;
+    const selectedMusic: IMusic = musicData[musicIndex];
+    const selectedLyricIndices = selectedLyrics[musicIndex] || [];
+
+    const updatedMusic: IMusic = {
+      ...selectedMusic,
+      selectedLyric: selectedMusic.lyric
+        .split('\n')
+        .filter((_, idx) => selectedLyricIndices.includes(idx))
+        .join('\n'),
+      selected: true, // 선택된 음악으로 설정
     };
 
-    setMusicDiaryData(updatedDiaryData);
+    const updatedDiaryData: { status: DiaryStatus; music: IMusic } = {
+      status: 'EDIT',
+      music: updatedMusic,
+    };
+
     patchDiary({ id: diaryId as string, payload: updatedDiaryData });
   };
 

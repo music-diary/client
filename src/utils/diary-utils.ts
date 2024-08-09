@@ -21,10 +21,15 @@ const buildFinalTemplate = (
   template: ITemplate,
   templateContents: Record<string, string>,
 ) => ({
-  ...template,
+  name: template.name,
+  description: template.description,
+  type: template.type,
+  order: template.order,
   templateContents: template.templateContents.map((content) => ({
-    ...content,
-    content: templateContents[content.name] || '',
+    order: content.order,
+    name: content.name,
+    label: content.label,
+    content: templateContents[content.name] || '', // Use the provided content or an empty string
   })),
 });
 
@@ -47,7 +52,7 @@ export const createDiaryData = ({
     topics: topicList.map((topic) => ({ id: topic.id })),
     emotions: getFinalEmotions(emotions),
     ...(finalTemplate
-      ? { templates: finalTemplate, content: null }
+      ? { templates: finalTemplate }
       : { content: diaryContent }),
   };
 };
