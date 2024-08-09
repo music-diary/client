@@ -4,6 +4,8 @@ import {
   type IStatisticEmotion,
   type IStatisticTopic,
   type IDiaryYear,
+  type IArchiveMusic,
+  type IArchiveEmotion,
 } from './interfaces';
 import { type IMusic, type IDiary, type IEmotion } from './interfaces/diary';
 import { type Gender, type Role, type Status } from './types';
@@ -110,4 +112,22 @@ export interface WithdrawalPayloadSchema {
 export interface PathWithdrawalSchema {
   id: string;
   payload: WithdrawalPayloadSchema;
+}
+
+export interface MusicRecommendationSchema {
+  musics: IArchiveMusic[];
+  count: number;
+  emotion: { parent: IArchiveEmotion };
+}
+
+export interface DiaryListArchiveSchema {
+  id: string;
+  userId: string;
+  title: string;
+  content: string;
+  templateId: string | null;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string | null;
 }

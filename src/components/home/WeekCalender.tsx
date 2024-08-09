@@ -1,44 +1,13 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { COLORS, FONTS } from '@/constants';
 import { ArrowButtonSvg } from 'assets/images/home';
-
-// toISOString()를 한국 시간으로 변환
-const formatKST = (date: Date) => {
-  const offset = 1000 * 60 * 60 * 9; // UTC+9
-  const koreaDate = new Date(date.getTime() + offset);
-  return koreaDate.toISOString().split('T')[0];
-};
-
-const cvtDateToWeekStr = (date: Date): { weekStart: Date; weekEnd: Date } => {
-  const weekStart = new Date(date);
-  weekStart.setDate(weekStart.getDate() - weekStart.getDay()); // 시작일: 일요일로 설정
-
-  const weekEnd = new Date(weekStart);
-  weekEnd.setDate(weekEnd.getDate() + 6); // 종료일: 토요일로 설정
-
-  return { weekStart, weekEnd };
-};
-
-const moveWeek = (date: Date, type: 'prev' | 'post') => {
-  const currentDate = new Date(date);
-
-  if (type === 'prev') {
-    currentDate.setDate(currentDate.getDate() - currentDate.getDay() - 7);
-  } else if (type === 'post') {
-    currentDate.setDate(currentDate.getDate() + (7 - currentDate.getDay()));
-  }
-
-  const startDate = new Date(currentDate);
-  const endDate = new Date(startDate);
-  endDate.setDate(startDate.getDate() + 6);
-
-  return { startDate, endDate };
-};
+import { useDiaryArchive } from '@/api/hooks/useArchive';
+import { cvtDateToWeekStr, formatKST, moveWeek } from '@/utils/date-utils';
 
 const WeekCalendar = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const { weekStart } = cvtDateToWeekStr(selectedDate);
+  const { weekStart, weekEnd } = cvtDateToWeekStr(selectedDate);
 
   const koreaDate = formatKST(new Date());
   const today = koreaDate.split('-');
@@ -60,8 +29,13 @@ const WeekCalendar = () => {
     ? today[1]
     : weekDays[6].split('-')[1];
 
-  // 추후: 일기 쓴 날짜에 따라 dot 표시 (현재는 dummyDates로 표시)
-  const dummyDates = ['2024-03-24', '2024-03-27'];
+  // data fetch
+  const { data: diaryData } = useDiaryArchive(
+    formatKST(weekStart),
+    formatKST(weekEnd),
+  );
+
+  const diaryDates = diaryData.map((diary) => diary.createdAt.split('T')[0]);
 
   const prevWeek = () => {
     const { startDate } = moveWeek(weekStart, 'prev');
@@ -106,7 +80,8 @@ const WeekCalendar = () => {
                   : styles.dayTextContainer
               }
             >
-              {dummyDates.includes(date) && <View style={styles.dot}></View>}
+              {/* 실제 데이터 기반으로 dot 표시 */}
+              {diaryDates?.includes(date) && <View style={styles.dot}></View>}
               <Text
                 style={[
                   styles.dayText,
@@ -173,7 +148,6 @@ const styles = StyleSheet.create({
   dayTextContainer: {
     width: 32,
     height: 32,
-
     justifyContent: 'center',
     alignItems: 'center',
   },
