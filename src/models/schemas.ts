@@ -119,3 +119,15 @@ export interface MusicRecommendationSchema {
   count: number;
   emotion: { parent: IArchiveEmotion };
 }
+
+export interface DiaryListArchiveSchema {
+  id: string;
+  userId: string;
+  title: string;
+  content: string;
+  templateId: string | null;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string | null;
+}

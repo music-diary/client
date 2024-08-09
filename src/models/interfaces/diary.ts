@@ -64,4 +64,3 @@ export interface IDiary {
   musics?: IMusic[];
   content?: string | null;
 }
-

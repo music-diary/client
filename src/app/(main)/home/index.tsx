@@ -1,4 +1,3 @@
-import React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -12,23 +11,28 @@ import NewUserDescription from '@/components/home/NewUserDescription';
 import { useMusicArchive } from '@/api/hooks/useArchive';
 import LoadingIndicator from '@/components/common/LoadingIndicator';
 import { emotionColor, emotionHomeText } from '@/constants/data/emotion-colors';
+import { getCurrentMonthRange } from '@/utils/date-utils';
 
 const HomeScreen = () => {
   const name = 'Miya';
-
+  const { startAt, endAt } = getCurrentMonthRange();
   const {
     data: archiveData,
     error,
     isLoading,
-  } = useMusicArchive('2024-07-01', '2024-07-31', 'month');
-
-  const handlePersonClick = () => {
-    router.push('/(main)/mypage');
-  };
+  } = useMusicArchive(startAt, endAt, 'month');
+  //  } = useMusicArchive('2024-07-01', '2024-07-31', 'month');
 
   if (isLoading || !archiveData) {
     return <LoadingIndicator />;
   }
+  if (error) {
+    console.warn('Error while fetching archive data:', error);
+  }
+
+  const handlePersonClick = () => {
+    router.push('/(main)/mypage');
+  };
 
   const diaryCount = archiveData.count;
 
@@ -54,41 +58,37 @@ const HomeScreen = () => {
 
           {/* 바디 부분 */}
           <View style={styles.body}>
-            {isLoading ? (
-              <LoadingIndicator /> // 로딩 중일 때 전체 섹션에 로딩 인디케이터 표시
-            ) : (
-              <>
-                <CharacterAnimation />
-                <Text style={styles.bodyMent}>
-                  Miya님의{'\n'}일주일간 기록이에요
-                </Text>
-                <View style={{ marginTop: 16 }}>
-                  <WeekCalendar />
-                </View>
-                <View style={{ marginTop: 40 }}>
-                  {diaryCount > 0 ? (
-                    <Text style={styles.bodyMent}>
-                      이번달 {name}님은{'\n'}
-                      <Text style={{ color }}>{text}</Text> 감정의 노래를 가장
-                      많이 들었어요
-                    </Text>
-                  ) : (
-                    <Text style={styles.bodyMent}>
-                      이번달 {name}님은{'\n'}
-                      아직 일기를 작성하지 않았어요
-                    </Text>
-                  )}
-                </View>
+            <>
+              <CharacterAnimation />
+              <Text style={styles.bodyMent}>
+                Miya님의{'\n'}일주일간 기록이에요
+              </Text>
+              <View style={{ marginTop: 16 }}>
+                <WeekCalendar />
+              </View>
+              <View style={{ marginTop: 40 }}>
                 {diaryCount > 0 ? (
-                  <MonthlyMusicList
-                    musics={archiveData.musics}
-                    topEmotion={emotionName}
-                  />
+                  <Text style={styles.bodyMent}>
+                    이번달 {name}님은{'\n'}
+                    <Text style={{ color }}>{text}</Text> 감정의 노래를 가장
+                    많이 들었어요
+                  </Text>
                 ) : (
-                  <NewUserDescription description="일기쓰고 노래를 추천받아 볼래요" />
+                  <Text style={styles.bodyMent}>
+                    이번달 {name}님은{'\n'}
+                    아직 일기를 작성하지 않았어요
+                  </Text>
                 )}
-              </>
-            )}
+              </View>
+              {diaryCount > 0 ? (
+                <MonthlyMusicList
+                  musics={archiveData.musics}
+                  topEmotion={emotionName}
+                />
+              ) : (
+                <NewUserDescription description="일기쓰고 노래를 추천받아 볼래요" />
+              )}
+            </>
           </View>
 
           {/* 하단 부분 */}
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   logoText: {
-    color: '#FAFAFA',
+    color: COLORS.WHITE,
     ...FONTS.H1,
   },
   body: {

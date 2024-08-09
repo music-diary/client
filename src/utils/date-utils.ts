@@ -15,7 +15,7 @@ export function formatToYearMonth(date: Date): string {
   return `${year}년 ${month}월`;
 }
 
-// form > 2024-06-24
+// form > 2024-06-24 (한국시간 변환 x)
 export function formatToDate(date: Date): string {
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
@@ -30,7 +30,7 @@ export function calculateDaysSince(startDate: string): number {
   const now = new Date();
   const diffTime = Math.abs(now.getTime() - start.getTime());
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  return diffDays; 
+  return diffDays;
 }
 
 export const parseTime = (timeStr: string): Date => {
@@ -97,4 +97,56 @@ export const formatDateString = (input: string): string => {
   } else {
     return 'Invalid date';
   }
+};
+
+// toISOString()를 한국 시간으로 변환 cf> 2024-07-01T15:00:00.000Z -> 2024-07-02
+export const formatKST = (date: Date) => {
+  const offset = 1000 * 60 * 60 * 9; // UTC+9
+  const koreaDate = new Date(date.getTime() + offset);
+  return koreaDate.toISOString().split('T')[0];
+};
+
+// cf> 2024-07-02 -> { weekStart: 2024-06-30, weekEnd: 2024-07-06 }
+export const cvtDateToWeekStr = (
+  date: Date,
+): { weekStart: Date; weekEnd: Date } => {
+  const weekStart = new Date(date);
+  weekStart.setDate(weekStart.getDate() - weekStart.getDay()); // 시작일: 일요일로 설정
+
+  const weekEnd = new Date(weekStart);
+  weekEnd.setDate(weekEnd.getDate() + 6); // 종료일: 토요일로 설정
+
+  return { weekStart, weekEnd };
+};
+
+// cf> 2024-07-02 -> { startDate: 2024-06-25, endDate: 2024-07-01 }
+export const moveWeek = (date: Date, type: 'prev' | 'post') => {
+  const currentDate = new Date(date);
+
+  if (type === 'prev') {
+    currentDate.setDate(currentDate.getDate() - currentDate.getDay() - 7);
+  } else if (type === 'post') {
+    currentDate.setDate(currentDate.getDate() + (7 - currentDate.getDay()));
+  }
+
+  const startDate = new Date(currentDate);
+  const endDate = new Date(startDate);
+  endDate.setDate(startDate.getDate() + 6);
+
+  return { startDate, endDate };
+};
+
+// cf> 2024-07-02 -> { startAt: 2024-07-01, endAt: 2024-07-31 }
+export const getCurrentMonthRange = () => {
+  const now = new Date();
+
+  // 이번 달의 첫째 날
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+  const startAt = formatKST(startOfMonth);
+
+  // 다음 달의 첫째 날에서 하루를 뺀 날짜 (이번 달의 마지막 날)
+  const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+  const endAt = formatKST(endOfMonth);
+
+  return { startAt, endAt };
 };
