@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import {
   type IEmotion,
-  type IMusic,
+  type IArchiveMusic,
   type ITemplate,
   type ITopic,
 } from '@/models/interfaces';
@@ -48,7 +48,9 @@ const getTemplates = async (): Promise<ITemplate[]> => {
   return data.templates;
 };
 
-const getMusicRecommendation = async (diaryId: string): Promise<IMusic[]> => {
+const getMusicRecommendation = async (
+  diaryId: string,
+): Promise<IArchiveMusic[]> => {
   const { data } = await apiClient.get(DIARIES.MUSIC.replace(':id', diaryId));
   return data.data;
 };

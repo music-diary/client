@@ -1,13 +1,19 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import { router } from 'expo-router';
 import { COLORS, FONTS } from '@/constants';
 
 const NewUserDescription = ({ description }: { description: string }) => {
+  // 클릭 시 일기쓰러 가기로 이동
+  const handleDiaryPress = () => {
+    router.push('/(main)/diary');
+  };
+
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={handleDiaryPress}>
       <Text style={styles.descriptionText}>{description}</Text>
       <MaterialIcons name="arrow-outward" size={20} color={COLORS.WHITE} />
-    </View>
+    </TouchableOpacity>
   );
 };
 

@@ -79,11 +79,11 @@ function RootLayoutNav() {
     //   router.navigate('intro');
     // }
     if (!isAuthenticated) {
-      router.navigate('(onboarding)');
-      // router.navigate('(main)');
+      // router.navigate('(onboarding)');
+      router.navigate('(main)');
     } else {
-      // router.navigate('(main)');
-      router.navigate('(main)/mypage/statistic');
+      router.navigate('(main)');
+      // router.navigate('(main)/mypage/statistic');
     }
   }, [isAuthenticated]);
 
