@@ -56,6 +56,11 @@ const DailyMainArchive = ({ diaryId }: { diaryId: string }) => {
         </View>
       </View>
       <Text style={styles.b2sbText}>{title}</Text>
+      {/**
+       * TODO:
+       *
+       * 일기가 템플릿으로 작성될 때 안보임. 수정 필요함.
+       */}
       {expanded && <Text style={styles.diaryContent}>{content}</Text>}
       <View style={styles.emotionContainer}>
         {emotions.map((data, index) => (
