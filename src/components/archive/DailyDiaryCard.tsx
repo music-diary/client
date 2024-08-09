@@ -15,6 +15,13 @@ const DailyMainArchive = ({ diaryId }: { diaryId: string }) => {
   if (isFetching) return <Text>Loading...</Text>;
   if (error) return <Text>Error!</Text>;
 
+  /**
+   * TODO:
+   *
+   * emotions level0 까지 전부 나와야함.
+   * 지금은 하위레벨 3개까지만 나옴.
+   * 프론트에서 로직 수정해야함.
+   */
   const { title, content, emotions, musics } = diaryData ?? {};
   console.log('diaryData:', diaryData);
 

@@ -47,7 +47,7 @@ export const createDiaryData = ({
     topics: topicList.map((topic) => ({ id: topic.id })),
     emotions: getFinalEmotions(emotions),
     ...(finalTemplate
-      ? { templates: finalTemplate, content: null }
+      ? { templates: finalTemplate }
       : { content: diaryContent }),
   };
 };

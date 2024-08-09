@@ -83,6 +83,12 @@ const WriteScreen = () => {
     openSplash('draft-save');
   };
 
+  /**
+   * TODO:
+   *
+   * 템플릿이 있는 경우 에러났었음.
+   * 확인 필요.
+   */
   const handleMusicRecommendation = () => {
     const generatedDiaryData = createDiaryData({
       title,
@@ -92,7 +98,7 @@ const WriteScreen = () => {
       templateContents,
       topicList,
       emotions: [...emotionList, ...detailedEmotionList],
-      status: 'EDIT' as 'EDIT' | 'DONE',
+      status: 'EDIT',
     });
     setDiaryData(generatedDiaryData);
     patchDiary({ id: diaryId as string, payload: generatedDiaryData });
