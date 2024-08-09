@@ -1,4 +1,4 @@
-import { type Template } from '../types';
+import { type DiaryStatus, type Template } from '../types';
 
 export interface ITopic {
   id: string;
@@ -48,20 +48,19 @@ export interface IMusic {
   title: string;
   artist: string;
   albumUrl: string;
-  selectedLyric: string;
+  selectedLyric: string | null;
   lyric: string;
   selected: boolean;
   youtubeUrl: string;
-  editorPick: string;
+  editorPick: string | null;
 }
 
 export interface IDiary {
   title: string;
-  status: 'EDIT' | 'DONE';
+  status: DiaryStatus;
   topics: Array<{ id: string }>;
   emotions: IEmotion[];
   templates?: ITemplate | null;
   musics?: IMusic[];
   content?: string | null;
 }
-
