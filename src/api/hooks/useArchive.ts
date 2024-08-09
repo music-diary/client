@@ -14,6 +14,8 @@ const getMusicArchive = async (
   )
     .replace(':endAt', endAt)
     .replace(':group', group);
+  // 3초 지연
+  // await new Promise((resolve) => setTimeout(resolve, 3000));
   const { data } = await apiClient.get(endpoint);
   return data.data;
 };

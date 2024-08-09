@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { COLORS } from '@/constants';
-import { HappySvg } from 'assets/images/common';
+import { HappySvg, BadSvg, SosoSvg } from 'assets/images/common'; // 필요한 SVG들을 import
 import { type IArchiveMusic } from '@/models/interfaces';
 import { emotionColor } from '@/constants/data';
 import { colorWithOpacity } from '@/utils/color-utils';
@@ -9,12 +9,38 @@ import CircleAlbum from '../common/CircleAlbum';
 
 interface MonthlyMusicListProps {
   musics: IArchiveMusic[];
+  topEmotion: string;
 }
 
-const MonthlyMusicList = ({ musics }: MonthlyMusicListProps) => {
+const MonthlyMusicList = ({ musics, topEmotion }: MonthlyMusicListProps) => {
   const selectedMusics = musics.filter((music) => music.selected);
 
-  // 선택된 음악 목록을 렌더링하는 함수
+  const renderEmotionIcon = () => {
+    switch (topEmotion) {
+      case 'good':
+        return <HappySvg width={52} height={52} fill={COLORS.GREEN} />;
+      case 'bad':
+        return <BadSvg width={52} height={52} fill={COLORS.BLUE} />;
+      case 'normal':
+        return <SosoSvg width={52} height={52} fill={COLORS.PURPLE} />;
+      default:
+        return <SosoSvg width={52} height={52} fill={COLORS.PURPLE} />;
+    }
+  };
+
+  const getBackgroundColor = () => {
+    switch (topEmotion) {
+      case 'good':
+        return COLORS.PURPLE;
+      case 'bad':
+        return COLORS.PURPLE;
+      case 'normal':
+        return COLORS.GREEN;
+      default:
+        return COLORS.PURPLE;
+    }
+  };
+
   const renderMusic = (music: IArchiveMusic, index: number) => {
     if (!music.diary || !Array.isArray(music.diary.emotions)) {
       console.error(
@@ -46,8 +72,10 @@ const MonthlyMusicList = ({ musics }: MonthlyMusicListProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.body}>
-        <View style={styles.albumStart}>
-          <HappySvg width={52} height={52} fill={COLORS.GREEN} />
+        <View
+          style={[styles.albumStart, { backgroundColor: getBackgroundColor() }]}
+        >
+          {renderEmotionIcon()}
         </View>
         <ScrollView
           style={styles.circleStart}

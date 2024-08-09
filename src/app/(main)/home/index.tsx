@@ -10,23 +10,31 @@ import { COLORS, FONTS } from '@/constants';
 import TopDescription from '@/components/home/TopDescription';
 import NewUserDescription from '@/components/home/NewUserDescription';
 import { useMusicArchive } from '@/api/hooks/useArchive';
+import LoadingIndicator from '@/components/common/LoadingIndicator';
+import { emotionColor, emotionHomeText } from '@/constants/data/emotion-colors';
 
 const HomeScreen = () => {
-  // 월간 작성 개수 -> dummy data
-  const diaryCount = 3;
-  // 이름 -> dummy data
   const name = 'Miya';
 
-  const { data, error, isLoading } = useMusicArchive(
-    '2024-07-01',
-    '2024-07-31',
-    'month',
-  );
+  const {
+    data: archiveData,
+    error,
+    isLoading,
+  } = useMusicArchive('2024-07-01', '2024-07-31', 'month');
 
-  // person 클릭 시 마이페이지로 이동
   const handlePersonClick = () => {
     router.push('/(main)/mypage');
   };
+
+  if (isLoading || !archiveData) {
+    return <LoadingIndicator />;
+  }
+
+  const diaryCount = archiveData.count;
+
+  const emotionName = archiveData.emotion.parent.name;
+  const color = emotionColor[emotionName];
+  const text = emotionHomeText[emotionName];
 
   return (
     <>
@@ -46,31 +54,40 @@ const HomeScreen = () => {
 
           {/* 바디 부분 */}
           <View style={styles.body}>
-            <CharacterAnimation />
-            <Text style={styles.bodyMent}>
-              Miya님의{'\n'}일주일간 기록이에요
-            </Text>
-            <View style={{ marginTop: 16 }}>
-              <WeekCalendar />
-            </View>
-            <View style={{ marginTop: 40 }}>
-              {diaryCount > 0 ? (
-                <Text style={styles.bodyMent}>
-                  이번달 Miya님은{'\n'}
-                  <Text style={{ color: COLORS.GREEN }}>긍정적인</Text> 감정의
-                  노래를 가장 많이 들었어요
-                </Text>
-              ) : (
-                <Text style={styles.bodyMent}>
-                  이번달 Miya님은{'\n'}
-                  아직 일기를 작성하지 않았어요
-                </Text>
-              )}
-            </View>
-            {diaryCount > 0 && data ? (
-              <MonthlyMusicList musics={data.musics} />
+            {isLoading ? (
+              <LoadingIndicator /> // 로딩 중일 때 전체 섹션에 로딩 인디케이터 표시
             ) : (
-              <NewUserDescription description="아직 작성한 일기가 없어요" />
+              <>
+                <CharacterAnimation />
+                <Text style={styles.bodyMent}>
+                  Miya님의{'\n'}일주일간 기록이에요
+                </Text>
+                <View style={{ marginTop: 16 }}>
+                  <WeekCalendar />
+                </View>
+                <View style={{ marginTop: 40 }}>
+                  {diaryCount > 0 ? (
+                    <Text style={styles.bodyMent}>
+                      이번달 {name}님은{'\n'}
+                      <Text style={{ color }}>{text}</Text> 감정의 노래를 가장
+                      많이 들었어요
+                    </Text>
+                  ) : (
+                    <Text style={styles.bodyMent}>
+                      이번달 {name}님은{'\n'}
+                      아직 일기를 작성하지 않았어요
+                    </Text>
+                  )}
+                </View>
+                {diaryCount > 0 ? (
+                  <MonthlyMusicList
+                    musics={archiveData.musics}
+                    topEmotion={emotionName}
+                  />
+                ) : (
+                  <NewUserDescription description="일기쓰고 노래를 추천받아 볼래요" />
+                )}
+              </>
             )}
           </View>
 
