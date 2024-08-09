@@ -5,7 +5,7 @@ import {
   type IStatisticTopic,
   type IDiaryYear,
 } from './interfaces';
-import { type IDiary, type IEmotion } from './interfaces/diary';
+import { type IMusic, type IDiary, type IEmotion } from './interfaces/diary';
 import { type Gender, type Role, type Status } from './types';
 
 export interface VerifyPhoneSchema {
@@ -25,7 +25,7 @@ export interface SignUpSchema {
 
 export interface PatchDiarySchema {
   id: string;
-  payload: Partial<IDiary>;
+  payload: Partial<Omit<IDiary, 'musics'> & { music?: IMusic }>;
 }
 
 export interface UserSchema {
