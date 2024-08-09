@@ -25,18 +25,18 @@ export interface IEmotion {
 }
 
 export interface ITemplate {
-  id: string;
+  id?: string;
   name: string;
   description: string;
   type: Template;
   order: number;
-  isExample: boolean;
+  isExample?: boolean;
   templateContents: ITemplateContent[];
 }
 
 export interface ITemplateContent {
-  id: string;
-  templateId: string;
+  id?: string;
+  templateId?: string;
   content: string | null;
   order: number;
   name: string;
