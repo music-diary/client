@@ -65,7 +65,7 @@ const PhoneVerifyScreen = () => {
     };
     verifyPhone(verificationData, {
       onSuccess: (data) => {
-        if (data.user.id) return;
+        if (data?.user?.id) return;
         // 여기로 넘어오면 신규 유저.
         toggleDim();
         setModalVisible(true);
