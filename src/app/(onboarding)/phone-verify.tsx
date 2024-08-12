@@ -249,7 +249,8 @@ const styles = StyleSheet.create({
   },
   validityInfoText: {
     color: COLORS.PINK,
-    ...FONTS.BTN,
+    ...FONTS.LB,
+    fontSize: 11,
   },
   validityQnAButton: {
     alignSelf: 'flex-start',
