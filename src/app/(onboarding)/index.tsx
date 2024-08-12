@@ -50,7 +50,7 @@ const SignUpScreen = () => {
     <SafeAreaView style={styles.container}>
       <Header
         title="전화번호 가입"
-        description="음계일기를 시작하기 위해 전화번호 인증이 필요해요"
+        description="뮤다를 시작하기 위해 전화번호 인증이 필요해요"
       />
       <KeyboardAvoidingView
         style={styles.keyboardAvoidingContainer}

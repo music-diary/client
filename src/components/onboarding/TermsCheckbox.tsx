@@ -24,7 +24,10 @@ const TermsCheckbox = ({
 
   return (
     <View style={styles.container}>
-      <View style={styles.titleContainer}>
+      <TouchableOpacity
+        style={styles.titleContainer}
+        onPress={() => setValue(!value)}
+      >
         <Checkbox
           style={styles.checkbox}
           value={value}
@@ -34,7 +37,7 @@ const TermsCheckbox = ({
         <Text style={[styles.title, type === 'all' && FONTS.B2_SB]}>
           {title}
         </Text>
-      </View>
+      </TouchableOpacity>
       {url.length > 0 && (
         <TouchableOpacity onPress={handleOpenTerms}>
           <Text style={styles.openTerms}>보기</Text>

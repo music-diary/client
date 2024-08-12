@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import { router, useLocalSearchParams } from 'expo-router';
 import {
+  InputAccessoryView,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
@@ -26,7 +28,7 @@ const UserInfoScreen = () => {
 
   const [name, setName] = useState('');
   const [birth, setBirth] = useState('');
-  const [gender, setGender] = useState('OTHER');
+  const [gender, setGender] = useState('FEMALE');
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   useEffect(() => {
@@ -52,7 +54,7 @@ const UserInfoScreen = () => {
       <SafeAreaView edges={['top']} style={styles.container}>
         <Header
           title="기본 정보를 입력해주세요"
-          description="음계일기는 사용자 정보를 기반으로 음악을 추천해 드려요"
+          description="뮤다는 사용자 정보를 기반으로 음악을 추천해 드려요"
         />
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -68,6 +70,7 @@ const UserInfoScreen = () => {
                   placeholderTextColor={COLORS.GREY1}
                   value={name}
                   onChangeText={setName}
+                  inputAccessoryViewID="user-info"
                 />
               </View>
               <View style={styles.inputContainer}>
@@ -80,6 +83,7 @@ const UserInfoScreen = () => {
                     value={birth}
                     keyboardType="number-pad"
                     onChangeText={handleBirthChange}
+                    inputAccessoryViewID="user-info"
                   />
                   <Text style={styles.birthInfo}>
                     숫자 8자리로 입력해주세요
@@ -109,11 +113,36 @@ const UserInfoScreen = () => {
           </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
       </SafeAreaView>
+      <InputAccessoryView
+        nativeID="user-info"
+        backgroundColor={isButtonDisabled ? COLORS.BG_LIGHT : COLORS.PURPLE}
+      >
+        <TouchableOpacity
+          style={styles.nextButton}
+          onPress={handleNext}
+          disabled={isButtonDisabled}
+        >
+          <Text
+            style={[
+              styles.nextText,
+              {
+                color: isButtonDisabled ? COLORS.CONTENTS_LIGHT : COLORS.WHITE,
+              },
+            ]}
+          >
+            다음
+          </Text>
+        </TouchableOpacity>
+      </InputAccessoryView>
       <CustomBottomButton
         isActive={!isButtonDisabled}
         onPress={handleNext}
         label="다음"
       />
+      {/**
+       * TODO:
+       * 모달 닫으면 앱 초기화면으로 이동
+       */}
       <CustomAlertModal
         name="sign_up-cancel"
         title="지금 그만두시면 입력한 정보는 저장되지 않고,"
@@ -173,10 +202,19 @@ const styles = StyleSheet.create({
   birthInfo: {
     color: COLORS.PINK,
     ...FONTS.LB,
+    fontSize: 11,
   },
   genderButtonGroup: {
     display: 'flex',
     flexDirection: 'row',
     gap: 16,
+  },
+  nextButton: {
+    alignItems: 'center',
+    height: 60,
+    justifyContent: 'center',
+  },
+  nextText: {
+    ...FONTS.B1_SB,
   },
 });
