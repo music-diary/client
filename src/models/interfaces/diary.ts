@@ -22,6 +22,7 @@ export interface IEmotion {
   parent: IEmotion;
   level: number;
   order: number;
+  rootId: string;
 }
 
 export interface ITemplate {
