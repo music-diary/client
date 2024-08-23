@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useDiary } from '@/api/hooks/useDiaries';
 import CircleAlbum from '@/components/common/CircleAlbum';
 import { COLORS, FONTS } from '@/constants';
-import { type IArchiveMusic } from '@/models/interfaces'; // 추가
+import { type IMusic, type IArchiveMusic } from '@/models/interfaces'; // 추가
 import { colorWithOpacity, getColorForMood } from '@/utils/color-utils';
 import { getMoodFromEmotions } from '@/utils/emotion-utils';
 import { ArrowInSvg, ArrowOutSvg } from 'assets/images/archive';
@@ -31,7 +31,7 @@ const DailyMainArchive = ({ diaryId }: { diaryId: string }) => {
     setExpanded(!expanded);
   };
 
-  const mainMusic: IArchiveMusic =
+  const mainMusic: IArchiveMusic | IMusic =
     musics && musics.length > 0
       ? musics.find((music) => music.selected) ?? musics[0] // 선택된 음악이 없으면 첫 번째 음악 사용
       : ({} as IArchiveMusic); // 빈 객체를 기본값으로 사용

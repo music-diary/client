@@ -1,15 +1,16 @@
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { COLORS } from '@/constants';
-import { HappySvg, BadSvg, SosoSvg } from 'assets/images/common'; // 필요한 SVG들을 import
+import { HappySvg, BadSvg, SosoSvg } from 'assets/images/common';
 import { type IArchiveMusic } from '@/models/interfaces';
 import { emotionColor } from '@/constants/data';
 import { colorWithOpacity } from '@/utils/color-utils';
+import { getMoodFromEmotions } from '@/utils/emotion-utils';
 import CircleAlbum from '../common/CircleAlbum';
 
 interface MonthlyMusicListProps {
   musics: IArchiveMusic[];
-  topEmotion: string;
+  topEmotion: string | null;
 }
 
 const MonthlyMusicList = ({ musics, topEmotion }: MonthlyMusicListProps) => {
@@ -49,13 +50,20 @@ const MonthlyMusicList = ({ musics, topEmotion }: MonthlyMusicListProps) => {
       return null;
     }
 
-    const emotionName =
-      music.diary.emotions.find(
-        (emotion) => emotion.emotions.parent.level === 0,
-      )?.emotions.parent.name ?? 'normal';
-    const color =
-      colorWithOpacity(emotionColor[emotionName], 0.3) ||
-      colorWithOpacity(COLORS.GREEN, 0.3);
+    // const emotionName = archiveData?.emotion
+    //   ? getMoodFromEmotions([{ emotions: archiveData?.emotion }])
+    //   : null;
+
+    // getMoodFromEmotions 함수를 사용하여 최상위 감정의 이름을 찾음
+    const emotionName = getMoodFromEmotions([
+      { emotions: music.diary.emotions[0].emotions },
+    ]);
+    console.log(
+      '🚀 ~ file: MonthlyMusicList.tsx:67 ~ renderMusic ~ emotionName:',
+      emotionName,
+    );
+
+    const color = colorWithOpacity(emotionColor[emotionName], 0.3);
 
     return (
       <View style={styles.albumList} key={music.id}>

@@ -5,7 +5,6 @@ import {
   type IStatisticTopic,
   type IDiaryYear,
   type IArchiveMusic,
-  type IArchiveEmotion,
 } from './interfaces';
 import { type IMusic, type IDiary, type IEmotion } from './interfaces/diary';
 import { type Gender, type Role, type Status } from './types';
@@ -117,7 +116,7 @@ export interface PathWithdrawalSchema {
 export interface MusicRecommendationSchema {
   musics: IArchiveMusic[];
   count: number;
-  emotion: { parent: IArchiveEmotion };
+  emotion: IEmotion;
 }
 
 export interface DiaryListArchiveSchema {

@@ -10,7 +10,7 @@ const AUTH = API_ENDPOINTS.AUTH;
 export const tempLogin = async () => {
   try {
     const { headers, data } = await apiClient.post(AUTH.LOGIN, {
-      id: 'cddf8b1e-55c7-4e95-8208-e91beaba823d',
+      id: '1ea6b340-a8a7-480c-b81a-b9a20a9e53f9',
     });
 
     await handleLogin(headers);

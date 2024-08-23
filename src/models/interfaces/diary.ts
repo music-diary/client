@@ -22,6 +22,8 @@ export interface IEmotion {
   parent: IEmotion;
   level: number;
   order: number;
+  rootId?: string | null;
+  aiScale?: string | null;
 }
 
 export interface ITemplate {

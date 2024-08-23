@@ -1,13 +1,15 @@
+import { type IMusic, type IEmotion } from './diary';
+
 export interface IArchiveEmotion {
   id: string;
   name: string;
   label: string;
   parentId: string | null;
-  rootId: string | null;
+  parent: IEmotion | null;
   level: number;
   order: number;
-  aiScale: string | null;
-  parent: IArchiveEmotion | null;
+  rootId?: string | null;
+  aiScale?: string | null;
 }
 
 export interface IArchiveMusic {
@@ -27,6 +29,6 @@ export interface IArchiveMusic {
   createdAt: string;
   updatedAt: string;
   diary: {
-    emotions: Array<{ emotions: { parent: IArchiveEmotion } }>;
+    emotions: IMusic | IArchiveMusic;
   } | null;
 }

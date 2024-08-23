@@ -1,7 +1,7 @@
 import { SafeAreaView, ActivityIndicator, StyleSheet } from 'react-native';
 import { COLORS } from '@/constants';
 
-const LoadingIndicator = () => {
+const LoadingScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <ActivityIndicator size="small" color={COLORS.WHITE} />
@@ -15,7 +15,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: COLORS.BLACK,
   },
 });
 
-export default LoadingIndicator;
+export default LoadingScreen;

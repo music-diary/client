@@ -6,6 +6,9 @@ import {
   type MusicRecommendationSchema,
 } from '@/models/schemas';
 
+const delay = async (ms: number) =>
+  await new Promise((resolve) => setTimeout(resolve, ms));
+
 const getMusicArchive = async (
   startAt: string,
   endAt: string,
@@ -17,8 +20,9 @@ const getMusicArchive = async (
   )
     .replace(':endAt', endAt)
     .replace(':group', group);
+  console.log('endpoint', endpoint);
   // 3초 지연
-  // await new Promise((resolve) => setTimeout(resolve, 3000));
+  await delay(3000);
   const { data } = await apiClient.get(endpoint);
   return data.data;
 };

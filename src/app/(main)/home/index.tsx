@@ -9,23 +9,26 @@ import { COLORS, FONTS } from '@/constants';
 import TopDescription from '@/components/home/TopDescription';
 import NewUserDescription from '@/components/home/NewUserDescription';
 import { useMusicArchive } from '@/api/hooks/useArchive';
-import LoadingIndicator from '@/components/common/LoadingIndicator';
 import { emotionColor, emotionHomeText } from '@/constants/data/emotion-colors';
 import { getCurrentMonthRange } from '@/utils/date-utils';
+import { getMoodFromEmotions } from '@/utils/emotion-utils';
+import { useUserName } from '@/api/hooks/useUsers';
+import LoadingScreen from '@/components/common/LoadingScreen';
 
 const HomeScreen = () => {
-  const name = 'Miya';
   const { startAt, endAt } = getCurrentMonthRange();
   const {
     data: archiveData,
     error,
     isLoading,
   } = useMusicArchive(startAt, endAt, 'month');
-  //  } = useMusicArchive('2024-07-01', '2024-07-31', 'month');
+
+  const userName = useUserName();
 
   if (isLoading || !archiveData) {
-    return <LoadingIndicator />;
+    return <LoadingScreen />;
   }
+
   if (error) {
     console.warn('Error while fetching archive data:', error);
   }
@@ -36,9 +39,15 @@ const HomeScreen = () => {
 
   const diaryCount = archiveData.count;
 
-  const emotionName = archiveData.emotion.parent.name;
-  const color = emotionColor[emotionName];
-  const text = emotionHomeText[emotionName];
+  const emotionName = archiveData?.emotion
+    ? getMoodFromEmotions([{ emotions: archiveData?.emotion }])
+    : null;
+
+  console.log(archiveData.emotion);
+
+  // emotionName이 존재할 때만 color와 text 계산
+  const color = emotionName ? emotionColor[emotionName] : COLORS.GREEN;
+  const text = emotionName ? emotionHomeText[emotionName] : '';
 
   return (
     <>
@@ -53,7 +62,7 @@ const HomeScreen = () => {
                 <ProfileSvg />
               </TouchableOpacity>
             </View>
-            <TopDescription count={diaryCount} name={name} />
+            <TopDescription count={diaryCount} name={userName} />
           </View>
 
           {/* 바디 부분 */}
@@ -61,7 +70,7 @@ const HomeScreen = () => {
             <>
               <CharacterAnimation />
               <Text style={styles.bodyMent}>
-                Miya님의{'\n'}일주일간 기록이에요
+                {userName}님의{'\n'}일주일간 기록이에요
               </Text>
               <View style={{ marginTop: 16 }}>
                 <WeekCalendar />
@@ -69,13 +78,13 @@ const HomeScreen = () => {
               <View style={{ marginTop: 40 }}>
                 {diaryCount > 0 ? (
                   <Text style={styles.bodyMent}>
-                    이번달 {name}님은{'\n'}
+                    이번달 {userName}님은{'\n'}
                     <Text style={{ color }}>{text}</Text> 감정의 노래를 가장
                     많이 들었어요
                   </Text>
                 ) : (
                   <Text style={styles.bodyMent}>
-                    이번달 {name}님은{'\n'}
+                    이번달 {userName}님은{'\n'}
                     아직 일기를 작성하지 않았어요
                   </Text>
                 )}
