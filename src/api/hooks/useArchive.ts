@@ -2,12 +2,13 @@ import { useQuery } from '@tanstack/react-query';
 import apiClient from '@/api/client';
 import { API_ENDPOINTS } from '@/api/endpoints';
 import {
+  type MusicArchiveSummarySchema,
   type DiaryListArchiveSchema,
   type MusicRecommendationSchema,
 } from '@/models/schemas';
 
-const delay = async (ms: number) =>
-  await new Promise((resolve) => setTimeout(resolve, ms));
+// const delay = async (ms: number) =>
+//   await new Promise((resolve) => setTimeout(resolve, ms));
 
 const getMusicArchive = async (
   startAt: string,
@@ -20,9 +21,8 @@ const getMusicArchive = async (
   )
     .replace(':endAt', endAt)
     .replace(':group', group);
-  console.log('endpoint', endpoint);
   // 3초 지연
-  await delay(3000);
+  // await delay(3000);
   const { data } = await apiClient.get(endpoint);
   return data.data;
 };
@@ -56,5 +56,21 @@ export const useDiaryArchive = (startAt: string, endAt: string) => {
     queryKey: ['diaryArchive', startAt, endAt],
     queryFn: async () => await getDiaryArchive(startAt, endAt),
     initialData: [],
+  });
+};
+
+// summary archive
+const getMusicSummaryArchive = async (): Promise<
+  MusicArchiveSummarySchema[]
+> => {
+  const endpoint = API_ENDPOINTS.ARCHIVES.SUMMARY;
+  const { data } = await apiClient.get(endpoint);
+  return data.summary;
+};
+
+export const useMusicArchiveSummary = () => {
+  return useQuery({
+    queryKey: ['summaryArchive'],
+    queryFn: async () => await getMusicSummaryArchive(),
   });
 };

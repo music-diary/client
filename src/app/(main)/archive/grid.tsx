@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
 import { COLORS } from '@/constants';
-import dummy_archive_main from '@/data/dummy_archive_main.json';
 import MonthlyMainArchive from '@/components/archive/MonthlyMainArchive';
 import RouteSwitcher from '@/components/archive/RouteSwitcher';
+import { useMusicArchiveSummary } from '@/api/hooks/useArchive';
+import LoadingScreen from '@/components/common/LoadingScreen';
 
-interface DiaryEntryData {
+interface MusicSummaryEntry {
   id: string;
   month: string;
   mood: string;
@@ -16,10 +16,26 @@ interface DiaryEntryData {
 }
 
 const GridScreen = () => {
-  const [entryData, setEntryData] = useState<DiaryEntryData[]>([]);
-  useEffect(() => {
-    setEntryData(dummy_archive_main);
-  }, []);
+  const { data: summaryData, isLoading } = useMusicArchiveSummary();
+
+  if (!summaryData || isLoading) {
+    return (
+      <View>
+        <LoadingScreen />
+      </View>
+    );
+  }
+
+  const entryData: MusicSummaryEntry[] =
+    summaryData.map((item, index) => ({
+      id: String(index),
+      month: item.date,
+      mood: item.emotion?.parent?.name ?? '',
+      albumCoverUrl: item.music?.albumUrl ?? '',
+      songTitle: item.music?.title ?? 'Unknown',
+      artist: item.music?.artist ?? 'Unknown',
+      diaryEntries: item.count,
+    })) ?? [];
 
   return (
     <View style={styles.container}>

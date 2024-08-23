@@ -32,3 +32,11 @@ export interface IArchiveMusic {
     emotions: IMusic | IArchiveMusic;
   } | null;
 }
+
+export interface ISummaryMusic {
+  id: string;
+  songId: string;
+  title: string;
+  artist: string;
+  albumUrl: string;
+}

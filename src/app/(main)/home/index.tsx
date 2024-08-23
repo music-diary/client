@@ -43,8 +43,6 @@ const HomeScreen = () => {
     ? getMoodFromEmotions([{ emotions: archiveData?.emotion }])
     : null;
 
-  console.log(archiveData.emotion);
-
   // emotionName이 존재할 때만 color와 text 계산
   const color = emotionName ? emotionColor[emotionName] : COLORS.GREEN;
   const text = emotionName ? emotionHomeText[emotionName] : '';

@@ -5,6 +5,7 @@ import {
   type IStatisticTopic,
   type IDiaryYear,
   type IArchiveMusic,
+  type ISummaryMusic,
 } from './interfaces';
 import { type IMusic, type IDiary, type IEmotion } from './interfaces/diary';
 import { type Gender, type Role, type Status } from './types';
@@ -129,4 +130,11 @@ export interface DiaryListArchiveSchema {
   createdAt: string;
   updatedAt: string;
   deletedAt: string | null;
+}
+
+export interface MusicArchiveSummarySchema {
+  date: string;
+  music: ISummaryMusic | null;
+  count: number;
+  emotion: { parent: IEmotion | null } | null;
 }
