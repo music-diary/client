@@ -4,6 +4,7 @@ import { COLORS, FONTS } from '@/constants';
 import DailyDiaryCard from '@/components/archive/DailyDiaryCard';
 import { useModalStore } from '@/store/useModalStore';
 import CustomAlertModal from '@/components/common/CustomAlertModal';
+import { useDeleteDiary } from '@/api/hooks/useArchive';
 
 export interface DailyDiaryData {
   id: string;
@@ -23,13 +24,21 @@ const DayScreen = () => {
   const diaryId = id ?? '';
 
   const { activeModal, closeModal } = useModalStore();
+  const { mutate: deleteDiary } = useDeleteDiary();
 
   const handleConfirm = () => {
-    console.log('삭제 확인');
-    closeModal();
-    router.back();
+    deleteDiary(diaryId, {
+      onSuccess: () => {
+        console.log('삭제 확인');
+        closeModal(); // 모달 닫기
+        router.back(); // 이전 페이지로 이동
+      },
+      onError: (error) => {
+        console.error('삭제 오류:', error);
+        closeModal(); // 오류 발생 시에도 모달을 닫음
+      },
+    });
   };
-
   return (
     <ScrollView style={styles.container}>
       {activeModal ? (

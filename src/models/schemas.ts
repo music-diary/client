@@ -125,6 +125,10 @@ export interface MusicRecommendationSchema {
   emotion: IEmotion;
 }
 
+export interface MusicRecommendationCalendarSchema {
+  musics: IArchiveMusic[];
+}
+
 export interface DiaryListArchiveSchema {
   id: string;
   userId: string;

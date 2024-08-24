@@ -6,6 +6,7 @@ import { useMusicArchiveSummary } from '@/api/hooks/useArchive';
 import LoadingScreen from '@/components/common/LoadingScreen';
 import { getMoodFromEmotions } from '@/utils/emotion-utils';
 import { type IMusicSummaryEntry } from '@/models/interfaces';
+import NoArchiveData from '@/components/archive/NoArchiveData';
 
 const GridScreen = () => {
   const { data: summaryData, isLoading } = useMusicArchiveSummary();
@@ -34,23 +35,28 @@ const GridScreen = () => {
       <View style={styles.header}>
         <RouteSwitcher />
       </View>
-      <FlatList
-        data={entryData}
-        keyExtractor={(item) => item.id}
-        numColumns={2}
-        columnWrapperStyle={styles.columnWrapper}
-        renderItem={({ item }) => (
-          <View style={styles.gridItem}>
-            <MonthlyMainArchive {...item} />
-          </View>
-        )}
-        contentContainerStyle={styles.contentContainer}
-        style={{ backgroundColor: COLORS.BLACK }}
-      />
+      {entryData.length === 0 ? (
+        <View style={styles.container}>
+          <NoArchiveData />
+        </View>
+      ) : (
+        <FlatList
+          data={entryData}
+          keyExtractor={(item) => item.id}
+          numColumns={2}
+          columnWrapperStyle={styles.columnWrapper}
+          renderItem={({ item }) => (
+            <View style={styles.gridItem}>
+              <MonthlyMainArchive {...item} />
+            </View>
+          )}
+          contentContainerStyle={styles.contentContainer}
+          style={{ backgroundColor: COLORS.BLACK }}
+        />
+      )}
     </View>
   );
 };
-
 export default GridScreen;
 
 const styles = StyleSheet.create({

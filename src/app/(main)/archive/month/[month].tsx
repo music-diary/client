@@ -7,13 +7,13 @@ import RouteSwitcher from '@/components/archive/RouteSwitcher';
 import {
   formatMonthDayDate,
   getMonthRangeFromParams,
-} from '@/utils/date-utils'; // 날짜 관련 유틸리티를 수정합니다.
+} from '@/utils/date-utils';
 import { useDiaryMonthlyArchive } from '@/api/hooks/useArchive';
 import LoadingScreen from '@/components/common/LoadingScreen';
 import { getLevel1Emotions, getMoodFromEmotions } from '@/utils/emotion-utils';
 import { type DiaryMonthArchiveSchema } from '@/models/schemas';
+import { useUserName } from '@/api/hooks/useUsers';
 
-// 일기 데이터를 가공하여 반환하는 함수
 const extractDiaries = (diaries: DiaryMonthArchiveSchema[]) => {
   return diaries
     .sort(
@@ -40,7 +40,6 @@ const extractDiaries = (diaries: DiaryMonthArchiveSchema[]) => {
     });
 };
 
-// 감정과 함께 음악 추천 데이터를 반환하는 함수
 const extractMusicsWithFeeling = (diaries: DiaryMonthArchiveSchema[]) => {
   return diaries.flatMap((diary) =>
     diary.musics.map((music) => ({
@@ -52,36 +51,28 @@ const extractMusicsWithFeeling = (diaries: DiaryMonthArchiveSchema[]) => {
   );
 };
 
-// 메인 컴포넌트
 const ArchiveScreen = () => {
-  // 라우터에서 월 정보를 가져옴
   const { month } = useLocalSearchParams<{ month: string }>();
-  
 
-  // 전달받은 month를 날짜 범위로 변환 (2024년 07월 -> {startAt: '2024-07-01', endAt: '2024-07-31'})
   const { startAt, endAt } = getMonthRangeFromParams(month);
+  const userName = useUserName();
 
-  // 다이어리 월별 아카이브 데이터를 가져옴
   const {
     data: archiveData,
     error,
     isLoading,
   } = useDiaryMonthlyArchive(startAt, endAt, 'month');
 
-  // 일기 데이터 가공
   const dailyArchiveData = archiveData ? extractDiaries(archiveData) : [];
 
-  // 음악 추천 데이터 가공
   const recommendMusics = archiveData
     ? extractMusicsWithFeeling(archiveData)
     : [];
 
-  // 로딩 상태 처리
   if (isLoading || !archiveData) {
     return <LoadingScreen />;
   }
 
-  // 에러 처리
   if (error) {
     console.warn('Error while fetching archive data:', error);
   }
@@ -92,10 +83,8 @@ const ArchiveScreen = () => {
         <RouteSwitcher />
       </View>
       <ScrollView style={styles.container}>
-        {/* 현재 년월 표시 */}
         <Text style={styles.headerText}>{month}</Text>
 
-        {/* 일별 아카이브를 수평 스크롤로 표시 */}
         <ScrollView
           horizontal={true}
           showsHorizontalScrollIndicator={false}
@@ -108,10 +97,9 @@ const ArchiveScreen = () => {
           </View>
         </ScrollView>
 
-        {/* 추천 음악들 표시 */}
         <View style={styles.recommendContainer}>
           <Text style={styles.headerText}>
-            Miya님이 {month}에 추천받은 음악들
+            {userName}님이 {month}에 추천받은 음악들
           </Text>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <View style={styles.scrollContent}>
