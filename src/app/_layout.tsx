@@ -15,6 +15,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import DImOverlay from '@/components/common/DImOverlay';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { useAppStore } from '@/store/useAppStore';
+import { COLORS } from '@/constants';
 // import { login } from '@/api/hooks/useAuth';
 
 export {
@@ -93,7 +94,12 @@ function RootLayoutNav() {
           <ThemeProvider
             value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
           >
-            <Stack screenOptions={{ animation: 'fade' }}>
+            <Stack
+              screenOptions={{
+                animation: 'fade',
+                contentStyle: { backgroundColor: COLORS.BLACK },
+              }}
+            >
               <Stack.Screen
                 name="(onboarding)"
                 options={{ headerShown: false }}

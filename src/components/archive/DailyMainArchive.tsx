@@ -27,7 +27,14 @@ const DailyMainArchive = ({
   feeling,
 }: DiaryDataProps) => {
   return (
-    <Link href={`/(main)/archive/day/${date}`} asChild key={id}>
+    <Link
+      href={{
+        pathname: `/(main)/archive/day/${date}`,
+        params: { id },
+      }}
+      asChild
+      key={id}
+    >
       <TouchableOpacity key={id}>
         <Text style={styles.b2LightText}>{date}</Text>
         <View style={styles.cardContainer}>

@@ -1,12 +1,10 @@
 import { router, useLocalSearchParams } from 'expo-router';
-import { Share, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { StyleSheet, Text, ScrollView, View } from 'react-native';
 import { COLORS, FONTS } from '@/constants';
-import dummy_archive_day from '@/data/dummy_archive_day.json';
 import DailyDiaryCard from '@/components/archive/DailyDiaryCard';
-import { useModalToggleStore, useModalStore } from '@/store/useModalStore';
-import { TrashSvg, UploadSvg } from 'assets/images/archive';
+import { useModalStore } from '@/store/useModalStore';
 import CustomAlertModal from '@/components/common/CustomAlertModal';
+import { useDeleteDiary } from '@/api/hooks/useArchive';
 
 export interface DailyDiaryData {
   id: string;
@@ -21,81 +19,28 @@ export interface DailyDiaryData {
   feeling: string;
 }
 
-const ModalOpenView = ({
-  onSharePress,
-  onDeletePress,
-}: {
-  onSharePress: () => void;
-  onDeletePress: () => void;
-}) => {
-  return (
-    <View style={styles.modal}>
-      <TouchableOpacity style={styles.modalContent} onPress={onSharePress}>
-        <Text style={styles.b1WhiteText}>공유</Text>
-        <UploadSvg fill={COLORS.WHITE} />
-      </TouchableOpacity>
-      <View style={styles.divider} />
-      <TouchableOpacity style={styles.modalContent} onPress={onDeletePress}>
-        <Text style={styles.b1RedText}>삭제</Text>
-        <TrashSvg fill={COLORS.RED} />
-      </TouchableOpacity>
-    </View>
-  );
-};
-
 const DayScreen = () => {
-  // ...모달 토글 상태 (zustand 사용)
-  const { toggleModal, isModalOpen } = useModalToggleStore();
-  const { activeModal, openModal, closeModal } = useModalStore();
+  const { day, id } = useLocalSearchParams<{ day: string; id: string }>();
+  const diaryId = id ?? '';
 
-  // 삭제 모달 상태
+  const { activeModal, closeModal } = useModalStore();
+  const { mutate: deleteDiary } = useDeleteDiary();
 
   const handleConfirm = () => {
-    console.log('삭제 확인'); // 추후 삭제에 관해서는 비동기 처리 로직 추가 예정
-    closeModal();
-    router.back();
+    deleteDiary(diaryId, {
+      onSuccess: () => {
+        console.log('삭제 확인');
+        closeModal(); // 모달 닫기
+        router.back(); // 이전 페이지로 이동
+      },
+      onError: (error) => {
+        console.error('삭제 오류:', error);
+        closeModal(); // 오류 발생 시에도 모달을 닫음
+      },
+    });
   };
-
-  // 토글에서 공유 or 삭제버튼을 눌렀을 때
-  const onSharePress = async () => {
-    toggleModal();
-    const content = {
-      title: '공유하기',
-      message: `음계일기 ${dailyDiaryData[0].date}을 공유합니다.`,
-      url: dailyDiaryData[0].albumCoverUrl, // 수정 필요.. 이미지 형식으로 저장해야하나 고민중
-    };
-    try {
-      const result = await Share.share(content);
-      if (result.action === Share.sharedAction) {
-        console.log('공유 성공');
-      } else if (result.action === Share.dismissedAction) {
-        console.log('공유 취소');
-      }
-    } catch (error) {
-      console.error('공유 실패:', error);
-    }
-  };
-  const onSharePressHandler = () => {
-    onSharePress().catch((error) => console.error('Error', error));
-  };
-  const onDeletePress = () => {
-    toggleModal();
-    openModal('delete-diary-modal');
-  };
-
-  const { day } = useLocalSearchParams<{ day: string }>();
-  const dailyDiaryData: DailyDiaryData[] = dummy_archive_day;
-
   return (
     <ScrollView style={styles.container}>
-      {/* ...더보기 눌렸을때 */}
-      {isModalOpen ? (
-        <ModalOpenView
-          onSharePress={onSharePressHandler}
-          onDeletePress={onDeletePress}
-        />
-      ) : null}
-      {/* 삭제버튼 눌렸을 때 */}
       {activeModal ? (
         <CustomAlertModal
           name="delete-diary-modal"
@@ -110,7 +55,7 @@ const DayScreen = () => {
       ) : null}
       <Text style={styles.b1LightText}>{day}</Text>
       <View style={styles.cardContainer}>
-        <DailyDiaryCard {...dailyDiaryData[0]} />
+        <DailyDiaryCard diaryId={diaryId} />
       </View>
     </ScrollView>
   );
@@ -124,38 +69,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     backgroundColor: COLORS.BLACK,
   },
-  modal: {
-    backgroundColor: '#2A2B2B', // 추후 수정 필요할 수도..!
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    width: 200,
-    paddingHorizontal: 16,
-    borderRadius: 16,
-    zIndex: 1,
-  },
-  modalContent: {
-    flexDirection: 'row',
-    height: 44,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  divider: {
-    height: 0.5,
-    backgroundColor: COLORS.CONTENTS_LIGHT,
-    marginHorizontal: -16,
-  },
   b1LightText: {
     paddingTop: 20,
     color: COLORS.CONTENTS_LIGHT,
-    ...FONTS.B1,
-  },
-  b1WhiteText: {
-    color: COLORS.WHITE,
-    ...FONTS.B1,
-  },
-  b1RedText: {
-    color: COLORS.RED,
     ...FONTS.B1,
   },
   cardContainer: {

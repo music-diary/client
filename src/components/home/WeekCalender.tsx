@@ -81,7 +81,16 @@ const WeekCalendar = () => {
               }
             >
               {/* 실제 데이터 기반으로 dot 표시 */}
-              {diaryDates?.includes(date) && <View style={styles.dot}></View>}
+              {diaryDates?.includes(date) && (
+                <View
+                  style={[
+                    styles.dot,
+                    today.join('-') === date && {
+                      backgroundColor: COLORS.WHITE,
+                    },
+                  ]}
+                ></View>
+              )}
               <Text
                 style={[
                   styles.dayText,
@@ -102,7 +111,7 @@ export default WeekCalendar;
 
 const styles = StyleSheet.create({
   container: {
-    marginRight: 16, // 수정 필요
+    marginRight: 16,
   },
   calendarTop: {
     flexDirection: 'row',

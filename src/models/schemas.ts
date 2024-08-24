@@ -5,9 +5,14 @@ import {
   type IStatisticTopic,
   type IDiaryYear,
   type IArchiveMusic,
-  type IArchiveEmotion,
+  type ISummaryMusic,
 } from './interfaces';
-import { type IMusic, type IDiary, type IEmotion } from './interfaces/diary';
+import {
+  type IMusic,
+  type IDiary,
+  type IEmotion,
+  type ITopic,
+} from './interfaces/diary';
 import { type Gender, type Role, type Status } from './types';
 
 export interface VerifyPhoneSchema {
@@ -116,7 +121,11 @@ export interface PathWithdrawalSchema {
 export interface MusicRecommendationSchema {
   musics: IArchiveMusic[];
   count: number;
-  emotion: { parent: IArchiveEmotion };
+  emotion: IEmotion;
+}
+
+export interface MusicRecommendationCalendarSchema {
+  musics: IArchiveMusic[];
 }
 
 export interface DiaryListArchiveSchema {
@@ -129,4 +138,27 @@ export interface DiaryListArchiveSchema {
   createdAt: string;
   updatedAt: string;
   deletedAt: string | null;
+}
+
+export interface MusicArchiveSummarySchema {
+  date: string;
+  music: ISummaryMusic | null;
+  count: number;
+  emotion: { parent: IEmotion | null } | null;
+}
+
+export interface DiaryMonthArchiveSchema {
+  id: string;
+  userId: string;
+  title: string;
+  content: string;
+  templateId: string | null;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string | null;
+  user: { id: string };
+  emotions: Array<{ emotions: IEmotion }>;
+  topics: Array<{ topic: ITopic }>;
+  musics: ISummaryMusic[];
 }

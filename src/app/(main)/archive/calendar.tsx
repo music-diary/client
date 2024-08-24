@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  ActivityIndicator,
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 import { CalendarList, type DateData } from 'react-native-calendars';
 import { router } from 'expo-router';
 import { COLORS } from '@/constants';
@@ -57,20 +50,14 @@ const customDayComponent = ({ date, imageUri }: customDayComponentProps) => {
 };
 
 const CalendarScreen = () => {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [showTempBlack, setShowTempBlack] = useState(false);
+  const [showTempBlack, setShowTempBlack] = useState(true);
 
-  // 로딩처리
   useEffect(() => {
-    setTimeout(() => setIsLoaded(true), 100);
+    const timer = setTimeout(() => {
+      setShowTempBlack(false);
+    }, 100);
+    return () => clearTimeout(timer);
   }, []);
-
-  useEffect(() => {
-    if (isLoaded) {
-      setShowTempBlack(true);
-      setTimeout(() => setShowTempBlack(false), 500);
-    }
-  }, [isLoaded]);
 
   const getImageUriForDate = (dateString?: string) => {
     if (!dateString) return undefined;
@@ -80,44 +67,33 @@ const CalendarScreen = () => {
 
   return (
     <View style={styles.container}>
-      {isLoaded ? (
-        <>
-          {showTempBlack && (
-            <View style={styles.blackContainer}>
-              <TempBlack />
-            </View>
-          )}
-          <View style={styles.routerContainer}>
-            <RouteSwitcher />
+      <>
+        {/* {showTempBlack && (
+          <View style={styles.blackContainer}>
+            <TempBlack />
           </View>
-          <CalendarList
-            hideExtraDays
-            horizontal={false}
-            theme={{
-              calendarBackground: COLORS.BLACK,
-              monthTextColor: COLORS.WHITE,
-              textSectionTitleColor: COLORS.CONTENTS_LIGHT,
-              dayTextColor: COLORS.WHITE,
-              textMonthFontFamily: 'pret-b',
-            }}
-            dayComponent={({ date, state }) =>
-              customDayComponent({
-                date: date as DateData,
-                imageUri: date
-                  ? getImageUriForDate(date.dateString)
-                  : undefined,
-              })
-            }
-          />
-        </>
-      ) : (
-        <>
-          <ActivityIndicator
-            style={styles.loadingContainer}
-            color={COLORS.PURPLE}
-          />
-        </>
-      )}
+        )} */}
+        <View style={styles.routerContainer}>
+          <RouteSwitcher />
+        </View>
+        <CalendarList
+          hideExtraDays
+          horizontal={false}
+          theme={{
+            calendarBackground: COLORS.BLACK,
+            monthTextColor: COLORS.WHITE,
+            textSectionTitleColor: COLORS.CONTENTS_LIGHT,
+            dayTextColor: COLORS.WHITE,
+            textMonthFontFamily: 'pret-b',
+          }}
+          dayComponent={({ date, state }) =>
+            customDayComponent({
+              date: date as DateData,
+              imageUri: date ? getImageUriForDate(date.dateString) : undefined,
+            })
+          }
+        />
+      </>
     </View>
   );
 };
@@ -131,17 +107,10 @@ const styles = StyleSheet.create({
   },
   routerContainer: {
     position: 'absolute',
-    // 중앙 정렬
     width: '100%',
-
     top: 0,
     left: 0,
     zIndex: 3,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   blackContainer: {
     position: 'absolute',

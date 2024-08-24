@@ -1,15 +1,16 @@
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { COLORS } from '@/constants';
-import { HappySvg, BadSvg, SosoSvg } from 'assets/images/common'; // 필요한 SVG들을 import
+import { HappySvg, BadSvg, SosoSvg } from 'assets/images/common';
 import { type IArchiveMusic } from '@/models/interfaces';
 import { emotionColor } from '@/constants/data';
 import { colorWithOpacity } from '@/utils/color-utils';
+import { getMoodFromEmotions } from '@/utils/emotion-utils';
 import CircleAlbum from '../common/CircleAlbum';
 
 interface MonthlyMusicListProps {
   musics: IArchiveMusic[];
-  topEmotion: string;
+  topEmotion: string | null;
 }
 
 const MonthlyMusicList = ({ musics, topEmotion }: MonthlyMusicListProps) => {
@@ -42,20 +43,24 @@ const MonthlyMusicList = ({ musics, topEmotion }: MonthlyMusicListProps) => {
   };
 
   const renderMusic = (music: IArchiveMusic, index: number) => {
-    if (!music.diary || !Array.isArray(music.diary.emotions)) {
+    // music.diary가 null이거나, emotions 배열이 없는 경우 처리
+    if (
+      !music.diary ||
+      !Array.isArray(music.diary.emotions) ||
+      music.diary.emotions.length === 0
+    ) {
       console.error(
         `음악 ID ${music.id}에 대한 일기 데이터가 유효하지 않습니다.`,
       );
       return null;
     }
 
-    const emotionName =
-      music.diary.emotions.find(
-        (emotion) => emotion.emotions.parent.level === 0,
-      )?.emotions.parent.name ?? 'normal';
-    const color =
-      colorWithOpacity(emotionColor[emotionName], 0.3) ||
-      colorWithOpacity(COLORS.GREEN, 0.3);
+    // 최상위 감정의 이름을 찾음
+    const emotionName = getMoodFromEmotions([
+      { emotions: music.diary.emotions[0].emotions },
+    ]);
+
+    const color = colorWithOpacity(emotionColor[emotionName], 0.3);
 
     return (
       <View style={styles.albumList} key={music.id}>
