@@ -121,23 +121,3 @@ export const useDeleteDiary = () => {
     },
   });
 };
-
-const getMusicArchiveCalendar = async (
-  startAt: string,
-  endAt: string,
-): Promise<MusicRecommendationCalendarSchema> => {
-  const endpoint = API_ENDPOINTS.ARCHIVES.MUSIC_ARCHIVE_CALENDAR.replace(
-    ':startAt',
-    startAt,
-  ).replace(':endAt', endAt);
-
-  const { data } = await apiClient.get(endpoint);
-  return data.data;
-};
-
-export const useMusicArchiveCalendar = (startAt: string, endAt: string) => {
-  return useQuery({
-    queryKey: ['musicArchiveCalendar', startAt, endAt],
-    queryFn: async () => await getMusicArchiveCalendar(startAt, endAt),
-  });
-};
