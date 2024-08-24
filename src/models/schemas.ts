@@ -101,13 +101,12 @@ export interface ContactPayloadSchema {
   message: string;
 }
 
+export interface EmotionNode {
+  emotions: IEmotion;
+}
+
 export interface DiaryResponseSchema extends Omit<IDiary, 'emotions'> {
-  emotions: Array<{
-    emotions: IEmotion;
-    parent?: IEmotion | null; // 상위 감정 객체
-    parentId?: string | null; // 상위 감정의 ID
-    rootId?: string; // 최상위 감정의 ID
-  }>;
+  emotions: EmotionNode[];
 }
 
 export interface WithdrawalPayloadSchema {

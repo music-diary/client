@@ -3,9 +3,12 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useDiary } from '@/api/hooks/useDiaries';
 import CircleAlbum from '@/components/common/CircleAlbum';
 import { COLORS, FONTS } from '@/constants';
-import { type IMusic, type IArchiveMusic } from '@/models/interfaces'; // 추가
+import { type IMusic } from '@/models/interfaces'; // 추가
 import { colorWithOpacity, getColorForMood } from '@/utils/color-utils';
-import { getMoodFromEmotions } from '@/utils/emotion-utils';
+import {
+  getAllEmotionsFromTree,
+  getMoodFromEmotions,
+} from '@/utils/emotion-utils';
 import { ArrowInSvg, ArrowOutSvg } from 'assets/images/archive';
 
 const DailyMainArchive = ({ diaryId }: { diaryId: string }) => {
@@ -15,26 +18,19 @@ const DailyMainArchive = ({ diaryId }: { diaryId: string }) => {
   if (isFetching) return <Text>Loading...</Text>;
   if (error) return <Text>Error!</Text>;
 
-  /**
-   * TODO:
-   *
-   * emotions level0 까지 전부 나와야함.
-   * 지금은 하위레벨 3개까지만 나옴.
-   * 프론트에서 로직 수정해야함.
-   */
-  const { title, content, emotions, musics } = diaryData ?? {};
-  console.log('diaryData:', diaryData);
+  const { title, content, templates, emotions, musics } = diaryData ?? {};
 
+  const allEmotions = getAllEmotionsFromTree(emotions);
   const mood = getMoodFromEmotions(emotions);
 
   const handlePress = () => {
     setExpanded(!expanded);
   };
 
-  const mainMusic: IArchiveMusic | IMusic =
+  const mainMusic: IMusic =
     musics && musics.length > 0
       ? musics.find((music) => music.selected) ?? musics[0] // 선택된 음악이 없으면 첫 번째 음악 사용
-      : ({} as IArchiveMusic); // 빈 객체를 기본값으로 사용
+      : ({} as IMusic); // 빈 객체를 기본값으로 사용
 
   return (
     <View style={styles.cardContainer}>
@@ -55,15 +51,27 @@ const DailyMainArchive = ({ diaryId }: { diaryId: string }) => {
           </View>
         </View>
       </View>
-      <Text style={styles.b2sbText}>{title}</Text>
-      {/**
-       * TODO:
-       *
-       * 일기가 템플릿으로 작성될 때 안보임. 수정 필요함.
-       */}
-      {expanded && <Text style={styles.diaryContent}>{content}</Text>}
+      <View style={styles.diaryTitleView}>
+        <Text style={styles.b2sbText}>{title}</Text>
+        {templates && (
+          <Text style={styles.templateTitle}>{templates?.name}</Text>
+        )}
+      </View>
+      {expanded &&
+        (templates ? (
+          <View style={styles.templateContainer}>
+            {templates.templateContents.map((template) => (
+              <View key={template.id}>
+                <Text style={styles.templateSubtitle}>{template.name}</Text>
+                <Text style={styles.templateContent}>{template.content}</Text>
+              </View>
+            ))}
+          </View>
+        ) : (
+          <Text style={styles.diaryContent}>{content}</Text>
+        ))}
       <View style={styles.emotionContainer}>
-        {emotions.map((data, index) => (
+        {allEmotions.map((data, index) => (
           <View
             key={index}
             style={[
@@ -71,7 +79,7 @@ const DailyMainArchive = ({ diaryId }: { diaryId: string }) => {
               { backgroundColor: getColorForMood(mood) }, // 감정의 색상 사용
             ]}
           >
-            <Text style={styles.btnText}>{data.emotions.label}</Text>
+            <Text style={styles.btnText}>{data.label}</Text>
           </View>
         ))}
       </View>
@@ -101,6 +109,11 @@ const styles = StyleSheet.create({
   },
   middleContainer: {
     paddingTop: 18,
+    alignItems: 'center',
+    gap: 8,
+  },
+  diaryTitleView: {
+    flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
   },
@@ -136,19 +149,41 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     textAlign: 'center',
   },
+  templateContainer: {
+    paddingTop: 10,
+    paddingBottom: 12,
+    flexDirection: 'column',
+    gap: 10,
+    width: '100%',
+  },
+  templateTitle: {
+    color: colorWithOpacity(COLORS.WHITE, 0.2),
+    ...FONTS.B2_SB,
+  },
+  templateSubtitle: {
+    color: colorWithOpacity(COLORS.WHITE, 0.2),
+    ...FONTS.LB,
+  },
+  templateContent: {
+    color: COLORS.WHITE,
+    ...FONTS.B2_LINE2,
+  },
   emotionContainer: {
-    paddingTop: 20,
+    paddingTop: 10,
     flexDirection: 'row',
-    gap: 8,
+    flexWrap: 'wrap', // 감정 요소가 넘치면 다음 줄로 이동
+    justifyContent: 'flex-start', // 자연스러운 정렬
+    gap: 10,
   },
   emotionCircle: {
-    paddingVertical: 5,
-    paddingHorizontal: 12,
+    paddingVertical: 8,
+    paddingHorizontal: 14.5,
     borderRadius: 30,
+    marginBottom: 8, // 요소가 여러 줄일 때의 간격
   },
   diaryContent: {
     color: COLORS.CONTENTS_LIGHT,
-    paddingTop: 16,
+    paddingTop: 6,
     textAlign: 'justify',
     ...FONTS.B2_LINE2,
   },
