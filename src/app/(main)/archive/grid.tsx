@@ -19,11 +19,7 @@ const GridScreen = () => {
   const { data: summaryData, isLoading } = useMusicArchiveSummary();
 
   if (!summaryData || isLoading) {
-    return (
-      <View>
-        <LoadingScreen />
-      </View>
-    );
+    return <LoadingScreen />;
   }
 
   const entryData: MusicSummaryEntry[] =

@@ -34,9 +34,17 @@ export interface IArchiveMusic {
 }
 
 export interface ISummaryMusic {
-  id: string;
+  id?: string;
   songId: string;
   title: string;
   artist: string;
   albumUrl: string;
+  selected?: boolean;
+}
+
+export interface IArchiveMusicRecommendation {
+  albumCoverUrl: string;
+  songTitle: string;
+  artist: string;
+  emotionName: string;
 }

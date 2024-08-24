@@ -5,6 +5,7 @@ import {
   type MusicArchiveSummarySchema,
   type DiaryListArchiveSchema,
   type MusicRecommendationSchema,
+  type DiaryMonthArchiveSchema,
 } from '@/models/schemas';
 
 // const delay = async (ms: number) =>
@@ -65,6 +66,7 @@ const getMusicSummaryArchive = async (): Promise<
 > => {
   const endpoint = API_ENDPOINTS.ARCHIVES.SUMMARY;
   const { data } = await apiClient.get(endpoint);
+
   return data.summary;
 };
 
@@ -72,5 +74,32 @@ export const useMusicArchiveSummary = () => {
   return useQuery({
     queryKey: ['summaryArchive'],
     queryFn: async () => await getMusicSummaryArchive(),
+  });
+};
+
+const getDiaryMonthlyArchive = async (
+  startAt: string,
+  endAt: string,
+  group: string,
+): Promise<DiaryMonthArchiveSchema[]> => {
+  const endpoint = API_ENDPOINTS.ARCHIVES.DIARY_MONTHLY_ARCHIVE.replace(
+    ':startAt',
+    startAt,
+  )
+    .replace(':endAt', endAt)
+    .replace(':group', group);
+  const { data } = await apiClient.get(endpoint);
+
+  return data.diaries;
+};
+
+export const useDiaryMonthlyArchive = (
+  startAt: string,
+  endAt: string,
+  group: string,
+) => {
+  return useQuery({
+    queryKey: ['diaryMonthlyArchive', startAt, endAt, group],
+    queryFn: async () => await getDiaryMonthlyArchive(startAt, endAt, group),
   });
 };

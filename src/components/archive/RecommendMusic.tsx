@@ -1,24 +1,18 @@
 import { View, Text, StyleSheet } from 'react-native';
 import CircleAlbum from '@/components/common/CircleAlbum';
 import { COLORS, FONTS } from '@/constants';
-import { colorWithOpacity, getColorForMood } from '@/utils/color-utils';
+import { colorWithOpacity } from '@/utils/color-utils';
 import { trimTitle } from '@/utils/text-utils';
-
-interface RecommendData {
-  id: string;
-  albumCoverUrl: string;
-  songTitle: string;
-  artist: string;
-  feeling: string;
-}
+import { type IArchiveMusicRecommendation } from '@/models/interfaces';
+import { emotionColor } from '@/constants/data';
 
 const RecommendMusic = ({
   albumCoverUrl,
   songTitle,
   artist,
-  feeling,
-}: RecommendData) => {
-  const color = colorWithOpacity(getColorForMood(feeling), 0.3);
+  emotionName,
+}: IArchiveMusicRecommendation) => {
+  const color = colorWithOpacity(emotionColor[emotionName], 0.3);
 
   return (
     <View style={styles.container}>

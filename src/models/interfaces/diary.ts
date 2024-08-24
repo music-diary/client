@@ -5,6 +5,7 @@ export interface ITopic {
   label: string;
   emoji: string;
   name: string;
+  order?: string;
 }
 
 export interface IGenre {
