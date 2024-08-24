@@ -1,26 +1,39 @@
-import React, { useEffect, useState } from 'react';
 import { StyleSheet, ScrollView, Text, View } from 'react-native';
 import { COLORS } from '@/constants';
-import dummy_archive_month from '@/data/dummy_archive_month.json';
 import DailyMainArchive from '@/components/archive/DailyMainArchive';
 import RecommendMusic from '@/components/archive/RecommendMusic';
 import RouteSwitcher from '@/components/archive/RouteSwitcher';
-import { formatToYearMonth, getCurrentMonthRange } from '@/utils/date-utils';
+import {
+  formatMonthDayDate,
+  formatToYearMonth,
+  getCurrentMonthRange,
+} from '@/utils/date-utils';
 import { useDiaryMonthlyArchive } from '@/api/hooks/useArchive';
 import LoadingScreen from '@/components/common/LoadingScreen';
-import { getMoodFromEmotions } from '@/utils/emotion-utils';
+import {
+  getLevel1And2Emotions,
+  getMoodFromEmotions,
+} from '@/utils/emotion-utils';
 import { type DiaryMonthArchiveSchema } from '@/models/schemas';
 
-interface DiaryData {
-  id: string;
-  date: string;
-  albumCoverUrl: string;
-  songTitle: string;
-  artist: string;
-  diaryTitle: string;
-  emotions: string[];
-  feeling: string;
-}
+const extractDiaries = (diaries: DiaryMonthArchiveSchema[]) => {
+  return diaries.map((diary) => {
+    const selectedMusic = diary.musics.find((music) => music.selected === true);
+    const emotionLabels = getLevel1And2Emotions(
+      diary.emotions.map((e) => e.emotions),
+    ).map((emotion) => emotion.label);
+    return {
+      id: diary.id,
+      date: formatMonthDayDate(diary.updatedAt),
+      albumCoverUrl: selectedMusic?.albumUrl ?? '',
+      songTitle: selectedMusic?.title ?? '',
+      artist: selectedMusic?.artist ?? '',
+      diaryTitle: diary.title,
+      emotions: emotionLabels,
+      feeling: getMoodFromEmotions(diary.emotions || []),
+    };
+  });
+};
 
 const extractMusicsWithFeeling = (diaries: DiaryMonthArchiveSchema[]) => {
   return diaries.flatMap((diary) =>
@@ -42,13 +55,9 @@ const ArchiveScreen = () => {
     isLoading,
   } = useDiaryMonthlyArchive(startAt, endAt, 'month');
 
-  const [entryData, setEntryData] = useState<DiaryData[]>([]);
-
   const currentMonth = new Date().getMonth() + 1;
 
-  useEffect(() => {
-    setEntryData(dummy_archive_month);
-  }, []);
+  const dailyArchiveData = archiveData ? extractDiaries(archiveData) : [];
 
   const recommendMusics = archiveData
     ? extractMusicsWithFeeling(archiveData)
@@ -75,7 +84,7 @@ const ArchiveScreen = () => {
           style={{ paddingTop: 11 }}
         >
           <View style={styles.scrollContent}>
-            {entryData.map((entry) => (
+            {dailyArchiveData.map((entry) => (
               <DailyMainArchive key={entry.id} {...entry} />
             ))}
           </View>

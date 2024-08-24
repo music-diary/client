@@ -44,11 +44,12 @@ const ModalOpenView = ({
 };
 
 const DayScreen = () => {
-  // ...모달 토글 상태 (zustand 사용)
+  const { day, id } = useLocalSearchParams<{ day: string; id: string }>();
+  const diaryId = id ?? '';
+  const dailyDiaryData: DailyDiaryData[] = dummy_archive_day;
+
   const { toggleModal, isModalOpen } = useModalToggleStore();
   const { activeModal, openModal, closeModal } = useModalStore();
-
-  // 삭제 모달 상태
 
   const handleConfirm = () => {
     console.log('삭제 확인'); // 추후 삭제에 관해서는 비동기 처리 로직 추가 예정
@@ -62,7 +63,7 @@ const DayScreen = () => {
     const content = {
       title: '공유하기',
       message: `음계일기 ${dailyDiaryData[0].date}을 공유합니다.`,
-      url: dailyDiaryData[0].albumCoverUrl, // 수정 필요.. 이미지 형식으로 저장해야하나 고민중
+      url: dailyDiaryData[0].albumCoverUrl,
     };
     try {
       const result = await Share.share(content);
@@ -82,9 +83,6 @@ const DayScreen = () => {
     toggleModal();
     openModal('delete-diary-modal');
   };
-
-  const { day } = useLocalSearchParams<{ day: string }>();
-  const dailyDiaryData: DailyDiaryData[] = dummy_archive_day;
 
   return (
     <ScrollView style={styles.container}>
@@ -110,7 +108,7 @@ const DayScreen = () => {
       ) : null}
       <Text style={styles.b1LightText}>{day}</Text>
       <View style={styles.cardContainer}>
-        <DailyDiaryCard {...dailyDiaryData[0]} />
+        <DailyDiaryCard diaryId={diaryId} />
       </View>
     </ScrollView>
   );

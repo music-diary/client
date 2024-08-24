@@ -4,16 +4,8 @@ import MonthlyMainArchive from '@/components/archive/MonthlyMainArchive';
 import RouteSwitcher from '@/components/archive/RouteSwitcher';
 import { useMusicArchiveSummary } from '@/api/hooks/useArchive';
 import LoadingScreen from '@/components/common/LoadingScreen';
-
-interface MusicSummaryEntry {
-  id: string;
-  month: string;
-  mood: string;
-  albumCoverUrl: string;
-  songTitle: string;
-  artist: string;
-  diaryEntries: number;
-}
+import { getMoodFromEmotions } from '@/utils/emotion-utils';
+import { type IMusicSummaryEntry } from '@/models/interfaces';
 
 const GridScreen = () => {
   const { data: summaryData, isLoading } = useMusicArchiveSummary();
@@ -22,16 +14,20 @@ const GridScreen = () => {
     return <LoadingScreen />;
   }
 
-  const entryData: MusicSummaryEntry[] =
+  const entryData: IMusicSummaryEntry[] =
     summaryData.map((item, index) => ({
       id: String(index),
       month: item.date,
-      mood: item.emotion?.parent?.name ?? '',
+      mood: item.emotion?.parent
+        ? getMoodFromEmotions([{ emotions: item.emotion?.parent }])
+        : '',
       albumCoverUrl: item.music?.albumUrl ?? '',
       songTitle: item.music?.title ?? 'Unknown',
       artist: item.music?.artist ?? 'Unknown',
       diaryEntries: item.count,
     })) ?? [];
+
+  console.log(summaryData[0].emotion);
 
   return (
     <View style={styles.container}>

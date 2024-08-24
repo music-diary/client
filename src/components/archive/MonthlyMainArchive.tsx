@@ -14,18 +14,9 @@ import { colorWithOpacity } from '@/utils/color-utils';
 import { trimTitle } from '@/utils/text-utils';
 import { emotionColor } from '@/constants/data';
 import { formatDateString } from '@/utils/date-utils';
+import { type IMusicSummaryEntry } from '@/models/interfaces';
 
 const contentWidth = Dimensions.get('window').width / 2 - 22;
-
-interface DiaryEntryProps {
-  id: string;
-  month: string;
-  mood: string;
-  albumCoverUrl: string;
-  songTitle: string;
-  artist: string;
-  diaryEntries: number;
-}
 
 const EmotionImage = ({ mood }: { mood: string }) => {
   switch (mood) {
@@ -61,7 +52,7 @@ const MonthlyMainArchive = ({
   songTitle,
   artist,
   diaryEntries,
-}: DiaryEntryProps) => {
+}: IMusicSummaryEntry) => {
   const backgroundColor = emotionColor[mood];
   const emotionImage = EmotionImage({ mood });
 

@@ -25,6 +25,15 @@ export function formatToDate(date: Date): string {
   return `${year}-${formattedMonth}-${formattedDay}`;
 }
 
+// form > 2024-03-24T07:03:00.000Z -> 3월 15일 
+export const formatMonthDayDate = (dateString: string) => {
+  return new Date(dateString).toLocaleDateString('ko-KR', {
+    month: 'long',
+    day: 'numeric',
+  });
+};
+
+
 export function calculateDaysSince(startDate: string): number {
   const start = new Date(startDate);
   const now = new Date();

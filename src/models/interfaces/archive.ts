@@ -42,6 +42,16 @@ export interface ISummaryMusic {
   selected?: boolean;
 }
 
+export interface IMusicSummaryEntry {
+  id: string;
+  month: string;
+  mood: string;
+  albumCoverUrl: string;
+  songTitle: string;
+  artist: string;
+  diaryEntries: number;
+}
+
 export interface IArchiveMusicRecommendation {
   albumCoverUrl: string;
   songTitle: string;
