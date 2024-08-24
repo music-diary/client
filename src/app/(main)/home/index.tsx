@@ -16,7 +16,7 @@ import { useUserName } from '@/api/hooks/useUsers';
 import LoadingScreen from '@/components/common/LoadingScreen';
 
 const HomeScreen = () => {
-  const { startAt, endAt } = getCurrentMonthRange();
+  const { startAt, endAt } = getCurrentMonthRange(new Date());
   const {
     data: archiveData,
     error,

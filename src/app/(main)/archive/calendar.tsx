@@ -1,99 +1,148 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
-import { CalendarList, type DateData } from 'react-native-calendars';
-import { router } from 'expo-router';
-import { COLORS } from '@/constants';
-import TempBlack from '@/components/archive/TempBlack';
-import dummyArchiveCalendar from '@/data/dummy_archive_calendar.json';
+import React, { useState } from 'react';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  ActivityIndicator,
+} from 'react-native';
+import { Calendar, type DateData } from 'react-native-calendars';
+import { Feather } from '@expo/vector-icons';
+import { Link } from 'expo-router';
+import { COLORS, FONTS } from '@/constants';
 import RouteSwitcher from '@/components/archive/RouteSwitcher';
+import {
+  getFormattedMonth,
+  getCurrentMonthRange,
+  formatMonthDayDate,
+} from '@/utils/date-utils';
+import { useDiaryMonthlyArchive } from '@/api/hooks/useArchive';
+import { type DiaryMonthArchiveSchema } from '@/models/schemas';
 
-interface customDayComponentProps {
-  date: DateData;
-  imageUri?: string;
-}
-const customDayComponent = ({ date, imageUri }: customDayComponentProps) => {
-  // dateData 형식 확인
-  const handleDateClick = (dd: DateData) => {
-    // console.log('🚀 ~ file: calendar.tsx:22 ~ handleDateClick ~ dd:', dd);
-    // 추후 날짜 누르면 이동하게 구현
-  };
+type ProcessedMusicData = Record<
+  string,
+  {
+    albumCoverUrl: string;
+    id: string;
+  }
+>;
 
-  // temp date (임시 설정)
-  const tempDate = 'archive/day/3%EC%9B%94%202%EC%9D%BC';
-  const handleAlbumClick = (date: DateData) => {
-    console.log(
-      '🚀 ~ file: calendar.tsx:26 ~ handleAlbumClick ~ date:',
-      date.dateString,
-    );
-    router.push(tempDate);
-  };
+const extractProcessedMusicData = (diaries: DiaryMonthArchiveSchema[]) => {
+  const processedData: ProcessedMusicData = {};
 
-  return (
-    <View style={styles.dayContainer}>
-      {imageUri ? (
-        <TouchableOpacity
-          style={styles.albumContainer}
-          onPress={() => handleAlbumClick(date)}
-        >
-          <View style={styles.albumImageContainer}>
-            <Image source={{ uri: imageUri }} style={styles.albumImage} />
-          </View>
-          <Text style={styles.whiteText}>{date.day}</Text>
-        </TouchableOpacity>
-      ) : (
-        <TouchableOpacity onPress={() => handleDateClick(date)}>
-          <Text style={styles.whiteText}>{date.day}</Text>
-        </TouchableOpacity>
-      )}
-    </View>
-  );
+  diaries.forEach((diary) => {
+    const selectedMusic = diary.musics.find((music) => music.selected);
+    if (selectedMusic) {
+      const updatedAtDate = new Date(diary.updatedAt)
+        .toISOString()
+        .split('T')[0];
+      processedData[updatedAtDate] = {
+        albumCoverUrl: selectedMusic.albumUrl,
+        id: diary.id,
+      };
+    }
+  });
+
+  return processedData;
 };
 
 const CalendarScreen = () => {
-  const [showTempBlack, setShowTempBlack] = useState(true);
+  const [currentDate, setCurrentDate] = useState<Date>(new Date());
+  const [monthRange, setMonthRange] = useState(
+    getCurrentMonthRange(currentDate),
+  );
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowTempBlack(false);
-    }, 100);
-    return () => clearTimeout(timer);
-  }, []);
+  const { data: musicData, isLoading } = useDiaryMonthlyArchive(
+    monthRange.startAt,
+    monthRange.endAt,
+    'month',
+  );
 
-  const getImageUriForDate = (dateString?: string) => {
-    if (!dateString) return undefined;
-    const item = dummyArchiveCalendar.find((item) => item.date === dateString);
-    return item ? item.albumCoverUrl : undefined;
+  const processedMusicData = musicData
+    ? extractProcessedMusicData(musicData)
+    : {};
+
+  const handleMonthChange = (month: DateData) => {
+    const newDate = new Date(month.year, month.month - 1);
+    setCurrentDate(newDate);
+    setMonthRange(getCurrentMonthRange(newDate));
   };
+
+  // 화살표 렌더링 함수
+  const renderArrow = (direction: 'left' | 'right') => (
+    <Feather
+      name={`chevron-${direction}`}
+      size={24}
+      color={COLORS.CONTENTS_LIGHT}
+    />
+  );
+
+  const getImageUriForDate = (dateString: string) => {
+    return processedMusicData?.[dateString]?.albumCoverUrl;
+  };
+
+  const renderDay = ({ date, state }: { date: DateData; state: string }) => {
+    const textColor =
+      state === 'disabled' ? COLORS.CONTENTS_LIGHT : COLORS.WHITE;
+    const imageUri = getImageUriForDate(date.dateString);
+    const id = processedMusicData?.[date.dateString]?.id;
+
+    return (
+      <Link
+        href={{
+          pathname: `/(main)/archive/day/${formatMonthDayDate(date.dateString)}`,
+          params: { id },
+        }}
+        asChild
+        key={id || date.dateString}
+      >
+        <TouchableOpacity style={styles.dayContainer} disabled={!id}>
+          {imageUri && (
+            <View style={styles.imageContainer}>
+              <Image source={{ uri: imageUri }} style={styles.albumImage} />
+            </View>
+          )}
+          <Text style={[styles.dayText, { color: textColor }]}>{date.day}</Text>
+        </TouchableOpacity>
+      </Link>
+    );
+  };
+
+  // 로딩 상태 표시
+  if (isLoading) {
+    return (
+      <View style={styles.loaderContainer}>
+        <ActivityIndicator size="small" color={COLORS.PURPLE} />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
-      <>
-        {/* {showTempBlack && (
-          <View style={styles.blackContainer}>
-            <TempBlack />
-          </View>
-        )} */}
-        <View style={styles.routerContainer}>
-          <RouteSwitcher />
-        </View>
-        <CalendarList
-          hideExtraDays
-          horizontal={false}
-          theme={{
-            calendarBackground: COLORS.BLACK,
-            monthTextColor: COLORS.WHITE,
-            textSectionTitleColor: COLORS.CONTENTS_LIGHT,
-            dayTextColor: COLORS.WHITE,
-            textMonthFontFamily: 'pret-b',
-          }}
-          dayComponent={({ date, state }) =>
-            customDayComponent({
-              date: date as DateData,
-              imageUri: date ? getImageUriForDate(date.dateString) : undefined,
-            })
-          }
-        />
-      </>
+      <View style={styles.routerContainer}>
+        <RouteSwitcher />
+      </View>
+
+      <View style={styles.monthContainer}>
+        <Text style={styles.monthText}>{getFormattedMonth(currentDate)}</Text>
+      </View>
+
+      <Calendar
+        current={getFormattedMonth(currentDate)}
+        onMonthChange={handleMonthChange}
+        enableSwipeMonths={true}
+        renderArrow={renderArrow}
+        dayComponent={renderDay}
+        theme={{
+          backgroundColor: COLORS.BLACK,
+          calendarBackground: COLORS.BLACK,
+          monthTextColor: COLORS.WHITE,
+          selectedDayBackgroundColor: COLORS.PURPLE,
+          selectedDayTextColor: COLORS.PURPLE,
+          textMonthFontFamily: 'pret-b',
+        }}
+      />
     </View>
   );
 };
@@ -105,6 +154,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.BLACK,
   },
+  loaderContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.BLACK,
+  },
   routerContainer: {
     position: 'absolute',
     width: '100%',
@@ -112,44 +167,38 @@ const styles = StyleSheet.create({
     left: 0,
     zIndex: 3,
   },
-  blackContainer: {
-    position: 'absolute',
-    flex: 1,
-    height: '100%',
-    width: '100%',
-    zIndex: 10,
+  monthContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 20,
+    paddingHorizontal: 20,
+  },
+  monthText: {
+    color: COLORS.WHITE,
+    fontSize: 20,
+    fontFamily: 'pret-b',
   },
   dayContainer: {
-    flex: 1,
-    justifyContent: 'center',
+    marginVertical: 12,
     alignItems: 'center',
-    height: 40,
-    aspectRatio: 1,
-  },
-  whiteText: {
-    textAlign: 'center',
-    color: COLORS.WHITE,
-    zIndex: 1,
-    opacity: 1,
-  },
-  albumContainer: {
-    flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
     height: 40,
     width: 40,
+  },
+  dayText: {
+    ...FONTS.B2,
+    color: COLORS.WHITE,
+  },
+  imageContainer: {
+    position: 'absolute',
+    width: 40,
+    height: 40,
     borderRadius: 20,
     overflow: 'hidden',
-    backgroundColor: COLORS.BLACK,
-  },
-  albumImageContainer: {
-    position: 'absolute',
-    height: '100%',
-    width: '100%',
-    opacity: 0.5, // 이미지 투명도 조절
   },
   albumImage: {
-    height: '100%',
     width: '100%',
+    height: '100%',
   },
 });

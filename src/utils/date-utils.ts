@@ -15,6 +15,13 @@ export function formatToYearMonth(date: Date): string {
   return `${year}년 ${month}월`;
 }
 
+// form > 2024-08
+export const getFormattedMonth = (date: Date) => {
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  return `${year}-${month}`;
+};
+
 // form > 2024-06-24 (한국시간 변환 x)
 export function formatToDate(date: Date): string {
   const year = date.getFullYear();
@@ -145,15 +152,13 @@ export const moveWeek = (date: Date, type: 'prev' | 'post') => {
 };
 
 // cf> 2024-07-02 -> { startAt: 2024-07-01, endAt: 2024-07-31 }
-export const getCurrentMonthRange = () => {
-  const now = new Date();
-
-  // 이번 달의 첫째 날
-  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-  const startAt = formatKST(startOfMonth);
+export const getCurrentMonthRange = (date: Date) => {
+  // 해당 달의 첫째 날
+  const startOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+  const startAt = formatKST(startOfMonth); // 필요한 시간대 포맷 적용 (KST)
 
   // 다음 달의 첫째 날에서 하루를 뺀 날짜 (이번 달의 마지막 날)
-  const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+  const endOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0);
   const endAt = formatKST(endOfMonth);
 
   return { startAt, endAt };
