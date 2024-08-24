@@ -10,29 +10,32 @@ import {
 } from '@/utils/date-utils';
 import { useDiaryMonthlyArchive } from '@/api/hooks/useArchive';
 import LoadingScreen from '@/components/common/LoadingScreen';
-import {
-  getLevel1And2Emotions,
-  getMoodFromEmotions,
-} from '@/utils/emotion-utils';
+import { getLevel1Emotions, getMoodFromEmotions } from '@/utils/emotion-utils';
 import { type DiaryMonthArchiveSchema } from '@/models/schemas';
-
 const extractDiaries = (diaries: DiaryMonthArchiveSchema[]) => {
-  return diaries.map((diary) => {
-    const selectedMusic = diary.musics.find((music) => music.selected === true);
-    const emotionLabels = getLevel1And2Emotions(
-      diary.emotions.map((e) => e.emotions),
-    ).map((emotion) => emotion.label);
-    return {
-      id: diary.id,
-      date: formatMonthDayDate(diary.updatedAt),
-      albumCoverUrl: selectedMusic?.albumUrl ?? '',
-      songTitle: selectedMusic?.title ?? '',
-      artist: selectedMusic?.artist ?? '',
-      diaryTitle: diary.title,
-      emotions: emotionLabels,
-      feeling: getMoodFromEmotions(diary.emotions || []),
-    };
-  });
+  return diaries
+    .sort(
+      (a, b) =>
+        new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
+    )
+    .map((diary) => {
+      const selectedMusic = diary.musics.find(
+        (music) => music.selected === true,
+      );
+      const emotionLabels = getLevel1Emotions(
+        diary.emotions.map((e) => e.emotions),
+      ).map((emotion) => emotion.label);
+      return {
+        id: diary.id,
+        date: formatMonthDayDate(diary.updatedAt),
+        albumCoverUrl: selectedMusic?.albumUrl ?? '',
+        songTitle: selectedMusic?.title ?? '',
+        artist: selectedMusic?.artist ?? '',
+        diaryTitle: diary.title,
+        emotions: emotionLabels,
+        feeling: getMoodFromEmotions(diary.emotions || []),
+      };
+    });
 };
 
 const extractMusicsWithFeeling = (diaries: DiaryMonthArchiveSchema[]) => {
