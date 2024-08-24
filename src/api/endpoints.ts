@@ -34,5 +34,10 @@ export const API_ENDPOINTS = {
     MUSIC_ARCHIVE:
       '/musics/me/archive?start-at=:startAt&end-at=:endAt&group=:group',
     DIARY_ARCHIVE: '/diaries/me/archive?start-at=:start&end-at=:end',
+    SUMMARY: `/musics/me/archive/summary`,
+    DIARY_MONTHLY_ARCHIVE:
+      '/diaries/me/archive?start-at=:startAt&end-at=:endAt&group=:group',
+    MUSIC_ARCHIVE_CALENDAR:
+      '/musics/me/archive?start-at=:startAt&end-at=:endAt',
   },
 };

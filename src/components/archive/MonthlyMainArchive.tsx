@@ -12,52 +12,30 @@ import { BadSvg, HappySvg, SosoSvg } from 'assets/images/common';
 import { COLORS, FONTS } from '@/constants';
 import { colorWithOpacity } from '@/utils/color-utils';
 import { trimTitle } from '@/utils/text-utils';
+import { emotionColor } from '@/constants/data';
+import { formatDateString } from '@/utils/date-utils';
+import { type IMusicSummaryEntry } from '@/models/interfaces';
 
 const contentWidth = Dimensions.get('window').width / 2 - 22;
 
-interface DiaryEntryProps {
-  id: string;
-  month: string;
-  mood: string;
-  albumCoverUrl: string;
-  songTitle: string;
-  artist: string;
-  diaryEntries: number;
-}
-
-const getBackgroundColor = (mood: string) => {
-  switch (mood) {
-    case 'Neutral':
-      return COLORS.BLUE;
-    case 'Positive':
-      return COLORS.PURPLE;
-    case 'Negative':
-      return COLORS.GREEN;
-
-    default:
-      return '#f5f5f5';
-  }
-};
-
-// 긍정, 부정, 중립에 따라 분류
 const EmotionImage = ({ mood }: { mood: string }) => {
   switch (mood) {
-    case 'Positive':
+    case 'good':
       return (
         <View style={styles.emotion}>
-          <HappySvg width={120} height={120} fill={COLORS.GREEN} />
+          <HappySvg width={120} height={120} fill={COLORS.PURPLE} />
         </View>
       );
-    case 'Negative':
+    case 'bad':
       return (
         <View style={styles.emotion}>
-          <BadSvg width={125} height={125} fill={COLORS.BLUE} />
+          <BadSvg width={125} height={125} fill={COLORS.PURPLE} />
         </View>
       );
-    case 'Neutral':
+    case 'normal':
       return (
         <View style={styles.emotion}>
-          <SosoSvg width={125} height={125} fill={COLORS.PURPLE} />
+          <SosoSvg width={125} height={125} fill={COLORS.GREEN} />
         </View>
       );
     default:
@@ -65,6 +43,7 @@ const EmotionImage = ({ mood }: { mood: string }) => {
   }
 };
 
+// 메인 아카이브 컴포넌트
 const MonthlyMainArchive = ({
   id,
   month,
@@ -73,14 +52,16 @@ const MonthlyMainArchive = ({
   songTitle,
   artist,
   diaryEntries,
-}: DiaryEntryProps) => {
-  const backgroundColor = getBackgroundColor(mood);
+}: IMusicSummaryEntry) => {
+  const backgroundColor = emotionColor[mood];
   const emotionImage = EmotionImage({ mood });
+
+  const stringMonth = formatDateString(month);
 
   return (
     <View style={styles.fullContainer}>
       <Link
-        href={`/(main)/archive/month/${month}`}
+        href={`/(main)/archive/month/${stringMonth}`}
         asChild
         style={[styles.container, { backgroundColor }]}
         key={id}
@@ -103,7 +84,7 @@ const MonthlyMainArchive = ({
           </View>
         </TouchableOpacity>
       </Link>
-      <Text style={styles.month}>{month}</Text>
+      <Text style={styles.month}>{stringMonth}</Text>
     </View>
   );
 };

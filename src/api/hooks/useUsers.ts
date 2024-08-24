@@ -1,4 +1,4 @@
-import { useMutation, useSuspenseQuery, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import {
   type PathUserSchema,
   type UserSchema,
@@ -12,6 +12,9 @@ import { API_ENDPOINTS } from '@/api/endpoints';
 import apiClient from '../client';
 
 const USERS = API_ENDPOINTS.USERS;
+
+// const delay = async (ms: number) =>
+//   await new Promise((resolve) => setTimeout(resolve, ms));
 
 const getUser = async () => {
   const { data } = await apiClient.get(API_ENDPOINTS.USERS.SELF);
@@ -30,20 +33,26 @@ const getUserInfo = async (): Promise<UserSchema> => {
 };
 
 export const useGetUserInfo = () => {
-  return useSuspenseQuery({
+  return useQuery({
     queryKey: ['userInfo'],
     queryFn: getUserInfo,
+    initialData: {} as UserSchema,
   });
 };
 
 // 유저 생성일 가져오기
 export const useUserCreatedInfo = () => {
-  return useGetUserInfo().data.createdAt;
+  return useGetUserInfo().data?.createdAt;
+};
+
+// 유저 이름 가져오기
+export const useUserName = () => {
+  return useGetUserInfo().data?.name;
 };
 
 // 유저 아이디 가져오기
 export const useUserId = () => {
-  return useGetUserInfo().data.id;
+  return useGetUserInfo().data?.id;
 };
 
 // 유저 정보 수정하기
@@ -74,6 +83,7 @@ const getMonthlyStatistics = async (
 ): Promise<MonthlyStatisticsSchema> => {
   const url = API_ENDPOINTS.USERS.STATISTICS.MONTH.replace(':value', month);
   const { data } = await apiClient.get(url);
+  // await delay(3000);
   return data.data;
 };
 

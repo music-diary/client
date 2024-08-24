@@ -5,6 +5,7 @@ export interface ITopic {
   label: string;
   emoji: string;
   name: string;
+  order?: string;
 }
 
 export interface IGenre {
@@ -22,7 +23,8 @@ export interface IEmotion {
   parent: IEmotion;
   level: number;
   order: number;
-  rootId: string;
+  rootId?: string | null;
+  aiScale?: string | null;
 }
 
 export interface ITemplate {

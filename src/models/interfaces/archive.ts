@@ -1,13 +1,15 @@
+import { type IMusic, type IEmotion } from './diary';
+
 export interface IArchiveEmotion {
   id: string;
   name: string;
   label: string;
   parentId: string | null;
-  rootId: string | null;
+  parent: IEmotion | null;
   level: number;
   order: number;
-  aiScale: string | null;
-  parent: IArchiveEmotion | null;
+  rootId?: string | null;
+  aiScale?: string | null;
 }
 
 export interface IArchiveMusic {
@@ -27,6 +29,32 @@ export interface IArchiveMusic {
   createdAt: string;
   updatedAt: string;
   diary: {
-    emotions: Array<{ emotions: { parent: IArchiveEmotion } }>;
+    emotions: IMusic | IArchiveMusic;
   } | null;
+}
+
+export interface ISummaryMusic {
+  id?: string;
+  songId: string;
+  title: string;
+  artist: string;
+  albumUrl: string;
+  selected?: boolean;
+}
+
+export interface IMusicSummaryEntry {
+  id: string;
+  month: string;
+  mood: string;
+  albumCoverUrl: string;
+  songTitle: string;
+  artist: string;
+  diaryEntries: number;
+}
+
+export interface IArchiveMusicRecommendation {
+  albumCoverUrl: string;
+  songTitle: string;
+  artist: string;
+  emotionName: string;
 }

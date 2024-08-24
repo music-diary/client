@@ -25,6 +25,14 @@ export function formatToDate(date: Date): string {
   return `${year}-${formattedMonth}-${formattedDay}`;
 }
 
+// form > 2024-03-24T07:03:00.000Z -> 3월 15일
+export const formatMonthDayDate = (dateString: string) => {
+  return new Date(dateString).toLocaleDateString('ko-KR', {
+    month: 'long',
+    day: 'numeric',
+  });
+};
+
 export function calculateDaysSince(startDate: string): number {
   const start = new Date(startDate);
   const now = new Date();
@@ -146,6 +154,26 @@ export const getCurrentMonthRange = () => {
 
   // 다음 달의 첫째 날에서 하루를 뺀 날짜 (이번 달의 마지막 날)
   const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+  const endAt = formatKST(endOfMonth);
+
+  return { startAt, endAt };
+};
+
+// '2024년 07월' -> 그 달의 시작과 끝 날짜를 { startAt: '2024-07-01', endAt: '2024-07-31' }로 반환
+export const getMonthRangeFromParams = (monthString: string | undefined) => {
+  const yearMonthMatch = monthString?.match(/(\d{4})년 (\d{2})월/);
+
+  if (!yearMonthMatch) {
+    throw new Error('잘못된 날짜 형식입니다.');
+  }
+
+  const year = parseInt(yearMonthMatch[1], 10);
+  const month = parseInt(yearMonthMatch[2], 10) - 1;
+
+  const startOfMonth = new Date(year, month, 1);
+  const startAt = formatKST(startOfMonth);
+
+  const endOfMonth = new Date(year, month + 1, 0);
   const endAt = formatKST(endOfMonth);
 
   return { startAt, endAt };

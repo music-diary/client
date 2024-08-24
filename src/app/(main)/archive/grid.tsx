@@ -1,48 +1,62 @@
-import { useEffect, useState } from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
 import { COLORS } from '@/constants';
-import dummy_archive_main from '@/data/dummy_archive_main.json';
 import MonthlyMainArchive from '@/components/archive/MonthlyMainArchive';
 import RouteSwitcher from '@/components/archive/RouteSwitcher';
-
-interface DiaryEntryData {
-  id: string;
-  month: string;
-  mood: string;
-  albumCoverUrl: string;
-  songTitle: string;
-  artist: string;
-  diaryEntries: number;
-}
+import { useMusicArchiveSummary } from '@/api/hooks/useArchive';
+import LoadingScreen from '@/components/common/LoadingScreen';
+import { getMoodFromEmotions } from '@/utils/emotion-utils';
+import { type IMusicSummaryEntry } from '@/models/interfaces';
+import NoArchiveData from '@/components/archive/NoArchiveData';
 
 const GridScreen = () => {
-  const [entryData, setEntryData] = useState<DiaryEntryData[]>([]);
-  useEffect(() => {
-    setEntryData(dummy_archive_main);
-  }, []);
+  const { data: summaryData, isLoading } = useMusicArchiveSummary();
+
+  if (!summaryData || isLoading) {
+    return <LoadingScreen />;
+  }
+
+  const entryData: IMusicSummaryEntry[] =
+    summaryData.map((item, index) => ({
+      id: String(index),
+      month: item.date,
+      mood: item.emotion?.parent
+        ? getMoodFromEmotions([{ emotions: item.emotion?.parent }])
+        : '',
+      albumCoverUrl: item.music?.albumUrl ?? '',
+      songTitle: item.music?.title ?? 'Unknown',
+      artist: item.music?.artist ?? 'Unknown',
+      diaryEntries: item.count,
+    })) ?? [];
+
+  console.log(summaryData[0].emotion);
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <RouteSwitcher />
       </View>
-      <FlatList
-        data={entryData}
-        keyExtractor={(item) => item.id}
-        numColumns={2}
-        columnWrapperStyle={styles.columnWrapper}
-        renderItem={({ item }) => (
-          <View style={styles.gridItem}>
-            <MonthlyMainArchive {...item} />
-          </View>
-        )}
-        contentContainerStyle={styles.contentContainer}
-        style={{ backgroundColor: COLORS.BLACK }}
-      />
+      {entryData.length === 0 ? (
+        <View style={styles.container}>
+          <NoArchiveData />
+        </View>
+      ) : (
+        <FlatList
+          data={entryData}
+          keyExtractor={(item) => item.id}
+          numColumns={2}
+          columnWrapperStyle={styles.columnWrapper}
+          renderItem={({ item }) => (
+            <View style={styles.gridItem}>
+              <MonthlyMainArchive {...item} />
+            </View>
+          )}
+          contentContainerStyle={styles.contentContainer}
+          style={{ backgroundColor: COLORS.BLACK }}
+        />
+      )}
     </View>
   );
 };
-
 export default GridScreen;
 
 const styles = StyleSheet.create({

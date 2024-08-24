@@ -1,10 +1,16 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import apiClient from '@/api/client';
 import { API_ENDPOINTS } from '@/api/endpoints';
 import {
+  type MusicArchiveSummarySchema,
   type DiaryListArchiveSchema,
   type MusicRecommendationSchema,
+  type DiaryMonthArchiveSchema,
+  type MusicRecommendationCalendarSchema,
 } from '@/models/schemas';
+
+// const delay = async (ms: number) =>
+//   await new Promise((resolve) => setTimeout(resolve, ms));
 
 const getMusicArchive = async (
   startAt: string,
@@ -18,7 +24,7 @@ const getMusicArchive = async (
     .replace(':endAt', endAt)
     .replace(':group', group);
   // 3초 지연
-  // await new Promise((resolve) => setTimeout(resolve, 3000));
+  // await delay(3000);
   const { data } = await apiClient.get(endpoint);
   return data.data;
 };
@@ -52,5 +58,86 @@ export const useDiaryArchive = (startAt: string, endAt: string) => {
     queryKey: ['diaryArchive', startAt, endAt],
     queryFn: async () => await getDiaryArchive(startAt, endAt),
     initialData: [],
+  });
+};
+
+// summary archive
+const getMusicSummaryArchive = async (): Promise<
+  MusicArchiveSummarySchema[]
+> => {
+  const endpoint = API_ENDPOINTS.ARCHIVES.SUMMARY;
+  const { data } = await apiClient.get(endpoint);
+
+  return data.summary;
+};
+
+export const useMusicArchiveSummary = () => {
+  return useQuery({
+    queryKey: ['summaryArchive'],
+    queryFn: async () => await getMusicSummaryArchive(),
+  });
+};
+
+const getDiaryMonthlyArchive = async (
+  startAt: string,
+  endAt: string,
+  group: string,
+): Promise<DiaryMonthArchiveSchema[]> => {
+  const endpoint = API_ENDPOINTS.ARCHIVES.DIARY_MONTHLY_ARCHIVE.replace(
+    ':startAt',
+    startAt,
+  )
+    .replace(':endAt', endAt)
+    .replace(':group', group);
+  const { data } = await apiClient.get(endpoint);
+
+  return data.diaries;
+};
+
+export const useDiaryMonthlyArchive = (
+  startAt: string,
+  endAt: string,
+  group: string,
+) => {
+  return useQuery({
+    queryKey: ['diaryMonthlyArchive', startAt, endAt, group],
+    queryFn: async () => await getDiaryMonthlyArchive(startAt, endAt, group),
+  });
+};
+
+const deleteDiary = async (diaryId: string): Promise<void> => {
+  const endpoint = API_ENDPOINTS.DIARIES.ID.replace(':id', diaryId);
+  await apiClient.delete(endpoint);
+};
+
+export const useDeleteDiary = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (diaryId: string) => await deleteDiary(diaryId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['diaryArchive'] });
+      queryClient.invalidateQueries({ queryKey: ['diaryMonthlyArchive'] });
+    },
+  });
+};
+
+const getMusicArchiveCalendar = async (
+  startAt: string,
+  endAt: string,
+): Promise<MusicRecommendationCalendarSchema> => {
+  const endpoint = API_ENDPOINTS.ARCHIVES.MUSIC_ARCHIVE_CALENDAR.replace(
+    ':startAt',
+    startAt,
+  ).replace(':endAt', endAt);
+
+  const { data } = await apiClient.get(endpoint);
+  return data.data;
+};
+
+export const useMusicArchiveCalendar = (startAt: string, endAt: string) => {
+  return useQuery({
+    queryKey: ['musicArchiveCalendar', startAt, endAt],
+    queryFn: async () => await getMusicArchiveCalendar(startAt, endAt),
   });
 };

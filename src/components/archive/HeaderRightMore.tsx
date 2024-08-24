@@ -1,20 +1,19 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import { Feather } from '@expo/vector-icons';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { StyleSheet, TouchableOpacity } from 'react-native';
+import { TrashSvg } from 'assets/images/archive'; // SVG 파일이 있다고 가정합니다.
 import { COLORS } from '@/constants';
-import { useModalToggleStore } from '@/store/useModalStore';
+import { useModalStore } from '@/store/useModalStore';
 
 const HeaderRightMore = () => {
-  const { toggleModal, isModalOpen } = useModalToggleStore();
+  const { openModal } = useModalStore();
+
+  const onDeletePress = () => {
+    openModal('delete-diary-modal');
+  };
 
   return (
-    <TouchableOpacity style={styles.container} onPress={toggleModal}>
-      <Feather
-        name={isModalOpen ? 'x' : 'more-horizontal'}
-        size={18}
-        color={COLORS.WHITE}
-      />
+    <TouchableOpacity style={styles.container} onPress={onDeletePress}>
+      <TrashSvg fill={COLORS.WHITE} />
     </TouchableOpacity>
   );
 };
@@ -23,6 +22,7 @@ export default HeaderRightMore;
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
