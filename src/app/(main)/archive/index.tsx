@@ -53,7 +53,7 @@ const extractMusicsWithFeeling = (diaries: DiaryMonthArchiveSchema[]) => {
 };
 
 const ArchiveScreen = () => {
-  const { startAt, endAt } = getCurrentMonthRange();
+  const { startAt, endAt } = getCurrentMonthRange(new Date());
   const userName = useUserName();
 
   const {
