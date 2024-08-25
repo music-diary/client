@@ -6,7 +6,6 @@ import {
   type DiaryListArchiveSchema,
   type MusicRecommendationSchema,
   type DiaryMonthArchiveSchema,
-  type MusicRecommendationCalendarSchema,
 } from '@/models/schemas';
 
 // const delay = async (ms: number) =>
@@ -117,6 +116,7 @@ export const useDeleteDiary = () => {
     mutationFn: async (diaryId: string) => await deleteDiary(diaryId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['diaryArchive'] });
+      queryClient.invalidateQueries({ queryKey: ['musicArchive'] });
       queryClient.invalidateQueries({ queryKey: ['diaryMonthlyArchive'] });
     },
   });

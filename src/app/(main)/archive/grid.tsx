@@ -28,8 +28,6 @@ const GridScreen = () => {
       diaryEntries: item.count,
     })) ?? [];
 
-  console.log(summaryData[0].emotion);
-
   return (
     <View style={styles.container}>
       <View style={styles.header}>
