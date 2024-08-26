@@ -13,7 +13,7 @@ const CompleteScreen = () => {
       <SafeAreaView edges={['top']} style={styles.container}>
         <View style={styles.welcomeContainer}>
           <Image source={require('assets/images/complete-logo.png')} />
-          <Text style={styles.welcomeText}>음계일기에 오신 것을 환영해요!</Text>
+          <Text style={styles.welcomeText}>뮤다에 오신 것을 환영해요!</Text>
         </View>
       </SafeAreaView>
       <CustomBottomButton isActive={true} onPress={handleNext} label="다음" />

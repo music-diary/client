@@ -26,6 +26,7 @@ import { type DiaryStatus } from '@/models/types';
 import { useModalStore } from '@/store/useModalStore';
 import { colorWithOpacity } from '@/utils/color-utils';
 import { extractVideoId } from '@/utils/music-utils';
+import { useGetUserInfo } from '@/api/hooks/useUsers';
 
 const PAGE_WIDTH = Dimensions.get('window').width;
 const PAGE_HEIGHT = Dimensions.get('window').height;
@@ -43,6 +44,8 @@ const MusicRecommendationScreen = () => {
   const [selectedMusicIndex, setSelectedMusicIndex] = useState<number | null>(
     null,
   );
+
+  const { data: userInfo, isLoading, isError } = useGetUserInfo();
 
   const {
     data: musicData,
@@ -152,7 +155,7 @@ const MusicRecommendationScreen = () => {
     <>
       <SafeAreaView edges={['bottom']} style={styles.container}>
         <Text style={styles.headerTitle}>
-          오늘의 윤경 님에게 어울리는 곡들이에요
+          오늘의 {userInfo?.name} 님에게 어울리는 곡을 골라볼까요?
         </Text>
         <Carousel
           ref={ref}
