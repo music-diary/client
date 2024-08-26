@@ -74,6 +74,7 @@ const MonthlyStatistic = () => {
             <MusicPreference
               key="musicPreference"
               genreCounts={monthlyStatistics.genreCounts}
+              diaryCount={monthlyStatistics.diaryCount}
             />,
 
             <DiaryTopic

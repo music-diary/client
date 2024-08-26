@@ -27,6 +27,7 @@ const MonthlyNoDataTemplate = () => {
               <MusicPreference
                 key="musicPreference"
                 genreCounts={templateData.genreCounts}
+                diaryCount={templateData.diaryCount}
               />,
 
               <DiaryTopic
