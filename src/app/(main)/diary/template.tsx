@@ -119,12 +119,16 @@ const TemplateScreen = () => {
                     {template.description}
                   </Text>
                 </View>
-                <AntDesign
+                <TouchableOpacity
                   onPress={() => handleSetTemplate(template.type)}
-                  name="pluscircleo"
-                  size={16}
-                  color={COLORS.WHITE}
-                />
+                  hitSlop={{ top: 20, right: 12, left: 12 }}
+                >
+                  <AntDesign
+                    name="pluscircleo"
+                    size={16}
+                    color={COLORS.WHITE}
+                  />
+                </TouchableOpacity>
               </View>
               <Animated.View style={animatedStyles(template.type)}>
                 <View style={styles.templatePreviewContainer}>
