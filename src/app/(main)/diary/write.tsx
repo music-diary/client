@@ -109,6 +109,11 @@ const WriteScreen = () => {
     }
   };
 
+  /**
+   * TODO:
+   *
+   * 글자수 세기 추가
+   */
   return (
     <>
       <KeyboardAvoidingView
@@ -245,7 +250,7 @@ const WriteScreen = () => {
         description={`미처 마무리 짓지 못한 일기도\n언제든 다시 적어보세요`}
         toastMessage="임시저장 되었습니다"
         svg={GroupSvg}
-        onClose={() => router.navigate('(main)')}
+        onClose={() => router.navigate('/(main)')}
       />
     </>
   );
@@ -291,7 +296,7 @@ const styles = StyleSheet.create({
   },
   inputTitle: {
     padding: 10,
-    color: COLORS.CONTENTS_LIGHT,
+    color: COLORS.WHITE,
     backgroundColor: COLORS.BOX,
     borderRadius: 10,
     ...FONTS.B1_SB,
@@ -306,7 +311,7 @@ const styles = StyleSheet.create({
     paddingTop: 14,
     paddingBottom: 14,
     paddingHorizontal: 12,
-    color: COLORS.CONTENTS_LIGHT,
+    color: COLORS.WHITE,
     backgroundColor: COLORS.BOX,
     borderRadius: 10,
     ...FONTS.B2,
