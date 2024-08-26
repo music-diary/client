@@ -256,6 +256,7 @@ const MypageScreen = () => {
           <BodyNavigator content="문의 사항" onPress={onPressInquiry} />
         </View>
         {/* 바디2-2 */}
+        <View style={styles.divider} />
         <View style={styles.body2}>
           {mypageTerms.map((term) => (
             <BodyNavigator
@@ -264,6 +265,9 @@ const MypageScreen = () => {
               onPress={() => handleOpenTerms(term.url)}
             />
           ))}
+          <View style={styles.body2}>
+            <BodyNavigator content="Thanks to" onPress={onPressInquiry} />
+          </View>
         </View>
         {/* 바디3 */}
         <View style={styles.divider} />

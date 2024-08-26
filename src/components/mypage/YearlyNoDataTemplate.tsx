@@ -17,10 +17,17 @@ const YearlyNoDataTemplate = () => {
         <View style={styles.overlay} />
         <View style={styles.bodyContainer}>
           <DiaryYearlyGraph monthlyData={templateData.diaries[0].months} />
-          <MusicPreference genreCounts={templateData.genreCounts} isYearly />
+          <MusicPreference
+            genreCounts={templateData.genreCounts}
+            isYearly
+            diaryCount={templateData.diaries[0].count}
+          />
           <View style={styles.twoColumnContainer}>
             <MyFilling emotionData={templateData.emotions} />
-            <DiaryTopic topics={templateData.topics} />
+            <DiaryTopic
+              topics={templateData.topics}
+              diaryCount={templateData.diaries[0].count}
+            />
           </View>
         </View>
       </View>

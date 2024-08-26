@@ -13,6 +13,7 @@ import LoadingScreen from '@/components/common/LoadingScreen';
 import { getLevel1Emotions, getMoodFromEmotions } from '@/utils/emotion-utils';
 import { type DiaryMonthArchiveSchema } from '@/models/schemas';
 import { useUserName } from '@/api/hooks/useUsers';
+import NoArchiveData from '@/components/archive/NoArchiveData';
 
 const extractDiaries = (diaries: DiaryMonthArchiveSchema[]) => {
   return diaries
@@ -82,34 +83,43 @@ const ArchiveScreen = () => {
       <View style={styles.header}>
         <RouteSwitcher />
       </View>
-      <ScrollView style={styles.container}>
-        <Text style={styles.headerText}>{month}</Text>
+      {archiveData && archiveData.length === 0 ? (
+        <View style={styles.noDataContainer}>
+          <NoArchiveData />
+        </View>
+      ) : (
+        <ScrollView style={styles.container}>
+          <Text style={styles.headerText}>{month}</Text>
 
-        <ScrollView
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          style={{ paddingTop: 11 }}
-        >
-          <View style={styles.scrollContent}>
-            {dailyArchiveData.map((entry) => (
-              <DailyMainArchive key={entry.id} {...entry} />
-            ))}
-          </View>
-        </ScrollView>
-
-        <View style={styles.recommendContainer}>
-          <Text style={styles.headerText}>
-            {userName}님이 {month}에 추천받은 음악들
-          </Text>
-          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          <ScrollView
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            style={{ paddingTop: 11 }}
+          >
             <View style={styles.scrollContent}>
-              {recommendMusics.map((entry, index) => (
-                <RecommendMusic key={index} {...entry} />
+              {dailyArchiveData.map((entry) => (
+                <DailyMainArchive key={entry.id} {...entry} />
               ))}
             </View>
           </ScrollView>
-        </View>
-      </ScrollView>
+
+          <View style={styles.recommendContainer}>
+            <Text style={styles.headerText}>
+              {userName}님이 {month?.slice(6)}에 추천받은 음악들
+            </Text>
+            <ScrollView
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+            >
+              <View style={styles.scrollContent}>
+                {recommendMusics.map((entry, index) => (
+                  <RecommendMusic key={index} {...entry} />
+                ))}
+              </View>
+            </ScrollView>
+          </View>
+        </ScrollView>
+      )}
     </>
   );
 };
@@ -122,6 +132,10 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.BLACK,
     paddingLeft: 16,
     paddingTop: 20,
+  },
+  noDataContainer: {
+    flex: 1,
+    backgroundColor: COLORS.BLACK,
   },
   header: {
     height: 50,

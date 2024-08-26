@@ -10,21 +10,36 @@ const containerWidth = Dimensions.get('window').width / 2 - 24;
 
 interface DiaryTopicProps {
   topics: IStatisticTopic[];
+  diaryCount: number;
 }
 
-const DiaryTopic = ({ topics }: DiaryTopicProps) => {
-  // 에러 케이스 + 로딩 케이스
-  if (topics.length === 0) {
+const DiaryTopic = ({ topics, diaryCount }: DiaryTopicProps) => {
+  // 가장 빈도 높은 순으로 sort
+  const sortedTopics = topics.sort(
+    (a, b) => b.topic._count.diaries - a.topic._count.diaries,
+  );
+
+  if (diaryCount === -1) {
     return (
       <View style={styles.container}>
         <LoadingIndicator />
       </View>
     );
   }
-  // 가장 빈도 높은 순으로 sort
-  const sortedTopics = topics.sort(
-    (a, b) => b.topic._count.diaries - a.topic._count.diaries,
-  );
+
+  if (!topics || topics.length === -1) {
+    return (
+      <View style={styles.container}>
+        <View style={styles.title}>
+          <BookOpenSvg />
+          <Text style={styles.buttonText}>일기 주제</Text>
+        </View>
+        <Text style={styles.b2sbNoText}>
+          아직 일기 주제를 {'\n'} 선택하지 않았어요
+        </Text>
+      </View>
+    );
+  }
 
   const topTopics = sortedTopics.slice(0, 3);
 
@@ -57,14 +72,22 @@ const DiaryTopic = ({ topics }: DiaryTopicProps) => {
         <BookOpenSvg />
         <Text style={styles.buttonText}>일기 주제</Text>
       </View>
-      <Text style={styles.bodyText}>{renderTopTopics()}</Text>
 
-      {sortedTopics.map((topic) => (
-        <View key={topic.topic.id} style={styles.contentContainer}>
-          <Text>{topic.topic.emoji}</Text>
-          <Text style={styles.b2sbText}>{topic.topic.label}</Text>
-        </View>
-      ))}
+      {topics.length === 0 ? (
+        <Text style={styles.b2sbNoText}>
+          아직 일기 주제를 {'\n'} 선택하지 않았어요
+        </Text>
+      ) : (
+        <>
+          <Text style={styles.bodyText}>{renderTopTopics()}</Text>
+          {sortedTopics.map((topic) => (
+            <View key={topic.topic.id} style={styles.contentContainer}>
+              <Text>{topic.topic.emoji}</Text>
+              <Text style={styles.b2sbText}>{topic.topic.label}</Text>
+            </View>
+          ))}
+        </>
+      )}
     </View>
   );
 };
@@ -89,6 +112,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 4,
   },
+
   buttonText: {
     color: COLORS.PURPLE_BOX,
     ...FONTS.BTN,
@@ -116,6 +140,12 @@ const styles = StyleSheet.create({
   },
   b2sbText: {
     color: COLORS.WHITE,
+    ...FONTS.B2_SB,
+  },
+  b2sbNoText: {
+    paddingTop: 10,
+    textAlign: 'center',
+    color: colorWithOpacity(COLORS.WHITE, 0.5),
     ...FONTS.B2_SB,
   },
 });

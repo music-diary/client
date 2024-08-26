@@ -10,7 +10,7 @@ import {
   useUserCreatedInfo,
   useGetYearlyStatistics,
 } from '@/api/hooks/useUsers';
-import { generateYearArray } from '@/utils/date-utils';
+import { formatDateTextString, generateYearArray } from '@/utils/date-utils';
 import NoDiaryStatistic from '@/components/mypage/NoDiaryStatistic';
 import YearlyNoDataTemplate from '@/components/mypage/YearlyNoDataTemplate';
 import MoreInfo from './MoreInfo';
@@ -45,7 +45,7 @@ const YearlyStatisticPage = () => {
             onSelect={handleSelect}
           />
         </View>
-        <NoDiaryStatistic />
+        <NoDiaryStatistic dateString={formatDateTextString(selectedData)} />
         <YearlyNoDataTemplate />
       </View>
     );
@@ -62,10 +62,17 @@ const YearlyStatisticPage = () => {
       </View>
       <View style={styles.bodyContainer}>
         <DiaryYearlyGraph monthlyData={yearlyStatistics.diaries[0].months} />
-        <MusicPreference genreCounts={yearlyStatistics.genreCounts} isYearly />
+        <MusicPreference
+          genreCounts={yearlyStatistics.genreCounts}
+          isYearly
+          diaryCount={yearlyStatistics.diaries[0].count}
+        />
         <View style={styles.twoColumnContainer}>
           <MyFilling emotionData={yearlyStatistics.emotions} />
-          <DiaryTopic topics={yearlyStatistics.topics} />
+          <DiaryTopic
+            topics={yearlyStatistics.topics}
+            diaryCount={yearlyStatistics.diaries[0].count}
+          />
         </View>
         <MoreInfo />
       </View>
