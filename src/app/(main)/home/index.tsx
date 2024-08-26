@@ -44,6 +44,7 @@ const HomeScreen = () => {
   };
 
   const diaryCount = archiveData.count;
+  console.log('🚀 ~ file: index.tsx:47 ~ HomeScreen ~ diaryCount:', diaryCount);
 
   const emotionName = archiveData?.emotion
     ? getMoodFromEmotions([{ emotions: archiveData?.emotion }])
