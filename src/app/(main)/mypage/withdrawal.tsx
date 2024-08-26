@@ -102,7 +102,7 @@ const WithdrawalScreen = () => {
     return (
       <CustomAlertModal
         name="withdrawal-confirm-modal"
-        title="정말 음계일기에서 탈퇴하시겠어요?"
+        title="정말 뮤다에서 탈퇴하시겠어요?"
         description="작성하신 일기 및 편지, 음악들을 복구할 수 없어요."
         leftButtonText="아니오, 취소할래요"
         rightButtonText="네, 탈퇴할래요"
@@ -145,7 +145,7 @@ const WithdrawalScreen = () => {
                   {/* Placeholder 스타일링 */}
                   {extraReason === '' && (
                     <Text style={styles.placeholder}>
-                      음계일기를 이용하면서 불편했던 점을 알려주시면{'\n'}서비스
+                      뮤다를 이용하면서 불편했던 점을 알려주시면{'\n'}서비스
                       개선에 적극 반영할게요.
                     </Text>
                   )}
