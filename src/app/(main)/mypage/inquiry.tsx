@@ -147,8 +147,8 @@ const InquiryScreen = () => {
           <View style={styles.inputBoxContainer}>
             {extraReason === '' && (
               <Text style={styles.placeholder}>
-                음계일기를 이용하면서 불편했던 점을 알려주시면{'\n'}서비스
-                개선에 적극 반영할게요.
+                뮤다를 이용하면서 불편했던 점을 알려주시면{'\n'}서비스 개선에
+                적극 반영할게요.
               </Text>
             )}
             <TextInput

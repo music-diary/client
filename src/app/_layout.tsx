@@ -80,9 +80,9 @@ function RootLayoutNav() {
     //   router.navigate('intro');
     // }
     if (!isAuthenticated) {
-      router.navigate('(onboarding)');
+      router.navigate('/(onboarding)');
     } else {
-      router.navigate('(main)');
+      router.navigate('/(main)');
     }
   }, [isAuthenticated]);
 
