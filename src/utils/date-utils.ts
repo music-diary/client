@@ -111,6 +111,21 @@ export const formatDateString = (input: string): string => {
   }
 };
 
+// form > 2024-08 -> 8월, 2024-12 -> 12월, 2024 -> 2024년
+export const formatDateTextString = (input: string): string => {
+  const parts = input.split('-');
+
+  if (parts.length === 2) {
+    const [, month] = parts;
+    return `${parseInt(month, 10)}월달`;
+  } else if (parts.length === 1) {
+    const [year] = parts;
+    return `${year}년`;
+  } else {
+    return 'Invalid date';
+  }
+};
+
 // toISOString()를 한국 시간으로 변환 cf> 2024-07-01T15:00:00.000Z -> 2024-07-02
 export const formatKST = (date: Date) => {
   const offset = 1000 * 60 * 60 * 9; // UTC+9

@@ -11,7 +11,7 @@ import {
   useUserCreatedInfo,
   useGetMonthlyStatistics,
 } from '@/api/hooks/useUsers';
-import { generateMonthArray } from '@/utils/date-utils';
+import { formatDateTextString, generateMonthArray } from '@/utils/date-utils';
 import NoDiaryStatistic from '@/components/mypage/NoDiaryStatistic';
 import MonthlyNoDataTemplate from '@/components/mypage/MonthlyNoDataTemplate';
 
@@ -44,7 +44,7 @@ const MonthlyStatistic = () => {
             onSelect={handleSelect}
           />
         </View>
-        <NoDiaryStatistic />
+        <NoDiaryStatistic dateString={formatDateTextString(selectedData)} />
         <MonthlyNoDataTemplate />
       </View>
     );

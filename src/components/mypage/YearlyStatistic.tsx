@@ -10,7 +10,7 @@ import {
   useUserCreatedInfo,
   useGetYearlyStatistics,
 } from '@/api/hooks/useUsers';
-import { generateYearArray } from '@/utils/date-utils';
+import { formatDateTextString, generateYearArray } from '@/utils/date-utils';
 import NoDiaryStatistic from '@/components/mypage/NoDiaryStatistic';
 import YearlyNoDataTemplate from '@/components/mypage/YearlyNoDataTemplate';
 import MoreInfo from './MoreInfo';
@@ -45,7 +45,7 @@ const YearlyStatisticPage = () => {
             onSelect={handleSelect}
           />
         </View>
-        <NoDiaryStatistic />
+        <NoDiaryStatistic dateString={formatDateTextString(selectedData)} />
         <YearlyNoDataTemplate />
       </View>
     );

@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { router } from 'expo-router';
 import { COLORS, FONTS } from '@/constants';
 
-const NoDiaryStatistic = () => {
+const NoDiaryStatistic = ({ dateString }: { dateString: string }) => {
   const onPress = () => {
     router.navigate('(main)/diary');
   };
@@ -11,7 +11,8 @@ const NoDiaryStatistic = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.middleText}>
-        아직 분석할 음악 일기가 없어요.{'\n'}오늘을 기록하러 가볼까요?
+        {dateString}엔 음악일기를 작성하지 않았어요.
+        {'\n'}일기 작성 이후 통계를 볼 수 있어요.
       </Text>
       <TouchableOpacity style={styles.btnContainer} onPress={onPress}>
         <Text style={styles.btnText}>일기쓰러 가기</Text>
