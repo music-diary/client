@@ -33,9 +33,8 @@ const WithdrawalScreen = () => {
   const withdrawMutation = useWithdrawal({
     onSuccess: () => {
       console.log('탈퇴 성공');
-      logout();
-      closeModal();
       router.push('/onboarding');
+      logout();
     },
   });
 
@@ -89,6 +88,7 @@ const WithdrawalScreen = () => {
   };
 
   const handleConfirm = () => {
+    closeModal();
     if (selectedToggle) {
       const payload = {
         withdrawalReasonsId: selectedToggle,

@@ -33,21 +33,21 @@ export const mypageTerms = [
   {
     id: 'check1',
     title: '서비스 소개',
-    url: 'https://abaft-nest-e64.notion.site/Muda-0a3e2d1b8dfd4dce8e4b3a8280710382?pvs=4',
+    url: 'https://www.instagram.com/muda_diary/?utm_source=ig_web_button_share_sheet',
   },
   {
     id: 'check2',
     title: '오픈 라이센스',
-    url: 'https://abaft-nest-e64.notion.site/Muda-6ec8bf57e3b944b2b79218b1ea1e5c8b?pvs=4',
+    url: '???',
   },
   {
     id: 'check3',
     title: '개인정보처리방침',
-    url: 'https://abaft-nest-e64.notion.site/Muda-8f01521541c34a839429e018ef3548b5?pvs=4',
+    url: 'https://abaft-nest-e64.notion.site/Muda-6ec8bf57e3b944b2b79218b1ea1e5c8b?pvs=4',
   },
   {
     id: 'check4',
     title: '이용 약관',
-    url: 'https://abaft-nest-e64.notion.site/Muda-8f01521541c34a839429e018ef3548b5?pvs=4',
-  }
+    url: 'https://abaft-nest-e64.notion.site/Muda-0a3e2d1b8dfd4dce8e4b3a8280710382?pvs=4',
+  },
 ];
