@@ -1,6 +1,5 @@
-import { useCallback } from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { router, useFocusEffect } from 'expo-router';
+import { router } from 'expo-router';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { ProfileSvg } from 'assets/images/home';
 import WeekCalendar from '@/components/home/WeekCalender';

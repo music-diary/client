@@ -40,9 +40,7 @@ const CardScreen = () => {
 
   const { mutate: patchDiary } = usePatchDiary({
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['diaryArchive'] });
-      queryClient.invalidateQueries({ queryKey: ['musicArchive'] });
-      queryClient.invalidateQueries({ queryKey: ['diaryMonthlyArchive'] });
+      queryClient.invalidateQueries({ queryKey: ['archive'] });
       router.push({ pathname: '/(main)/archive' });
     },
     onError: () => {
