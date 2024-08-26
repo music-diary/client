@@ -42,3 +42,6 @@ expo-env.d.ts
 
 # vscode extensions
 .vscode/
+
+# eas.json
+eas.json
