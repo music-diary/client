@@ -12,9 +12,9 @@ import { BadSvg, HappySvg, SosoSvg } from 'assets/images/common';
 import { COLORS, FONTS } from '@/constants';
 import { colorWithOpacity } from '@/utils/color-utils';
 import { trimTitle } from '@/utils/text-utils';
-import { emotionColor } from '@/constants/data';
 import { formatDateString } from '@/utils/date-utils';
 import { type IMusicSummaryEntry } from '@/models/interfaces';
+import { emotionBackgroundColor } from '@/constants/data/emotion-colors';
 
 const contentWidth = Dimensions.get('window').width / 2 - 22;
 
@@ -23,19 +23,19 @@ const EmotionImage = ({ mood }: { mood: string }) => {
     case 'good':
       return (
         <View style={styles.emotion}>
-          <HappySvg width={120} height={120} fill={COLORS.PURPLE} />
+          <HappySvg width={120} height={120} fill={COLORS.GREEN} />
         </View>
       );
     case 'bad':
       return (
         <View style={styles.emotion}>
-          <BadSvg width={125} height={125} fill={COLORS.PURPLE} />
+          <BadSvg width={125} height={125} fill={COLORS.BLUE} />
         </View>
       );
     case 'normal':
       return (
         <View style={styles.emotion}>
-          <SosoSvg width={125} height={125} fill={COLORS.GREEN} />
+          <SosoSvg width={125} height={125} fill={COLORS.PURPLE} />
         </View>
       );
     default:
@@ -53,7 +53,7 @@ const MonthlyMainArchive = ({
   artist,
   diaryEntries,
 }: IMusicSummaryEntry) => {
-  const backgroundColor = emotionColor[mood];
+  const backgroundColor = emotionBackgroundColor[mood];
   const emotionImage = EmotionImage({ mood });
 
   const stringMonth = formatDateString(month);
