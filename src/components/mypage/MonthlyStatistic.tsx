@@ -76,7 +76,11 @@ const MonthlyStatistic = () => {
               genreCounts={monthlyStatistics.genreCounts}
             />,
 
-            <DiaryTopic key="diaryTopic" topics={monthlyStatistics.topics} />,
+            <DiaryTopic
+              key="diaryTopic"
+              topics={monthlyStatistics.topics}
+              diaryCount={monthlyStatistics.diaryCount}
+            />,
             <MoreInfo key="moreInfo" />,
           ]}
           renderItem={({ item }) => <View style={styles.item}>{item}</View>}

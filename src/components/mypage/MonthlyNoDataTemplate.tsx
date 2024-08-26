@@ -29,7 +29,11 @@ const MonthlyNoDataTemplate = () => {
                 genreCounts={templateData.genreCounts}
               />,
 
-              <DiaryTopic key="diaryTopic" topics={templateData.topics} />,
+              <DiaryTopic
+                key="diaryTopic"
+                topics={templateData.topics}
+                diaryCount={templateData.diaryCount}
+              />,
             ]}
             renderItem={({ item }) => <View style={styles.item}>{item}</View>}
             keyExtractor={(_, index) => index.toString()}

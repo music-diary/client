@@ -9,12 +9,13 @@ import {
   type PathWithdrawalSchema,
 } from '@/models/schemas';
 import { API_ENDPOINTS } from '@/api/endpoints';
+import { type IStatisticTopic } from '@/models/interfaces';
 import apiClient from '../client';
 
 const USERS = API_ENDPOINTS.USERS;
 
-// const delay = async (ms: number) =>
-//   await new Promise((resolve) => setTimeout(resolve, ms));
+const delay = async (ms: number) =>
+  await new Promise((resolve) => setTimeout(resolve, ms));
 
 const getUser = async () => {
   const { data } = await apiClient.get(API_ENDPOINTS.USERS.SELF);
@@ -83,7 +84,7 @@ const getMonthlyStatistics = async (
 ): Promise<MonthlyStatisticsSchema> => {
   const url = API_ENDPOINTS.USERS.STATISTICS.MONTH.replace(':value', month);
   const { data } = await apiClient.get(url);
-  // await delay(3000);
+  await delay(3000);
   return data.data;
 };
 

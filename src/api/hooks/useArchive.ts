@@ -117,6 +117,7 @@ export const useDeleteDiary = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['diaryArchive'] });
       queryClient.invalidateQueries({ queryKey: ['musicArchive'] });
+      queryClient.invalidateQueries({ queryKey: ['summaryArchive'] });
       queryClient.invalidateQueries({ queryKey: ['diaryMonthlyArchive'] });
     },
   });

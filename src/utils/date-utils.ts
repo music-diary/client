@@ -63,11 +63,13 @@ export const convertToTimeString = (date: Date): string => {
   return `${hours}:${minutes}`;
 };
 
-// form > 2024-03-24T07:03:00.000Z 데이터가 들어오면 ['2024-03', '...', '2024-08'] 반환
+// form > 2024-03-24T07:03:00.000Z 데이터가 들어오면 ['2024-08', '...', '2024-03'] 반환
 export const generateMonthArray = (createdDate: string): string[] => {
   const months = [];
   let currentDate = new Date();
   const startDate = new Date(createdDate);
+
+  startDate.setDate(1);
 
   while (currentDate >= startDate) {
     const month = currentDate.getMonth() + 1;
@@ -76,8 +78,6 @@ export const generateMonthArray = (createdDate: string): string[] => {
     currentDate = new Date(currentDate.setMonth(currentDate.getMonth() - 1));
   }
 
-  // '2024-09' 추가 (임시)
-  months.push('2024-09');
   return months;
 };
 
@@ -92,9 +92,6 @@ export const generateYearArray = (createdDate: string): string[] => {
     years.push(`${year}`);
     currentDate.setFullYear(currentDate.getFullYear() - 1);
   }
-
-  // '2025' 추가 (임시)
-  years.push('2025');
 
   return years;
 };
