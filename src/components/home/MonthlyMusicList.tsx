@@ -43,15 +43,11 @@ const MonthlyMusicList = ({ musics, topEmotion }: MonthlyMusicListProps) => {
   };
 
   const renderMusic = (music: IArchiveMusic, index: number) => {
-    // music.diary가 null이거나, emotions 배열이 없는 경우 처리
     if (
       !music.diary ||
       !Array.isArray(music.diary.emotions) ||
       music.diary.emotions.length === 0
     ) {
-      console.error(
-        `음악 ID ${music.id}에 대한 일기 데이터가 유효하지 않습니다.`,
-      );
       return null;
     }
 

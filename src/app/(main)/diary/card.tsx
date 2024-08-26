@@ -9,6 +9,7 @@ import {
   useNavigation,
 } from 'expo-router';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useQueryClient } from '@tanstack/react-query';
 import { usePatchDiary } from '@/api/hooks/useDiaries';
 import DailyDiaryCard from '@/components/archive/DailyDiaryCard';
 import CustomAlertModal from '@/components/common/CustomAlertModal';
@@ -35,9 +36,11 @@ const CardScreen = () => {
   const { openSplash, closeSplash } = useSplashStore();
 
   const navigation = useNavigation();
+  const queryClient = useQueryClient();
 
   const { mutate: patchDiary } = usePatchDiary({
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['archive'] });
       router.push({ pathname: '/(main)/archive' });
     },
     onError: () => {

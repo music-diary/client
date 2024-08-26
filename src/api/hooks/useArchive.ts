@@ -6,7 +6,6 @@ import {
   type DiaryListArchiveSchema,
   type MusicRecommendationSchema,
   type DiaryMonthArchiveSchema,
-  type MusicRecommendationCalendarSchema,
 } from '@/models/schemas';
 
 // const delay = async (ms: number) =>
@@ -35,7 +34,7 @@ export const useMusicArchive = (
   group: string,
 ) => {
   return useQuery({
-    queryKey: ['musicArchive', startAt, endAt, group],
+    queryKey: ['archive', 'musicArchive', startAt, endAt, group],
     queryFn: async () => await getMusicArchive(startAt, endAt, group),
   });
 };
@@ -55,7 +54,7 @@ const getDiaryArchive = async (
 
 export const useDiaryArchive = (startAt: string, endAt: string) => {
   return useQuery({
-    queryKey: ['diaryArchive', startAt, endAt],
+    queryKey: ['archive', 'diaryArchive', startAt, endAt],
     queryFn: async () => await getDiaryArchive(startAt, endAt),
     initialData: [],
   });
@@ -73,7 +72,7 @@ const getMusicSummaryArchive = async (): Promise<
 
 export const useMusicArchiveSummary = () => {
   return useQuery({
-    queryKey: ['summaryArchive'],
+    queryKey: ['archive', 'summaryArchive'],
     queryFn: async () => await getMusicSummaryArchive(),
   });
 };
@@ -100,7 +99,7 @@ export const useDiaryMonthlyArchive = (
   group: string,
 ) => {
   return useQuery({
-    queryKey: ['diaryMonthlyArchive', startAt, endAt, group],
+    queryKey: ['archive', 'diaryMonthlyArchive', startAt, endAt, group],
     queryFn: async () => await getDiaryMonthlyArchive(startAt, endAt, group),
   });
 };
@@ -116,8 +115,7 @@ export const useDeleteDiary = () => {
   return useMutation({
     mutationFn: async (diaryId: string) => await deleteDiary(diaryId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['diaryArchive'] });
-      queryClient.invalidateQueries({ queryKey: ['diaryMonthlyArchive'] });
+      queryClient.invalidateQueries({ queryKey: ['archive'] });
     },
   });
 };

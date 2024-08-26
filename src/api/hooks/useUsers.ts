@@ -13,9 +13,6 @@ import apiClient from '../client';
 
 const USERS = API_ENDPOINTS.USERS;
 
-// const delay = async (ms: number) =>
-//   await new Promise((resolve) => setTimeout(resolve, ms));
-
 const getUser = async () => {
   const { data } = await apiClient.get(API_ENDPOINTS.USERS.SELF);
   console.log('getUser data ::: ', data);
@@ -83,7 +80,6 @@ const getMonthlyStatistics = async (
 ): Promise<MonthlyStatisticsSchema> => {
   const url = API_ENDPOINTS.USERS.STATISTICS.MONTH.replace(':value', month);
   const { data } = await apiClient.get(url);
-  // await delay(3000);
   return data.data;
 };
 
@@ -98,7 +94,7 @@ const getYearlyStatistics = async (
 
 export const useGetMonthlyStatistics = (month: string) => {
   return useQuery({
-    queryKey: ['monthlyStatistics', month],
+    queryKey: ['statistics', 'monthlyStatistics', month],
     queryFn: async () => await getMonthlyStatistics(month),
     placeholderData: {
       date: '',
@@ -112,7 +108,7 @@ export const useGetMonthlyStatistics = (month: string) => {
 
 export const useGetYearlyStatistics = (year: string) => {
   return useQuery({
-    queryKey: ['yearlyStatistics', year],
+    queryKey: ['statistics', 'yearlyStatistics', year],
     queryFn: async () => await getYearlyStatistics(year),
     placeholderData: {
       year: '',

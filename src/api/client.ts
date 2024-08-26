@@ -32,7 +32,6 @@ apiClient.interceptors.response.use(
       console.warn('Unauthorized, logging out...');
       useAppStore.getState().logout();
     }
-
     return await Promise.reject(error);
   },
 );
