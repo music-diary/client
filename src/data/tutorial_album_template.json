@@ -250,14 +250,24 @@
   "count": 17,
   "emotion": {
     "parent": {
-      "id": "2c39c42c-c5b7-4c07-adb3-e0ccd35cc662",
-      "name": "good",
-      "label": "좋았어요!",
-      "parentId": null,
-      "rootId": null,
-      "level": 0,
-      "order": 0,
-      "aiScale": null
+      "id": "c2c1b72c-d917-43d1-9b70-7487921ea535",
+      "name": "expected",
+      "label": "기대하는",
+      "parentId": "2c39c42c-c5b7-4c07-adb3-e0ccd35cc662",
+      "rootId": "2c39c42c-c5b7-4c07-adb3-e0ccd35cc662",
+      "level": 1,
+      "order": 1,
+      "aiScale": 1,
+      "parent": {
+        "id": "2c39c42c-c5b7-4c07-adb3-e0ccd35cc662",
+        "name": "good",
+        "label": "좋았어요!",
+        "parentId": null,
+        "rootId": null,
+        "level": 0,
+        "order": 0,
+        "aiScale": null
+      }
     }
   }
 }

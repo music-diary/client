@@ -1,116 +1,107 @@
-import { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   SafeAreaView,
-  ScrollView,
   StyleSheet,
-  Text,
   View,
   Modal,
-  TouchableOpacity,
   TouchableWithoutFeedback,
   Pressable,
+  Animated,
 } from 'react-native';
-import { router } from 'expo-router';
-import { ProfileSvg } from 'assets/images/home';
-import CharacterAnimation from '@/components/home/CharacterAnimation';
-import { COLORS, FONTS } from '@/constants';
-import NewUserDescription from '@/components/home/NewUserDescription';
-import { emotionColor, emotionHomeText } from '@/constants/data/emotion-colors';
-import { getMoodFromEmotions } from '@/utils/emotion-utils';
+import { useRouter } from 'expo-router';
+import { COLORS } from '@/constants';
 import { colorWithOpacity } from '@/utils/color-utils';
-import TopDescriptionTemplate from '@/components/template/TopDescriptionTemplate';
-import WeekCalendarTemplate from '@/components/template/WeekCalenderTemplate';
-import MonthlyMusicListTemplate from '@/components/template/MonthlyMusicListTemplate';
-import dummyData from '@/data/tutorial_album_template.json';
-import { type MusicRecommendationSchema } from '@/models/schemas';
+import TutorialContentTemplate from '@/components/template/TutorialContentTemplate';
+import {
+  TutorialFirstSvg,
+  TutorialSecondSvg,
+  TutorialThirdSvg,
+  TutorialFourthSvg,
+  TutorialFifthSvg,
+} from 'assets/images/tutorial';
 
 const Tutorial = () => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
-
-  const archiveData = dummyData as unknown as MusicRecommendationSchema;
-  console.log('🚀 ~ file: index.tsx:46 ~ Tutorial ~ archiveData:', archiveData);
-
-  const userName = 'Muda';
-
-  const handlePersonClick = () => {
-    router.push('/(main)/mypage');
-  };
+  const [currentStep, setCurrentStep] = useState(1);
+  const [isModalVisible, setIsModalVisible] = useState(true);
+  const fadeAnim = useRef(new Animated.Value(1)).current;
+  const router = useRouter();
 
   const handleScreenPress = () => {
-    router.push('/(main)/tutorial/second-tutorial');
-    setIsModalVisible(false);
+    if (currentStep === 5) {
+      router.replace('(onboarding)');
+      setIsModalVisible(false);
+    } else {
+      Animated.timing(fadeAnim, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: true,
+      }).start(() => {
+        setCurrentStep((prevStep) => (prevStep < 5 ? prevStep + 1 : 1));
+        Animated.timing(fadeAnim, {
+          toValue: 1, // 다시 완전히 보임
+          duration: 300,
+          useNativeDriver: true,
+        }).start();
+      });
+    }
   };
 
-  const diaryCount = archiveData.count;
-  console.log('🚀 ~ file: index.tsx:47 ~ HomeScreen ~ diaryCount:', diaryCount);
-
-  const emotionName = archiveData?.emotion
-    ? getMoodFromEmotions([{ emotions: archiveData?.emotion }])
-    : null;
-
-  const color = emotionName ? emotionColor[emotionName] : COLORS.GREEN;
-  const text = emotionName ? emotionHomeText[emotionName] : '';
+  // 각 단계별로 보여줄 SVG 선택
+  const renderSvg = () => {
+    switch (currentStep) {
+      case 1:
+        return (
+          <View style={styles.firstSvgContainer}>
+            <TutorialFirstSvg />
+          </View>
+        );
+      case 2:
+        return (
+          <View style={styles.secondSvgContainer}>
+            <TutorialSecondSvg />
+          </View>
+        );
+      case 3:
+        return (
+          <View style={styles.thirdSvgContainer}>
+            <TutorialThirdSvg />
+          </View>
+        );
+      case 4:
+        return (
+          <View style={styles.fourthSvgContainer}>
+            <TutorialFourthSvg />
+          </View>
+        );
+      case 5:
+        return (
+          <View style={styles.fifthSvgContainer}>
+            <TutorialFifthSvg />
+          </View>
+        );
+      default:
+        return (
+          <View style={styles.firstSvgContainer}>
+            <TutorialFirstSvg />
+          </View>
+        );
+    }
+  };
 
   return (
     <>
-      <Modal visible={isModalVisible} transparent={true} animationType="none">
+      <Modal visible={isModalVisible} transparent={true} animationType="fade">
         <Pressable style={styles.overlay} onPress={handleScreenPress} />
-        <View style={styles.characterAnimationContainer}>
-          <CharacterAnimation />
+        <View style={styles.tutorialContainer} pointerEvents="none">
+          <Animated.View style={{ opacity: fadeAnim }}>
+            {renderSvg()}
+          </Animated.View>
         </View>
       </Modal>
-
       <SafeAreaView style={styles.topSafeArea} />
+      {/* 아래 화면의 Content */}
       <TouchableWithoutFeedback onPress={handleScreenPress}>
-        <SafeAreaView style={styles.container}>
-          <ScrollView>
-            <View style={styles.top}>
-              <View style={styles.topBar}>
-                <Text style={styles.logoText}>Logo</Text>
-                <TouchableOpacity onPress={handlePersonClick}>
-                  <ProfileSvg />
-                </TouchableOpacity>
-              </View>
-              <TopDescriptionTemplate count={diaryCount} name={userName} />
-            </View>
-
-            <View style={styles.body}>
-              <>
-                <Text style={styles.bodyMent}>
-                  {userName}님의{'\n'}일주일간 기록이에요
-                </Text>
-                <View style={{ marginTop: 16 }}>
-                  <WeekCalendarTemplate />
-                </View>
-                <View style={{ marginTop: 40 }}>
-                  {diaryCount > 0 ? (
-                    <Text style={styles.bodyMent}>
-                      이번달 {userName}님은{'\n'}
-                      <Text style={{ color }}>{text}</Text> 감정의 노래를 가장
-                      많이 들었어요
-                    </Text>
-                  ) : (
-                    <Text style={styles.bodyMent}>
-                      이번달 {userName}님은{'\n'}
-                      아직 일기를 작성하지 않았어요
-                    </Text>
-                  )}
-                </View>
-                {diaryCount > 0 ? (
-                  <MonthlyMusicListTemplate
-                    musics={archiveData.musics}
-                    topEmotion={emotionName}
-                  />
-                ) : (
-                  <NewUserDescription description="일기쓰고 노래를 추천받아 볼래요" />
-                )}
-              </>
-            </View>
-
-            {/* 하단 부분 */}
-            <View style={{ height: 63 }} />
-          </ScrollView>
-        </SafeAreaView>
+        <TutorialContentTemplate />
       </TouchableWithoutFeedback>
     </>
   );
@@ -123,53 +114,41 @@ const styles = StyleSheet.create({
   overlay: {
     flex: 1,
     backgroundColor: colorWithOpacity(COLORS.BLACK, 0.7),
-    justifyContent: 'center',
-    alignItems: 'center',
     zIndex: 1,
   },
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.BLACK,
-  },
-  top: {
-    paddingHorizontal: 16,
-    backgroundColor: COLORS.PURPLE,
-    paddingBottom: 50,
-    marginTop: -200,
-    paddingTop: 200,
-  },
-  topBar: {
-    height: 44,
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  logoText: {
-    color: COLORS.WHITE,
-    ...FONTS.H1,
-  },
-  characterAnimationContainer: {
-    zIndex: 1000, // CharacterAnimation이 overlay 위로 올라오도록 설정
-    position: 'absolute', // 고정된 위치에 두어 화면에 띄움
-    top: 300,
+  tutorialContainer: {
+    position: 'absolute',
+    top: 0,
     left: 0,
     right: 0,
-    alignItems: 'center',
+    bottom: 0,
+    zIndex: 1000,
+    pointerEvents: 'none',
   },
-  body: {
-    backgroundColor: COLORS.BLACK,
-    marginTop: -50,
-    borderTopLeftRadius: 18,
-    borderTopRightRadius: 18,
-    paddingLeft: 16,
-    paddingTop: 28,
-    paddingBottom: 23,
+  firstSvgContainer: {
+    position: 'absolute',
+    right: 8,
+    top: 140,
   },
-  bodyMent: {
-    color: COLORS.WHITE,
-    fontFamily: 'pret-b',
-    fontSize: 16,
-    lineHeight: 24,
+  secondSvgContainer: {
+    position: 'absolute',
+    right: 8,
+    top: 107,
+  },
+  thirdSvgContainer: {
+    position: 'absolute',
+    right: 79,
+    top: 550,
+  },
+  fourthSvgContainer: {
+    position: 'absolute',
+    left: 16,
+    top: 611,
+  },
+  fifthSvgContainer: {
+    position: 'absolute',
+    left: 89,
+    top: 638,
   },
 });
 

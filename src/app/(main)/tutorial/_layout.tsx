@@ -9,7 +9,6 @@ const LoginLayout = () => {
       }}
     >
       <Stack.Screen name="index" />
-      <Stack.Screen name="second-tutorial" />
     </Stack>
   );
 };
