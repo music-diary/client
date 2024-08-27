@@ -82,7 +82,7 @@ function RootLayoutNav() {
     if (!isAuthenticated) {
       router.navigate('/(onboarding)');
     } else {
-      router.navigate('/(main)');
+      router.navigate('/(main)/tutorial');
     }
   }, [isAuthenticated]);
 

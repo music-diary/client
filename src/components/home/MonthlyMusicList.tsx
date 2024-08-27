@@ -48,6 +48,9 @@ const MonthlyMusicList = ({ musics, topEmotion }: MonthlyMusicListProps) => {
       !Array.isArray(music.diary.emotions) ||
       music.diary.emotions.length === 0
     ) {
+      // console.warn(
+      //   `음악 ID ${music.id}에 대한 일기 데이터가 유효하지 않습니다.`,
+      // );
       return null;
     }
 

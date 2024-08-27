@@ -23,12 +23,6 @@ const HomeScreen = () => {
     isLoading,
   } = useMusicArchive(startAt, endAt, 'month');
 
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     refetch();
-  //   }, [refetch]),
-  // );
-
   const userName = useUserName();
 
   if (isLoading || !archiveData) {

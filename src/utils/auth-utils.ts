@@ -28,6 +28,7 @@ const extractToken = (
 export const handleLogin = async (headers: Record<string, any>) => {
   const authorizationHeader = headers.authorization as string | undefined;
   const token = extractToken(authorizationHeader);
+  
 
   if (token) {
     useAppStore.getState().login(token);

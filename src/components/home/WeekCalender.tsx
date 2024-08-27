@@ -35,7 +35,7 @@ const WeekCalendar = () => {
     formatKST(weekEnd),
   );
 
-  const diaryDates = diaryData.map((diary) => diary.createdAt.split('T')[0]);
+  const diaryDates = diaryData.map((diary) => diary.updatedAt.split('T')[0]);
 
   const prevWeek = () => {
     const { startDate } = moveWeek(weekStart, 'prev');
