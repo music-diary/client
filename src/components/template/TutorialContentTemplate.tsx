@@ -33,10 +33,10 @@ const TutorialContentTemplate = () => {
 
   return (
     <>
-      <View style={styles.characterAnimationContainer}>
-        <MainCharacterSvg />
-      </View>
       <SafeAreaView style={styles.container}>
+        <View style={styles.characterAnimationContainer}>
+          <MainCharacterSvg />
+        </View>
         <ScrollView>
           <View style={styles.top}>
             <View style={styles.topBar}>
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   characterAnimationContainer: {
     zIndex: 1,
     position: 'absolute',
-    top: 190,
+    top: 140,
     right: 8,
   },
   top: {

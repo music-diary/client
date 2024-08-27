@@ -245,6 +245,42 @@
           }
         ]
       }
+    },
+    {
+      "id": "new4",
+      "songId": "8193661",
+      "title": "노래 1",
+      "artist": "아티스트 1",
+      "albumUrl": "https://cdnimg.melon.co.kr/cm2/album/images/115/75/652/11575652_20240826143135_500.jpg?1e6f1ab7e1ab7132025e38d650a098c7/melon/resize/282/quality/80/optimize",
+      "selectedLyric": null,
+      "lyric": "가사 1...",
+      "originalGenre": "팝",
+      "selected": true,
+      "youtubeUrl": "https://www.youtube.com/watch?v=example1",
+      "editorPick": null,
+      "userId": "user1",
+      "diaryId": "diary1",
+      "createdAt": "2024-08-27T16:08:42.229Z",
+      "updatedAt": "2024-08-27T16:08:42.229Z",
+      "deletedAt": null,
+      "diary": {
+        "emotions": [
+          {
+            "emotions": {
+              "parent": {
+                "id": "parent1",
+                "name": "good",
+                "label": "행복한",
+                "parentId": null,
+                "rootId": null,
+                "level": 0,
+                "order": 0,
+                "aiScale": 1
+              }
+            }
+          }
+        ]
+      }
     }
   ],
   "count": 17,

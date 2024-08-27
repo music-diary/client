@@ -19,15 +19,18 @@ import {
   TutorialFourthSvg,
   TutorialFifthSvg,
 } from 'assets/images/tutorial';
+import { useAppStore } from '@/store/useAppStore';
 
 const Tutorial = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [isModalVisible, setIsModalVisible] = useState(true);
   const fadeAnim = useRef(new Animated.Value(1)).current;
   const router = useRouter();
+  const setFirstLaunch = useAppStore((state) => state.setFirstLaunch);
 
   const handleScreenPress = () => {
     if (currentStep === 5) {
+      setFirstLaunch(false);
       router.replace('(onboarding)');
       setIsModalVisible(false);
     } else {
@@ -92,14 +95,13 @@ const Tutorial = () => {
     <>
       <Modal visible={isModalVisible} transparent={true} animationType="fade">
         <Pressable style={styles.overlay} onPress={handleScreenPress} />
-        <View style={styles.tutorialContainer} pointerEvents="none">
-          <Animated.View style={{ opacity: fadeAnim }}>
+        <SafeAreaView style={styles.tutorialContainer} pointerEvents="none">
+          <Animated.View style={{ opacity: fadeAnim, flex: 1 }}>
             {renderSvg()}
           </Animated.View>
-        </View>
+        </SafeAreaView>
       </Modal>
       <SafeAreaView style={styles.topSafeArea} />
-      {/* 아래 화면의 Content */}
       <TouchableWithoutFeedback onPress={handleScreenPress}>
         <TutorialContentTemplate />
       </TouchableWithoutFeedback>
@@ -118,37 +120,36 @@ const styles = StyleSheet.create({
   },
   tutorialContainer: {
     position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
+    width: '100%',
+    height: '100%',
     zIndex: 1000,
     pointerEvents: 'none',
   },
   firstSvgContainer: {
     position: 'absolute',
     right: 8,
-    top: 140,
+    top: 90,
   },
   secondSvgContainer: {
     position: 'absolute',
     right: 8,
-    top: 107,
+    top: 57,
   },
   thirdSvgContainer: {
     position: 'absolute',
-    right: 79,
-    top: 550,
+    left: 28,
+    top: 499.5,
   },
   fourthSvgContainer: {
     position: 'absolute',
     left: 16,
-    top: 611,
+    top: 562,
   },
   fifthSvgContainer: {
     position: 'absolute',
-    left: 89,
-    top: 638,
+    left: '50%',
+    bottom: 5,
+    transform: [{ translateX: -98 }],
   },
 });
 
