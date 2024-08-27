@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -7,47 +8,37 @@ import {
   Modal,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  Pressable, // 추가된 부분
+  Pressable,
 } from 'react-native';
 import { router } from 'expo-router';
 import { ProfileSvg } from 'assets/images/home';
-import MonthlyMusicList from '@/components/home/MonthlyMusicList';
 import CharacterAnimation from '@/components/home/CharacterAnimation';
 import { COLORS, FONTS } from '@/constants';
 import NewUserDescription from '@/components/home/NewUserDescription';
-import { useMusicArchive } from '@/api/hooks/useArchive';
 import { emotionColor, emotionHomeText } from '@/constants/data/emotion-colors';
-import { getCurrentMonthRange } from '@/utils/date-utils';
 import { getMoodFromEmotions } from '@/utils/emotion-utils';
-import LoadingScreen from '@/components/common/LoadingScreen';
 import { colorWithOpacity } from '@/utils/color-utils';
 import TopDescriptionTemplate from '@/components/template/TopDescriptionTemplate';
 import WeekCalendarTemplate from '@/components/template/WeekCalenderTemplate';
+import MonthlyMusicListTemplate from '@/components/template/MonthlyMusicListTemplate';
+import dummyData from '@/data/tutorial_album_template.json';
+import { type MusicRecommendationSchema } from '@/models/schemas';
 
 const Tutorial = () => {
-  const { startAt, endAt } = getCurrentMonthRange(new Date());
-  const {
-    data: archiveData,
-    error,
-    isLoading,
-  } = useMusicArchive(startAt, endAt, 'month');
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const archiveData = dummyData as unknown as MusicRecommendationSchema;
+  console.log('🚀 ~ file: index.tsx:46 ~ Tutorial ~ archiveData:', archiveData);
 
   const userName = 'Muda';
-
-  if (isLoading || !archiveData) {
-    return <LoadingScreen />;
-  }
-
-  if (error) {
-    console.warn('Error while fetching archive data:', error);
-  }
 
   const handlePersonClick = () => {
     router.push('/(main)/mypage');
   };
 
   const handleScreenPress = () => {
-    router.push('/(main)/tutorial/second-tutorial'); // 터치 시 second-tutorial로 이동
+    router.push('/(main)/tutorial/second-tutorial');
+    setIsModalVisible(false);
   };
 
   const diaryCount = archiveData.count;
@@ -62,16 +53,17 @@ const Tutorial = () => {
 
   return (
     <>
-      <Modal visible={false} transparent={true}>
+      <Modal visible={isModalVisible} transparent={true} animationType="none">
         <Pressable style={styles.overlay} onPress={handleScreenPress} />
+        <View style={styles.characterAnimationContainer}>
+          <CharacterAnimation />
+        </View>
       </Modal>
 
-      {/* 화면 터치 감지를 위해 TouchableWithoutFeedback으로 감쌈 */}
       <SafeAreaView style={styles.topSafeArea} />
       <TouchableWithoutFeedback onPress={handleScreenPress}>
         <SafeAreaView style={styles.container}>
           <ScrollView>
-            {/* 상단 부분 */}
             <View style={styles.top}>
               <View style={styles.topBar}>
                 <Text style={styles.logoText}>Logo</Text>
@@ -82,10 +74,8 @@ const Tutorial = () => {
               <TopDescriptionTemplate count={diaryCount} name={userName} />
             </View>
 
-            {/* 바디 부분 */}
             <View style={styles.body}>
               <>
-                <CharacterAnimation />
                 <Text style={styles.bodyMent}>
                   {userName}님의{'\n'}일주일간 기록이에요
                 </Text>
@@ -107,7 +97,7 @@ const Tutorial = () => {
                   )}
                 </View>
                 {diaryCount > 0 ? (
-                  <MonthlyMusicList
+                  <MonthlyMusicListTemplate
                     musics={archiveData.musics}
                     topEmotion={emotionName}
                   />
@@ -135,6 +125,7 @@ const styles = StyleSheet.create({
     backgroundColor: colorWithOpacity(COLORS.BLACK, 0.7),
     justifyContent: 'center',
     alignItems: 'center',
+    zIndex: 1,
   },
   container: {
     flex: 1,
@@ -156,6 +147,14 @@ const styles = StyleSheet.create({
   logoText: {
     color: COLORS.WHITE,
     ...FONTS.H1,
+  },
+  characterAnimationContainer: {
+    zIndex: 1000, // CharacterAnimation이 overlay 위로 올라오도록 설정
+    position: 'absolute', // 고정된 위치에 두어 화면에 띄움
+    top: 300,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
   },
   body: {
     backgroundColor: COLORS.BLACK,
