@@ -89,6 +89,13 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="tutorial"
+        options={{
+          headerShown: false,
+          tabBarItemStyle: { display: 'none' },
+        }}
+      />
+      <Tabs.Screen
         name="mypage"
         options={{
           title: '',

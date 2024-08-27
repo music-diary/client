@@ -68,7 +68,7 @@ export default function RootLayout() {
 function RootLayoutNav() {
   const [queryClient] = useState(() => new QueryClient());
 
-  const { isAuthenticated } = useAppStore();
+  const { isFirstLaunch, isAuthenticated } = useAppStore();
 
   const colorScheme = useColorScheme();
 
@@ -76,10 +76,9 @@ function RootLayoutNav() {
     // 임시 로그인 처리 (isAuthenticated가 true로 바뀜)
     // login();
     // logout();
-    // if (isFirstLaunch) {
-    //   router.navigate('intro');
-    // }
-    if (!isAuthenticated) {
+    if (isFirstLaunch) {
+      router.navigate('/(main)/tutorial');
+    } else if (!isAuthenticated) {
       router.navigate('/(onboarding)');
     } else {
       router.navigate('/(main)');

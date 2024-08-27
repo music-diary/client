@@ -13,7 +13,10 @@ interface MonthlyMusicListProps {
   topEmotion: string | null;
 }
 
-const MonthlyMusicList = ({ musics, topEmotion }: MonthlyMusicListProps) => {
+const MonthlyMusicListTemplate = ({
+  musics,
+  topEmotion,
+}: MonthlyMusicListProps) => {
   const selectedMusics = musics.filter((music) => music.selected);
 
   const renderEmotionIcon = () => {
@@ -93,7 +96,7 @@ const MonthlyMusicList = ({ musics, topEmotion }: MonthlyMusicListProps) => {
   );
 };
 
-export default MonthlyMusicList;
+export default MonthlyMusicListTemplate;
 
 const styles = StyleSheet.create({
   container: {

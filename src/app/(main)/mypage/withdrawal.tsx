@@ -8,7 +8,6 @@ import {
   ScrollView,
 } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import { router } from 'expo-router';
 import { COLORS, FONTS } from '@/constants';
 import CustomCheckToggle from '@/components/common/CustomCheckToggle';
 import useKeyboardScrollViewScroll from '@/hooks/useKeyboardScrollViewScroll';
@@ -32,9 +31,8 @@ const WithdrawalScreen = () => {
 
   const withdrawMutation = useWithdrawal({
     onSuccess: () => {
-      console.log('탈퇴 성공');
-      router.push('/onboarding');
       logout();
+      console.log('탈퇴 성공');
     },
   });
 
