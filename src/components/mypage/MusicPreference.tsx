@@ -9,22 +9,27 @@ import { getGenreLabel } from '@/utils/label-utils';
 import LoadingIndicator from '@/components/common/LoadingIndicator';
 
 const containerWidth = Dimensions.get('window').width / 2 - 24;
-
 const containerYearlyWidth = Dimensions.get('window').width - 32;
 
 interface MusicPreferenceProps {
   genreCounts: Array<{ genre: string; count: number }>;
+  diaryCount: number;
   isYearly?: boolean;
 }
 
 const MusicPreference = ({
   genreCounts = [],
   isYearly,
+  diaryCount,
 }: MusicPreferenceProps) => {
   const { data: genres } = useGenres();
 
   const generateGraphData = () => {
-    return genreCounts.map((item) => {
+    const top3Genres = [...genreCounts]
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 3);
+
+    return top3Genres.map((item) => {
       const genre = genres.find((g) => g.name === item.genre);
       return {
         label: genre?.label ?? item.genre,
@@ -35,7 +40,6 @@ const MusicPreference = ({
   };
 
   const graphData = generateGraphData(); // 변환된 데이터
-  const graphTotal = graphData.reduce((acc, item) => acc + item.count, 0); // count 총합
 
   const componentWidth = isYearly ? containerYearlyWidth : containerWidth;
 
@@ -60,15 +64,14 @@ const MusicPreference = ({
           numberOfLines={1}
           ellipsizeMode="tail"
         >
-          {genreCounts
-            .slice(0, 3)
-            .map((item) => getGenreLabel(item.genre, genres))
+          {graphData
+            .map((item) => getGenreLabel(item.label, genres))
             .join(', ')}
         </Text>
         <Text style={styles.bodyText}>장르를 많이 추천받았어요</Text>
       </View>
 
-      <PreferenceGraph data={graphData} total={graphTotal} />
+      <PreferenceGraph data={graphData} total={diaryCount} />
       <View style={styles.genreContainer}>
         {graphData.map((genre, index) => (
           <View key={index} style={styles.genreItem}>

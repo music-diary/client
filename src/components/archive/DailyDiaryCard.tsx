@@ -12,7 +12,7 @@ import {
 import { ArrowInSvg, ArrowOutSvg } from 'assets/images/archive';
 
 const DailyMainArchive = ({ diaryId }: { diaryId: string }) => {
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(true);
   // 다이어리 조회
   const { data: diaryData, error, isFetching } = useDiary(diaryId);
   if (isFetching) return <Text>Loading...</Text>;

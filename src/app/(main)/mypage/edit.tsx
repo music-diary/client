@@ -22,6 +22,7 @@ import { formatToDate } from '@/utils/date-utils';
 import { useGetUserInfo, usePatchUser } from '@/api/hooks/useUsers';
 import { type Gender } from '@/models/types';
 import { type UserPayloadSchema } from '@/models/schemas';
+import { WarningCircleSvg } from 'assets/images/onboarding';
 
 const EditScreen = () => {
   const queryClient = useQueryClient();
@@ -39,9 +40,15 @@ const EditScreen = () => {
 
   const [nickname, setNickname] = useState(userInfo.name);
   const [isNicknameFocused, setIsNicknameFocused] = useState(false);
+  const [nicknameError, setNicknameError] = useState(''); // 닉네임 오류 메시지 상태
 
   const onChangeNickname = (inputText: string) => {
     setNickname(inputText);
+    if (inputText.length > 6) {
+      setNicknameError('닉네임은 6자까지만 입력 가능합니다.'); // 6자를 넘기면 오류 메시지 설정
+    } else {
+      setNicknameError('');
+    }
   };
 
   // 달력
@@ -73,7 +80,6 @@ const EditScreen = () => {
     setSelectedToggle(index);
   };
 
-  // 하단 버튼 활성화 조건
   const [isButtonActive, setButtonActive] = useState(false);
 
   useEffect(() => {
@@ -82,10 +88,15 @@ const EditScreen = () => {
       selectedDate.toLocaleDateString() !== birthday.toLocaleDateString();
     const isToggleChanged = genderOptions[selectedToggle] !== userInfo.gender;
 
-    setButtonActive(isNicknameChanged || isDateChanged || isToggleChanged);
+    if (nickname.length > 6) {
+      setButtonActive(false);
+    } else {
+      setButtonActive(isNicknameChanged || isDateChanged || isToggleChanged);
+    }
   }, [nickname, selectedDate, selectedToggle]);
 
   const handleButtonPress = () => {
+    if (nickname.length > 6) return;
     const payload: UserPayloadSchema = {
       name: nickname,
       birthDay: selectedDate.toISOString(),
@@ -127,7 +138,14 @@ const EditScreen = () => {
                 placeholderTextColor={COLORS.CONTENTS_LIGHT}
                 onFocus={() => setIsNicknameFocused(true)}
                 onBlur={() => setIsNicknameFocused(false)}
+                maxLength={7}
               />
+              {nicknameError ? (
+                <View style={styles.verifyStatusView}>
+                  <WarningCircleSvg />
+                  <Text style={styles.errorText}>{nicknameError}</Text>
+                </View>
+              ) : null}
             </View>
             {/* 생년월일 */}
             <View style={styles.titleName}>
@@ -233,6 +251,17 @@ const styles = StyleSheet.create({
     color: COLORS.WHITE,
     ...FONTS.BTN,
   },
+  verifyStatusView: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    
+    gap: 4,
+  },
+  errorText: {
+    color: COLORS.PINK,
+    ...FONTS.BTN,
+  },
   birthdayContainer: {
     borderWidth: 1,
     borderColor: COLORS.GREY1,
@@ -253,6 +282,7 @@ const styles = StyleSheet.create({
     borderColor: COLORS.WHITE,
     color: COLORS.WHITE,
   },
+
   checkboxContainer: {
     flexDirection: 'row',
     gap: 15,

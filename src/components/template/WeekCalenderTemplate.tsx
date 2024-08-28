@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { COLORS, FONTS } from '@/constants';
 import { ArrowButtonSvg } from 'assets/images/home';
-import { useDiaryArchive } from '@/api/hooks/useArchive';
 import { cvtDateToWeekStr, formatKST, moveWeek } from '@/utils/date-utils';
+import dummyData from '@/data/tutorial_calender_template.json';
 
-const WeekCalendar = () => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const { weekStart, weekEnd } = cvtDateToWeekStr(selectedDate);
+const WeekCalendarTemplate = () => {
+  const fixedDate = new Date('2024-08-29');
+  const [selectedDate, setSelectedDate] = useState(fixedDate);
 
-  const koreaDate = formatKST(new Date());
+  const { weekStart } = cvtDateToWeekStr(selectedDate);
+
+  const koreaDate = formatKST(fixedDate);
   const today = koreaDate.split('-');
 
   const weekName = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
@@ -21,6 +23,7 @@ const WeekCalendar = () => {
     const kstDay = formatKST(day);
     weekDays.push(kstDay);
   }
+
   const displayYear = weekDays.includes(koreaDate)
     ? today[0]
     : weekDays[6].split('-')[0];
@@ -29,11 +32,7 @@ const WeekCalendar = () => {
     ? today[1]
     : weekDays[6].split('-')[1];
 
-  // data fetch
-  const { data: diaryData } = useDiaryArchive(
-    formatKST(weekStart),
-    formatKST(weekEnd),
-  );
+  const diaryData = dummyData;
 
   const diaryDates = diaryData.map((diary) => diary.updatedAt.split('T')[0]);
 
@@ -97,7 +96,7 @@ const WeekCalendar = () => {
                   today.join('-') === date && { color: '#1D1D1D' },
                 ]}
               >
-                {date.split('-')[2]}
+                {date.split('-')[2]} {/* 일(day)만 표시 */}
               </Text>
             </View>
           ))}
@@ -107,7 +106,7 @@ const WeekCalendar = () => {
   );
 };
 
-export default WeekCalendar;
+export default WeekCalendarTemplate;
 
 const styles = StyleSheet.create({
   container: {

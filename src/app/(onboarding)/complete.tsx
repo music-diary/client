@@ -6,7 +6,7 @@ import { COLORS, FONTS } from '@/constants';
 
 const CompleteScreen = () => {
   const handleNext = () => {
-    router.push({ pathname: '/(main)' });
+    router.replace({ pathname: '/(main)' });
   };
   return (
     <>

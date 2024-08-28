@@ -8,12 +8,7 @@ import {
 } from 'react-native';
 import { router } from 'expo-router';
 import { COLORS, FONTS } from '@/constants';
-
-const formatKST = (date: Date) => {
-  const offset = 1000 * 60 * 60 * 9; // UTC+9
-  const koreaDate = new Date(date.getTime() + offset);
-  return koreaDate.toISOString().split('T')[0];
-};
+import { formatKST } from '@/utils/date-utils';
 
 // 클릭 시 일기쓰러 가기로 이동
 const handleDiaryPress = () => {
@@ -58,12 +53,11 @@ const moreThanTwo = ({ count, name }: { count: number; name: string }) => {
 
 const TopDescription = ({ count, name }: { count: number; name: string }) => {
   const [showLessThanTwo, setShowLessThanTwo] = useState(count < 2);
-  const fadeAnim = useState(new Animated.Value(1))[0]; // 초기 투명도 값
+  const fadeAnim = useState(new Animated.Value(1))[0];
 
   useEffect(() => {
     if (count >= 2) {
       const timer = setTimeout(() => {
-        // 페이드 아웃 애니메이션
         Animated.timing(fadeAnim, {
           toValue: 0,
           duration: 500,
@@ -85,9 +79,17 @@ const TopDescription = ({ count, name }: { count: number; name: string }) => {
     }
   }, [count, fadeAnim]);
 
+  if (count <= 2) {
+    return (
+      <Animated.View style={[styles.topDescription, { opacity: fadeAnim }]}>
+        {showLessThanTwo ? lessThanTwo({ name }) : moreThanTwo({ count, name })}
+      </Animated.View>
+    );
+  }
+
   return (
     <Animated.View style={[styles.topDescription, { opacity: fadeAnim }]}>
-      {showLessThanTwo ? lessThanTwo({ name }) : moreThanTwo({ count, name })}
+      {showLessThanTwo ? moreThanTwo({ count, name }) : lessThanTwo({ name })}
     </Animated.View>
   );
 };
