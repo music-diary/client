@@ -34,10 +34,18 @@ const UserInfoScreen = () => {
   useEffect(() => {
     const isValid = name.trim() !== '' && birth.trim().length === 8;
     setIsButtonDisabled(!isValid);
-  }, [name, birth, gender]);
+  }, [name, birth]);
+
+  const handleNameChange = (name: string) => {
+    const validNameRegex = /^[a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ가-힣]{0,8}$/;
+    if (validNameRegex.test(name)) {
+      setName(name);
+    }
+  };
 
   const handleBirthChange = (birth: string) => {
-    if (/^\d{0,8}$/.test(birth)) {
+    const validBirthRegex = /^\d{0,8}$/;
+    if (validBirthRegex.test(birth)) {
       setBirth(birth);
     }
   };
@@ -69,9 +77,12 @@ const UserInfoScreen = () => {
                   placeholder="뭐라고 불러드릴까요?"
                   placeholderTextColor={COLORS.GREY1}
                   value={name}
-                  onChangeText={setName}
+                  onChangeText={handleNameChange}
                   inputAccessoryViewID="user-info"
                 />
+                <Text style={styles.validateInfo}>
+                  이름은 한글, 영어, 숫자로 8자까지만 입력 가능해요
+                </Text>
               </View>
               <View style={styles.inputContainer}>
                 <Text style={styles.inputLabel}>생년월일</Text>
@@ -85,7 +96,7 @@ const UserInfoScreen = () => {
                     onChangeText={handleBirthChange}
                     inputAccessoryViewID="user-info"
                   />
-                  <Text style={styles.birthInfo}>
+                  <Text style={styles.validateInfo}>
                     숫자 8자리로 입력해주세요
                   </Text>
                 </View>
@@ -199,7 +210,7 @@ const styles = StyleSheet.create({
     color: colorWithOpacity(COLORS.WHITE, 0.7),
     ...FONTS.BTN,
   },
-  birthInfo: {
+  validateInfo: {
     color: COLORS.PINK,
     ...FONTS.LB,
     fontSize: 11,
