@@ -6,5 +6,6 @@ import ArchiveCheerSvg from './archive-cheer.svg';
 import ArchiveSaveSvg from './archive-save.svg';
 import ArchiveIdeaSvg from './archive-idea.svg';
 import AlarmSvg from './alarm.svg';
+import StandByGood3 from './standby-good-3.svg';
 
-export { BlueSvg, GreenSvg, PurpleSvg,GroupSvg, ArchiveCheerSvg, ArchiveSaveSvg, ArchiveIdeaSvg, AlarmSvg};
+export { BlueSvg, GreenSvg, PurpleSvg,GroupSvg, ArchiveCheerSvg, ArchiveSaveSvg, ArchiveIdeaSvg, AlarmSvg, StandByGood3 };

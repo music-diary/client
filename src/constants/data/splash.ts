@@ -3,6 +3,7 @@ import {
   ArchiveCheerSvg,
   ArchiveIdeaSvg,
   ArchiveSaveSvg,
+  StandByGood3,
 } from 'assets/images/splash';
 
 export const splashOptions = {
@@ -20,6 +21,11 @@ export const splashOptions = {
   },
   alarm: {
     svg: AlarmSvg,
-    description: '잊지 않고 뮤다 알림을 보내드릴게요.',
+    description: '잊지 않고 뮤다 알림을 보내드릴게요',
+    toastMessage: '일기 알림이 설정되었습니다',
+  },
+  standBy3: {
+    svg: StandByGood3,
+    description: '오늘의 음악이 당신의 하루를\n더욱 반짝이게 만들거예요',
   },
 } as const;
