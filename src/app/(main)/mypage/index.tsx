@@ -29,11 +29,14 @@ import {
   parseTime,
 } from '@/utils/date-utils';
 import CustomAlertModal from '@/components/common/CustomAlertModal';
+import CustomSplash from '@/components/common/CustomSplash';
 import { useModalStore } from '@/store/useModalStore';
+import { useSplashStore } from '@/store/useSplashStore'; // 스플래시 상태 관리 스토어
 import { useGetUserInfo, usePatchUser } from '@/api/hooks/useUsers';
 import { type IGenre } from '@/models/interfaces';
 import { type UserPayloadSchema } from '@/models/schemas';
 import { mypageTerms } from '@/constants/data/terms';
+import { AlarmSvg } from 'assets/images/splash';
 
 const MypageScreen = () => {
   const { data: userInfo, isLoading, isError } = useGetUserInfo();
@@ -75,6 +78,7 @@ const MypageScreen = () => {
     useState<boolean>(false);
   const [isDiaryModalVisible, setDiaryModalVisible] = useState<boolean>(false);
   const { openModal, closeModal } = useModalStore();
+  const { openSplash, closeSplash } = useSplashStore(); // 스플래시 상태 관리 함수
 
   const handleToggleChange = (state: boolean) => {
     setIsGenreSuggested(state);
@@ -102,7 +106,13 @@ const MypageScreen = () => {
   const handleDiaryTimeChange = () => {
     setDiaryTime(tempDiaryTime);
     setDiaryModalVisible(false);
+    openSplash('alarm');
     handleUpdateUser(); // 선택된 시간 업데이트
+  };
+
+  const handleDiaryTimeChangeFalse = () => {
+    setDiaryModalVisible(false);
+    setIsDiaryToggled(false);
   };
 
   const handleUpdateUser = () => {
@@ -312,9 +322,8 @@ const MypageScreen = () => {
       <CustomBottomSheetModal
         title="일기 알림"
         visible={isDiaryModalVisible}
-        onSave={() => {
-          handleDiaryTimeChange();
-        }}
+        onSave={handleDiaryTimeChange}
+        onCancel={handleDiaryTimeChangeFalse}
       >
         <View style={styles.pickerContainer}>
           <DateTimePicker
@@ -330,6 +339,15 @@ const MypageScreen = () => {
           />
         </View>
       </CustomBottomSheetModal>
+
+      {/* 알림 설정 시 스플래시 화면 */}
+      <CustomSplash
+        name="alarm"
+        description="잊지 않고 뮤다 알림을 보내드릴게요."
+        toastMessage="알림이 설정되었습니다"
+        svg={AlarmSvg} // 스플래시 이미지로 AlarmSvg 사용
+        onClose={closeSplash}
+      />
     </ScrollView>
   );
 };
