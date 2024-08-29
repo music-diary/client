@@ -31,6 +31,8 @@ export default function DiaryLayout() {
         name="music"
         options={{
           headerTitle: () => <HeaderTitle title="음악 추천" />,
+          headerLeft: () => null,
+          headerBackVisible: false,
         }}
       />
       <Stack.Screen
