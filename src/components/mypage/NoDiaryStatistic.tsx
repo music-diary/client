@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   middleText: {
     color: 'white',
     textAlign: 'center',
-    ...FONTS.B2,
+    ...FONTS.B2_LINE2_SB,
   },
   btnContainer: {
     marginTop: 20,

@@ -8,9 +8,6 @@ import {
   type DiaryMonthArchiveSchema,
 } from '@/models/schemas';
 
-// const delay = async (ms: number) =>
-//   await new Promise((resolve) => setTimeout(resolve, ms));
-
 const getMusicArchive = async (
   startAt: string,
   endAt: string,
@@ -49,6 +46,7 @@ const getDiaryArchive = async (
     startAt,
   ).replace(':end', endAt);
   const { data } = await apiClient.get(endpoint);
+
   return data.diaries;
 };
 
@@ -89,6 +87,8 @@ const getDiaryMonthlyArchive = async (
     .replace(':endAt', endAt)
     .replace(':group', group);
   const { data } = await apiClient.get(endpoint);
+  // 3초 지연
+  await new Promise((resolve) => setTimeout(resolve, 3000));
 
   return data.diaries;
 };
