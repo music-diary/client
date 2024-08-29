@@ -1,6 +1,7 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { router, useLocalSearchParams } from 'expo-router';
 import {
+  ActivityIndicator,
   Dimensions,
   StyleSheet,
   Text,
@@ -16,6 +17,7 @@ import Carousel, {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import YoutubeIframe from 'react-native-youtube-iframe';
 import { useMusicRecommendation, usePatchDiary } from '@/api/hooks/useDiaries';
+import { useGetUserInfo } from '@/api/hooks/useUsers';
 import CustomAlertModal from '@/components/common/CustomAlertModal';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
 import LoadingView from '@/components/diary/LoadingView';
@@ -24,20 +26,22 @@ import { COLORS, FONTS } from '@/constants';
 import { type IMusic } from '@/models/interfaces';
 import { type DiaryStatus } from '@/models/types';
 import { useModalStore } from '@/store/useModalStore';
+import { useSplashStore } from '@/store/useSplashStore';
 import { colorWithOpacity } from '@/utils/color-utils';
 import { extractVideoId } from '@/utils/music-utils';
-import { useGetUserInfo } from '@/api/hooks/useUsers';
 
 const PAGE_WIDTH = Dimensions.get('window').width;
 const PAGE_HEIGHT = Dimensions.get('window').height;
 
 const MusicRecommendationScreen = () => {
-  const { diaryId } = useLocalSearchParams();
+  const { diaryId, mood } = useLocalSearchParams();
 
   const ref = useRef<ICarouselInstance>(null);
   const { closeModal } = useModalStore();
+  const { closeSplash } = useSplashStore();
   const progress = useSharedValue<number>(0);
 
+  const [showLoading, setShowLoading] = useState(true);
   const [selectedLyrics, setSelectedLyrics] = useState<
     Record<number, number[]>
   >({});
@@ -45,13 +49,25 @@ const MusicRecommendationScreen = () => {
     null,
   );
 
-  const { data: userInfo, isLoading, isError } = useGetUserInfo();
+  const { data: userInfo } = useGetUserInfo();
 
   const {
     data: musicData,
     error,
     isFetching,
   } = useMusicRecommendation(diaryId as string);
+
+  useEffect(() => {
+    setShowLoading(true);
+    const timer = setTimeout(() => {
+      setShowLoading(false);
+    }, 4000);
+
+    return () => {
+      clearTimeout(timer);
+      closeSplash();
+    };
+  }, []);
 
   const { mutate: patchDiary } = usePatchDiary({
     onSuccess: () => {
@@ -94,14 +110,14 @@ const MusicRecommendationScreen = () => {
   };
 
   const handleNext = () => {
-    const updatedMusicData: IMusic[] = musicData.map((music, index) => ({
-      ...music,
-      selectedLyric: music.lyric
-        .split('\n')
-        .filter((_, idx) => selectedLyrics[index]?.includes(idx))
-        .join('\n'),
-      selected: selectedLyrics[index]?.length > 0 || false, // 가사가 선택된 경우 true로 설정
-    }));
+    // const updatedMusicData: IMusic[] = musicData.map((music, index) => ({
+    //   ...music,
+    //   selectedLyric: music.lyric
+    //     .split('\n')
+    //     .filter((_, idx) => selectedLyrics[index]?.includes(idx))
+    //     .join('\n'),
+    //   selected: selectedLyrics[index]?.length > 0 || false, // 가사가 선택된 경우 true로 설정
+    // }));
 
     if (selectedMusicIndex === null) {
       console.error('No music selected.');
@@ -141,7 +157,17 @@ const MusicRecommendationScreen = () => {
     router.push('/');
   };
 
-  if (isFetching) return <LoadingView />;
+  if (showLoading) {
+    return <LoadingView mood={mood as 'good' | 'normal' | 'bad'} />;
+  }
+
+  if (isFetching) {
+    return (
+      <View style={styles.loaderContainer}>
+        <ActivityIndicator size="small" color={COLORS.PURPLE} />
+      </View>
+    );
+  }
 
   if (musicData.length === 0 || error) {
     return (
@@ -194,7 +220,7 @@ const MusicRecommendationScreen = () => {
                 </View>
                 <ScrollView>
                   {item.lyric
-                    .split('\n')
+                    .split('\\n')
                     .map((line: string, lineIndex: number) => (
                       <TouchableOpacity
                         key={lineIndex}
@@ -328,5 +354,11 @@ const styles = StyleSheet.create({
     ...FONTS.B1,
     textAlign: 'center',
     marginTop: 20,
+  },
+  loaderContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.BLACK,
   },
 });
