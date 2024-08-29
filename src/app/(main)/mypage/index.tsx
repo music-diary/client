@@ -39,6 +39,7 @@ import { mypageTerms } from '@/constants/data/terms';
 import { AlarmSvg } from 'assets/images/splash';
 import { type SplashKey } from '@/models/types';
 import { splashOptions } from '@/constants/data';
+import ThanksToList from '@/components/mypage/ThanksToList';
 
 const MypageScreen = () => {
   const { data: userInfo, isLoading, isError } = useGetUserInfo();
@@ -79,6 +80,8 @@ const MypageScreen = () => {
   const [isMusicFlavorToggled, setIsMusicFlavorToggled] =
     useState<boolean>(false);
   const [isDiaryModalVisible, setDiaryModalVisible] = useState<boolean>(false);
+  const [isThanksToModalVisible, setThanksToModalVisible] =
+    useState<boolean>(false);
   const { openModal, closeModal } = useModalStore();
   const { openSplash, closeSplash } = useSplashStore();
 
@@ -161,6 +164,10 @@ const MypageScreen = () => {
 
   const onPressWithdrawal = () => {
     router.push('/(main)/mypage/withdrawal');
+  };
+
+  const onPressThanksTo = () => {
+    setThanksToModalVisible(true);
   };
 
   const handleOpenTerms = (url: string) => {
@@ -279,7 +286,7 @@ const MypageScreen = () => {
             />
           ))}
           <View style={styles.body2}>
-            <BodyNavigator content="Thanks to" onPress={onPressInquiry} />
+            <BodyNavigator content="Thanks to" onPress={onPressThanksTo} />
           </View>
         </View>
         {/* 바디3 */}
@@ -342,8 +349,18 @@ const MypageScreen = () => {
           />
         </View>
       </CustomBottomSheetModal>
-
-      {/* 알림 설정 시 스플래시 화면 */}
+      {/* thanks to 클릭 시 모달 */}
+      <CustomBottomSheetModal
+        title="Thanks to"
+        visible={isThanksToModalVisible}
+        onCancel={() => {
+          setThanksToModalVisible(false);
+        }}
+        onSave={() => {}}
+      >
+        <ThanksToList />
+      </CustomBottomSheetModal>
+      {/* 스플래시 화면 */}
       <CustomSplash
         name="alarm"
         description={splashOptions.alarm.description}

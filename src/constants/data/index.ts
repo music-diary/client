@@ -4,3 +4,4 @@ export { terms } from './terms';
 export { splashOptions } from './splash';
 export { moodIcons } from './mood-icons';
 export { emotionColor } from './emotion-colors';
+export { thanksName } from './thanks-name-list';
