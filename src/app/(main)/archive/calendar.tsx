@@ -1,12 +1,5 @@
 import React, { useState } from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-  ActivityIndicator,
-} from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 import { Calendar, type DateData } from 'react-native-calendars';
 import { Feather } from '@expo/vector-icons';
 import { Link } from 'expo-router';
@@ -53,7 +46,7 @@ const CalendarScreen = () => {
     getCurrentMonthRange(currentDate),
   );
 
-  const { data: musicData, isLoading } = useDiaryMonthlyArchive(
+  const { data: musicData } = useDiaryMonthlyArchive(
     monthRange.startAt,
     monthRange.endAt,
     'month',
@@ -109,21 +102,11 @@ const CalendarScreen = () => {
     );
   };
 
-  // 로딩 상태 표시
-  if (isLoading) {
-    return (
-      <View style={styles.loaderContainer}>
-        <ActivityIndicator size="small" color={COLORS.PURPLE} />
-      </View>
-    );
-  }
-
   return (
     <View style={styles.container}>
       <View style={styles.routerContainer}>
         <RouteSwitcher />
       </View>
-
       <View style={styles.monthContainer}>
         <Text style={styles.monthText}>{getFormattedMonth(currentDate)}</Text>
       </View>
@@ -152,12 +135,6 @@ export default CalendarScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.BLACK,
-  },
-  loaderContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: COLORS.BLACK,
   },
   routerContainer: {
