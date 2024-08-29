@@ -12,7 +12,7 @@ const HeaderRight = ({ onPress }: HeaderRightProps) => {
   const { openModal } = useModalStore();
   const pathname = usePathname();
 
-  const handleDraft = () => router.push('/diary/draft');
+  // const handleDraft = () => router.push('/diary/draft');
 
   const handleXButton = () => {
     if (pathname === '/diary/write') {
@@ -29,11 +29,11 @@ const HeaderRight = ({ onPress }: HeaderRightProps) => {
 
   return (
     <View style={styles.container}>
-      {pathname.includes('/diary') && (
+      {/* {pathname.includes('/diary') && (
         <TouchableOpacity onPress={handleDraft}>
           <StoringSvg />
         </TouchableOpacity>
-      )}
+      )} */}
       <AntDesign size={22} name="close" color="white" onPress={handleXButton} />
     </View>
   );
