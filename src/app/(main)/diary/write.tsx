@@ -109,7 +109,7 @@ const WriteScreen = () => {
     onSuccess: () => {
       router.push({
         pathname: '/diary/music',
-        params: { diaryId, diaryData: JSON.stringify(diaryData) },
+        params: { diaryId, mood: mood.name },
       });
     },
     onError: () => {

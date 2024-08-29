@@ -1,37 +1,71 @@
-import { StyleSheet, Text, View, Image } from 'react-native';
-import { COLORS, FONTS } from '@/constants';
+import { useEffect, useState } from 'react';
+import { ActivityIndicator, View, StyleSheet } from 'react-native';
+import { type SplashOption, splashOptions } from '@/constants/data/splash';
+import { type SplashKey } from '@/models/types';
+import { useSplashStore } from '@/store/useSplashStore';
+import { COLORS } from '@/constants';
+import CustomSplash from '../common/CustomSplash';
 
-const LoadingView = () => {
+interface LoadingViewProps {
+  mood: 'good' | 'normal' | 'bad';
+}
+
+const LoadingView = ({ mood }: LoadingViewProps) => {
+  const { openSplash, closeSplash } = useSplashStore();
+  const [splashConfig, setSplashConfig] = useState<SplashOption | null>(null);
+
+  useEffect(() => {
+    openSplash('music-recommendation');
+    return () => closeSplash();
+  }, []);
+
+  useEffect(() => {
+    const getRandomSplash = (keys: SplashKey[]): SplashOption => {
+      const randomKey = keys[Math.floor(Math.random() * keys.length)];
+      return splashOptions[randomKey];
+    };
+
+    switch (mood) {
+      case 'good':
+        setSplashConfig(getRandomSplash(['good1', 'good2', 'good3']));
+        break;
+      case 'normal':
+        setSplashConfig(getRandomSplash(['normal1', 'normal2', 'normal3']));
+        break;
+      case 'bad':
+        setSplashConfig(getRandomSplash(['bad1', 'bad2', 'bad3']));
+        break;
+      default:
+        setSplashConfig(null);
+    }
+  }, [mood]);
+
+  if (!splashConfig)
+    return (
+      <>
+        <View style={styles.loaderContainer}>
+          <ActivityIndicator size="small" color={COLORS.PURPLE} />
+        </View>
+      </>
+    );
+
   return (
-    <View style={styles.container}>
-      <View style={styles.welcomeContainer}>
-        <Image source={require('assets/images/complete-logo.png')} />
-        <Text style={styles.welcomeText}>
-          세비님을 위한 음악을 고르고 있어요
-        </Text>
-      </View>
-    </View>
+    <CustomSplash
+      name="music-recommendation"
+      description={splashConfig.description}
+      svg={splashConfig.svg}
+      onClose={() => {}}
+    />
   );
 };
 
 export default LoadingView;
 
 const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    backgroundColor: COLORS.BLACK,
+  loaderContainer: {
     flex: 1,
-    alignItems: 'center',
-    paddingTop: 120,
-  },
-  welcomeContainer: {
-    display: 'flex',
-    alignItems: 'center',
     justifyContent: 'center',
-    gap: 60,
-  },
-  welcomeText: {
-    color: COLORS.WHITE,
-    ...FONTS.H1,
+    alignItems: 'center',
+    backgroundColor: COLORS.BLACK,
   },
 });
