@@ -13,7 +13,7 @@ const containerWidth = Dimensions.get('window').width - 32;
 
 const MoreInfo = () => {
   const onPress = () => {
-    router.navigate('(main)/diary');
+    router.navigate({ pathname: '/diary', params: { stateInit: 'true' } });
   };
 
   return (

@@ -5,7 +5,7 @@ import { COLORS, FONTS } from '@/constants';
 
 const NoArchiveData = () => {
   const onPress = () => {
-    router.navigate('(main)/diary');
+    router.navigate({ pathname: '/diary', params: { stateInit: 'true' } });
   };
 
   return (

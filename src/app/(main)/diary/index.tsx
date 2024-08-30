@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { router, useFocusEffect } from 'expo-router';
+import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { createDiary } from '@/api/hooks/useDiaries';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
@@ -13,12 +13,23 @@ import { type IEmotion, type ITopic } from '@/models/interfaces';
 import { isEmptyObject } from '@/utils/common-utils';
 
 const SubjectEmotionScreen = () => {
+  const { stateInit } = useLocalSearchParams();
+
   const [mood, setMood] = useState<IEmotion>({} as IEmotion);
   const [emotions, setEmotions] = useState<IEmotion[]>([]);
   const [detailedEmotions, setDetailedEmotions] = useState<IEmotion[]>([]);
   const [topics, setTopics] = useState<ITopic[]>([]);
   const [diaryId, setDiaryId] = useState<string>('');
   const [error, setError] = useState<string | null>(null); // 오류 상태
+
+
+  useFocusEffect(
+    useCallback(() => {
+      if (stateInit) {
+        setMood({} as IEmotion);
+      }
+    }, [stateInit]),
+  );
 
   /**
    * TODO:

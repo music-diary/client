@@ -67,7 +67,10 @@ export default function TabLayout() {
         listeners={({ navigation }) => ({
           tabPress: (e) => {
             e.preventDefault();
-            navigation.navigate('diary', { screen: 'index' });
+            navigation.navigate('diary', {
+              screen: 'index',
+              params: { stateInit: true },
+            });
           },
         })}
       />
