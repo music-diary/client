@@ -322,10 +322,13 @@ const WriteScreen = () => {
         name="write-cancel"
         title="작성을 그만두시겠어요?"
         description="지금 그만두시면, 노래를 추천 받을 수 없어요."
-        leftButtonText="일기 계속 작성하기"
-        rightButtonText="임시저장하고 나가기"
-        onLeftButtonPress={closeModal}
-        onRightButtonPress={handleDraft}
+        leftButtonText="그만두기"
+        rightButtonText="일기 계속 작성하기"
+        onLeftButtonPress={() => {
+          closeModal();
+          router.replace('/(main)');
+        }}
+        onRightButtonPress={closeModal}
       />
       <CustomSplash
         name="draft-save"

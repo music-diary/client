@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react';
 import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { createDiary } from '@/api/hooks/useDiaries';
+import CustomAlertModal from '@/components/common/CustomAlertModal';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
 import DetailedEmotionSelector from '@/components/diary/DetailedEmotionSelector';
 import EmotionSelector from '@/components/diary/EmotionSelector';
@@ -10,6 +11,7 @@ import SelectorView from '@/components/diary/SelectorView';
 import TopicSelector from '@/components/diary/TopicSelector';
 import { COLORS } from '@/constants';
 import { type IEmotion, type ITopic } from '@/models/interfaces';
+import { useModalStore } from '@/store/useModalStore';
 import { isEmptyObject } from '@/utils/common-utils';
 
 const SubjectEmotionScreen = () => {
@@ -22,6 +24,7 @@ const SubjectEmotionScreen = () => {
   const [diaryId, setDiaryId] = useState<string>('');
   const [error, setError] = useState<string | null>(null); // 오류 상태
 
+  const { closeModal } = useModalStore();
 
   useFocusEffect(
     useCallback(() => {
@@ -130,6 +133,18 @@ const SubjectEmotionScreen = () => {
         isActive={!isEmptyObject(mood) && emotions.length > 0}
         onPress={handleNext} // 버튼 클릭 이벤트 핸들러
         label="완료"
+      />
+      <CustomAlertModal
+        name="write-cancel"
+        title="작성을 그만두시겠어요?"
+        description="지금 그만두시면, 노래를 추천 받을 수 없어요."
+        leftButtonText="그만두기"
+        rightButtonText="일기 계속 작성하기"
+        onLeftButtonPress={() => {
+          closeModal();
+          router.replace('/(main)');
+        }}
+        onRightButtonPress={closeModal}
       />
     </>
   );
