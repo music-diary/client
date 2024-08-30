@@ -12,7 +12,7 @@ import { formatKST } from '@/utils/date-utils';
 
 // 클릭 시 일기쓰러 가기로 이동
 const handleDiaryPress = () => {
-  router.push('/(main)/diary');
+  router.navigate({ pathname: '/diary', params: { stateInit: 'true' } });
 };
 
 const lessThanTwo = ({ name }: { name: string }) => (
