@@ -220,7 +220,7 @@ const MusicRecommendationScreen = () => {
                 </View>
                 <ScrollView>
                   {item.lyric
-                    .split('\\n')
+                    .split('\n')
                     .map((line: string, lineIndex: number) => (
                       <TouchableOpacity
                         key={lineIndex}

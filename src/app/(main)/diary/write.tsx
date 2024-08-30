@@ -55,6 +55,8 @@ const WriteScreen = () => {
   const [title, setTitle] = useState('');
   const [diaryContent, setDiaryContent] = useState('');
   const [diaryData, setDiaryData] = useState<IDiary>({} as IDiary); // diaryData 상태 추가
+  const [charCount, setCharCount] = useState<Record<string, number>>({}); // 글자 수 상태 추가
+
   const [templateContents, setTemplateContents] = useState<
     Record<string, string>
   >({});
@@ -144,6 +146,17 @@ const WriteScreen = () => {
     patchDiary({ id: diaryId as string, payload: generatedDiaryData });
   };
 
+  const handleTextChange = (name: string, text: string) => {
+    setTemplateContents((prev) => ({
+      ...prev,
+      [name]: text,
+    }));
+    setCharCount((prev) => ({
+      ...prev,
+      [name]: text.length,
+    }));
+  };
+
   const isButtonActive = () => {
     if (type && template) {
       return (
@@ -155,11 +168,6 @@ const WriteScreen = () => {
     }
   };
 
-  /**
-   * TODO:
-   *
-   * 글자수 세기 추가
-   */
   return (
     <>
       <KeyboardAvoidingView
@@ -230,17 +238,16 @@ const WriteScreen = () => {
                           placeholderTextColor={COLORS.CONTENTS_LIGHT}
                           value={templateContents[content.name] || ''}
                           onChangeText={(text) =>
-                            setTemplateContents((prev) => ({
-                              ...prev,
-                              [content.name]: text,
-                            }))
+                            handleTextChange(content.name, text)
                           }
                           onFocus={handleFocus}
                           inputAccessoryViewID={
                             Platform.OS === 'ios' ? 'keyboard' : undefined
                           }
                         />
-                        <Text style={styles.inputDiaryCount}>0/200</Text>
+                        <Text style={styles.inputDiaryCount}>
+                          {charCount[content.name] || 0}/200
+                        </Text>
                       </View>
                     </View>
                   ))}
@@ -256,13 +263,21 @@ const WriteScreen = () => {
                     style={styles.inputDiary}
                     placeholderTextColor={COLORS.CONTENTS_LIGHT}
                     value={diaryContent}
-                    onChangeText={setDiaryContent}
+                    onChangeText={(text) => {
+                      setDiaryContent(text);
+                      setCharCount((prev) => ({
+                        ...prev,
+                        diaryContent: text.length,
+                      }));
+                    }}
                     onFocus={handleFocus}
                     inputAccessoryViewID={
                       Platform.OS === 'ios' ? 'keyboard' : undefined
                     }
                   />
-                  <Text style={styles.inputDiaryCount}>0/500</Text>
+                  <Text style={styles.inputDiaryCount}>
+                    {charCount.diaryContent || 0}/500
+                  </Text>
                 </View>
               </>
             )}
