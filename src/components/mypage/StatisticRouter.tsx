@@ -41,7 +41,7 @@ const StaticRouter = ({ activeView, setActiveView }: StaticRouterProps) => {
           style={styles.textContainer}
         >
           <Text style={[styles.text, { color: getTextColor('yearly') }]}>
-            년간
+            연간
           </Text>
           <View style={getUnderline('yearly')} />
         </TouchableOpacity>

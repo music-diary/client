@@ -77,7 +77,7 @@ function RootLayoutNav() {
     // login();
     // logout();
     if (isFirstLaunch) {
-      router.navigate('/(main)/tutorial');
+      router.navigate('/(tutorial)');
     } else if (!isAuthenticated) {
       router.navigate('/(onboarding)');
     } else {
@@ -101,6 +101,10 @@ function RootLayoutNav() {
             >
               <Stack.Screen
                 name="(onboarding)"
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="(tutorial)"
                 options={{ headerShown: false }}
               />
               <Stack.Screen name="(main)" options={{ headerShown: false }} />

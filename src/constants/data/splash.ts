@@ -5,6 +5,7 @@ import {
   ArchiveCheerSvg,
   ArchiveIdeaSvg,
   ArchiveSaveSvg,
+  StandByGood3,
   MusicLoadingGood1Svg,
   MusicLoadingGood2Svg,
   MusicLoadingNormal1Svg,
@@ -18,6 +19,7 @@ import {
 export interface SplashOption {
   svg: React.FC<SvgProps>; // Type for SVG components
   description: string;
+  toastMessage?: string;
 }
 
 export const splashOptions: Record<SplashKey, SplashOption> = {
@@ -36,6 +38,11 @@ export const splashOptions: Record<SplashKey, SplashOption> = {
   alarm: {
     svg: AlarmSvg,
     description: '잊지 않고 뮤다 알림을 보내드릴게요',
+    toastMessage: '일기 알림이 설정되었습니다',
+  },
+  standBy3: {
+    svg: StandByGood3,
+    description: '오늘의 음악이 당신의 하루를\n더욱 반짝이게 만들거예요',
   },
   good1: {
     svg: MusicLoadingGood1Svg,

@@ -29,11 +29,15 @@ import {
   parseTime,
 } from '@/utils/date-utils';
 import CustomAlertModal from '@/components/common/CustomAlertModal';
+import CustomSplash from '@/components/common/CustomSplash';
 import { useModalStore } from '@/store/useModalStore';
+import { useSplashStore } from '@/store/useSplashStore'; // 스플래시 상태 관리 스토어
 import { useGetUserInfo, usePatchUser } from '@/api/hooks/useUsers';
 import { type IGenre } from '@/models/interfaces';
 import { type UserPayloadSchema } from '@/models/schemas';
 import { mypageTerms } from '@/constants/data/terms';
+import { splashOptions } from '@/constants/data';
+import ThanksToList from '@/components/mypage/ThanksToList';
 
 const MypageScreen = () => {
   const { data: userInfo, isLoading, isError } = useGetUserInfo();
@@ -74,7 +78,10 @@ const MypageScreen = () => {
   const [isMusicFlavorToggled, setIsMusicFlavorToggled] =
     useState<boolean>(false);
   const [isDiaryModalVisible, setDiaryModalVisible] = useState<boolean>(false);
+  const [isThanksToModalVisible, setThanksToModalVisible] =
+    useState<boolean>(false);
   const { openModal, closeModal } = useModalStore();
+  const { openSplash, closeSplash } = useSplashStore();
 
   const handleToggleChange = (state: boolean) => {
     setIsGenreSuggested(state);
@@ -94,15 +101,22 @@ const MypageScreen = () => {
   };
 
   const handleSave = () => {
+    openSplash('standBy3');
     setSelectedGenres(tempSelectedGenres);
     handleMusicFlavorToggleChange();
     handleUpdateUser(); // 선택된 장르를 저장 후 업데이트
   };
 
   const handleDiaryTimeChange = () => {
+    openSplash('alarm');
     setDiaryTime(tempDiaryTime);
     setDiaryModalVisible(false);
     handleUpdateUser(); // 선택된 시간 업데이트
+  };
+
+  const handleDiaryTimeChangeFalse = () => {
+    setDiaryModalVisible(false);
+    setIsDiaryToggled(false);
   };
 
   const handleUpdateUser = () => {
@@ -148,6 +162,10 @@ const MypageScreen = () => {
 
   const onPressWithdrawal = () => {
     router.push('/(main)/mypage/withdrawal');
+  };
+
+  const onPressThanksTo = () => {
+    setThanksToModalVisible(true);
   };
 
   const handleOpenTerms = (url: string) => {
@@ -266,7 +284,7 @@ const MypageScreen = () => {
             />
           ))}
           <View style={styles.body2}>
-            <BodyNavigator content="Thanks to" onPress={onPressInquiry} />
+            <BodyNavigator content="Thanks to" onPress={onPressThanksTo} />
           </View>
         </View>
         {/* 바디3 */}
@@ -312,9 +330,8 @@ const MypageScreen = () => {
       <CustomBottomSheetModal
         title="일기 알림"
         visible={isDiaryModalVisible}
-        onSave={() => {
-          handleDiaryTimeChange();
-        }}
+        onSave={handleDiaryTimeChange}
+        onCancel={handleDiaryTimeChangeFalse}
       >
         <View style={styles.pickerContainer}>
           <DateTimePicker
@@ -330,6 +347,31 @@ const MypageScreen = () => {
           />
         </View>
       </CustomBottomSheetModal>
+      {/* thanks to 클릭 시 모달 */}
+      <CustomBottomSheetModal
+        title="Thanks to"
+        visible={isThanksToModalVisible}
+        onCancel={() => {
+          setThanksToModalVisible(false);
+        }}
+        onSave={() => {}}
+      >
+        <ThanksToList />
+      </CustomBottomSheetModal>
+      {/* 스플래시 화면 */}
+      <CustomSplash
+        name="alarm"
+        description={splashOptions.alarm.description}
+        toastMessage={splashOptions.alarm.toastMessage}
+        svg={splashOptions.alarm.svg}
+        onClose={closeSplash}
+      />
+      <CustomSplash
+        name="standBy3"
+        description={splashOptions.standBy3.description}
+        svg={splashOptions.standBy3.svg}
+        onClose={closeSplash}
+      />
     </ScrollView>
   );
 };

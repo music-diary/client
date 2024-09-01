@@ -1,4 +1,4 @@
-import { Tabs, usePathname } from 'expo-router';
+import { Tabs } from 'expo-router';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import { Foundation, Feather, FontAwesome6 } from '@expo/vector-icons';
 import { useClientOnlyValue } from '@/hooks/useClientOnlyValue';
@@ -10,14 +10,6 @@ const currentWidth = Dimensions.get('window').width * ratio;
 const currentHeight = (137 / 435) * currentWidth;
 
 export default function TabLayout() {
-  const path = usePathname();
-  // 탭바 숨길 페이지 hide에 추가하면 됩니다..!
-  const hide =
-    path === '/mypage/edit' ||
-    path === '/mypage/inquiry' ||
-    path === '/mypage/withdrawal' ||
-    path === '/mypage/statistic';
-
   return (
     <Tabs
       screenOptions={{
@@ -25,9 +17,7 @@ export default function TabLayout() {
         tabBarInactiveTintColor: COLORS.WHITE,
         headerShown: useClientOnlyValue(false, true),
         tabBarShowLabel: false,
-        tabBarStyle: hide
-          ? { display: 'none' }
-          : { display: 'flex', ...styles.tabBarStyle },
+        tabBarStyle: { display: 'flex', ...styles.tabBarStyle },
         headerTransparent: true,
 
         tabBarBackground: () => (
@@ -41,12 +31,16 @@ export default function TabLayout() {
         ),
       }}
     >
-      <Tabs.Screen name="index" options={{ href: null }} />
+      <Tabs.Screen
+        name="index"
+        options={{
+          headerShown: false,
+          tabBarItemStyle: { display: 'none' },
+        }}
+      />
       <Tabs.Screen
         name="home"
         options={{
-          title: '',
-          headerShown: false,
           tabBarIcon: ({ color }) => (
             <Foundation name="home" size={21} color={color} />
           ),
@@ -56,48 +50,20 @@ export default function TabLayout() {
       <Tabs.Screen
         name="diary"
         options={{
-          title: '',
-          headerShown: false,
           tabBarIcon: ({ color }) => (
             <FontAwesome6 name="pen-nib" size={17} color={color} />
           ),
           tabBarStyle: { display: 'none' },
           tabBarItemStyle: styles.middleItem,
         }}
-        listeners={({ navigation }) => ({
-          tabPress: (e) => {
-            e.preventDefault();
-            navigation.navigate('diary', {
-              screen: 'index',
-              params: { stateInit: true },
-            });
-          },
-        })}
       />
       <Tabs.Screen
         name="archive"
         options={{
-          title: '',
-          headerShown: false,
           tabBarIcon: ({ color }) => (
             <Feather name="archive" size={18} color={color} />
           ),
           tabBarItemStyle: styles.rightItem,
-        }}
-      />
-      <Tabs.Screen
-        name="letter"
-        options={{
-          href: null,
-        }}
-      />
-
-      <Tabs.Screen
-        name="mypage"
-        options={{
-          title: '',
-          headerShown: false,
-          tabBarItemStyle: { display: 'none' },
         }}
       />
     </Tabs>
@@ -119,10 +85,8 @@ const styles = StyleSheet.create({
   },
 
   layout: {
-    // 중앙정렬
     alignItems: 'center',
     bottom: 34,
-    // shadow 설정
     shadowColor: COLORS.BLACK,
     shadowOpacity: 0.9,
     shadowOffset: {
@@ -130,7 +94,6 @@ const styles = StyleSheet.create({
       height: 5,
     },
   },
-
   item: {
     paddingRight: 50,
     paddingBottom: 20,
@@ -150,7 +113,6 @@ const styles = StyleSheet.create({
     zIndex: 1,
     overflow: 'visible',
   },
-
   rightItem: {
     paddingLeft: 50,
     paddingBottom: 20,

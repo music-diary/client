@@ -77,7 +77,7 @@ const MonthlyMainArchive = ({
             />
             <View style={styles.textContainer}>
               <Text style={styles.songTitle}>
-                {trimTitle(songTitle, 4)} 외 {diaryEntries}곡
+                {trimTitle(songTitle, 4)} 외 {diaryEntries - 1}곡
               </Text>
               <Text style={styles.artist}>{trimTitle(artist, 8)}</Text>
             </View>

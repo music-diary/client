@@ -6,5 +6,6 @@ import DefaultProfileSvg from './default-profile.svg';
 import MusicNotesSvg from './music-notes.svg';
 import PhotoSvg from './photo.svg';
 import SmileySvg from './smiley.svg';
+import ThanksStar from './thanks-star.svg';
 
-export { ArrowDownSvg, BookOpenSvg, ChartPieSvg, ConfettiSvg, DefaultProfileSvg, MusicNotesSvg, PhotoSvg, SmileySvg };
+export { ArrowDownSvg, BookOpenSvg, ChartPieSvg, ConfettiSvg, DefaultProfileSvg, MusicNotesSvg, PhotoSvg, SmileySvg, ThanksStar };

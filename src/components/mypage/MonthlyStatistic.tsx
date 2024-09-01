@@ -30,7 +30,7 @@ const MonthlyStatistic = () => {
   if (!monthlyStatistics) return null;
   if (isError) return <Text>Error occurred while fetching data.</Text>;
 
-  const handleSelect = (value: string) => {
+const handleSelect = (value: string) => {
     setSelectedData(value);
   };
 
