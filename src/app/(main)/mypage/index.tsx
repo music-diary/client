@@ -36,8 +36,6 @@ import { useGetUserInfo, usePatchUser } from '@/api/hooks/useUsers';
 import { type IGenre } from '@/models/interfaces';
 import { type UserPayloadSchema } from '@/models/schemas';
 import { mypageTerms } from '@/constants/data/terms';
-import { AlarmSvg } from 'assets/images/splash';
-import { type SplashKey } from '@/models/types';
 import { splashOptions } from '@/constants/data';
 import ThanksToList from '@/components/mypage/ThanksToList';
 
