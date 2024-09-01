@@ -70,12 +70,20 @@ const ArchiveScreen = () => {
     ? extractMusicsWithFeeling(archiveData)
     : [];
 
-  if (isLoading || !archiveData) {
-    return <LoadingScreen />;
-  }
-
   if (error) {
     console.warn('Error while fetching archive data:', error);
+  }
+
+  // 로딩 중일때
+  if (isLoading || !archiveData) {
+    return (
+      <>
+        <View style={styles.header}>
+          <RouteSwitcher />
+        </View>
+        <LoadingScreen />
+      </>
+    );
   }
 
   return (

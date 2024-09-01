@@ -38,7 +38,7 @@ export const mypageTerms = [
   {
     id: 'check2',
     title: '오픈 라이센스',
-    url: '???',
+    url: 'https://yazii-village.notion.site/2f5092b108bc4cf59696063d00911e41?pvs=4',
   },
   {
     id: 'check3',

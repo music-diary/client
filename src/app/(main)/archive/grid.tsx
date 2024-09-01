@@ -11,8 +11,16 @@ import NoArchiveData from '@/components/archive/NoArchiveData';
 const GridScreen = () => {
   const { data: summaryData, isLoading } = useMusicArchiveSummary();
 
+  // 로딩 중일때
   if (!summaryData || isLoading) {
-    return <LoadingScreen />;
+    return (
+      <>
+        <View style={styles.header}>
+          <RouteSwitcher />
+        </View>
+        <LoadingScreen />
+      </>
+    );
   }
 
   const entryData: IMusicSummaryEntry[] =

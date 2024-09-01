@@ -6,7 +6,7 @@ import EmotionIcon from '@/components/mypage/EmotionIcon';
 import { colorWithOpacity } from '@/utils/color-utils';
 import { useMoods } from '@/api/hooks/useDiaries';
 import { emotionColor } from '@/constants/data';
-import { translateLabel } from '@/utils/label-utils';
+import { translateLabel, translateLabelStatistic } from '@/utils/label-utils';
 import LoadingIndicator from '@/components/common/LoadingIndicator';
 import { type IStatisticEmotion } from '@/models/interfaces';
 
@@ -56,7 +56,7 @@ const MyFilling = ({ emotionData }: MyFillingDataProps) => {
             { color: emotionColor[mostFrequent.rootIdName] },
           ]}
         >
-          {translateLabel(mostFrequent.rootIdName, moods)}
+          {translateLabelStatistic(mostFrequent.rootIdName)}
           <Text style={{ color: colorWithOpacity(COLORS.WHITE, 0.5) }}>
             {' '}
             중

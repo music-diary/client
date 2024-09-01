@@ -74,15 +74,17 @@ const CustomBottomSheetModal = ({
           <SafeAreaView edges={['top']} style={styles.modalContainer}>
             <TouchableWithoutFeedback onPress={handleContentPress}>
               <View style={styles.modalContent}>
-                <View style={styles.buttonContainer}>
-                  <TouchableOpacity onPress={handleClose}>
-                    <Text style={styles.buttonText}>취소</Text>
-                  </TouchableOpacity>
-                  <Text style={styles.titleText}>{title}</Text>
-                  <TouchableOpacity onPress={handleSave}>
-                    <Text style={styles.buttonText}>저장</Text>
-                  </TouchableOpacity>
-                </View>
+                {title !== 'Thanks to' && (
+                  <View style={styles.buttonContainer}>
+                    <TouchableOpacity onPress={handleClose}>
+                      <Text style={styles.buttonText}>취소</Text>
+                    </TouchableOpacity>
+                    <Text style={styles.titleText}>{title}</Text>
+                    <TouchableOpacity onPress={handleSave}>
+                      <Text style={styles.buttonText}>저장</Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
                 <View style={styles.bodyContent}>{children}</View>
               </View>
             </TouchableWithoutFeedback>

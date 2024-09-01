@@ -66,7 +66,9 @@ export const convertToTimeString = (date: Date): string => {
 // form > 2024-03-24T07:03:00.000Z 데이터가 들어오면 ['2024-08', '...', '2024-03'] 반환
 export const generateMonthArray = (createdDate: string): string[] => {
   const months = [];
-  let currentDate = new Date();
+  const now = new Date();
+
+  let currentDate = new Date(now.getTime() + 9 * 60 * 60 * 1000);
   const startDate = new Date(createdDate);
 
   startDate.setDate(1);
@@ -98,8 +100,11 @@ export const generateYearArray = (createdDate: string): string[] => {
 
 // form > 2024-08 -> 2024년 08월 / 2024 -> 2024년
 export const formatDateString = (input: string): string => {
+  // 에러 처리
+  if (typeof input !== 'string') {
+    return 'Invalid date';
+  }
   const parts = input.split('-');
-
   if (parts.length === 2) {
     const [year, month] = parts;
     return `${year}년 ${month}월`;
