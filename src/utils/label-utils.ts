@@ -14,3 +14,16 @@ export const getGenreLabel = (genre: string, genres: IGenre[]): string => {
   const foundGenre = genres.find((g) => g.name === genre);
   return foundGenre?.label ?? genre;
 };
+
+export const translateLabelStatistic = (rootIdName: string): string => {
+  switch (rootIdName) {
+    case 'good':
+      return '긍정 감정';
+    case 'normal':
+      return '중립 감정';
+    case 'bad':
+      return '부정 감정';
+    default:
+      return '긍정 감정';
+  }
+};

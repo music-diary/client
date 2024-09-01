@@ -78,7 +78,7 @@ const DiaryTopic = ({ topics, diaryCount }: DiaryTopicProps) => {
           아직 일기 주제를 {'\n'} 선택하지 않았어요
         </Text>
       ) : (
-        <>
+        <View style={styles.middleContainer}>
           <Text style={styles.bodyText}>{renderTopTopics()}</Text>
           {sortedTopics.map((topic) => (
             <View key={topic.topic.id} style={styles.contentContainer}>
@@ -86,7 +86,7 @@ const DiaryTopic = ({ topics, diaryCount }: DiaryTopicProps) => {
               <Text style={styles.b2sbText}>{topic.topic.label}</Text>
             </View>
           ))}
-        </>
+        </View>
       )}
     </View>
   );
