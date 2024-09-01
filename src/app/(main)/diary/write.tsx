@@ -1,11 +1,16 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { router, useLocalSearchParams } from 'expo-router';
 import {
+  Dimensions,
+  InputAccessoryView,
+  Keyboard,
   KeyboardAvoidingView,
+  type NativeSyntheticEvent,
   Platform,
   ScrollView,
   StyleSheet,
   Text,
+  type TextInputFocusEventData,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -22,7 +27,6 @@ import { type Mood } from '@/models/types';
 import { useModalStore } from '@/store/useModalStore';
 import { useSplashStore } from '@/store/useSplashStore';
 import { createDiaryData } from '@/utils/diary-utils';
-import { useKeyboardListeners } from '@/utils/keyboard-utils';
 import GroupSvg from 'assets/images/splash/group-dot.svg';
 
 const WriteScreen = () => {
@@ -38,6 +42,7 @@ const WriteScreen = () => {
     diaryId,
   } = params;
 
+  const inputRefs = useRef<Array<React.RefObject<TextInput>>>([]);
   const scrollViewRef = useRef<ScrollView>(null);
 
   const mood = JSON.parse(m as string);
@@ -50,20 +55,63 @@ const WriteScreen = () => {
   const [title, setTitle] = useState('');
   const [diaryContent, setDiaryContent] = useState('');
   const [diaryData, setDiaryData] = useState<IDiary>({} as IDiary); // diaryData 상태 추가
+  const [charCount, setCharCount] = useState<Record<string, number>>({}); // 글자 수 상태 추가
+
   const [templateContents, setTemplateContents] = useState<
     Record<string, string>
   >({});
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
 
   const { openSplash } = useSplashStore();
   const { closeModal } = useModalStore();
 
-  useKeyboardListeners(scrollViewRef);
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
+      setKeyboardVisible(true);
+    });
+    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
+      setKeyboardVisible(false);
+    });
+
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
+  }, []);
+
+  /**
+   * TODO:
+   *
+   * 코드 정리 필요
+   */
+  const handleFocus = (
+    event: NativeSyntheticEvent<TextInputFocusEventData>,
+  ) => {
+    if (!keyboardVisible) return; // 키보드가 올라와 있지 않으면 함수 실행 중단
+
+    const scrollResponder = scrollViewRef.current?.getScrollResponder();
+    const targetOffset = event.nativeEvent.target;
+    const screenHeight = Dimensions.get('window').height; // 전체 스크린 높이
+
+    const desiredTopMargin = screenHeight * 0.2; // 상단 여백을 전체 높이의 10%로 설정
+    console.log('desiredTopMargin::: ', desiredTopMargin);
+    console.log('targetOffset', targetOffset);
+    // 스크롤뷰가 포커스된 필드를 화면 상단으로 스크롤하도록 요청
+    scrollResponder?.scrollResponderScrollNativeHandleToKeyboard(
+      targetOffset,
+      desiredTopMargin, // 원하는 상단 여백
+      true,
+    );
+  };
+
+  // useKeyboardListeners(scrollViewRef);
+  // useKeyboardAwareFocus(scrollViewRef, inputRefs.current); // 키보드 포커스 훅 사용
 
   const { mutate: patchDiary } = usePatchDiary({
     onSuccess: () => {
       router.push({
         pathname: '/diary/music',
-        params: { diaryId, diaryData: JSON.stringify(diaryData) },
+        params: { diaryId, mood: mood.name },
       });
     },
     onError: () => {
@@ -98,6 +146,17 @@ const WriteScreen = () => {
     patchDiary({ id: diaryId as string, payload: generatedDiaryData });
   };
 
+  const handleTextChange = (name: string, text: string) => {
+    setTemplateContents((prev) => ({
+      ...prev,
+      [name]: text,
+    }));
+    setCharCount((prev) => ({
+      ...prev,
+      [name]: text.length,
+    }));
+  };
+
   const isButtonActive = () => {
     if (type && template) {
       return (
@@ -109,11 +168,6 @@ const WriteScreen = () => {
     }
   };
 
-  /**
-   * TODO:
-   *
-   * 글자수 세기 추가
-   */
   return (
     <>
       <KeyboardAvoidingView
@@ -153,15 +207,19 @@ const WriteScreen = () => {
           <View
             style={[styles.inputContainer, { gap: type && template ? 20 : 16 }]}
           >
+            <TextInput
+              placeholder="일기제목"
+              style={styles.inputTitle}
+              placeholderTextColor={COLORS.CONTENTS_LIGHT}
+              value={title}
+              onChangeText={setTitle}
+              onFocus={handleFocus}
+              inputAccessoryViewID={
+                Platform.OS === 'ios' ? 'keyboard' : undefined
+              }
+            />
             {type && template ? (
               <>
-                <TextInput
-                  placeholder="일기제목"
-                  style={[styles.inputTitle, { marginBottom: 0 }]}
-                  placeholderTextColor={COLORS.CONTENTS_LIGHT}
-                  value={title}
-                  onChangeText={setTitle}
-                />
                 {template.templateContents
                   .sort((a, b) => a.order - b.order)
                   .map((content) => (
@@ -180,26 +238,22 @@ const WriteScreen = () => {
                           placeholderTextColor={COLORS.CONTENTS_LIGHT}
                           value={templateContents[content.name] || ''}
                           onChangeText={(text) =>
-                            setTemplateContents((prev) => ({
-                              ...prev,
-                              [content.name]: text,
-                            }))
+                            handleTextChange(content.name, text)
+                          }
+                          onFocus={handleFocus}
+                          inputAccessoryViewID={
+                            Platform.OS === 'ios' ? 'keyboard' : undefined
                           }
                         />
-                        <Text style={styles.inputDiaryCount}>0/200</Text>
+                        <Text style={styles.inputDiaryCount}>
+                          {charCount[content.name] || 0}/200
+                        </Text>
                       </View>
                     </View>
                   ))}
               </>
             ) : (
               <>
-                <TextInput
-                  placeholder="일기제목"
-                  style={styles.inputTitle}
-                  placeholderTextColor={COLORS.CONTENTS_LIGHT}
-                  value={title}
-                  onChangeText={setTitle}
-                />
                 <View style={styles.inputDiaryView}>
                   <TextInput
                     placeholder="오늘 하루에 대해 적어보세요"
@@ -209,11 +263,39 @@ const WriteScreen = () => {
                     style={styles.inputDiary}
                     placeholderTextColor={COLORS.CONTENTS_LIGHT}
                     value={diaryContent}
-                    onChangeText={setDiaryContent}
+                    onChangeText={(text) => {
+                      setDiaryContent(text);
+                      setCharCount((prev) => ({
+                        ...prev,
+                        diaryContent: text.length,
+                      }));
+                    }}
+                    onFocus={handleFocus}
+                    inputAccessoryViewID={
+                      Platform.OS === 'ios' ? 'keyboard' : undefined
+                    }
                   />
-                  <Text style={styles.inputDiaryCount}>0/500</Text>
+                  <Text style={styles.inputDiaryCount}>
+                    {charCount.diaryContent || 0}/500
+                  </Text>
                 </View>
               </>
+            )}
+
+            {Platform.OS === 'ios' && (
+              <InputAccessoryView nativeID="keyboard">
+                <TouchableOpacity
+                  onPress={() => Keyboard.dismiss()}
+                  style={{
+                    backgroundColor: COLORS.WHITE,
+                    paddingHorizontal: 16,
+                    paddingVertical: 10,
+                    alignItems: 'flex-end',
+                  }}
+                >
+                  <Text style={{ color: COLORS.BLUE, ...FONTS.B1 }}>완료</Text>
+                </TouchableOpacity>
+              </InputAccessoryView>
             )}
 
             <View style={styles.infoContainer}>
@@ -240,10 +322,13 @@ const WriteScreen = () => {
         name="write-cancel"
         title="작성을 그만두시겠어요?"
         description="지금 그만두시면, 노래를 추천 받을 수 없어요."
-        leftButtonText="일기 계속 작성하기"
-        rightButtonText="임시저장하고 나가기"
-        onLeftButtonPress={closeModal}
-        onRightButtonPress={handleDraft}
+        leftButtonText="그만두기"
+        rightButtonText="일기 계속 작성하기"
+        onLeftButtonPress={() => {
+          closeModal();
+          router.replace('/(main)');
+        }}
+        onRightButtonPress={closeModal}
       />
       <CustomSplash
         name="draft-save"

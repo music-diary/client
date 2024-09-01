@@ -6,7 +6,7 @@ import { COLORS, FONTS } from '@/constants';
 const NewUserDescription = ({ description }: { description: string }) => {
   // 클릭 시 일기쓰러 가기로 이동
   const handleDiaryPress = () => {
-    router.push('/(main)/diary');
+    router.navigate({ pathname: '/diary', params: { stateInit: 'true' } });
   };
 
   return (

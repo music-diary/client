@@ -12,28 +12,35 @@ const HeaderRight = ({ onPress }: HeaderRightProps) => {
   const { openModal } = useModalStore();
   const pathname = usePathname();
 
-  const handleDraft = () => router.push('/diary/draft');
+  // const handleDraft = () => router.push('/diary/draft');
 
+  /**
+   * TODO: diary/card 부분 확인 후 수정예정
+   */
   const handleXButton = () => {
-    if (pathname === '/diary/write') {
-      openModal('write-cancel');
-      return;
-    }
-    if (pathname === '/diary/music') {
-      openModal('music-cancel');
-      return;
-    }
+    const cancelRoutes = ['/diary', '/diary/write', '/diary/music'];
 
-    return router.push('/(main)');
+    if (cancelRoutes.includes(pathname)) {
+      openModal('write-cancel');
+    } else if (pathname === '/diary/template') {
+      router.back();
+    } else {
+      router.replace('/(main)');
+    }
   };
 
+  /**
+   * TODO:
+   *
+   * 주석 및 임시저장 삭제해야함
+   */
   return (
     <View style={styles.container}>
-      {pathname.includes('/diary') && (
+      {/* {pathname.includes('/diary') && (
         <TouchableOpacity onPress={handleDraft}>
           <StoringSvg />
         </TouchableOpacity>
-      )}
+      )} */}
       <AntDesign size={22} name="close" color="white" onPress={handleXButton} />
     </View>
   );
