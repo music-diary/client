@@ -24,8 +24,8 @@ const HeaderRight = ({ onPress }: HeaderRightProps) => {
       openModal('write-cancel');
     } else if (pathname === '/diary/template') {
       router.back();
-    } else {
-      router.replace('/(main)');
+    } else if (pathname === '/diary/card') {
+      openModal('card-cancel');
     }
   };
 
