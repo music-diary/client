@@ -38,6 +38,7 @@ import { type UserPayloadSchema } from '@/models/schemas';
 import { mypageTerms } from '@/constants/data/terms';
 import { splashOptions } from '@/constants/data';
 import ThanksToList from '@/components/mypage/ThanksToList';
+import { scheduleNotification } from '@/utils/push-notifications';
 
 const MypageScreen = () => {
   const { data: userInfo, isLoading, isError } = useGetUserInfo();
@@ -110,6 +111,7 @@ const MypageScreen = () => {
   const handleDiaryTimeChange = () => {
     openSplash('alarm');
     setDiaryTime(tempDiaryTime);
+    scheduleNotification(tempDiaryTime);
     setDiaryModalVisible(false);
     handleUpdateUser(); // 선택된 시간 업데이트
   };

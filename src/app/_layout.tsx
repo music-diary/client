@@ -16,6 +16,7 @@ import DImOverlay from '@/components/common/DImOverlay';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { useAppStore } from '@/store/useAppStore';
 import { COLORS } from '@/constants';
+import { usePushNotifications } from '@/hooks/usePushNotifications';
 // import { login } from '@/api/hooks/useAuth';
 
 export {
@@ -40,6 +41,8 @@ SplashScreen.preventAutoHideAsync();
  * pret -> pret-m
  */
 export default function RootLayout() {
+  usePushNotifications();
+
   const [loaded, error] = useFonts({
     pret: require(`assets/fonts/Pretendard-Medium.otf`),
     'pret-r': require(`assets/fonts/Pretendard-Regular.otf`),
