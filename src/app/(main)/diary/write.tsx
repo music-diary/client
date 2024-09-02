@@ -399,7 +399,7 @@ const styles = StyleSheet.create({
     color: COLORS.WHITE,
     backgroundColor: COLORS.BOX,
     borderRadius: 10,
-    ...FONTS.B2,
+    ...FONTS.B2_LINE2,
   },
   inputDiaryCount: {
     alignSelf: 'flex-end',

@@ -9,6 +9,7 @@ import {
   type DiaryResponseSchema,
   type PatchDiarySchema,
 } from '@/models/schemas';
+import { type DiaryStatus } from '@/models/types';
 import apiClient from '../client';
 import { API_ENDPOINTS } from '../endpoints';
 
@@ -31,6 +32,12 @@ const patchDiary = async ({ id, payload }: PatchDiarySchema) => {
 const getDiary = async (id: string): Promise<DiaryResponseSchema> => {
   const { data } = await apiClient.get(DIARIES.ID.replace(':id', id));
   return data.diary;
+};
+
+const getAllDiaries = async (status: DiaryStatus) => {
+  const endpoint = DIARIES.ME.replace(':status', status);
+  const { data } = await apiClient.get(endpoint);
+  return data.diaries;
 };
 
 const getAllEmotions = async (): Promise<IEmotion[]> => {
@@ -65,6 +72,14 @@ export const useDiary = (id: string) => {
     queryKey: ['diary', id],
     queryFn: async () => await getDiary(id),
     initialData: {} as DiaryResponseSchema,
+  });
+};
+
+export const useAllDiaries = (status: DiaryStatus) => {
+  return useQuery({
+    queryKey: ['diaries', status],
+    queryFn: async () => await getAllDiaries(status),
+    initialData: [],
   });
 };
 

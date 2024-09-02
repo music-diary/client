@@ -65,8 +65,10 @@ const CustomSplash = ({
   }, [activeSplash]);
 
   const handlePress = () => {
-    setIsVisible(false);
-    onClose();
+    if (!progressBar) {
+      setIsVisible(false);
+      onClose();
+    }
   };
 
   return (

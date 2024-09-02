@@ -1,33 +1,32 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DateTimePicker, {
   type DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
-import {
-  router,
-  useFocusEffect,
-  useLocalSearchParams,
-  useNavigation,
-} from 'expo-router';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useQueryClient } from '@tanstack/react-query';
-import { usePatchDiary } from '@/api/hooks/useDiaries';
+import { router, useLocalSearchParams } from 'expo-router';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { useAllDiaries, usePatchDiary } from '@/api/hooks/useDiaries';
+import { useGetUserInfo, usePatchUser } from '@/api/hooks/useUsers';
 import DailyDiaryCard from '@/components/archive/DailyDiaryCard';
 import CustomAlertModal from '@/components/common/CustomAlertModal';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
 import CustomBottomSheetModal from '@/components/common/CustomBottomSheetModal';
 import CustomSplash from '@/components/common/CustomSplash';
-import { COLORS, FONTS } from '@/constants';
+import { COLORS } from '@/constants';
 import { splashOptions } from '@/constants/data';
+import { type UserPayloadSchema } from '@/models/schemas';
 import { type SplashKey } from '@/models/types';
 import { useModalStore } from '@/store/useModalStore';
 import { useSplashStore } from '@/store/useSplashStore';
+import { convertToTimeString } from '@/utils/date-utils';
+import { scheduleNotification } from '@/utils/push-notifications';
 
 const CardScreen = () => {
   const { diaryId } = useLocalSearchParams(); // URL에서 diaryData 가져오기
 
-  const [isFirstDiary] = useState(false);
+  const { data: userInfo } = useGetUserInfo();
+
   const [showPicker, setShowPicker] = useState(false);
-  const [tempDate, setTempDate] = useState<Date>(new Date());
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [splashKey, setSplashKey] = useState<SplashKey>('cheer');
   const [splashConfig, setSplashConfig] = useState(splashOptions[splashKey]);
@@ -35,8 +34,10 @@ const CardScreen = () => {
   const { openModal, closeModal } = useModalStore();
   const { openSplash, closeSplash } = useSplashStore();
 
-  const navigation = useNavigation();
   const queryClient = useQueryClient();
+
+  const { data: allDiaries } = useAllDiaries('DONE');
+  const { mutate: patchUser } = usePatchUser();
 
   const { mutate: patchDiary } = usePatchDiary({
     onSuccess: () => {
@@ -52,14 +53,8 @@ const CardScreen = () => {
     setSplashConfig(splashOptions[splashKey] || splashOptions.cheer);
   }, [splashKey]);
 
-  useFocusEffect(
-    useCallback(() => {
-      const state = navigation.getState();
-    }, [navigation]),
-  );
-
   const handleSave = () => {
-    if (isFirstDiary) {
+    if (allDiaries.length === 0) {
       openModal('push-notification');
     } else {
       const randomKey = getRandomSplashKey(['cheer', 'save', 'idea']);
@@ -68,14 +63,13 @@ const CardScreen = () => {
     }
   };
 
-  const handleNoPushNotification = () => {
-    closeModal();
-    setSplashKey('idea');
-    openSplash('archive-save');
-  };
-
-  const handlePushNotification = () => {
-    setTimeout(() => setShowPicker(true), 200); // 모달이 닫힌 후 200ms 후에 피커를 엽니다.
+  const handlePushNotification = (answer: boolean) => {
+    if (answer) {
+      setTimeout(() => setShowPicker(true), 200); // 모달이 닫힌 후 200ms 후에 피커를 엽니다.
+    } else {
+      setSplashKey('idea');
+      openSplash('archive-save');
+    }
     closeModal();
   };
 
@@ -89,7 +83,7 @@ const CardScreen = () => {
 
   const onChange = (_: DateTimePickerEvent, date?: Date) => {
     if (date) {
-      setTempDate(date);
+      setSelectedDate(date);
     }
   };
 
@@ -100,7 +94,8 @@ const CardScreen = () => {
   };
 
   const confirmDateSelection = () => {
-    setSelectedDate(tempDate);
+    scheduleNotification(selectedDate);
+    handleUpdateAlarm();
     setSplashKey('alarm');
     openSplash('archive-save');
   };
@@ -110,12 +105,33 @@ const CardScreen = () => {
     return keys[randomIndex];
   };
 
+  const handleUpdateAlarm = () => {
+    const genres = userInfo?.genre
+      ? userInfo.genre.map((g) => ({ id: g.id, label: g.label, name: g.name }))
+      : [];
+    const updatedTime = convertToTimeString(selectedDate);
+    const updatedGenres = genres.map((genre) => ({
+      id: genre.id,
+    }));
+    const payload: UserPayloadSchema = {
+      name: userInfo.name,
+      birthDay: userInfo.birthDay,
+      gender: userInfo.gender,
+      isGenreSuggested: userInfo.isGenreSuggested,
+      isAgreedMarketing: userInfo.isAgreedMarketing,
+      IsAgreedDiaryAlarm: true,
+      diaryAlarmTime: updatedTime,
+      genres: updatedGenres,
+    };
+
+    patchUser({ id: userInfo.id, payload });
+  };
+
   // Render
   return (
     <>
       <View style={{ flex: 1, backgroundColor: COLORS.BLACK }}>
         <ScrollView style={styles.container}>
-          <Text style={styles.b1LightText}>3월 2일</Text>
           <View style={styles.cardContainer}>
             <DailyDiaryCard diaryId={diaryId as string} />
           </View>
@@ -134,7 +150,7 @@ const CardScreen = () => {
       >
         <View style={styles.pickerContainer}>
           <DateTimePicker
-            value={tempDate}
+            value={selectedDate}
             mode="time"
             display="spinner"
             onChange={onChange}
@@ -159,8 +175,8 @@ const CardScreen = () => {
         title="매일 일기 쓰는 시간에 맞춰 알려드릴까요?"
         leftButtonText="괜찮아요"
         rightButtonText="네, 알려주세요"
-        onLeftButtonPress={handleNoPushNotification}
-        onRightButtonPress={handlePushNotification}
+        onLeftButtonPress={() => handlePushNotification(false)}
+        onRightButtonPress={() => handlePushNotification(true)}
       />
       <CustomSplash
         name="archive-save"
@@ -180,11 +196,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 16,
     backgroundColor: COLORS.BLACK,
-  },
-  b1LightText: {
-    paddingTop: 20,
-    color: COLORS.CONTENTS_LIGHT,
-    ...FONTS.B1,
   },
   cardContainer: {
     marginTop: 10,
