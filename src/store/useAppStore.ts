@@ -9,6 +9,8 @@ interface AppState {
   logout: () => void;
   isFirstLaunch: boolean;
   setFirstLaunch: (isFirstLaunch: boolean) => void;
+  tooltipRead: boolean;
+  setTooltipRead: (toolTipRead: boolean) => void;
 }
 
 export const useAppStore = create<AppState>()(
@@ -36,6 +38,8 @@ export const useAppStore = create<AppState>()(
       },
       isFirstLaunch: true,
       setFirstLaunch: (isFirstLaunch: boolean) => set({ isFirstLaunch }),
+      tooltipRead: false,
+      setTooltipRead: (tooltipRead: boolean) => set({ tooltipRead }),
     }),
     {
       name: 'app-storage',
