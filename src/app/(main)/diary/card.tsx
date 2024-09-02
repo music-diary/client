@@ -143,6 +143,18 @@ const CardScreen = () => {
         </View>
       </CustomBottomSheetModal>
       <CustomAlertModal
+        name="card-cancel"
+        title="작성을 그만두시겠어요?"
+        description="지금 그만두시면, 일기가 아카이브에 저장되지 않아요"
+        leftButtonText="그만두기"
+        rightButtonText="일기 계속 작성하기"
+        onLeftButtonPress={() => {
+          closeModal();
+          router.replace('/(main)');
+        }}
+        onRightButtonPress={closeModal}
+      />
+      <CustomAlertModal
         name="push-notification"
         title="매일 일기 쓰는 시간에 맞춰 알려드릴까요?"
         leftButtonText="괜찮아요"

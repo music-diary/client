@@ -1,10 +1,10 @@
-import { StyleSheet, Text, View } from 'react-native';
-import { COLORS } from '@/constants';
+import { StyleSheet, View } from 'react-native';
+import { LogoHeaderSvg } from 'assets/images/common';
 
 const LogoTitle = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>App Name.</Text>
+      <LogoHeaderSvg />
     </View>
   );
 };
@@ -18,10 +18,5 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     gap: 10,
-  },
-  title: {
-    color: COLORS.WHITE,
-    fontFamily: 'pret-b',
-    fontSize: 24,
   },
 });

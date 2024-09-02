@@ -42,7 +42,10 @@ export default function DiaryLayout() {
           headerRight: () => <HeaderRightDraft />,
         }}
       />
-      <Stack.Screen name="card" />
+      <Stack.Screen
+        name="card"
+        options={{ headerTitle: () => <HeaderTitle title="오늘의 음악일기" /> }}
+      />
     </Stack>
   );
 }
