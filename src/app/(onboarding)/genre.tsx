@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react';
-import { router, useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams } from 'expo-router';
 import {
+  ActivityIndicator,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  ActivityIndicator,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSignUp } from '@/api/hooks/useAuth';
+import { useGenres } from '@/api/hooks/useGenres';
+import CustomBottomButton from '@/components/common/CustomBottomButton';
 import GenreRecModal from '@/components/onboarding/GenreRecModal';
 import Header from '@/components/onboarding/Header';
 import { COLORS, FONTS } from '@/constants';
@@ -16,13 +18,14 @@ import { type IGenre } from '@/models/interfaces';
 import { type SignUpSchema } from '@/models/schemas';
 import { type Gender } from '@/models/types';
 import { useDimStore } from '@/store/useDimStore';
-import CustomBottomButton from '@/components/common/CustomBottomButton';
-import { useGenres } from '@/api/hooks/useGenres';
+import { useSplashStore } from '@/store/useSplashStore';
 
 const GenreScreen = () => {
   const { data: genres, error, isLoading } = useGenres();
   const { phoneNumber, name, birth, gender, isAgreedMarketing } =
     useLocalSearchParams();
+
+  const { openSplash } = useSplashStore();
 
   const { toggleDim } = useDimStore();
   const { mutate: signUp } = useSignUp();
@@ -84,7 +87,7 @@ const GenreScreen = () => {
     signUp(userData, {
       onSuccess: (data) => {
         console.log('Sign Up Success:', data);
-        router.push('/complete');
+        openSplash('welcome-muda');
       },
       onError: (error) => {
         console.warn('Sign Up Error:', error);
