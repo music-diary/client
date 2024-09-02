@@ -55,6 +55,7 @@ const LoadingView = ({ mood }: LoadingViewProps) => {
       description={splashConfig.description}
       svg={splashConfig.svg}
       onClose={() => {}}
+      progressBar
     />
   );
 };

@@ -8,9 +8,9 @@
     "scheme": "MUDA",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/common/muda-icon.png",
+      "image": "./assets/images/common/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#7850F8"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
