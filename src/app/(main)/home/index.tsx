@@ -1,21 +1,25 @@
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
+import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { ProfileSvg } from 'assets/images/home';
-import WeekCalendar from '@/components/home/WeekCalender';
-import MonthlyMusicList from '@/components/home/MonthlyMusicList';
-import CharacterAnimation from '@/components/home/CharacterAnimation';
-import { COLORS, FONTS } from '@/constants';
-import TopDescription from '@/components/home/TopDescription';
-import NewUserDescription from '@/components/home/NewUserDescription';
 import { useMusicArchive } from '@/api/hooks/useArchive';
+import { useUserName } from '@/api/hooks/useUsers';
+import CustomSplash from '@/components/common/CustomSplash';
+import LoadingScreen from '@/components/common/LoadingScreen';
+import CharacterAnimation from '@/components/home/CharacterAnimation';
+import MonthlyMusicList from '@/components/home/MonthlyMusicList';
+import NewUserDescription from '@/components/home/NewUserDescription';
+import TopDescription from '@/components/home/TopDescription';
+import WeekCalendar from '@/components/home/WeekCalender';
+import { COLORS, FONTS } from '@/constants';
 import { emotionColor, emotionHomeText } from '@/constants/data/emotion-colors';
+import { useSplashStore } from '@/store/useSplashStore';
 import { getCurrentMonthRange } from '@/utils/date-utils';
 import { getMoodFromEmotions } from '@/utils/emotion-utils';
-import { useUserName } from '@/api/hooks/useUsers';
-import LoadingScreen from '@/components/common/LoadingScreen';
+import { ProfileSvg } from 'assets/images/home';
+import { CompleteLogo } from 'assets/images/splash';
 
 const HomeScreen = () => {
+  const { closeSplash } = useSplashStore();
   const { startAt, endAt } = getCurrentMonthRange(new Date());
   const {
     data: archiveData,
@@ -102,6 +106,12 @@ const HomeScreen = () => {
           <View style={{ height: 63 }} />
         </ScrollView>
       </SafeAreaView>
+      <CustomSplash
+        name="welcome-muda"
+        description={`뮤다에 오신 것을 환영해요!`}
+        svg={CompleteLogo}
+        onClose={closeSplash}
+      />
     </>
   );
 };

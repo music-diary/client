@@ -15,6 +15,7 @@ import MusicLoadingNormal3Svg from './normal3.svg';
 import MusicLoadingBad1Svg from './bad1.svg';
 import MusicLoadingBad2Svg from './bad2.svg';
 import MusicLoadingBad3Svg from './bad3.svg';
+import CompleteLogo from './complete-logo.svg';
 
 export { 
   BlueSvg, 
@@ -33,6 +34,7 @@ export {
   MusicLoadingBad1Svg,
   MusicLoadingBad2Svg,
   MusicLoadingBad3Svg,
-  StandByGood3 
+  StandByGood3,
+  CompleteLogo
 };
 
