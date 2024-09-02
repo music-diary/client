@@ -152,10 +152,10 @@ const MusicRecommendationScreen = () => {
     });
   };
 
-  const handleDraft = () => {
-    closeModal();
-    router.push('/');
-  };
+  // const handleDraft = () => {
+  //   closeModal();
+  //   router.push('/');
+  // };
 
   if (showLoading) {
     return <LoadingView mood={mood as 'good' | 'normal' | 'bad'} />;
