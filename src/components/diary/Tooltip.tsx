@@ -1,24 +1,18 @@
-import { useState, useRef, useEffect } from 'react';
+import { useRef, useState } from 'react';
+import { AntDesign } from '@expo/vector-icons';
 import {
-  View,
-  Text,
-  TouchableOpacity,
   Modal,
   StyleSheet,
-  type ImageSourcePropType,
+  Text,
+  TouchableOpacity,
+  View,
   type LayoutRectangle,
 } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
 import { COLORS, FONTS } from '@/constants';
-import { TooltipSvg } from 'assets/images/diary';
 import { useAppStore } from '@/store/useAppStore';
+import { TooltipSvg } from 'assets/images/diary';
 
-interface CustomTooltipProps {
-  tooltipText?: string;
-  imageSource?: ImageSourcePropType;
-}
-
-const Tooltip = ({ tooltipText }: CustomTooltipProps) => {
+const Tooltip = () => {
   const { tooltipRead, setTooltipRead } = useAppStore();
   const [visible, setVisible] = useState(false);
   const [tooltipPosition, setTooltipPosition] =
@@ -34,20 +28,11 @@ const Tooltip = ({ tooltipText }: CustomTooltipProps) => {
     }
   };
 
-  useEffect(() => {
-    if (tooltipRef.current) {
-      tooltipRef.current.measure((x, y, width, height, pageX, pageY) => {
-        setTooltipPosition({ x: pageX - 66, y: pageY + 12, width, height });
-        setVisible(!tooltipRead); // 초기 상태에 따라 보여주기
-      });
-    }
-  }, [tooltipRead]); // tooltipRead에 의존
-
   const handleTooltipLayout = () => {
     if (tooltipRef.current) {
       tooltipRef.current.measure((x, y, width, height, pageX, pageY) => {
         setTooltipPosition({ x: pageX - 66, y: pageY + 12, width, height });
-        setVisible(!tooltipRead); // 초기 상태에 따라 보여주기
+        setVisible(!tooltipRead);
         setTooltipRead(true);
       });
     }
