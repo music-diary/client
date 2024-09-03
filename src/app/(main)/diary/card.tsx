@@ -138,7 +138,6 @@ const CardScreen = () => {
       diaryAlarmTime: updatedTime,
       genres: updatedGenres,
     };
-
     patchUser({ id: userInfo.id, payload });
   };
 

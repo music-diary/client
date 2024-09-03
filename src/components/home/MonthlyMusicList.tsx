@@ -86,7 +86,7 @@ const MonthlyMusicList = ({ musics, topEmotion }: MonthlyMusicListProps) => {
           horizontal={true}
           showsHorizontalScrollIndicator={false}
         >
-          {selectedMusics.map(renderMusic)}
+          {selectedMusics.slice().reverse().map(renderMusic)}
         </ScrollView>
       </View>
     </View>

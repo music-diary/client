@@ -24,7 +24,7 @@ const DiaryYearlyGraph = ({ monthlyData }: DiaryYearlyGraphProps) => {
 
   const average = useMemo(() => {
     const total = monthlyData.reduce((sum, { count }) => sum + count, 0);
-    return Math.round(total / monthlyData.length);
+    return Math.ceil(total / monthlyData.length);
   }, [monthlyData]);
 
   const transformedData = monthlyData.map(({ month, count }) => ({
@@ -39,7 +39,7 @@ const DiaryYearlyGraph = ({ monthlyData }: DiaryYearlyGraphProps) => {
         <Text style={styles.titleText}>작성한 음악일기</Text>
       </View>
       <Text style={styles.bodyText}>
-        올해 정말 <Text style={styles.highlight}>꾸준하게</Text> 음악일기를
+        올해 정말 <Text style={styles.highlight}>꾸준하게</Text> 뮤다를
         찾아주셨네요!
       </Text>
       <View style={styles.boxContainer}>
