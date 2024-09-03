@@ -15,7 +15,11 @@ import {
   View,
 } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import { usePatchDiary, useTemplates } from '@/api/hooks/useDiaries';
+import {
+  useDeleteDiary,
+  usePatchDiary,
+  useTemplates,
+} from '@/api/hooks/useDiaries';
 import CustomAlertModal from '@/components/common/CustomAlertModal';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
 import CustomSplash from '@/components/common/CustomSplash';
@@ -106,7 +110,7 @@ const WriteScreen = () => {
 
   // useKeyboardListeners(scrollViewRef);
   // useKeyboardAwareFocus(scrollViewRef, inputRefs.current); // 키보드 포커스 훅 사용
-
+  const { mutate: deleteDiary } = useDeleteDiary();
   const { mutate: patchDiary } = usePatchDiary({
     onSuccess: () => {
       router.push({
@@ -126,10 +130,10 @@ const WriteScreen = () => {
     });
   };
 
-  const handleDraft = () => {
-    closeModal();
-    openSplash('draft-save');
-  };
+  // const handleDraft = () => {
+  //   closeModal();
+  //   openSplash('draft-save');
+  // };
 
   const handleMusicRecommendation = () => {
     const generatedDiaryData = createDiaryData({
@@ -326,6 +330,7 @@ const WriteScreen = () => {
         rightButtonText="일기 계속 작성하기"
         onLeftButtonPress={() => {
           closeModal();
+          deleteDiary(diaryId as string);
           router.replace('/(main)');
         }}
         onRightButtonPress={closeModal}

@@ -200,3 +200,37 @@ export const getMonthRangeFromParams = (monthString: string | undefined) => {
 
   return { startAt, endAt };
 };
+
+export const isValidDate = (date: string): boolean => {
+  const validDateRegex = /^(19|20)\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])$/;
+
+  // 기본 형식 유효성 검사
+  if (!validDateRegex.test(date)) return false;
+
+  const year = parseInt(date.substring(0, 4), 10);
+  const month = parseInt(date.substring(4, 6), 10);
+  const day = parseInt(date.substring(6, 8), 10);
+
+  // 윤년 여부 체크 함수
+  const isLeapYear = (year: number): boolean => {
+    return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+  };
+
+  // 각 월에 따른 일 수 검사
+  const daysInMonth = [
+    31,
+    isLeapYear(year) ? 29 : 28,
+    31,
+    30,
+    31,
+    30,
+    31,
+    31,
+    30,
+    31,
+    30,
+    31,
+  ];
+
+  return day <= daysInMonth[month - 1];
+};

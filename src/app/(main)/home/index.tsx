@@ -10,13 +10,14 @@ import MonthlyMusicList from '@/components/home/MonthlyMusicList';
 import NewUserDescription from '@/components/home/NewUserDescription';
 import TopDescription from '@/components/home/TopDescription';
 import WeekCalendar from '@/components/home/WeekCalender';
-import { COLORS, FONTS } from '@/constants';
+import { COLORS } from '@/constants';
 import { emotionColor, emotionHomeText } from '@/constants/data/emotion-colors';
 import { useSplashStore } from '@/store/useSplashStore';
 import { getCurrentMonthRange } from '@/utils/date-utils';
 import { getMoodFromEmotions } from '@/utils/emotion-utils';
 import { ProfileSvg } from 'assets/images/home';
 import { CompleteLogo } from 'assets/images/splash';
+import { LogoHeaderSvg } from 'assets/images/common';
 
 const HomeScreen = () => {
   const { closeSplash } = useSplashStore();
@@ -59,7 +60,7 @@ const HomeScreen = () => {
           {/* 상단 부분 */}
           <View style={styles.top}>
             <View style={styles.topBar}>
-              <Text style={styles.logoText}>Logo</Text>
+              <LogoHeaderSvg />
               <TouchableOpacity onPress={handlePersonClick}>
                 <ProfileSvg />
               </TouchableOpacity>
@@ -136,10 +137,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  logoText: {
-    color: COLORS.WHITE,
-    ...FONTS.H1,
   },
   body: {
     backgroundColor: COLORS.BLACK,
