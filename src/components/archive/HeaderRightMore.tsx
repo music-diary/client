@@ -1,19 +1,19 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
-import { TrashSvg } from 'assets/images/archive'; // SVG 파일이 있다고 가정합니다.
+import { Feather } from '@expo/vector-icons';
 import { COLORS } from '@/constants';
-import { useModalStore } from '@/store/useModalStore';
+import { useModalToggleStore } from '@/store/useModalStore';
 
 const HeaderRightMore = () => {
-  const { openModal } = useModalStore();
-
-  const onDeletePress = () => {
-    openModal('delete-diary-modal');
-  };
+  const { toggleModal, isModalOpen } = useModalToggleStore();
 
   return (
-    <TouchableOpacity style={styles.container} onPress={onDeletePress}>
-      <TrashSvg fill={COLORS.WHITE} />
+    <TouchableOpacity style={styles.container} onPress={toggleModal}>
+      <Feather
+        name={isModalOpen ? 'x' : 'more-horizontal'}
+        size={18}
+        color={COLORS.WHITE}
+      />
     </TouchableOpacity>
   );
 };
