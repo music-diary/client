@@ -370,8 +370,9 @@ const MypageScreen = () => {
       />
       <CustomSplash
         name="standBy3"
-        description={splashOptions.standBy3.description}
-        svg={splashOptions.standBy3.svg}
+        description={splashOptions.good3.description}
+        toastMessage={splashOptions.good3.toastMessage}
+        svg={splashOptions.good3.svg}
         onClose={closeSplash}
       />
     </ScrollView>

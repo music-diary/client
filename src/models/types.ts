@@ -12,12 +12,12 @@ export type SplashKey =
   | 'good1'
   | 'good2'
   | 'good3'
-  | 'standBy3'
   | 'normal1'
   | 'normal2'
   | 'normal3'
   | 'bad1'
   | 'bad2'
-  | 'bad3';
+  | 'bad3'
+  | 'delete';
 
 export type DiaryStatus = 'EDIT' | 'DONE';

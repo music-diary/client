@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
   arrow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 6,
+    gap: 10,
   },
   forwardArrow: {
     transform: [{ rotate: '180deg' }],

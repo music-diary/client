@@ -79,6 +79,8 @@ function RootLayoutNav() {
     // 임시 로그인 처리 (isAuthenticated가 true로 바뀜)
     // login();
     // logout();
+
+    queryClient.clear();
     if (isFirstLaunch) {
       router.navigate('/(tutorial)');
     } else if (!isAuthenticated) {

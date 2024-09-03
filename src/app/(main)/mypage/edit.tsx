@@ -40,14 +40,16 @@ const EditScreen = () => {
 
   const [nickname, setNickname] = useState(userInfo.name);
   const [isNicknameFocused, setIsNicknameFocused] = useState(false);
-  const [nicknameError, setNicknameError] = useState(''); // 닉네임 오류 메시지 상태
+  const [nicknameError, setNicknameError] = useState(''); 
 
   const onChangeNickname = (inputText: string) => {
-    setNickname(inputText);
-    if (inputText.length > 6) {
-      setNicknameError('닉네임은 6자까지만 입력 가능합니다.'); // 6자를 넘기면 오류 메시지 설정
+    const validNameRegex = /^[a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ가-힣]{0,6}$/; 
+
+    if (validNameRegex.test(inputText)) {
+      setNickname(inputText);
+      setNicknameError(''); // 유효성 검사 통과 시 오류 메시지 초기화
     } else {
-      setNicknameError('');
+      setNicknameError('이름은 한글, 영어, 숫자로 6자까지만 입력 가능해요'); // 유효성 검사 실패 시 오류 메시지 설정
     }
   };
 
@@ -255,7 +257,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    
+
     gap: 4,
   },
   errorText: {

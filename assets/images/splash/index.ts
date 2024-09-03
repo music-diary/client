@@ -6,7 +6,6 @@ import ArchiveCheerSvg from './archive-cheer.svg';
 import ArchiveSaveSvg from './archive-save.svg';
 import ArchiveIdeaSvg from './archive-idea.svg';
 import AlarmSvg from './alarm.svg';
-import StandByGood3 from './standby-good-3.svg';
 import MusicLoadingGood1Svg from './good1.svg';
 import MusicLoadingGood2Svg from './good2.svg';
 import MusicLoadingNormal1Svg from './normal1.svg';
@@ -15,6 +14,7 @@ import MusicLoadingNormal3Svg from './normal3.svg';
 import MusicLoadingBad1Svg from './bad1.svg';
 import MusicLoadingBad2Svg from './bad2.svg';
 import MusicLoadingBad3Svg from './bad3.svg';
+import DeleteSvg from './delete.svg';
 import CompleteLogo from './complete-logo.svg';
 
 export { 
@@ -34,7 +34,7 @@ export {
   MusicLoadingBad1Svg,
   MusicLoadingBad2Svg,
   MusicLoadingBad3Svg,
-  StandByGood3,
+  DeleteSvg,
   CompleteLogo
 };
 

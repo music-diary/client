@@ -5,7 +5,6 @@ import {
   ArchiveCheerSvg,
   ArchiveIdeaSvg,
   ArchiveSaveSvg,
-  StandByGood3,
   MusicLoadingGood1Svg,
   MusicLoadingGood2Svg,
   MusicLoadingNormal1Svg,
@@ -14,6 +13,7 @@ import {
   MusicLoadingBad1Svg,
   MusicLoadingBad2Svg,
   MusicLoadingBad3Svg,
+  DeleteSvg,
 } from 'assets/images/splash';
 
 export interface SplashOption {
@@ -40,10 +40,6 @@ export const splashOptions: Record<SplashKey, SplashOption> = {
     description: '잊지 않고 뮤다 알림을 보내드릴게요',
     toastMessage: '일기 알림이 설정되었습니다',
   },
-  standBy3: {
-    svg: StandByGood3,
-    description: '오늘의 음악이 당신의 하루를\n더욱 반짝이게 만들거예요',
-  },
   good1: {
     svg: MusicLoadingGood1Svg,
     description: '빛나는 오늘의 음악을\n오래오래 간직하길 바라요!',
@@ -55,6 +51,7 @@ export const splashOptions: Record<SplashKey, SplashOption> = {
   good3: {
     svg: ArchiveCheerSvg,
     description: '오늘의 음악이 당신의 하루를\n더욱 반짝이게 만들거에요',
+    toastMessage: '내 음악 취향이 저장되었습니다',
   },
   normal1: {
     svg: MusicLoadingNormal1Svg,
@@ -79,5 +76,10 @@ export const splashOptions: Record<SplashKey, SplashOption> = {
   bad3: {
     svg: MusicLoadingBad3Svg,
     description: '때로는 감정을 온전히\n마주하는 것도 도움이 돼요',
+  },
+  delete: {
+    svg: DeleteSvg,
+    description: '음악을 들은 그날의\n감정만큼은 기억되길 바라요',
+    toastMessage: '삭제되었습니다',
   },
 } as const;

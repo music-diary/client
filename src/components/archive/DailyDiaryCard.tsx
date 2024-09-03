@@ -183,20 +183,19 @@ const styles = StyleSheet.create({
     ...FONTS.B2_LINE2,
   },
   emotionContainer: {
-    paddingTop: 10,
+    paddingTop: 14,
     flexDirection: 'row',
-    flexWrap: 'wrap', // 감정 요소가 넘치면 다음 줄로 이동
-    justifyContent: 'flex-start', // 자연스러운 정렬
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
     gap: 10,
   },
   emotionCircle: {
     paddingVertical: 8,
     paddingHorizontal: 14.5,
     borderRadius: 30,
-    marginBottom: 8, // 요소가 여러 줄일 때의 간격
   },
   diaryContent: {
-    color: COLORS.CONTENTS_LIGHT,
+    color: COLORS.WHITE,
     paddingTop: 6,
     textAlign: 'justify',
     ...FONTS.B2_LINE2,
