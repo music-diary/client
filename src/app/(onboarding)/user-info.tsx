@@ -21,6 +21,7 @@ import { COLORS, FONTS } from '@/constants';
 import { genders } from '@/constants/data';
 import { useModalStore } from '@/store/useModalStore';
 import { colorWithOpacity } from '@/utils/color-utils';
+import { isValidDate } from '@/utils/date-utils';
 
 const UserInfoScreen = () => {
   const params = useLocalSearchParams();
@@ -30,14 +31,26 @@ const UserInfoScreen = () => {
   const [birth, setBirth] = useState('');
   const [gender, setGender] = useState('FEMALE');
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [validationMessage, setValidationMessage] =
+    useState('숫자 8자리로 입력해주세요');
 
   useEffect(() => {
-    const isValid = name.trim() !== '' && birth.trim().length === 8;
-    setIsButtonDisabled(!isValid);
+    if (birth.length === 8 && !isValidDate(birth)) {
+      setValidationMessage('유효하지 않은 날짜입니다. 다시 입력해주세요.');
+    } else if (birth.length < 8) {
+      setValidationMessage('숫자 8자리로 입력해주세요.');
+    }
+  }, [birth]);
+
+  useEffect(() => {
+    const isNameValid = name.trim() !== ''; // 이름이 비어있지 않은지 확인
+    const isBirthValid = birth.length === 8 && isValidDate(birth); // 생년월일이 8자리이며 유효한 날짜인지 확인
+
+    setIsButtonDisabled(!(isNameValid && isBirthValid));
   }, [name, birth]);
 
   const handleNameChange = (name: string) => {
-    const validNameRegex = /^[a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ가-힣]{0,8}$/;
+    const validNameRegex = /^[a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ가-힣]{0,6}$/;
     if (validNameRegex.test(name)) {
       setName(name);
     }
@@ -81,7 +94,7 @@ const UserInfoScreen = () => {
                   inputAccessoryViewID="user-info"
                 />
                 <Text style={styles.validateInfo}>
-                  이름은 한글, 영어, 숫자로 8자까지만 입력 가능해요
+                  이름은 한글, 영어, 숫자로 6자까지만 입력 가능해요
                 </Text>
               </View>
               <View style={styles.inputContainer}>
@@ -96,9 +109,7 @@ const UserInfoScreen = () => {
                     onChangeText={handleBirthChange}
                     inputAccessoryViewID="user-info"
                   />
-                  <Text style={styles.validateInfo}>
-                    숫자 8자리로 입력해주세요
-                  </Text>
+                  <Text style={styles.validateInfo}>{validationMessage}</Text>
                 </View>
               </View>
               <View style={[styles.inputContainer, { gap: 18 }]}>

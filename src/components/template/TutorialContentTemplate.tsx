@@ -7,7 +7,7 @@ import {
   StyleSheet,
   SafeAreaView,
 } from 'react-native';
-import { COLORS, FONTS } from '@/constants';
+import { COLORS } from '@/constants';
 import { ProfileSvg } from 'assets/images/home';
 import NewUserDescription from '@/components/home/NewUserDescription';
 import { emotionColor, emotionHomeText } from '@/constants/data/emotion-colors';
@@ -17,7 +17,7 @@ import MonthlyMusicListTemplate from '@/components/template/MonthlyMusicListTemp
 import dummyData from '@/data/tutorial_album_template.json';
 import { type MusicRecommendationSchema } from '@/models/schemas';
 import { getMoodFromEmotions } from '@/utils/emotion-utils';
-import { MainCharacterSvg } from 'assets/images/common';
+import { LogoHeaderSvg, MainCharacterSvg } from 'assets/images/common';
 
 const TutorialContentTemplate = () => {
   const archiveData = dummyData as unknown as MusicRecommendationSchema;
@@ -40,7 +40,7 @@ const TutorialContentTemplate = () => {
         <ScrollView>
           <View style={styles.top}>
             <View style={styles.topBar}>
-              <Text style={styles.logoText}>Logo</Text>
+              <LogoHeaderSvg />
               <TouchableOpacity>
                 <ProfileSvg />
               </TouchableOpacity>
@@ -109,10 +109,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  logoText: {
-    color: COLORS.WHITE,
-    ...FONTS.H1,
   },
   body: {
     backgroundColor: COLORS.BLACK,
