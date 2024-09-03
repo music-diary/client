@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { router, useLocalSearchParams } from 'expo-router';
 import { StyleSheet, Text, ScrollView, View } from 'react-native';
 import { COLORS, FONTS } from '@/constants';
@@ -5,6 +6,9 @@ import DailyDiaryCard from '@/components/archive/DailyDiaryCard';
 import { useModalStore } from '@/store/useModalStore';
 import CustomAlertModal from '@/components/common/CustomAlertModal';
 import { useDeleteDiary } from '@/api/hooks/useArchive';
+import CustomSplash from '@/components/common/CustomSplash';
+import { splashOptions } from '@/constants/data';
+import { useSplashStore } from '@/store/useSplashStore';
 
 export interface DailyDiaryData {
   id: string;
@@ -24,24 +28,32 @@ const DayScreen = () => {
   const diaryId = id ?? '';
 
   const { activeModal, closeModal } = useModalStore();
+  const { openSplash, closeSplash } = useSplashStore();
   const { mutate: deleteDiary } = useDeleteDiary();
 
   const handleConfirm = () => {
     deleteDiary(diaryId, {
       onSuccess: () => {
-        console.log('삭제 확인');
-        closeModal(); // 모달 닫기
-        router.back(); // 이전 페이지로 이동
+        closeModal();
+        openSplash('delete');
       },
       onError: (error) => {
         console.error('삭제 오류:', error);
-        closeModal(); // 오류 발생 시에도 모달을 닫음
+        closeModal();
       },
     });
   };
+
+  const closeDeleteSplash = () => {
+    setTimeout(() => {
+      router.back();
+    }, 0);
+    closeSplash();
+  };
+
   return (
     <ScrollView style={styles.container}>
-      {activeModal ? (
+      {activeModal && (
         <CustomAlertModal
           name="delete-diary-modal"
           title="이 일기를 정말 삭제하시겠어요?"
@@ -52,11 +64,19 @@ const DayScreen = () => {
           onRightButtonPress={handleConfirm}
           isDelete={true}
         />
-      ) : null}
+      )}
       <Text style={styles.b1LightText}>{day}</Text>
       <View style={styles.cardContainer}>
         <DailyDiaryCard diaryId={diaryId} />
       </View>
+      {/* 스플래시 화면 */}
+      <CustomSplash
+        name="delete"
+        description={splashOptions.delete.description}
+        toastMessage={splashOptions.delete.toastMessage}
+        svg={splashOptions.delete.svg}
+        onClose={closeDeleteSplash}
+      />
     </ScrollView>
   );
 };
