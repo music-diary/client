@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import {
   Keyboard,
-  type NativeSyntheticEvent,
-  type TextInput,
+  // type NativeSyntheticEvent,
+  // type TextInput,
   type ScrollView,
 } from 'react-native';
 
