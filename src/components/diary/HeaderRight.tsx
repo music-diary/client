@@ -1,8 +1,7 @@
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 import { router, usePathname } from 'expo-router';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useModalStore } from '@/store/useModalStore';
-import { StoringSvg } from 'assets/images/diary';
 
 interface HeaderRightProps {
   onPress?: () => void;
@@ -29,18 +28,16 @@ const HeaderRight = ({ onPress }: HeaderRightProps) => {
     }
   };
 
-  /**
-   * TODO:
-   *
-   * 주석 및 임시저장 삭제해야함
-   */
   return (
     <View style={styles.container}>
-      {/* {pathname.includes('/diary') && (
-        <TouchableOpacity onPress={handleDraft}>
-          <StoringSvg />
-        </TouchableOpacity>
-      )} */}
+      {pathname === '/diary/card' && onPress && (
+        <MaterialCommunityIcons
+          name="arrow-collapse-down"
+          size={20}
+          color="white"
+          onPress={onPress}
+        />
+      )}
       <AntDesign size={22} name="close" color="white" onPress={handleXButton} />
     </View>
   );
