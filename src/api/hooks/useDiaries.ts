@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   type IEmotion,
   type ITemplate,
@@ -15,7 +15,7 @@ import { API_ENDPOINTS } from '../endpoints';
 
 const DIARIES = API_ENDPOINTS.DIARIES;
 
-export const createDiary = async (): Promise<string> => {
+const createDiary = async (): Promise<string> => {
   const payload = { status: 'EDIT' };
   const { data } = await apiClient.post(DIARIES.CREATE, payload);
   return data.diaryId;
@@ -26,6 +26,11 @@ const patchDiary = async ({ id, payload }: PatchDiarySchema) => {
     DIARIES.ID.replace(':id', id),
     payload,
   );
+  return data;
+};
+
+const deleteDiary = async (id: string) => {
+  const { data } = await apiClient.delete(DIARIES.ID.replace(':id', id));
   return data;
 };
 
@@ -63,6 +68,23 @@ const getMusicRecommendation = async (diaryId: string): Promise<IMusic[]> => {
 export const usePatchDiary = (options = {}) => {
   return useMutation({
     mutationFn: patchDiary,
+    ...options,
+  });
+};
+
+export const useDeleteDiary = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: deleteDiary,
+    onSuccess: (_, id) => {
+      queryClient.removeQueries({ queryKey: ['diary', id] });
+    },
+  });
+};
+
+export const useCreateDiary = (options = {}) => {
+  return useMutation({
+    mutationFn: createDiary,
     ...options,
   });
 };

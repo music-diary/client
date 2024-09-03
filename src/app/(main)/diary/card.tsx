@@ -10,7 +10,11 @@ import {
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { captureRef } from 'react-native-view-shot';
-import { useAllDiaries, usePatchDiary } from '@/api/hooks/useDiaries';
+import {
+  useAllDiaries,
+  useDeleteDiary,
+  usePatchDiary,
+} from '@/api/hooks/useDiaries';
 import { useGetUserInfo, usePatchUser } from '@/api/hooks/useUsers';
 import DailyDiaryCard from '@/components/archive/DailyDiaryCard';
 import CustomAlertModal from '@/components/common/CustomAlertModal';
@@ -40,6 +44,7 @@ const CardScreen = () => {
   const [splashKey, setSplashKey] = useState<SplashKey>('cheer');
   const [splashConfig, setSplashConfig] = useState(splashOptions[splashKey]);
   const [isCapturing, setIsCapturing] = useState(false);
+  const [isDeletedDiary, setIsDeletedDiary] = useState(false);
 
   const { openModal, closeModal } = useModalStore();
   const { openSplash, closeSplash } = useSplashStore();
@@ -48,7 +53,7 @@ const CardScreen = () => {
 
   const { data: allDiaries } = useAllDiaries('DONE');
   const { mutate: patchUser } = usePatchUser();
-
+  const { mutate: deleteDiary } = useDeleteDiary();
   const { mutate: patchDiary } = usePatchDiary({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['archive'] });
@@ -180,11 +185,13 @@ const CardScreen = () => {
       <View style={{ flex: 1, backgroundColor: COLORS.BLACK }}>
         <ScrollView style={styles.container}>
           <View style={styles.cardContainer}>
-            <DailyDiaryCard
-              diaryId={diaryId as string}
-              ref={cardRef}
-              isCapturing={isCapturing}
-            />
+            {!isDeletedDiary && (
+              <DailyDiaryCard
+                diaryId={diaryId as string}
+                ref={cardRef}
+                isCapturing={isCapturing}
+              />
+            )}
           </View>
         </ScrollView>
       </View>
@@ -217,6 +224,8 @@ const CardScreen = () => {
         rightButtonText="일기 계속 작성하기"
         onLeftButtonPress={() => {
           closeModal();
+          deleteDiary(diaryId as string);
+          setIsDeletedDiary(true);
           router.replace('/(main)');
         }}
         onRightButtonPress={closeModal}

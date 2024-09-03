@@ -1,7 +1,8 @@
 import { useCallback, useState } from 'react';
 import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { createDiary } from '@/api/hooks/useDiaries';
+import { useQueryClient } from '@tanstack/react-query';
+import { useCreateDiary, useDeleteDiary } from '@/api/hooks/useDiaries';
 import CustomAlertModal from '@/components/common/CustomAlertModal';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
 import DetailedEmotionSelector from '@/components/diary/DetailedEmotionSelector';
@@ -15,6 +16,8 @@ import { useModalStore } from '@/store/useModalStore';
 import { isEmptyObject } from '@/utils/common-utils';
 
 const SubjectEmotionScreen = () => {
+  const queryClient = useQueryClient();
+
   const { stateInit } = useLocalSearchParams();
 
   const [mood, setMood] = useState<IEmotion>({} as IEmotion);
@@ -25,6 +28,7 @@ const SubjectEmotionScreen = () => {
   const [error, setError] = useState<string | null>(null); // 오류 상태
 
   const { closeModal } = useModalStore();
+  const { mutate: deleteDiary } = useDeleteDiary();
 
   useFocusEffect(
     useCallback(() => {
@@ -39,25 +43,50 @@ const SubjectEmotionScreen = () => {
    *
    * 이부분 확인해봐야함
    */
+
+  // useCreateDiary 훅을 사용하여 mutate 함수 가져오기
+  const { mutate: createDiary } = useCreateDiary({
+    onSuccess: (id: string) => {
+      setDiaryId(id); // 생성된 diaryId 설정
+      setError(null); // 오류 상태 초기화
+      queryClient.setQueryData(['diary', diaryId], {
+        id: diaryId,
+        status: 'EDIT',
+      });
+    },
+    onError: () => {
+      setError('일기를 생성하는 데 실패했습니다. \n 다시 시도해 주세요.');
+    },
+  });
+
   useFocusEffect(
     useCallback(() => {
-      const fetchDiaryId = async () => {
-        try {
-          const id = await createDiary();
-          setDiaryId(id);
-          setError(null); // 오류 상태 초기화
-        } catch (error) {
-          console.error('Failed to create diary:', error);
-          setError('일기를 생성하는 데 실패했습니다. \n 다시 시도해 주세요.');
-        }
-      };
-
       // diaryId가 없을 때만 새로 생성
       if (!diaryId) {
-        fetchDiaryId();
+        createDiary(); // mutate 함수 호출
       }
-    }, [diaryId]),
+    }, []),
   );
+
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     const fetchDiaryId = async () => {
+  //       try {
+  //         const id = await createDiary();
+  //         setDiaryId(id);
+  //         setError(null); // 오류 상태 초기화
+  //       } catch (error) {
+  //         console.error('Failed to create diary:', error);
+  //         setError('일기를 생성하는 데 실패했습니다. \n 다시 시도해 주세요.');
+  //       }
+  //     };
+
+  //     // diaryId가 없을 때만 새로 생성
+  //     if (!diaryId) {
+  //       fetchDiaryId();
+  //     }
+  //   }, [diaryId]),
+  // );
 
   const handleNext = () => {
     router.push({
@@ -142,6 +171,8 @@ const SubjectEmotionScreen = () => {
         rightButtonText="일기 계속 작성하기"
         onLeftButtonPress={() => {
           closeModal();
+          deleteDiary(diaryId);
+          setDiaryId('');
           router.replace('/(main)');
         }}
         onRightButtonPress={closeModal}

@@ -16,7 +16,11 @@ import Carousel, {
 } from 'react-native-reanimated-carousel';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import YoutubeIframe from 'react-native-youtube-iframe';
-import { useMusicRecommendation, usePatchDiary } from '@/api/hooks/useDiaries';
+import {
+  useDeleteDiary,
+  useMusicRecommendation,
+  usePatchDiary,
+} from '@/api/hooks/useDiaries';
 import { useGetUserInfo } from '@/api/hooks/useUsers';
 import CustomAlertModal from '@/components/common/CustomAlertModal';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
@@ -69,6 +73,7 @@ const MusicRecommendationScreen = () => {
     };
   }, []);
 
+  const { mutate: deleteDiary } = useDeleteDiary();
   const { mutate: patchDiary } = usePatchDiary({
     onSuccess: () => {
       router.push({ pathname: '/diary/card', params: { diaryId } });
@@ -277,6 +282,7 @@ const MusicRecommendationScreen = () => {
         rightButtonText="일기 계속 작성하기"
         onLeftButtonPress={() => {
           closeModal();
+          deleteDiary(diaryId as string);
           router.replace('/(main)');
         }}
         onRightButtonPress={closeModal}
