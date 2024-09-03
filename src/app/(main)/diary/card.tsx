@@ -1,10 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import DateTimePicker, {
   type DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
 import { useQueryClient } from '@tanstack/react-query';
-import { router, useLocalSearchParams } from 'expo-router';
+import {
+  requestPermissionsAsync,
+  saveToLibraryAsync,
+} from 'expo-media-library';
+import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import { ScrollView, StyleSheet, View } from 'react-native';
+import { captureRef } from 'react-native-view-shot';
 import { useAllDiaries, usePatchDiary } from '@/api/hooks/useDiaries';
 import { useGetUserInfo, usePatchUser } from '@/api/hooks/useUsers';
 import DailyDiaryCard from '@/components/archive/DailyDiaryCard';
@@ -12,6 +17,7 @@ import CustomAlertModal from '@/components/common/CustomAlertModal';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
 import CustomBottomSheetModal from '@/components/common/CustomBottomSheetModal';
 import CustomSplash from '@/components/common/CustomSplash';
+import HeaderRight from '@/components/diary/HeaderRight';
 import { COLORS } from '@/constants';
 import { splashOptions } from '@/constants/data';
 import { type UserPayloadSchema } from '@/models/schemas';
@@ -24,12 +30,16 @@ import { scheduleNotification } from '@/utils/push-notifications';
 const CardScreen = () => {
   const { diaryId } = useLocalSearchParams(); // URL에서 diaryData 가져오기
 
+  const navigation = useNavigation();
+  const cardRef = useRef<View>(null);
+
   const { data: userInfo } = useGetUserInfo();
 
   const [showPicker, setShowPicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [splashKey, setSplashKey] = useState<SplashKey>('cheer');
   const [splashConfig, setSplashConfig] = useState(splashOptions[splashKey]);
+  const [isCapturing, setIsCapturing] = useState(false);
 
   const { openModal, closeModal } = useModalStore();
   const { openSplash, closeSplash } = useSplashStore();
@@ -127,13 +137,54 @@ const CardScreen = () => {
     patchUser({ id: userInfo.id, payload });
   };
 
+  const handleSaveToGallery = async () => {
+    setIsCapturing(true); // 캡처 시작 전 숨김 처리
+    try {
+      // 짧은 지연 시간을 두어 요소가 숨겨질 시간을 줌
+      await new Promise((resolve) => requestAnimationFrame(resolve));
+
+      const uri = await captureRef(cardRef, {
+        format: 'png',
+        quality: 0.8,
+      });
+
+      const { status } = await requestPermissionsAsync();
+      if (status === 'granted') {
+        await saveToLibraryAsync(uri);
+        alert('갤러리에 이미지가 저장되었습니다.');
+      } else {
+        alert('갤러리에 접근할 권한이 필요합니다.');
+      }
+    } catch (error) {
+      console.error('갤러리에 이미지 저장 실패:', error);
+    } finally {
+      setIsCapturing(false); // 캡처 완료 후 원래 상태로 복구
+    }
+  };
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <HeaderRight
+          onPress={() => {
+            handleSaveToGallery();
+          }}
+        />
+      ),
+    });
+  }, [navigation]);
+
   // Render
   return (
     <>
       <View style={{ flex: 1, backgroundColor: COLORS.BLACK }}>
         <ScrollView style={styles.container}>
           <View style={styles.cardContainer}>
-            <DailyDiaryCard diaryId={diaryId as string} />
+            <DailyDiaryCard
+              diaryId={diaryId as string}
+              ref={cardRef}
+              isCapturing={isCapturing}
+            />
           </View>
         </ScrollView>
       </View>

@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import React, { forwardRef, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useDiary } from '@/api/hooks/useDiaries';
 import CircleAlbum from '@/components/common/CircleAlbum';
 import { COLORS, FONTS } from '@/constants';
-import { type IMusic } from '@/models/interfaces'; // 추가
+import { type IMusic } from '@/models/interfaces';
 import { colorWithOpacity, getColorForMood } from '@/utils/color-utils';
 import {
   getAllEmotionsFromTree,
@@ -11,7 +11,11 @@ import {
 } from '@/utils/emotion-utils';
 import { ArrowInSvg, ArrowOutSvg } from 'assets/images/archive';
 
-const DailyMainArchive = ({ diaryId }: { diaryId: string }) => {
+// forwardRef로 컴포넌트를 감싸기
+const DailyDiaryCard = forwardRef<
+  View,
+  { diaryId: string; isCapturing?: boolean }
+>(({ diaryId, isCapturing = false }, ref) => {
   const [expanded, setExpanded] = useState(true);
   // 다이어리 조회
   const { data: diaryData, error, isFetching } = useDiary(diaryId);
@@ -32,11 +36,15 @@ const DailyMainArchive = ({ diaryId }: { diaryId: string }) => {
       ? musics.find((music) => music.selected) ?? musics[0] // 선택된 음악이 없으면 첫 번째 음악 사용
       : ({} as IMusic); // 빈 객체를 기본값으로 사용
 
+  console.log('isCapturing', isCapturing);
+
   return (
-    <View style={styles.cardContainer}>
-      <TouchableOpacity style={styles.expandButton} onPress={handlePress}>
-        {expanded ? <ArrowInSvg /> : <ArrowOutSvg />}
-      </TouchableOpacity>
+    <View ref={ref} style={styles.cardContainer}>
+      {!isCapturing && (
+        <TouchableOpacity style={styles.expandButton} onPress={handlePress}>
+          {expanded ? <ArrowInSvg /> : <ArrowOutSvg />}
+        </TouchableOpacity>
+      )}
       <View style={styles.divider}>
         <CircleAlbum
           color={colorWithOpacity(getColorForMood(mood), 0.3)}
@@ -85,9 +93,11 @@ const DailyMainArchive = ({ diaryId }: { diaryId: string }) => {
       </View>
     </View>
   );
-};
+});
 
-export default DailyMainArchive;
+DailyDiaryCard.displayName = 'DailyDiaryCard';
+
+export default DailyDiaryCard;
 
 const styles = StyleSheet.create({
   cardContainer: {
