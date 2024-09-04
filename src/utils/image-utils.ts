@@ -8,9 +8,11 @@ import {
 export const handleSaveToGallery = async ({
   cardRef,
   setIsCapturing,
+  showToast,
 }: {
   cardRef: React.RefObject<View>;
   setIsCapturing: (isCapturing: boolean) => void;
+  showToast: (message: string, duration?: number) => void;
 }) => {
   setIsCapturing(true);
   try {
@@ -24,7 +26,7 @@ export const handleSaveToGallery = async ({
     const { status } = await requestPermissionsAsync();
     if (status === 'granted') {
       await saveToLibraryAsync(uri);
-      Alert.alert('이미지 저장', '갤러리에 이미지가 저장되었습니다.');
+      showToast('갤러리에 저장되었습니다.', 1300);
     } else {
       Alert.alert('권한 필요', '갤러리에 접근할 권한이 필요합니다.');
     }

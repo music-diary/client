@@ -58,11 +58,18 @@ const CustomSplash = ({
   useEffect(() => {
     if (activeSplash === name) {
       setIsVisible(true);
-      if (toastMessage) {
-        showToast(toastMessage, 1500);
-      }
     }
   }, [activeSplash]);
+
+  useEffect(() => {
+    if (isVisible) {
+      if (toastMessage) {
+        setTimeout(() => {
+          showToast(toastMessage, 1500);
+        }, 500);
+      }
+    }
+  }, [isVisible]);
 
   const handlePress = () => {
     if (!progressBar) {

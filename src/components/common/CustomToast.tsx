@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Animated, Dimensions, StyleSheet, Text } from 'react-native';
 import useToastStore from '@/store/useToastStore';
 import { COLORS, FONTS } from '@/constants';
+import { colorWithOpacity } from '@/utils/color-utils';
 
 const { width, height } = Dimensions.get('window');
 
-const CustomToast = () => {
+const CustomToast = ({ position = 'bottom' }: { position?: string }) => {
   const { message, visible, hideToast, duration } = useToastStore();
   const [fadeAnim] = useState(new Animated.Value(0));
 
@@ -16,7 +17,6 @@ const CustomToast = () => {
         duration: 800,
         useNativeDriver: true,
       }).start();
-
       const timer = setTimeout(() => {
         Animated.timing(fadeAnim, {
           toValue: 0,
@@ -36,7 +36,12 @@ const CustomToast = () => {
       style={[
         styles.overlay,
         {
-          opacity: fadeAnim,
+          justifyContent: position === 'center' ? 'center' : 'flex-end',
+          paddingBottom: position === 'center' ? 200 : 100,
+          backgroundColor:
+            position === 'center'
+              ? colorWithOpacity(COLORS.BLACK, 0.7)
+              : 'transparent',
         },
       ]}
     >
@@ -71,7 +76,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    paddingBottom: 100,
   },
   toast: {
     backgroundColor: COLORS.GREY3,
