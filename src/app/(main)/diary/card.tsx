@@ -3,13 +3,8 @@ import DateTimePicker, {
   type DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
 import { useQueryClient } from '@tanstack/react-query';
-import {
-  requestPermissionsAsync,
-  saveToLibraryAsync,
-} from 'expo-media-library';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import { captureRef } from 'react-native-view-shot';
 import {
   useAllDiaries,
   useDeleteDiary,
@@ -21,6 +16,7 @@ import CustomAlertModal from '@/components/common/CustomAlertModal';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
 import CustomBottomSheetModal from '@/components/common/CustomBottomSheetModal';
 import CustomSplash from '@/components/common/CustomSplash';
+import CustomToast from '@/components/common/CustomToast';
 import HeaderRight from '@/components/diary/HeaderRight';
 import { COLORS } from '@/constants';
 import { splashOptions } from '@/constants/data';
@@ -28,7 +24,9 @@ import { type UserPayloadSchema } from '@/models/schemas';
 import { type SplashKey } from '@/models/types';
 import { useModalStore } from '@/store/useModalStore';
 import { useSplashStore } from '@/store/useSplashStore';
+import useToastStore from '@/store/useToastStore';
 import { convertToTimeString } from '@/utils/date-utils';
+import { handleSaveToGallery } from '@/utils/image-utils';
 import { scheduleNotification } from '@/utils/push-notifications';
 
 const CardScreen = () => {
@@ -46,6 +44,7 @@ const CardScreen = () => {
   const [isCapturing, setIsCapturing] = useState(false);
   const [isDeletedDiary, setIsDeletedDiary] = useState(false);
 
+  const { showToast } = useToastStore();
   const { openModal, closeModal } = useModalStore();
   const { openSplash, closeSplash } = useSplashStore();
 
@@ -141,37 +140,12 @@ const CardScreen = () => {
     patchUser({ id: userInfo.id, payload });
   };
 
-  const handleSaveToGallery = async () => {
-    setIsCapturing(true); // 캡처 시작 전 숨김 처리
-    try {
-      // 짧은 지연 시간을 두어 요소가 숨겨질 시간을 줌
-      await new Promise((resolve) => requestAnimationFrame(resolve));
-
-      const uri = await captureRef(cardRef, {
-        format: 'png',
-        quality: 0.8,
-      });
-
-      const { status } = await requestPermissionsAsync();
-      if (status === 'granted') {
-        await saveToLibraryAsync(uri);
-        alert('갤러리에 이미지가 저장되었습니다.');
-      } else {
-        alert('갤러리에 접근할 권한이 필요합니다.');
-      }
-    } catch (error) {
-      console.error('갤러리에 이미지 저장 실패:', error);
-    } finally {
-      setIsCapturing(false); // 캡처 완료 후 원래 상태로 복구
-    }
-  };
-
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <HeaderRight
           onPress={() => {
-            handleSaveToGallery();
+            handleSaveToGallery({ cardRef, setIsCapturing, showToast });
           }}
         />
       ),
@@ -244,6 +218,7 @@ const CardScreen = () => {
         svg={splashConfig.svg}
         onClose={handleCloseSplash}
       />
+      <CustomToast position="center" />
     </>
   );
 };

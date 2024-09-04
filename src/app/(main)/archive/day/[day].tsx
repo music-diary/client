@@ -11,6 +11,8 @@ import { splashOptions } from '@/constants/data';
 import { useSplashStore } from '@/store/useSplashStore';
 import HeaderModalView from '@/components/archive/HeaderModalView';
 import { handleSaveToGallery } from '@/utils/image-utils';
+import CustomToast from '@/components/common/CustomToast';
+import useToastStore from '@/store/useToastStore';
 
 export interface DailyDiaryData {
   id: string;
@@ -29,6 +31,7 @@ const DayScreen = () => {
   const { day, id } = useLocalSearchParams<{ day: string; id: string }>();
   const diaryId = id ?? '';
 
+  const { showToast } = useToastStore();
   const { toggleModal, isModalOpen } = useModalToggleStore();
   const { activeModal, openModal, closeModal } = useModalStore();
 
@@ -40,7 +43,7 @@ const DayScreen = () => {
 
   const onSave = () => {
     toggleModal();
-    handleSaveToGallery({ cardRef, setIsCapturing });
+    handleSaveToGallery({ cardRef, setIsCapturing, showToast });
   };
 
   const onDelete = () => {
@@ -69,41 +72,44 @@ const DayScreen = () => {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      {activeModal && (
-        <CustomAlertModal
-          name="delete-diary-modal"
-          title="이 일기를 정말 삭제하시겠어요?"
-          description="한 번 삭제하면 일기를 복구할 수 없어요."
-          leftButtonText="아니오, 그냥 둘래요"
-          rightButtonText="네, 삭제할래요"
-          onLeftButtonPress={closeModal}
-          onRightButtonPress={handleDeleteConfirm}
-          isDelete={true}
-        />
-      )}
-      <Text style={styles.b1LightText}>{day}</Text>
-      <View style={styles.cardContainer}>
-        <DailyDiaryCard
-          diaryId={diaryId}
-          ref={cardRef}
-          isCapturing={isCapturing}
-        />
-      </View>
+    <>
+      <ScrollView style={styles.container}>
+        {activeModal && (
+          <CustomAlertModal
+            name="delete-diary-modal"
+            title="이 일기를 정말 삭제하시겠어요?"
+            description="한 번 삭제하면 일기를 복구할 수 없어요."
+            leftButtonText="아니오, 그냥 둘래요"
+            rightButtonText="네, 삭제할래요"
+            onLeftButtonPress={closeModal}
+            onRightButtonPress={handleDeleteConfirm}
+            isDelete={true}
+          />
+        )}
+        <Text style={styles.b1LightText}>{day}</Text>
+        <View style={styles.cardContainer}>
+          <DailyDiaryCard
+            diaryId={diaryId}
+            ref={cardRef}
+            isCapturing={isCapturing}
+          />
+        </View>
 
-      {/* ...더보기 눌렸을때 */}
-      {isModalOpen ? (
-        <HeaderModalView onSavePress={onSave} onDeletePress={onDelete} />
-      ) : null}
-      {/* 스플래시 화면 */}
-      <CustomSplash
-        name="delete"
-        description={splashOptions.delete.description}
-        toastMessage={splashOptions.delete.toastMessage}
-        svg={splashOptions.delete.svg}
-        onClose={closeDeleteSplash}
-      />
-    </ScrollView>
+        {/* ...더보기 눌렸을때 */}
+        {isModalOpen ? (
+          <HeaderModalView onSavePress={onSave} onDeletePress={onDelete} />
+        ) : null}
+        {/* 스플래시 화면 */}
+        <CustomSplash
+          name="delete"
+          description={splashOptions.delete.description}
+          toastMessage={splashOptions.delete.toastMessage}
+          svg={splashOptions.delete.svg}
+          onClose={closeDeleteSplash}
+        />
+      </ScrollView>
+      <CustomToast position="center" />
+    </>
   );
 };
 

@@ -39,8 +39,6 @@ const DailyDiaryCard = forwardRef<View, IDailyDiaryCardProps>(
         ? musics.find((music) => music.selected) ?? musics[0] // 선택된 음악이 없으면 첫 번째 음악 사용
         : ({} as IMusic); // 빈 객체를 기본값으로 사용
 
-    console.log('isCapturing', isCapturing);
-
     return (
       <View ref={ref} style={styles.cardContainer}>
         {!isCapturing && (
