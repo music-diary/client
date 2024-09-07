@@ -25,7 +25,12 @@ const calculatePercentages = (data: IStatisticEmotion[]) => {
       percentage: total ? (item.count / total) * 100 : 0,
       topEmotions: item.topEmotions,
     }))
-    .sort((a, b) => b.percentage - a.percentage);
+    .sort((a, b) => {
+      if (a.topEmotions.length !== b.topEmotions.length) {
+        return b.topEmotions.length - a.topEmotions.length;
+      }
+      return b.percentage - a.percentage;
+    });
 };
 
 const MyFilling = ({ emotionData }: MyFillingDataProps) => {
