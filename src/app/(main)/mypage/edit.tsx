@@ -40,16 +40,22 @@ const EditScreen = () => {
 
   const [nickname, setNickname] = useState(userInfo.name);
   const [isNicknameFocused, setIsNicknameFocused] = useState(false);
-  const [nicknameError, setNicknameError] = useState(''); 
+  const [nicknameError, setNicknameError] = useState('');
+  const [isButtonActive, setButtonActive] = useState(false);
 
   const onChangeNickname = (inputText: string) => {
-    const validNameRegex = /^[a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ가-힣]{0,6}$/; 
+    setNickname(inputText);
 
-    if (validNameRegex.test(inputText)) {
-      setNickname(inputText);
-      setNicknameError(''); // 유효성 검사 통과 시 오류 메시지 초기화
+    const validNameRegex = /^[a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ가-힣]*$/;
+    if (inputText.length > 6 || inputText.length < 1) {
+      setNicknameError('이름은 한글, 영어, 숫자로 6자까지만 입력 가능해요');
+      setButtonActive(false);
+    } else if (!validNameRegex.test(inputText)) {
+      setNicknameError('이름은 한글, 영어, 숫자로 6자까지만 입력 가능해요');
+      setButtonActive(false);
     } else {
-      setNicknameError('이름은 한글, 영어, 숫자로 6자까지만 입력 가능해요'); // 유효성 검사 실패 시 오류 메시지 설정
+      setNicknameError('');
+      setButtonActive(true);
     }
   };
 
@@ -74,7 +80,6 @@ const EditScreen = () => {
 
   // 성별 토글
   const genderOptions: Gender[] = ['FEMALE', 'MALE', 'OTHER'];
-
   const [selectedToggle, setSelectedToggle] = useState<number>(
     genderOptions.indexOf(userInfo.gender),
   );
@@ -82,23 +87,22 @@ const EditScreen = () => {
     setSelectedToggle(index);
   };
 
-  const [isButtonActive, setButtonActive] = useState(false);
-
+  // 완료 버튼 활성화/비활성화 처리
   useEffect(() => {
     const isNicknameChanged = nickname !== userInfo.name;
     const isDateChanged =
       selectedDate.toLocaleDateString() !== birthday.toLocaleDateString();
     const isToggleChanged = genderOptions[selectedToggle] !== userInfo.gender;
 
-    if (nickname.length > 6) {
+    if (nicknameError || nickname.length > 6) {
       setButtonActive(false);
     } else {
       setButtonActive(isNicknameChanged || isDateChanged || isToggleChanged);
     }
-  }, [nickname, selectedDate, selectedToggle]);
+  }, [nickname, selectedDate, selectedToggle, nicknameError]);
 
   const handleButtonPress = () => {
-    if (nickname.length > 6) return;
+    if (nicknameError || nickname.length > 6) return;
     const payload: UserPayloadSchema = {
       name: nickname,
       birthDay: selectedDate.toISOString(),
@@ -140,7 +144,7 @@ const EditScreen = () => {
                 placeholderTextColor={COLORS.CONTENTS_LIGHT}
                 onFocus={() => setIsNicknameFocused(true)}
                 onBlur={() => setIsNicknameFocused(false)}
-                maxLength={7}
+                maxLength={10} // 입력 가능하도록 최대 길이 설정
               />
               {nicknameError ? (
                 <View style={styles.verifyStatusView}>
@@ -257,7 +261,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-
     gap: 4,
   },
   errorText: {
