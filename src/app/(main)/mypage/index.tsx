@@ -140,6 +140,11 @@ const MypageScreen = () => {
   };
 
   useEffect(() => {
+    setDiaryTime(parseTime(userInfo.diaryAlarmTime));
+    setIsDiaryToggled(userInfo.IsAgreedDiaryAlarm);
+  }, [userInfo.IsAgreedDiaryAlarm, userInfo.diaryAlarmTime]);
+
+  useEffect(() => {
     handleUpdateUser();
   }, [isGenreSuggested, isAgreedMarketing, isDiaryToggled]);
 
