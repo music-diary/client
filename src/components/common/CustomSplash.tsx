@@ -11,6 +11,7 @@ import * as Progress from 'react-native-progress';
 import { useSplashStore } from '@/store/useSplashStore';
 import { COLORS, FONTS } from '@/constants';
 import useToastStore from '@/store/useToastStore';
+import { useGetUserInfo } from '@/api/hooks/useUsers';
 import CustomToast from './CustomToast';
 
 interface CustomSplashProps {
@@ -35,6 +36,7 @@ const CustomSplash = ({
   const { activeSplash } = useSplashStore();
   const animation = useRef(new Animated.Value(0)).current; // 애니메이션 값
   const [progress, setProgress] = useState(0); // 프로그레스 값을 위한 상태
+  const { data: userInfo } = useGetUserInfo();
 
   useEffect(() => {
     if (progressBar) {
@@ -65,7 +67,8 @@ const CustomSplash = ({
     if (isVisible) {
       if (toastMessage) {
         setTimeout(() => {
-          showToast(toastMessage, 1500);
+          showToast(toastMessage);
+          setTimeout(handlePress, 1500);
         }, 500);
       }
     }
@@ -85,14 +88,19 @@ const CustomSplash = ({
           <SvgComponent style={styles.image} />
           <Text style={styles.text}>{description}</Text>
           {progressBar && (
-            <Progress.Bar
-              progress={progress}
-              width={200}
-              height={6}
-              color={COLORS.PURPLE}
-              unfilledColor={COLORS.GREY1}
-              borderWidth={0}
-            />
+            <View style={styles.bottomView}>
+              <Progress.Bar
+                progress={progress}
+                width={200}
+                height={6}
+                color={COLORS.PURPLE}
+                unfilledColor={COLORS.GREY1}
+                borderWidth={0}
+              />
+              <Text style={styles.progressDesc}>
+                {userInfo?.name}님을 위한 음악을 고르고 있어요
+              </Text>
+            </View>
           )}
         </View>
       </TouchableWithoutFeedback>
@@ -120,5 +128,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: COLORS.WHITE,
     ...FONTS.T1,
+  },
+  bottomView: {
+    gap: 12,
+    alignItems: 'center',
+  },
+  progressDesc: {
+    color: COLORS.PURPLE,
+    ...FONTS.B2,
   },
 });

@@ -26,7 +26,7 @@ export const handleSaveToGallery = async ({
     const { status } = await requestPermissionsAsync();
     if (status === 'granted') {
       await saveToLibraryAsync(uri);
-      showToast('갤러리에 저장되었습니다.', 1300);
+      showToast('갤러리에 저장되었습니다.');
     } else {
       Alert.alert('권한 필요', '갤러리에 접근할 권한이 필요합니다.');
     }
