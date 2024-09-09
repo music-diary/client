@@ -53,9 +53,11 @@ const DailyDiaryCard = forwardRef<View, IDailyDiaryCardProps>(
             diameter={240}
           />
           <View style={styles.middleContainer}>
-            <View style={styles.sing}>
+            <View style={styles.musicHeader}>
               <Text style={styles.greyBtnText}>{mainMusic.artist}</Text>
               <Text style={styles.b2sbText}>{mainMusic.title}</Text>
+            </View>
+            <View style={styles.musicBody}>
               <Text style={styles.lyricsText}>{mainMusic.selectedLyric}</Text>
             </View>
           </View>
@@ -122,7 +124,6 @@ const styles = StyleSheet.create({
   middleContainer: {
     paddingTop: 18,
     alignItems: 'center',
-    gap: 8,
   },
   diaryTitleView: {
     flexDirection: 'row',
@@ -133,15 +134,18 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     width: '100%',
-    paddingBottom: 23,
     marginBottom: 16,
     borderBottomWidth: 1,
     borderBottomColor: COLORS.GREY1,
   },
-  sing: {
-    flexDirection: 'column',
+  musicHeader: {
     alignItems: 'center',
     gap: 6,
+  },
+  musicBody: {
+    alignItems: 'center',
+    paddingTop: 8,
+    paddingBottom: 12,
   },
   greyBtnText: {
     color: COLORS.GREY1,
@@ -158,7 +162,6 @@ const styles = StyleSheet.create({
   lyricsText: {
     color: COLORS.PURPLE,
     ...FONTS.B2_LINE2_SB,
-    paddingTop: 10,
     textAlign: 'center',
   },
   templateContainer: {
