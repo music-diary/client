@@ -16,7 +16,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { COLORS, FONTS } from '@/constants';
 import CustomCheckToggle from '@/components/common/CustomCheckToggle';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
-import { DefaultProfileSvg } from 'assets/images/mypage';
+import { DefaultProfileSvg, ThanksStar } from 'assets/images/mypage';
 import CustomBottomSheetModal from '@/components/common/CustomBottomSheetModal';
 import { formatToDate } from '@/utils/date-utils';
 import { useGetUserInfo, usePatchUser } from '@/api/hooks/useUsers';
@@ -125,6 +125,11 @@ const EditScreen = () => {
             <View style={styles.profileImage}>
               <DefaultProfileSvg width={100} height={100} />
             </View>
+            {userInfo.role === 'SPONSOR' && (
+              <View style={styles.profileImageTop}>
+                <ThanksStar />
+              </View>
+            )}
           </View>
           {/* body */}
           <View style={styles.body}>
@@ -241,6 +246,8 @@ const styles = StyleSheet.create({
   profile: {
     alignItems: 'center',
     paddingVertical: 36,
+    width: 100,
+    alignSelf: 'center',
   },
   profileImage: {
     width: 101,
@@ -248,6 +255,11 @@ const styles = StyleSheet.create({
     borderRadius: 51,
     borderWidth: 1,
     borderColor: COLORS.WHITE,
+  },
+  profileImageTop: {
+    position: 'absolute',
+    top: 35,
+    right: 0,
   },
   body: {
     gap: 30,
