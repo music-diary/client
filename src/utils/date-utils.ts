@@ -27,17 +27,16 @@ export function formatToDate(date: Date): string {
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
   const day = date.getDate();
-  const formattedMonth = String(month).padStart(2, '0'); // 한 자리 수 월을 두 자리로 변환
+  const formattedMonth = String(month).padStart(2, '0');
   const formattedDay = String(day).padStart(2, '0');
   return `${year}-${formattedMonth}-${formattedDay}`;
 }
 
-// form > 2024-03-24T07:03:00.000Z -> 3월 15일
 export const formatMonthDayDate = (dateString: string) => {
-  return new Date(dateString).toLocaleDateString('ko-KR', {
-    month: 'long',
-    day: 'numeric',
-  });
+  const month = parseInt(dateString.slice(5, 7), 10);
+  const day = parseInt(dateString.slice(8, 10), 10);
+
+  return `${month}월 ${day}일`;
 };
 
 export function calculateDaysSince(startDate: string): number {

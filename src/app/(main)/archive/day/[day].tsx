@@ -1,6 +1,12 @@
-import React, { useRef, useState } from 'react';
-import { router, useLocalSearchParams } from 'expo-router';
-import { StyleSheet, Text, ScrollView, View } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { router, useLocalSearchParams, useNavigation } from 'expo-router';
+import {
+  StyleSheet,
+  Text,
+  ScrollView,
+  View,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import { COLORS, FONTS } from '@/constants';
 import DailyDiaryCard from '@/components/archive/DailyDiaryCard';
 import { useModalStore, useModalToggleStore } from '@/store/useModalStore';
@@ -39,6 +45,7 @@ const DayScreen = () => {
   const { mutate: deleteDiary } = useDeleteDiary();
 
   const cardRef = useRef<View>(null);
+  const navigation = useNavigation();
   const [isCapturing, setIsCapturing] = useState(false);
 
   const onSave = () => {
@@ -71,51 +78,72 @@ const DayScreen = () => {
     closeSplash();
   };
 
-  return (
-    <>
-      <ScrollView style={styles.container}>
-        {activeModal && (
-          <CustomAlertModal
-            name="delete-diary-modal"
-            title="이 일기를 정말 삭제하시겠어요?"
-            description="한 번 삭제하면 일기를 복구할 수 없어요."
-            leftButtonText="아니오, 그냥 둘래요"
-            rightButtonText="네, 삭제할래요"
-            onLeftButtonPress={closeModal}
-            onRightButtonPress={handleDeleteConfirm}
-            isDelete={true}
-          />
-        )}
-        <Text style={styles.b1LightText}>{day}</Text>
-        <View style={styles.cardContainer}>
-          <DailyDiaryCard
-            diaryId={diaryId}
-            ref={cardRef}
-            isCapturing={isCapturing}
-          />
-        </View>
+  const closeToggle = () => {
+    if (isModalOpen) {
+      toggleModal();
+    }
+  };
 
-        {/* ...더보기 눌렸을때 */}
-        {isModalOpen ? (
-          <HeaderModalView onSavePress={onSave} onDeletePress={onDelete} />
-        ) : null}
-        {/* 스플래시 화면 */}
-        <CustomSplash
-          name="delete"
-          description={splashOptions.delete.description}
-          toastMessage={splashOptions.delete.toastMessage}
-          svg={splashOptions.delete.svg}
-          onClose={closeDeleteSplash}
-        />
-      </ScrollView>
-      <CustomToast position="center" />
-    </>
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('beforeRemove', () => {
+      if (isModalOpen) {
+        toggleModal();
+      }
+    });
+
+    return unsubscribe;
+  }, [navigation, isModalOpen]);
+
+  return (
+    <TouchableWithoutFeedback onPress={closeToggle}>
+      <View style={styles.allContainer}>
+        <ScrollView style={styles.container}>
+          {activeModal && (
+            <CustomAlertModal
+              name="delete-diary-modal"
+              title="이 일기를 정말 삭제하시겠어요?"
+              description="한 번 삭제하면 일기를 복구할 수 없어요."
+              leftButtonText="아니오, 그냥 둘래요"
+              rightButtonText="네, 삭제할래요"
+              onLeftButtonPress={closeModal}
+              onRightButtonPress={handleDeleteConfirm}
+              isDelete={true}
+            />
+          )}
+          <Text style={styles.b1LightText}>{day}</Text>
+          <View style={styles.cardContainer}>
+            <DailyDiaryCard
+              diaryId={diaryId}
+              ref={cardRef}
+              isCapturing={isCapturing}
+            />
+          </View>
+
+          {/* ...더보기 눌렸을때 */}
+          {isModalOpen ? (
+            <HeaderModalView onSavePress={onSave} onDeletePress={onDelete} />
+          ) : null}
+          {/* 스플래시 화면 */}
+          <CustomSplash
+            name="delete"
+            description={splashOptions.delete.description}
+            toastMessage={splashOptions.delete.toastMessage}
+            svg={splashOptions.delete.svg}
+            onClose={closeDeleteSplash}
+          />
+        </ScrollView>
+        <CustomToast position="center" />
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
 export default DayScreen;
 
 const styles = StyleSheet.create({
+  allContainer: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     paddingHorizontal: 16,
