@@ -21,7 +21,6 @@ import {
   useMusicRecommendation,
   usePatchDiary,
 } from '@/api/hooks/useDiaries';
-import { useGetUserInfo } from '@/api/hooks/useUsers';
 import CustomAlertModal from '@/components/common/CustomAlertModal';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
 import LoadingView from '@/components/diary/LoadingView';
@@ -52,8 +51,6 @@ const MusicRecommendationScreen = () => {
   const [selectedMusicIndex, setSelectedMusicIndex] = useState<number | null>(
     null,
   );
-
-  const { data: userInfo } = useGetUserInfo();
 
   const {
     data: musicData,
@@ -115,15 +112,6 @@ const MusicRecommendationScreen = () => {
   };
 
   const handleNext = () => {
-    // const updatedMusicData: IMusic[] = musicData.map((music, index) => ({
-    //   ...music,
-    //   selectedLyric: music.lyric
-    //     .split('\n')
-    //     .filter((_, idx) => selectedLyrics[index]?.includes(idx))
-    //     .join('\n'),
-    //   selected: selectedLyrics[index]?.length > 0 || false, // 가사가 선택된 경우 true로 설정
-    // }));
-
     if (selectedMusicIndex === null) {
       console.error('No music selected.');
       return;
