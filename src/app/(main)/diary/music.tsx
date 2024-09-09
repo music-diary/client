@@ -357,7 +357,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   selectedLyricLine: {
-    color: COLORS.PURPLE_BOX,
+    color: COLORS.PURPLE_LIGHT,
   },
   lyricsText: {
     textAlign: 'center',

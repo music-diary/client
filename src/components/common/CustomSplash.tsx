@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
   },
   progressDesc: {
     textAlign: 'center',
-    color: COLORS.PURPLE_BOX,
+    color: COLORS.PURPLE_LIGHT,
     ...FONTS.B2,
   },
 });
