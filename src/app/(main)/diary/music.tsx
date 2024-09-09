@@ -185,9 +185,12 @@ const MusicRecommendationScreen = () => {
   return (
     <>
       <SafeAreaView edges={['bottom']} style={styles.container}>
-        <Text style={styles.headerTitle}>
-          오늘의 {userInfo?.name} 님에게 어울리는 곡을 골라볼까요?
-        </Text>
+        <View style={styles.headerView}>
+          <Text style={styles.headerTitle}>
+            뮤다가 오늘의 음악 3곡을 가져왔어요
+          </Text>
+          <Text style={styles.headerDesc}>마음에 드는 곡을 선택해 볼까요?</Text>
+        </View>
         <Carousel
           ref={ref}
           {...({
@@ -313,9 +316,17 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 20,
   },
+  headerView: {
+    alignItems: 'center',
+    gap: 8,
+  },
   headerTitle: {
     color: COLORS.WHITE,
     ...FONTS.B1_SB,
+  },
+  headerDesc: {
+    color: colorWithOpacity(COLORS.WHITE, 0.7),
+    ...FONTS.B2,
   },
   cardContainer: {
     flex: 1,
