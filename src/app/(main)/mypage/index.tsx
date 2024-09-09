@@ -8,7 +8,7 @@ import {
   Pressable,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Feather, MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import DateTimePicker, {
   type DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
@@ -18,7 +18,11 @@ import BodyNavigator from '@/components/mypage/BodyNavigator';
 import CustomToggle from '@/components/common/CustomToggle';
 import MusicSelection from '@/components/home/MusicSelection';
 import { useAppStore } from '@/store/useAppStore';
-import { ChartPieSvg, DefaultProfileSvg } from 'assets/images/mypage';
+import {
+  ChartPieSvg,
+  DefaultProfileSvg,
+  ThanksStar,
+} from 'assets/images/mypage';
 import { colorWithOpacity } from '@/utils/color-utils';
 import CustomBottomSheetModal from '@/components/common/CustomBottomSheetModal';
 import {
@@ -140,6 +144,11 @@ const MypageScreen = () => {
   };
 
   useEffect(() => {
+    setDiaryTime(parseTime(userInfo.diaryAlarmTime));
+    setIsDiaryToggled(userInfo.IsAgreedDiaryAlarm);
+  }, [userInfo.IsAgreedDiaryAlarm, userInfo.diaryAlarmTime]);
+
+  useEffect(() => {
     handleUpdateUser();
   }, [isGenreSuggested, isAgreedMarketing, isDiaryToggled]);
 
@@ -191,9 +200,11 @@ const MypageScreen = () => {
           <View style={styles.profileImage}>
             <DefaultProfileSvg />
           </View>
-          <View style={styles.profileImageTop}>
-            <Feather name="star" color={COLORS.WHITE} />
-          </View>
+          {userInfo.role === 'SPONSOR' && (
+            <View style={styles.profileImageTop}>
+              <ThanksStar />
+            </View>
+          )}
           <Text style={styles.profileInfo}>
             <Text style={{ color: COLORS.PURPLE }}>{userInfo.name}</Text> 님과
             함께한 지{'\n'}
@@ -407,12 +418,6 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   profileImageTop: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    backgroundColor: COLORS.PURPLE,
-    justifyContent: 'center',
-    alignItems: 'center',
     position: 'absolute',
     top: -6,
     left: 40,
