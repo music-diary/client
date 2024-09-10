@@ -76,12 +76,9 @@ export const usePushNotifications = (): PushNotificationState => {
       });
 
     responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response);
-      });
+      Notifications.addNotificationResponseReceivedListener((response) => {});
 
     return () => {
-      console.log('remove notification listener');
       Notifications.removeNotificationSubscription(
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         notificationListener.current!,

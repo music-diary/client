@@ -76,7 +76,7 @@ const MusicRecommendationScreen = () => {
       router.push({ pathname: '/diary/card', params: { diaryId } });
     },
     onError: () => {
-      console.error('Failed to patch diary');
+      console.warn('Failed to patch diary');
     },
   });
 
@@ -113,7 +113,7 @@ const MusicRecommendationScreen = () => {
 
   const handleNext = () => {
     if (selectedMusicIndex === null) {
-      console.error('No music selected.');
+      console.warn('No music selected.');
       return;
     }
 

@@ -88,7 +88,7 @@ const WriteScreen = () => {
       });
     },
     onError: () => {
-      console.error('Failed to patch diary');
+      console.warn('Failed to patch diary');
     },
   });
 

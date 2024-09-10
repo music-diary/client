@@ -86,7 +86,6 @@ const GenreScreen = () => {
 
     signUp(userData, {
       onSuccess: (data) => {
-        console.log('Sign Up Success:', data);
         openSplash('welcome-muda');
       },
       onError: (error) => {

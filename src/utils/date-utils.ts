@@ -48,6 +48,7 @@ export function calculateDaysSince(startDate: string): number {
 }
 
 export const parseTime = (timeStr: string): Date => {
+  console.log('timeStr', timeStr);
   const [hours, minutes] = timeStr.split(':').map(Number);
   const date = new Date();
   date.setUTCHours(hours - 9, minutes, 0, 0); // UTC 시간 기준으로 설정

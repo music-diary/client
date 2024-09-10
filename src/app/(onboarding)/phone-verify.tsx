@@ -80,8 +80,7 @@ const PhoneVerifyScreen = () => {
   const handleRetryVerify = () => {
     setRetry(true);
     requestPhoneVerification(phoneNumber as string, {
-      onSuccess: (data) => {
-        console.log('Phone Verification Requested:', data);
+      onSuccess: () => {
         setVerifyStatus('resent');
         setRetry(true);
       },

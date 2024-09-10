@@ -15,7 +15,6 @@ apiClient.interceptors.request.use(
   async (config) => {
     const token = getToken();
     if (token) {
-      console.log('🚀 ~ file: client.ts:18 ~ token:', token);
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;

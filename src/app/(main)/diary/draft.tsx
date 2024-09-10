@@ -56,14 +56,10 @@ const DraftScreen = () => {
       } else {
         setSelectedDrafts([...selectedDrafts, draft.id]);
       }
-    } else {
-      console.log('편집임 클릭');
     }
   };
 
-  const handleDeleteDrafts = () => {
-    console.log('삭제');
-  };
+  const handleDeleteDrafts = () => {};
 
   return (
     <>

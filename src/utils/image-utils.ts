@@ -31,7 +31,7 @@ export const handleSaveToGallery = async ({
       Alert.alert('권한 필요', '갤러리에 접근할 권한이 필요합니다.');
     }
   } catch (error) {
-    console.error('갤러리에 이미지 저장 실패:', error);
+    console.warn('갤러리에 이미지 저장 실패:', error);
     Alert.alert('오류', '갤러리에 이미지 저장 실패');
   } finally {
     setIsCapturing(false);

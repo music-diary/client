@@ -66,9 +66,6 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   useEffect(() => {
-    // 임시 로그인 처리 (isAuthenticated가 true로 바뀜)
-    // login();
-    // logout();
     queryClient.clear();
     if (isFirstLaunch) {
       router.navigate('/(tutorial)');
@@ -102,8 +99,6 @@ function RootLayoutNav() {
                 options={{ headerShown: false }}
               />
               <Stack.Screen name="(main)" options={{ headerShown: false }} />
-              <Stack.Screen name="intro" options={{ headerShown: false }} />
-              <Stack.Screen name="(modals)" options={{ headerShown: false }} />
             </Stack>
             <DImOverlay />
           </ThemeProvider>
