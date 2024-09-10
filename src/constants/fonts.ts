@@ -10,7 +10,7 @@ export default {
     lineHeight: 20,
   },
   B1: {
-    fontFamily: 'pret',
+    fontFamily: 'pret-m',
     fontSize: 16,
     lineHeight: 18,
   },
@@ -20,7 +20,7 @@ export default {
     lineHeight: 18,
   },
   B2: {
-    fontFamily: 'pret',
+    fontFamily: 'pret-m',
     fontSize: 14,
     lineHeight: 16,
   },
@@ -40,7 +40,7 @@ export default {
     lineHeight: 22,
   },
   BTN: {
-    fontFamily: 'pret',
+    fontFamily: 'pret-m',
     fontSize: 12,
     lineHeight: 14,
   },
