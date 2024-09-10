@@ -46,12 +46,13 @@ export function calculateDaysSince(startDate: string): number {
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   return diffDays;
 }
-
-export const parseTime = (timeStr: string | null): Date => {
-  const [hours, minutes] = timeStr?.split(':').map(Number) ?? [11, 0];
-
+export const parseTime = (timeStr: string): Date => {
+  if (!timeStr) {
+    return new Date(0);
+  }
+  const [hours, minutes] = timeStr.split(':').map(Number);
   const date = new Date();
-  date.setUTCHours((hours || 11) - 9, minutes || 0, 0, 0);
+  date.setUTCHours(hours - 9, minutes, 0, 0);
   return date;
 };
 

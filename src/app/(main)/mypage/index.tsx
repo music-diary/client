@@ -144,6 +144,7 @@ const MypageScreen = () => {
   };
 
   useEffect(() => {
+    setTempDiaryTime(parseTime(userInfo.diaryAlarmTime));
     setDiaryTime(parseTime(userInfo.diaryAlarmTime));
     setIsDiaryToggled(userInfo.IsAgreedDiaryAlarm);
   }, [userInfo.IsAgreedDiaryAlarm, userInfo.diaryAlarmTime]);
