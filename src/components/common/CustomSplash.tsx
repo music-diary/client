@@ -31,7 +31,7 @@ const CustomSplash = ({
   onClose,
   progressBar = false,
 }: CustomSplashProps) => {
-  const { showToast } = useToastStore();
+  const { showToast, hideToast } = useToastStore();
   const [isVisible, setIsVisible] = useState(false);
   const { activeSplash } = useSplashStore();
   const animation = useRef(new Animated.Value(0)).current; // 애니메이션 값
@@ -61,6 +61,8 @@ const CustomSplash = ({
     if (activeSplash === name) {
       setIsVisible(true);
     }
+
+    return () => hideToast();
   }, [activeSplash]);
 
   useEffect(() => {
@@ -72,6 +74,8 @@ const CustomSplash = ({
         }, 500);
       }
     }
+
+    return () => hideToast();
   }, [isVisible]);
 
   const handlePress = () => {
@@ -79,6 +83,8 @@ const CustomSplash = ({
       setIsVisible(false);
       onClose();
     }
+
+    hideToast();
   };
 
   return (
