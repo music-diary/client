@@ -68,11 +68,11 @@ function RootLayoutNav() {
   useEffect(() => {
     queryClient.clear();
     if (isFirstLaunch) {
-      router.navigate('/(tutorial)');
+      router.replace('/(tutorial)');
     } else if (!isAuthenticated) {
-      router.navigate('/(onboarding)');
+      router.replace('/(onboarding)');
     } else {
-      router.navigate('/(main)');
+      router.replace('/(main)');
     }
   }, [isAuthenticated]);
 
