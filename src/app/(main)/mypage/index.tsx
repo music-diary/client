@@ -48,8 +48,6 @@ const MypageScreen = () => {
   const { data: userInfo, isLoading, isError } = useGetUserInfo();
   const patchUserMutation = usePatchUser();
 
-  console.log('userInfo', userInfo.diaryAlarmTime);
-
   const { logout } = useAppStore();
 
   const router = useRouter();
