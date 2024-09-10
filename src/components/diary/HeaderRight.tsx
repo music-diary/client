@@ -11,11 +11,6 @@ const HeaderRight = ({ onPress }: HeaderRightProps) => {
   const { openModal } = useModalStore();
   const pathname = usePathname();
 
-  // const handleDraft = () => router.push('/diary/draft');
-
-  /**
-   * TODO: diary/card 부분 확인 후 수정예정
-   */
   const handleXButton = () => {
     const cancelRoutes = ['/diary', '/diary/write', '/diary/music'];
 

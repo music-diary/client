@@ -20,7 +20,6 @@
 //   const closeModal = () => setModalVisible(false);
 
 //   const handleConfirm = () => {
-//     console.log('삭제 확인');
 //     // 여기에 삭제 작업을 수행하는 코드를 추가하면 됨
 //     closeModal();
 //   };

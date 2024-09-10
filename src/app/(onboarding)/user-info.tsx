@@ -161,19 +161,16 @@ const UserInfoScreen = () => {
         onPress={handleNext}
         label="다음"
       />
-      {/**
-       * TODO:
-       * 모달 닫으면 앱 초기화면으로 이동
-       */}
       <CustomAlertModal
         name="sign_up-cancel"
         title="지금 그만두시면 입력한 정보는 저장되지 않고,"
         description="회원가입이 되지 않아요."
         leftButtonText="그만할래요"
         rightButtonText="계속 진행할래요"
-        onLeftButtonPress={() =>
-          console.log('모달 닫은 후 튜토리얼 화면으로 돌아감')
-        }
+        onLeftButtonPress={() => {
+          closeModal();
+          router.navigate('/(onboarding)');
+        }}
         onRightButtonPress={closeModal}
         isDelete={false}
       />

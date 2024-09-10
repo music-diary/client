@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   buttonText: {
-    color: COLORS.PURPLE_BOX,
+    color: COLORS.PURPLE_LIGHT,
     ...FONTS.BTN,
   },
   bodyText: {

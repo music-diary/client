@@ -38,13 +38,6 @@ const SubjectEmotionScreen = () => {
     }, [stateInit]),
   );
 
-  /**
-   * TODO:
-   *
-   * 이부분 확인해봐야함
-   */
-
-  // useCreateDiary 훅을 사용하여 mutate 함수 가져오기
   const { mutate: createDiary } = useCreateDiary({
     onSuccess: (id: string) => {
       setDiaryId(id); // 생성된 diaryId 설정
@@ -68,26 +61,6 @@ const SubjectEmotionScreen = () => {
     }, []),
   );
 
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     const fetchDiaryId = async () => {
-  //       try {
-  //         const id = await createDiary();
-  //         setDiaryId(id);
-  //         setError(null); // 오류 상태 초기화
-  //       } catch (error) {
-  //         console.error('Failed to create diary:', error);
-  //         setError('일기를 생성하는 데 실패했습니다. \n 다시 시도해 주세요.');
-  //       }
-  //     };
-
-  //     // diaryId가 없을 때만 새로 생성
-  //     if (!diaryId) {
-  //       fetchDiaryId();
-  //     }
-  //   }, [diaryId]),
-  // );
-
   const handleNext = () => {
     router.push({
       pathname: '/diary/write',
@@ -101,11 +74,6 @@ const SubjectEmotionScreen = () => {
     });
   };
 
-  /**
-   * TODO:
-   *
-   * 로딩인디케이터 추가
-   */
   if (error) {
     return (
       <View style={styles.container}>

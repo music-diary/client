@@ -59,7 +59,7 @@ const CardScreen = () => {
       router.push({ pathname: '/(main)/archive' });
     },
     onError: () => {
-      console.error('Failed to patch diary');
+      console.warn('Failed to patch diary');
     },
   });
 

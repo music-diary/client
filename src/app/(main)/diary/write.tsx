@@ -26,10 +26,9 @@ import CustomSplash from '@/components/common/CustomSplash';
 import SelectorButtonGroup from '@/components/diary/SelectorButtonGroup';
 import TopicButton from '@/components/diary/TopicButton';
 import { COLORS, FONTS } from '@/constants';
-import { type IDiary, type IEmotion, type ITopic } from '@/models/interfaces';
+import { type IEmotion, type ITopic } from '@/models/interfaces';
 import { type Mood } from '@/models/types';
 import { useModalStore } from '@/store/useModalStore';
-import { useSplashStore } from '@/store/useSplashStore';
 import { createDiaryData } from '@/utils/diary-utils';
 import GroupSvg from 'assets/images/splash/group-dot.svg';
 
@@ -46,7 +45,6 @@ const WriteScreen = () => {
     diaryId,
   } = params;
 
-  const inputRefs = useRef<Array<React.RefObject<TextInput>>>([]);
   const scrollViewRef = useRef<ScrollView>(null);
 
   const mood = JSON.parse(m as string);
@@ -58,15 +56,13 @@ const WriteScreen = () => {
 
   const [title, setTitle] = useState('');
   const [diaryContent, setDiaryContent] = useState('');
-  const [diaryData, setDiaryData] = useState<IDiary>({} as IDiary); // diaryData 상태 추가
-  const [charCount, setCharCount] = useState<Record<string, number>>({}); // 글자 수 상태 추가
+  const [charCount, setCharCount] = useState<Record<string, number>>({});
 
   const [templateContents, setTemplateContents] = useState<
     Record<string, string>
   >({});
   const [keyboardVisible, setKeyboardVisible] = useState(false);
 
-  const { openSplash } = useSplashStore();
   const { closeModal } = useModalStore();
 
   useEffect(() => {
@@ -83,33 +79,6 @@ const WriteScreen = () => {
     };
   }, []);
 
-  /**
-   * TODO:
-   *
-   * 코드 정리 필요
-   */
-  const handleFocus = (
-    event: NativeSyntheticEvent<TextInputFocusEventData>,
-  ) => {
-    if (!keyboardVisible) return; // 키보드가 올라와 있지 않으면 함수 실행 중단
-
-    const scrollResponder = scrollViewRef.current?.getScrollResponder();
-    const targetOffset = event.nativeEvent.target;
-    const screenHeight = Dimensions.get('window').height; // 전체 스크린 높이
-
-    const desiredTopMargin = screenHeight * 0.2; // 상단 여백을 전체 높이의 10%로 설정
-    console.log('desiredTopMargin::: ', desiredTopMargin);
-    console.log('targetOffset', targetOffset);
-    // 스크롤뷰가 포커스된 필드를 화면 상단으로 스크롤하도록 요청
-    scrollResponder?.scrollResponderScrollNativeHandleToKeyboard(
-      targetOffset,
-      desiredTopMargin, // 원하는 상단 여백
-      true,
-    );
-  };
-
-  // useKeyboardListeners(scrollViewRef);
-  // useKeyboardAwareFocus(scrollViewRef, inputRefs.current); // 키보드 포커스 훅 사용
   const { mutate: deleteDiary } = useDeleteDiary();
   const { mutate: patchDiary } = usePatchDiary({
     onSuccess: () => {
@@ -119,7 +88,7 @@ const WriteScreen = () => {
       });
     },
     onError: () => {
-      console.error('Failed to patch diary');
+      console.warn('Failed to patch diary');
     },
   });
 
@@ -129,11 +98,6 @@ const WriteScreen = () => {
       params: { ...params, templates: JSON.stringify(templates) },
     });
   };
-
-  // const handleDraft = () => {
-  //   closeModal();
-  //   openSplash('draft-save');
-  // };
 
   const handleMusicRecommendation = () => {
     const generatedDiaryData = createDiaryData({
@@ -146,7 +110,6 @@ const WriteScreen = () => {
       emotions: [...emotionList, ...detailedEmotionList],
       status: 'EDIT',
     });
-    setDiaryData(generatedDiaryData);
     patchDiary({ id: diaryId as string, payload: generatedDiaryData });
   };
 
@@ -170,6 +133,24 @@ const WriteScreen = () => {
     } else {
       return title.length > 0 && diaryContent.length > 0;
     }
+  };
+
+  const handleFocus = (
+    event: NativeSyntheticEvent<TextInputFocusEventData>,
+  ) => {
+    if (!keyboardVisible) return; // 키보드가 올라와 있지 않으면 함수 실행 중단
+
+    const scrollResponder = scrollViewRef.current?.getScrollResponder();
+    const targetOffset = event.nativeEvent.target;
+    const screenHeight = Dimensions.get('window').height; // 전체 스크린 높이
+
+    const desiredTopMargin = screenHeight * 0.2; // 상단 여백을 전체 높이의 20%로 설정
+    // 스크롤뷰가 포커스된 필드를 화면 상단으로 스크롤하도록 요청
+    scrollResponder?.scrollResponderScrollNativeHandleToKeyboard(
+      targetOffset,
+      desiredTopMargin, // 원하는 상단 여백
+      true,
+    );
   };
 
   return (

@@ -32,7 +32,7 @@ export const handleLogin = async (headers: Record<string, any>) => {
   if (token) {
     useAppStore.getState().login(token);
   } else {
-    console.error('Invalid Authorization header format');
+    console.warn('Invalid Authorization header format');
   }
 };
 

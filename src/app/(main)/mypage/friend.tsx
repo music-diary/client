@@ -31,10 +31,6 @@
 //     if (nickname) {
 //       setFriends([...friends, nickname]);
 //     }
-//     console.log(
-//       '🚀 ~ file: myFriend.tsx:33 ~ handleAddFriend ~ nickname:',
-//       nickname,
-//     );
 //     closeAlert();
 //   };
 
