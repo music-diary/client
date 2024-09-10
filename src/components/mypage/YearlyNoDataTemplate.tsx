@@ -4,10 +4,11 @@ import MyFilling from '@/components/mypage/MyFilling';
 import MusicPreference from '@/components/mypage/MusicPreference';
 import DiaryTopic from '@/components/mypage/DiaryTopic';
 import DiaryYearlyGraph from '@/components/mypage/DiaryYearlyGraph';
-import templateData from '@/data/static_yearly_template.json';
+import { staticYearlyTemplate } from '@/constants/template-data';
 import { colorWithOpacity } from '@/utils/color-utils';
 
 const YearlyNoDataTemplate = () => {
+  const templateData = staticYearlyTemplate;
   return (
     <>
       <View style={styles.button}>

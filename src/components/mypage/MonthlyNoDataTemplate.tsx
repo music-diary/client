@@ -4,10 +4,11 @@ import DiaryNumber from '@/components/mypage/DiaryNumber';
 import MyFilling from '@/components/mypage/MyFilling';
 import MusicPreference from '@/components/mypage/MusicPreference';
 import DiaryTopic from '@/components/mypage/DiaryTopic';
-import templateData from '@/data/static_monthly_template.json';
+import { staticMonthlyTemplate } from '@/constants/template-data';
 import { colorWithOpacity } from '@/utils/color-utils';
 
 const MonthlyNoDataTemplate = () => {
+  const templateData = staticMonthlyTemplate;
   return (
     <>
       <View style={styles.button}>
