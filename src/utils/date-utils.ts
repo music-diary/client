@@ -47,10 +47,11 @@ export function calculateDaysSince(startDate: string): number {
   return diffDays;
 }
 
-export const parseTime = (timeStr: string): Date => {
-  const [hours, minutes] = timeStr.split(':').map(Number);
+export const parseTime = (timeStr: string | null): Date => {
+  const [hours, minutes] = timeStr?.split(':').map(Number) ?? [11, 0];
+
   const date = new Date();
-  date.setUTCHours(hours - 9, minutes, 0, 0); // UTC 시간 기준으로 설정
+  date.setUTCHours((hours || 11) - 9, minutes || 0, 0, 0);
   return date;
 };
 

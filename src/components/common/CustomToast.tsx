@@ -25,7 +25,10 @@ const CustomToast = ({ position = 'bottom' }: { position?: string }) => {
         }).start(hideToast);
       }, duration);
 
-      return () => clearTimeout(timer);
+      return () => {
+        clearTimeout(timer);
+        hideToast();
+      };
     }
   }, [visible]);
 

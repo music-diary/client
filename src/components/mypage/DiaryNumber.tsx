@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   titleText: {
-    color: COLORS.PURPLE_BOX,
+    color: COLORS.PURPLE_LIGHT,
     ...FONTS.BTN,
   },
   bodyText: {

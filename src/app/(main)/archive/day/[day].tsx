@@ -65,7 +65,7 @@ const DayScreen = () => {
         openSplash('delete');
       },
       onError: (error) => {
-        console.error('삭제 오류:', error);
+        console.warn('삭제 오류:', error);
         closeModal();
       },
     });

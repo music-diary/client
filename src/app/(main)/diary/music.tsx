@@ -76,7 +76,7 @@ const MusicRecommendationScreen = () => {
       router.push({ pathname: '/diary/card', params: { diaryId } });
     },
     onError: () => {
-      console.error('Failed to patch diary');
+      console.warn('Failed to patch diary');
     },
   });
 
@@ -113,7 +113,7 @@ const MusicRecommendationScreen = () => {
 
   const handleNext = () => {
     if (selectedMusicIndex === null) {
-      console.error('No music selected.');
+      console.warn('No music selected.');
       return;
     }
 
@@ -261,7 +261,7 @@ const MusicRecommendationScreen = () => {
         isActive={Object.values(selectedLyrics).some(
           (lyrics) => lyrics.length > 0,
         )}
-        onPress={handleNext} // 버튼 클릭 이벤트 핸들러
+        onPress={handleNext}
         label="다음"
       />
 
@@ -278,19 +278,6 @@ const MusicRecommendationScreen = () => {
         }}
         onRightButtonPress={closeModal}
       />
-
-      {/**
-       * TODO: 주석 삭제 예정
-       */}
-      {/* <CustomAlertModal
-        name="music-cancel"
-        title="작성을 그만두시겠어요?"
-        description="임시저장을 해두면 나중에 다시 적을 수 있어요."
-        leftButtonText="일기 계속 작성하기"
-        rightButtonText="임시저장하기"
-        onLeftButtonPress={closeModal}
-        onRightButtonPress={handleDraft}
-      /> */}
     </>
   );
 };
@@ -357,7 +344,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   selectedLyricLine: {
-    color: COLORS.PURPLE_BOX,
+    color: COLORS.PURPLE_LIGHT,
   },
   lyricsText: {
     textAlign: 'center',

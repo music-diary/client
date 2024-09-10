@@ -32,7 +32,6 @@ const WithdrawalScreen = () => {
   const withdrawMutation = useWithdrawal({
     onSuccess: () => {
       logout();
-      console.log('탈퇴 성공');
     },
   });
 

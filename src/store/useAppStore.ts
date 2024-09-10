@@ -24,7 +24,7 @@ export const useAppStore = create<AppState>()(
             set({ isAuthenticated: true, token });
           })
           .catch((error) => {
-            console.error('Failed to save the token:', error);
+            console.warn('Failed to save the token:', error);
           });
       },
       logout: () => {
@@ -33,7 +33,7 @@ export const useAppStore = create<AppState>()(
             set({ isAuthenticated: false, token: null });
           })
           .catch((error) => {
-            console.error('Failed to remove the token:', error);
+            console.warn('Failed to remove the token:', error);
           });
       },
       isFirstLaunch: true,

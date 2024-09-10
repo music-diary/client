@@ -15,7 +15,6 @@ const USERS = API_ENDPOINTS.USERS;
 
 const getUser = async () => {
   const { data } = await apiClient.get(API_ENDPOINTS.USERS.SELF);
-  console.log('getUser data ::: ', data);
   return data;
 };
 
@@ -64,11 +63,8 @@ const patchUser = async ({ id, payload }: PathUserSchema) => {
 export const usePatchUser = (options = {}) => {
   return useMutation({
     mutationFn: patchUser,
-    onSuccess: (data) => {
-      console.log('Update successful:', data);
-    },
     onError: (error) => {
-      console.log('Update failed:', error);
+      console.warn('Update failed:', error);
     },
     ...options,
   });
@@ -150,7 +146,7 @@ export const useSendInquiry = (options = {}) => {
   return useMutation({
     mutationFn: sendInquiry,
     onError: (error) => {
-      console.log('Send Inquiry error:', error);
+      console.warn('Send Inquiry error:', error);
     },
     ...options,
   });
@@ -183,7 +179,7 @@ export const useWithdrawal = (options = {}) => {
   return useMutation({
     mutationFn: withdrawal,
     onError: (error) => {
-      console.log('Withdrawal failed:', error);
+      console.warn('Withdrawal failed:', error);
     },
     ...options,
   });

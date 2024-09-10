@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   },
 
   buttonText: {
-    color: COLORS.PURPLE_BOX,
+    color: COLORS.PURPLE_LIGHT,
     ...FONTS.BTN,
   },
   bodyText: {
