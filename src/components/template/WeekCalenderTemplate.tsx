@@ -3,9 +3,10 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { COLORS, FONTS } from '@/constants';
 import { ArrowButtonSvg } from 'assets/images/home';
 import { cvtDateToWeekStr, formatKST, moveWeek } from '@/utils/date-utils';
-import dummyData from '@/data/tutorial_calender_template.json';
+import { tutorialCalendarTemplate } from '@/constants/template-data';
 
 const WeekCalendarTemplate = () => {
+  const dummyData = tutorialCalendarTemplate;
   const fixedDate = new Date('2024-08-29');
   const [selectedDate, setSelectedDate] = useState(fixedDate);
 

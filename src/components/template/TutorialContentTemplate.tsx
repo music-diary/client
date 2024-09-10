@@ -14,12 +14,13 @@ import { emotionColor, emotionHomeText } from '@/constants/data/emotion-colors';
 import TopDescriptionTemplate from '@/components/template/TopDescriptionTemplate';
 import WeekCalendarTemplate from '@/components/template/WeekCalenderTemplate';
 import MonthlyMusicListTemplate from '@/components/template/MonthlyMusicListTemplate';
-import dummyData from '@/data/tutorial_album_template.json';
 import { type MusicRecommendationSchema } from '@/models/schemas';
 import { getMoodFromEmotions } from '@/utils/emotion-utils';
 import { LogoHeaderSvg, MainCharacterSvg } from 'assets/images/common';
+import { tutorialAlbumTemplate } from '@/constants/template-data';
 
 const TutorialContentTemplate = () => {
+  const dummyData = tutorialAlbumTemplate;
   const archiveData = dummyData as unknown as MusicRecommendationSchema;
   const userName = 'Muda';
   const diaryCount = archiveData.count;
