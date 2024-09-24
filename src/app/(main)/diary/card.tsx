@@ -214,7 +214,11 @@ const CardScreen = () => {
       <CustomSplash
         name="archive-save"
         description={splashConfig.description}
-        toastMessage="아카이브에 저장되었습니다"
+        toastMessage={
+          splashKey === 'alarm'
+            ? '일기 알림이 설정되었습니다'
+            : '아카이브에 저장되었습니다'
+        }
         svg={splashConfig.svg}
         onClose={handleCloseSplash}
       />
