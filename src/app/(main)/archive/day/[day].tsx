@@ -96,7 +96,7 @@ const DayScreen = () => {
 
   return (
     <TouchableWithoutFeedback onPress={closeToggle}>
-      <View style={styles.allContainer}>
+      <ScrollView style={styles.allContainer}>
         <ScrollView style={styles.container}>
           {activeModal && (
             <CustomAlertModal
@@ -133,7 +133,7 @@ const DayScreen = () => {
           />
         </ScrollView>
         <CustomToast position="center" />
-      </View>
+      </ScrollView>
     </TouchableWithoutFeedback>
   );
 };
@@ -143,6 +143,7 @@ export default DayScreen;
 const styles = StyleSheet.create({
   allContainer: {
     flex: 1,
+    backgroundColor: COLORS.BLACK,
   },
   container: {
     flex: 1,
