@@ -1,16 +1,7 @@
 import * as Notifications from 'expo-notifications';
 
 export async function scheduleNotification(time: Date) {
-  const scheduledNotifications =
-    await Notifications.getAllScheduledNotificationsAsync();
-
-  if (scheduledNotifications.length > 0) {
-    for (const notification of scheduledNotifications) {
-      await Notifications.cancelScheduledNotificationAsync(
-        notification.identifier,
-      );
-    }
-  }
+  cancelNotification();
 
   await Notifications.scheduleNotificationAsync({
     content: {
@@ -23,4 +14,8 @@ export async function scheduleNotification(time: Date) {
       repeats: true,
     },
   });
+}
+
+export async function cancelNotification() {
+  await Notifications.cancelAllScheduledNotificationsAsync();
 }
