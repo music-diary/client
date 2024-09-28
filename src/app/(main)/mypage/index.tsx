@@ -42,7 +42,10 @@ import { type UserPayloadSchema } from '@/models/schemas';
 import { mypageTerms } from '@/constants/data/terms';
 import { splashOptions } from '@/constants/data';
 import ThanksToList from '@/components/mypage/ThanksToList';
-import { scheduleNotification } from '@/utils/push-notifications';
+import {
+  cancelNotification,
+  scheduleNotification,
+} from '@/utils/push-notifications';
 
 const MypageScreen = () => {
   const { data: userInfo, isLoading, isError } = useGetUserInfo();
@@ -151,6 +154,10 @@ const MypageScreen = () => {
 
   useEffect(() => {
     handleUpdateUser();
+
+    if (!isDiaryToggled) {
+      cancelNotification();
+    }
   }, [isGenreSuggested, isAgreedMarketing, isDiaryToggled]);
 
   const openLogoutModal = () => openModal('logout-confirm-modal');
