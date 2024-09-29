@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "MUDA",
+    "name": "뮤다",
     "slug": "music-diary",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "orientation": "portrait",
     "icon": "./assets/images/common/muda-icon.png",
-    "scheme": "MUDA",
+    "scheme": "muda",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/common/splash.png",
@@ -15,7 +15,8 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.seongsoo96.musicdiary"
+      "bundleIdentifier": "com.seongsoo96.musicdiary",
+      "buildNumber": "2"
     },
     "android": {
       "adaptiveIcon": {
