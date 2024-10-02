@@ -31,6 +31,7 @@ import { type Mood } from '@/models/types';
 import { useModalStore } from '@/store/useModalStore';
 import { createDiaryData } from '@/utils/diary-utils';
 import GroupSvg from 'assets/images/splash/group-dot.svg';
+import { trackEvent } from '@/utils/amplitude-utils';
 
 const WriteScreen = () => {
   const params = useLocalSearchParams();
@@ -110,6 +111,7 @@ const WriteScreen = () => {
       emotions: [...emotionList, ...detailedEmotionList],
       status: 'EDIT',
     });
+    trackEvent('Start Writing 3', { generatedDiaryData });
     patchDiary({ id: diaryId as string, payload: generatedDiaryData });
   };
 

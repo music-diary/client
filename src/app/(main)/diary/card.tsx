@@ -28,6 +28,7 @@ import useToastStore from '@/store/useToastStore';
 import { convertToTimeString } from '@/utils/date-utils';
 import { handleSaveToGallery } from '@/utils/image-utils';
 import { scheduleNotification } from '@/utils/push-notifications';
+import { trackEvent } from '@/utils/amplitude-utils';
 
 const CardScreen = () => {
   const { diaryId } = useLocalSearchParams(); // URL에서 diaryData 가져오기
@@ -68,6 +69,7 @@ const CardScreen = () => {
   }, [splashKey]);
 
   const handleSave = () => {
+    trackEvent('Start Writing 5');
     if (allDiaries.length === 0) {
       openModal('push-notification');
     } else {
@@ -137,6 +139,10 @@ const CardScreen = () => {
       diaryAlarmTime: updatedTime,
       genres: updatedGenres,
     };
+    trackEvent('Alarm On', {
+      selected_time: updatedTime,
+      isAgreedDiaryAlarm: true,
+    });
     patchUser({ id: userInfo.id, payload });
   };
 

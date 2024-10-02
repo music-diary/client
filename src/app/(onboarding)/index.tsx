@@ -24,7 +24,7 @@ const SignUpScreen = () => {
 
   // amplitude -> signUp_start Event Tracking
   useEffect(() => {
-    trackEvent('SignUp start');
+    trackEvent('SignUp Start');
   }, []);
 
   const validatePhoneNumber = (number: string) => {

@@ -90,7 +90,7 @@ const GenreScreen = () => {
     signUp(userData, {
       onSuccess: (data) => {
         amplitude.init(AMPLITUDE_KEY, phoneNumber as string);
-        trackEvent('SignUp completed', userData);
+        trackEvent('SignUp Completed', userData);
         amplitude.setUserId(phoneNumber as string);
         openSplash('welcome-muda');
       },
