@@ -8,12 +8,18 @@ import {
 import { router } from 'expo-router';
 import { COLORS, FONTS } from '@/constants';
 import { colorWithOpacity } from '@/utils/color-utils';
+import useDiaryStore from '@/store/useDiaryStore';
 
 const containerWidth = Dimensions.get('window').width - 32;
 
 const MoreInfo = () => {
+  const { hasDiaryForToday } = useDiaryStore();
   const onPress = () => {
-    router.navigate({ pathname: '/diary', params: { stateInit: 'true' } });
+    if (hasDiaryForToday) {
+      router.navigate({ pathname: '/(main)/home/diary-limit' });
+    } else {
+      router.navigate({ pathname: '/diary', params: { stateInit: 'true' } });
+    }
   };
 
   return (
