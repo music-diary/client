@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { router } from 'expo-router';
 import {
   InputAccessoryView,
@@ -14,12 +14,18 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRequestPhoneVerification } from '@/api/hooks/useAuth';
 import Header from '@/components/onboarding/Header';
 import { COLORS, FONTS } from '@/constants';
+import { trackEvent } from '@/utils/amplitude-utils';
 
 const SignUpScreen = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   const { mutate: requestPhoneVerification } = useRequestPhoneVerification();
+
+  // amplitude -> signUp_start Event Tracking
+  useEffect(() => {
+    trackEvent('SignUp start');
+  }, []);
 
   const validatePhoneNumber = (number: string) => {
     const phoneNumberPattern = /^\d{10,11}$/;

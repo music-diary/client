@@ -17,8 +17,8 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 import { useAppStore } from '@/store/useAppStore';
 import { COLORS } from '@/constants';
 import { usePushNotifications } from '@/hooks/usePushNotifications';
-const key = process.env.EXPO_PUBLIC_AMPLITUDE_KEY ?? '';
-amplitude.init(key);
+import { trackEvent } from '@/utils/amplitude-utils';
+const key = process.env.EXPO_PUBLIC_AMPLITUDE_KEY;
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -62,13 +62,24 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-  amplitude.track('Sign Up');
-  console.log('amplitude', amplitude);
   const [queryClient] = useState(() => new QueryClient());
 
   const { isFirstLaunch, isAuthenticated } = useAppStore();
 
   const colorScheme = useColorScheme();
+
+  useEffect(() => {
+    if (key) {
+      amplitude.init(key);
+    } else {
+      console.log('Amplitude key is missing');
+    }
+    if (isFirstLaunch) {
+      trackEvent('Open App', { isFirstLaunch: true });
+    } else {
+      trackEvent('Open App', { isFirstLaunch: false });
+    }
+  }, []);
 
   useEffect(() => {
     queryClient.clear();
