@@ -1,9 +1,13 @@
-import { Tabs, usePathname } from 'expo-router';
+import { useCallback } from 'react';
+import { router, Tabs, useFocusEffect, usePathname } from 'expo-router';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import { Foundation, Feather, FontAwesome6 } from '@expo/vector-icons';
 import { useClientOnlyValue } from '@/hooks/useClientOnlyValue';
 import { COLORS } from '@/constants';
 import BottomBarIcon from '@/components/common/BottomBarIcon';
+import { useDiaryArchive } from '@/api/hooks/useArchive';
+import { formatKST } from '@/utils/date-utils';
+import useDiaryStore from '@/store/useDiaryStore';
 
 const ratio = 435 / 375;
 const currentWidth = Dimensions.get('window').width * ratio;
@@ -16,7 +20,24 @@ export default function TabLayout() {
     path === '/mypage/edit' ||
     path === '/mypage/inquiry' ||
     path === '/mypage/withdrawal' ||
-    path === '/mypage/statistic';
+    path === '/mypage/statistic' ||
+    path === '/home/diary-limit';
+
+  const today = new Date();
+  const { hasDiaryForToday, setHasDiaryForToday } = useDiaryStore();
+
+  const { data, isLoading, isError } = useDiaryArchive(
+    formatKST(today),
+    formatKST(today),
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      if (!isLoading && !isError && data) {
+        setHasDiaryForToday(data.length > 0);
+      }
+    }, [data, isLoading, isError, setHasDiaryForToday]),
+  );
 
   return (
     <Tabs
@@ -67,10 +88,14 @@ export default function TabLayout() {
         listeners={({ navigation }) => ({
           tabPress: (e) => {
             e.preventDefault();
-            navigation.navigate('diary', {
-              screen: 'index',
-              params: { stateInit: true },
-            });
+            if (hasDiaryForToday) {
+              router.navigate({ pathname: '/(main)/home/diary-limit' });
+            } else {
+              navigation.navigate('diary', {
+                screen: 'index',
+                params: { stateInit: true },
+              });
+            }
           },
         })}
       />

@@ -9,13 +9,15 @@ import {
 import { router } from 'expo-router';
 import { COLORS, FONTS } from '@/constants';
 import { formatKST } from '@/utils/date-utils';
+import useDiaryStore from '@/store/useDiaryStore';
 
-// 클릭 시 일기쓰러 가기로 이동
-const handleDiaryPress = () => {
-  router.navigate({ pathname: '/diary', params: { stateInit: 'true' } });
-};
-
-const lessThanTwo = ({ name }: { name: string }) => (
+const lessThanTwo = ({
+  name,
+  onPress,
+}: {
+  name: string;
+  onPress: () => void;
+}) => (
   <View style={styles.topDescription}>
     <Text style={styles.topMent}>
       {name}님,{'\n'}오늘 하루를{' '}
@@ -24,13 +26,21 @@ const lessThanTwo = ({ name }: { name: string }) => (
       </Text>
       해보세요!
     </Text>
-    <TouchableOpacity style={styles.topButton} onPress={handleDiaryPress}>
+    <TouchableOpacity style={styles.topButton} onPress={onPress}>
       <Text style={styles.topButtonText}>일기쓰러 가기</Text>
     </TouchableOpacity>
   </View>
 );
 
-const moreThanTwo = ({ count, name }: { count: number; name: string }) => {
+const moreThanTwo = ({
+  count,
+  name,
+  onPress,
+}: {
+  count: number;
+  name: string;
+  onPress: () => void;
+}) => {
   const date = new Date();
   const koreaTime = formatKST(date);
   const month = parseInt(koreaTime.split('-')[1], 10);
@@ -44,7 +54,7 @@ const moreThanTwo = ({ count, name }: { count: number; name: string }) => {
         </Text>
         를{'\n'}노래와 함께 했어요
       </Text>
-      <TouchableOpacity style={styles.topButton} onPress={handleDiaryPress}>
+      <TouchableOpacity style={styles.topButton} onPress={onPress}>
         <Text style={styles.topButtonText}>일기쓰러 가기</Text>
       </TouchableOpacity>
     </View>
@@ -52,6 +62,15 @@ const moreThanTwo = ({ count, name }: { count: number; name: string }) => {
 };
 
 const TopDescription = ({ count, name }: { count: number; name: string }) => {
+  const { hasDiaryForToday } = useDiaryStore();
+  const onPress = () => {
+    if (hasDiaryForToday) {
+      router.navigate({ pathname: '/(main)/home/diary-limit' });
+    } else {
+      router.navigate({ pathname: '/diary', params: { stateInit: 'true' } });
+    }
+  };
+
   const [showLessThanTwo, setShowLessThanTwo] = useState(count < 2);
   const fadeAnim = useState(new Animated.Value(1))[0];
 
@@ -82,14 +101,18 @@ const TopDescription = ({ count, name }: { count: number; name: string }) => {
   if (count <= 2) {
     return (
       <Animated.View style={[styles.topDescription, { opacity: fadeAnim }]}>
-        {showLessThanTwo ? lessThanTwo({ name }) : moreThanTwo({ count, name })}
+        {showLessThanTwo
+          ? lessThanTwo({ name, onPress })
+          : moreThanTwo({ count, name, onPress })}
       </Animated.View>
     );
   }
 
   return (
     <Animated.View style={[styles.topDescription, { opacity: fadeAnim }]}>
-      {showLessThanTwo ? moreThanTwo({ count, name }) : lessThanTwo({ name })}
+      {showLessThanTwo
+        ? moreThanTwo({ count, name, onPress })
+        : lessThanTwo({ name, onPress })}
     </Animated.View>
   );
 };
