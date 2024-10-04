@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import * as amplitude from '@amplitude/analytics-react-native';
 import { useSignUp } from '@/api/hooks/useAuth';
 import { useGenres } from '@/api/hooks/useGenres';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
@@ -19,6 +20,8 @@ import { type SignUpSchema } from '@/models/schemas';
 import { type Gender } from '@/models/types';
 import { useDimStore } from '@/store/useDimStore';
 import { useSplashStore } from '@/store/useSplashStore';
+import { trackEvent } from '@/utils/amplitude-utils';
+const AMPLITUDE_KEY = process.env.EXPO_PUBLIC_AMPLITUDE_KEY ?? '';
 
 const GenreScreen = () => {
   const { data: genres, error, isLoading } = useGenres();
@@ -86,6 +89,9 @@ const GenreScreen = () => {
 
     signUp(userData, {
       onSuccess: (data) => {
+        amplitude.init(AMPLITUDE_KEY, phoneNumber as string);
+        trackEvent('SignUp Completed', userData);
+        amplitude.setUserId(phoneNumber as string);
         openSplash('welcome-muda');
       },
       onError: (error) => {
