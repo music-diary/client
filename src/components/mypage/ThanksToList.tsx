@@ -1,11 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import { COLORS, FONTS } from '@/constants';
 import { colorWithOpacity } from '@/utils/color-utils';
 import { ThanksStar } from 'assets/images/mypage';
 import { thanksName } from '@/constants/data';
 import { chunkArray } from '@/utils/text-utils';
 
+const height = Dimensions.get('window').height * 0.7;
 const ThanksToList = () => {
   const chunkedNames = chunkArray(thanksName, 2);
 
@@ -20,18 +22,20 @@ const ThanksToList = () => {
           뮤다를 후원해주신 분들에게 감사의 마음을 담아
         </Text>
       </View>
-      <View style={styles.body}>
-        {chunkedNames.map((pair, index) => (
-          <View style={styles.nameRow} key={index}>
-            {pair.map((name, idx) => (
-              <View style={styles.nameItem} key={idx}>
-                <ThanksStar />
-                <Text style={styles.nameText}>{name}</Text>
-              </View>
-            ))}
-          </View>
-        ))}
-      </View>
+      <ScrollView>
+        <View style={styles.body} onStartShouldSetResponder={() => true}>
+          {chunkedNames.map((pair, index) => (
+            <View style={styles.nameRow} key={index}>
+              {pair.map((name, idx) => (
+                <View style={styles.nameItem} key={idx}>
+                  <ThanksStar />
+                  <Text style={styles.nameText}>{name}</Text>
+                </View>
+              ))}
+            </View>
+          ))}
+        </View>
+      </ScrollView>
     </View>
   );
 };
@@ -40,6 +44,7 @@ export default ThanksToList;
 
 const styles = StyleSheet.create({
   container: {
+    height,
     gap: 20,
   },
   header: {
