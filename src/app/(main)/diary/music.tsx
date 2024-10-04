@@ -32,6 +32,7 @@ import { useModalStore } from '@/store/useModalStore';
 import { useSplashStore } from '@/store/useSplashStore';
 import { colorWithOpacity } from '@/utils/color-utils';
 import { extractVideoId } from '@/utils/music-utils';
+import { trackEvent } from '@/utils/amplitude-utils';
 
 const PAGE_WIDTH = Dimensions.get('window').width;
 const PAGE_HEIGHT = Dimensions.get('window').height;
@@ -134,7 +135,7 @@ const MusicRecommendationScreen = () => {
       status: 'EDIT',
       music: updatedMusic,
     };
-
+    trackEvent('Start Writing 4', { updatedMusic });
     patchDiary({ id: diaryId as string, payload: updatedDiaryData });
   };
 

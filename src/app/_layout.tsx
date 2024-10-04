@@ -11,11 +11,14 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import * as amplitude from '@amplitude/analytics-react-native';
 import DImOverlay from '@/components/common/DImOverlay';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { useAppStore } from '@/store/useAppStore';
 import { COLORS } from '@/constants';
 import { usePushNotifications } from '@/hooks/usePushNotifications';
+import { trackEvent } from '@/utils/amplitude-utils';
+const key = process.env.EXPO_PUBLIC_AMPLITUDE_KEY;
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -64,6 +67,19 @@ function RootLayoutNav() {
   const { isFirstLaunch, isAuthenticated } = useAppStore();
 
   const colorScheme = useColorScheme();
+
+  useEffect(() => {
+    if (key) {
+      amplitude.init(key);
+    } else {
+      console.log('Amplitude key is missing');
+    }
+    if (isFirstLaunch) {
+      trackEvent('Open App', { isFirstLaunch: true });
+    } else {
+      trackEvent('Open App', { isFirstLaunch: false });
+    }
+  }, []);
 
   useEffect(() => {
     queryClient.clear();

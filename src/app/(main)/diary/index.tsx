@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useQueryClient } from '@tanstack/react-query';
@@ -14,6 +14,7 @@ import { COLORS } from '@/constants';
 import { type IEmotion, type ITopic } from '@/models/interfaces';
 import { useModalStore } from '@/store/useModalStore';
 import { isEmptyObject } from '@/utils/common-utils';
+import { trackEvent } from '@/utils/amplitude-utils';
 
 const SubjectEmotionScreen = () => {
   const queryClient = useQueryClient();
@@ -29,6 +30,10 @@ const SubjectEmotionScreen = () => {
 
   const { closeModal } = useModalStore();
   const { mutate: deleteDiary } = useDeleteDiary();
+
+  useEffect(() => {
+    trackEvent('Start Writing 1');
+  }, []);
 
   useFocusEffect(
     useCallback(() => {
@@ -62,15 +67,17 @@ const SubjectEmotionScreen = () => {
   );
 
   const handleNext = () => {
+    const paramsData = {
+      mood: JSON.stringify(mood),
+      emotions: JSON.stringify(emotions),
+      detailedEmotions: JSON.stringify(detailedEmotions),
+      topics: JSON.stringify(topics),
+      diaryId,
+    };
+    trackEvent('Start Writing 2', paramsData);
     router.push({
       pathname: '/diary/write',
-      params: {
-        mood: JSON.stringify(mood),
-        emotions: JSON.stringify(emotions),
-        detailedEmotions: JSON.stringify(detailedEmotions),
-        topics: JSON.stringify(topics),
-        diaryId,
-      },
+      params: paramsData,
     });
   };
 
