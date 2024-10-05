@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { router, useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import {
   ActivityIndicator,
   Dimensions,
@@ -33,12 +33,14 @@ import { useSplashStore } from '@/store/useSplashStore';
 import { colorWithOpacity } from '@/utils/color-utils';
 import { extractVideoId } from '@/utils/music-utils';
 import { trackEvent } from '@/utils/amplitude-utils';
+import HeaderRight from '@/components/diary/HeaderRight';
 
 const PAGE_WIDTH = Dimensions.get('window').width;
 const PAGE_HEIGHT = Dimensions.get('window').height;
 
 const MusicRecommendationScreen = () => {
   const { diaryId, mood } = useLocalSearchParams();
+  const navigation = useNavigation();
 
   const ref = useRef<ICarouselInstance>(null);
   const { closeModal } = useModalStore();
@@ -71,6 +73,17 @@ const MusicRecommendationScreen = () => {
     };
   }, []);
 
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () =>
+        isFetching || musicData.length === 0 || error ? (
+          <HeaderRight onPressClose={handleXButtonAction} />
+        ) : (
+          <HeaderRight />
+        ),
+    });
+  }, [isFetching, musicData, error, diaryId, navigation]);
+
   const { mutate: deleteDiary } = useDeleteDiary();
   const { mutate: patchDiary } = usePatchDiary({
     onSuccess: () => {
@@ -80,6 +93,11 @@ const MusicRecommendationScreen = () => {
       console.warn('Failed to patch diary');
     },
   });
+
+  const handleXButtonAction = () => {
+    deleteDiary(diaryId as string);
+    router.replace('/(main)');
+  };
 
   const handleLyricPress = (musicIndex: number, lyricIndex: number) => {
     if (selectedMusicIndex !== musicIndex) {
@@ -274,8 +292,7 @@ const MusicRecommendationScreen = () => {
         rightButtonText="일기 계속 작성하기"
         onLeftButtonPress={() => {
           closeModal();
-          deleteDiary(diaryId as string);
-          router.replace('/(main)');
+          handleXButtonAction();
         }}
         onRightButtonPress={closeModal}
       />
