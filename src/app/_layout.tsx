@@ -72,7 +72,7 @@ function RootLayoutNav() {
     if (key) {
       amplitude.init(key);
     } else {
-      console.log('Amplitude key is missing');
+      console.warn('Amplitude key is missing');
     }
     if (isFirstLaunch) {
       trackEvent('Open App', { isFirstLaunch: true });

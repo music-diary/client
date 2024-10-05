@@ -4,14 +4,20 @@ import { StyleSheet, View } from 'react-native';
 import { useModalStore } from '@/store/useModalStore';
 
 interface HeaderRightProps {
-  onPress?: () => void;
+  onPressClose?: () => void;
+  onPressAction?: () => void;
 }
 
-const HeaderRight = ({ onPress }: HeaderRightProps) => {
+const HeaderRight = ({ onPressClose, onPressAction }: HeaderRightProps) => {
   const { openModal } = useModalStore();
   const pathname = usePathname();
 
   const handleXButton = () => {
+    if (onPressClose) {
+      onPressClose(); // 외부에서 받은 핸들러 실행
+      return;
+    }
+
     const cancelRoutes = ['/diary', '/diary/write', '/diary/music'];
 
     if (cancelRoutes.includes(pathname)) {
@@ -25,12 +31,12 @@ const HeaderRight = ({ onPress }: HeaderRightProps) => {
 
   return (
     <View style={styles.container}>
-      {pathname === '/diary/card' && onPress && (
+      {pathname === '/diary/card' && onPressAction && (
         <MaterialCommunityIcons
           name="arrow-collapse-down"
           size={20}
           color="white"
-          onPress={onPress}
+          onPress={onPressAction}
         />
       )}
       <AntDesign size={22} name="close" color="white" onPress={handleXButton} />
