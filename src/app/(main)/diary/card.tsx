@@ -150,7 +150,7 @@ const CardScreen = () => {
     navigation.setOptions({
       headerRight: () => (
         <HeaderRight
-          onPress={() => {
+          onPressAction={() => {
             handleSaveToGallery({ cardRef, setIsCapturing, showToast });
           }}
         />
