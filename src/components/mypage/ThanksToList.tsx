@@ -5,12 +5,10 @@ import { COLORS, FONTS } from '@/constants';
 import { colorWithOpacity } from '@/utils/color-utils';
 import { ThanksStar } from 'assets/images/mypage';
 import { thanksName } from '@/constants/data';
-import { chunkArray } from '@/utils/text-utils';
 
 const height = Dimensions.get('window').height * 0.7;
-const ThanksToList = () => {
-  const chunkedNames = chunkArray(thanksName, 2);
 
+const ThanksToList = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -24,14 +22,11 @@ const ThanksToList = () => {
       </View>
       <ScrollView>
         <View style={styles.body} onStartShouldSetResponder={() => true}>
-          {chunkedNames.map((pair, index) => (
-            <View style={styles.nameRow} key={index}>
-              {pair.map((name, idx) => (
-                <View style={styles.nameItem} key={idx}>
-                  <ThanksStar />
-                  <Text style={styles.nameText}>{name}</Text>
-                </View>
-              ))}
+          {/* thanksName을 한 줄로 나열 */}
+          {thanksName.map((name, index) => (
+            <View style={styles.nameItem} key={index}>
+              <ThanksStar />
+              <Text style={styles.nameText}>{name}</Text>
             </View>
           ))}
         </View>
@@ -70,15 +65,11 @@ const styles = StyleSheet.create({
     width: 36,
     borderRadius: 20,
   },
-  nameRow: {
-    flexDirection: 'row',
-    marginBottom: 16,
-    justifyContent: 'space-between',
-  },
   nameItem: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
+    marginBottom: 15, 
   },
   nameText: {
     color: COLORS.WHITE,
