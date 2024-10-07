@@ -2,7 +2,7 @@
   "expo": {
     "name": "뮤다",
     "slug": "music-diary",
-    "version": "0.0.7",
+    "version": "0.0.8",
     "orientation": "portrait",
     "icon": "./assets/images/common/muda-icon.png",
     "scheme": "muda",
@@ -16,7 +16,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.seongsoo96.musicdiary",
-      "buildNumber": "2"
+      "buildNumber": "1"
     },
     "android": {
       "adaptiveIcon": {
