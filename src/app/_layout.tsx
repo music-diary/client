@@ -18,6 +18,7 @@ import { useAppStore } from '@/store/useAppStore';
 import { COLORS } from '@/constants';
 import { usePushNotifications } from '@/hooks/usePushNotifications';
 import { trackEvent } from '@/utils/amplitude-utils';
+import useTrackingPermission from '@/hooks/useTrackingPermission';
 const key = process.env.EXPO_PUBLIC_AMPLITUDE_KEY;
 
 export {
@@ -35,6 +36,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   usePushNotifications();
+  useTrackingPermission();
 
   const [loaded, error] = useFonts({
     'pret-r': require(`assets/fonts/Pretendard-Regular.otf`),
