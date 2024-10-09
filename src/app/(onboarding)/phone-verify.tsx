@@ -24,14 +24,17 @@ import { WarningCircleSvg } from 'assets/images/onboarding';
 import { type VerifyStatus } from '@/models/types';
 import { colorWithOpacity } from '@/utils/color-utils';
 
+const testPhoneNumber = '+820101234321';
+
 const PhoneVerifyScreen = () => {
   const { phoneNumber } = useLocalSearchParams();
   const { toggleDim } = useDimStore();
-
   const [retry, setRetry] = useState(false);
   const [verifyNumber, setVerifyNumber] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(
+    phoneNumber !== testPhoneNumber,
+  );
   const [verifyStatus, setVerifyStatus] = useState<VerifyStatus>('sent');
 
   const { mutate: verifyPhone } = useVerifyPhone();
@@ -63,6 +66,11 @@ const PhoneVerifyScreen = () => {
       phoneNumber: phoneNumber as string,
       code: verifyNumber,
     };
+    if (phoneNumber === testPhoneNumber) {
+      toggleDim();
+      setModalVisible(true);
+      return;
+    }
     verifyPhone(verificationData, {
       onSuccess: (data) => {
         if (data?.user?.id) return;
