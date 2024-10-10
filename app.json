@@ -2,7 +2,7 @@
   "expo": {
     "name": "뮤다",
     "slug": "music-diary",
-    "version": "0.0.8",
+    "version": "0.0.9",
     "orientation": "portrait",
     "icon": "./assets/images/common/muda-icon.png",
     "scheme": "muda",
