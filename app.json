@@ -23,7 +23,7 @@
         "NSUserTrackingUsageDescription": "This app uses the IDFA to track user activity."
       },
       "config": {
-        "ITSAppUsesNonExemptEncryption": false
+        "usesNonExemptEncryption": false
       }
     },
     "android": {
