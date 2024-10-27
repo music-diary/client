@@ -20,7 +20,14 @@
       "infoPlist": {
         "NSCameraUsageDescription": "This app uses the camera to take a photo of the album cover.",
         "NSPhotoLibraryAddUsageDescription": "This app uses the photo library to save a photo of the album cover.",
-        "NSUserTrackingUsageDescription": "This app uses the IDFA to track user activity."
+        "NSUserTrackingUsageDescription": "This app uses the IDFA to track user activity.",
+        "CFBundleURLTypes": [
+          {
+            "CFBundleURLSchemes": [
+              "com.googleusercontent.apps.484104164369-6g5m6omo00mlg4cr047uh62ttpbo284m"
+            ]
+          }
+        ]
       }
     },
     "android": {
@@ -41,6 +48,10 @@
         "expo-tracking-transparency",
         {
           "userTrackingPermission": "This identifier will be used to deliver personalized ads to you."
+        },
+        "@react-native-google-signin/google-signin",
+        {
+          "iosUrlScheme": "com.googleusercontent.apps.484104164369-6g5m6omo00mlg4cr047uh62ttpbo284m"
         }
       ]
     ],
