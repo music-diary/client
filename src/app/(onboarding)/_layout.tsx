@@ -19,7 +19,7 @@ const LoginLayout = () => {
         animation: 'fade',
       }}
     >
-      <Stack.Screen name="index" options={{ headerLeft: () => null }} />
+      <Stack.Screen name="index" options={{ header: () => null }} />
       <Stack.Screen name="phone-verify" />
       <Stack.Screen
         name="user-info"
