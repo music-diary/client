@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import {
   ActivityIndicator,
   StyleSheet,
@@ -25,8 +25,7 @@ const AMPLITUDE_KEY = process.env.EXPO_PUBLIC_AMPLITUDE_KEY ?? '';
 
 const GenreScreen = () => {
   const { data: genres, error, isLoading } = useGenres();
-  const { phoneNumber, name, birth, gender, isAgreedMarketing } =
-    useLocalSearchParams();
+  const params = useLocalSearchParams();
 
   const { openSplash } = useSplashStore();
 
@@ -77,27 +76,36 @@ const GenreScreen = () => {
     toggleDim();
     setModalVisible(false);
 
-    const userData: SignUpSchema = {
-      name: name as string,
-      gender: gender as Gender,
-      phoneNumber: phoneNumber as string,
-      birthDay: parseDate(birth as string),
-      genres: selectedGenre,
-      isGenreSuggested,
-      isAgreedMarketing: isAgreedMarketing === 'true',
-    };
-
-    signUp(userData, {
-      onSuccess: (data) => {
-        amplitude.init(AMPLITUDE_KEY, phoneNumber as string);
-        trackEvent('SignUp Completed', userData);
-        amplitude.setUserId(phoneNumber as string);
-        openSplash('welcome-muda');
-      },
-      onError: (error) => {
-        console.warn('Sign Up Error:', error);
+    router.push({
+      pathname: '/terms',
+      params: {
+        isGenreSuggested: isGenreSuggested.toString(),
+        selectedGenre: JSON.stringify(selectedGenre),
+        ...params,
       },
     });
+
+    // const userData: SignUpSchema = {
+    //   name: name as string,
+    //   gender: gender as Gender,
+    //   // phoneNumber: phoneNumber as string,
+    //   birthDay: parseDate(birth as string),
+    //   genres: selectedGenre,
+    //   isGenreSuggested,
+    //   // isAgreedMarketing: isAgreedMarketing === 'true',
+    // };
+
+    // signUp(userData, {
+    //   onSuccess: (data) => {
+    //     // amplitude.init(AMPLITUDE_KEY, phoneNumber as string);
+    //     trackEvent('SignUp Completed', userData);
+    //     // amplitude.setUserId(phoneNumber as string);
+    //     openSplash('welcome-muda');
+    //   },
+    //   onError: (error) => {
+    //     console.warn('Sign Up Error:', error);
+    //   },
+    // });
   };
 
   if (isLoading) {
@@ -120,7 +128,7 @@ const GenreScreen = () => {
     <>
       <SafeAreaView edges={['top']} style={styles.container}>
         <Header
-          title={`${name as string} 님의 음악 취향을 선택해주세요`}
+          title={`${params.name as string} 님의 음악 취향을 선택해주세요`}
           description="최소 1개부터 최대 3개까지 가능해요"
         />
         <View style={styles.genreListContainer}>
@@ -146,7 +154,7 @@ const GenreScreen = () => {
       <CustomBottomButton
         isActive={!isButtonDisabled}
         onPress={handleNext}
-        label="완료"
+        label="다음"
       />
       <GenreRecModal
         modalVisible={modalVisible}

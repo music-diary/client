@@ -12,7 +12,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#7850F8"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.seongsoo96.musicdiary",
@@ -34,7 +36,11 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "com.google.android.gms.permission.AD_ID"
+      ],
+      "package": "com.seongsoo96.musicdiary"
     },
     "web": {
       "bundler": "metro",
@@ -48,7 +54,9 @@
         "expo-tracking-transparency",
         {
           "userTrackingPermission": "This identifier will be used to deliver personalized ads to you."
-        },
+        }
+      ],
+      [
         "@react-native-google-signin/google-signin",
         {
           "iosUrlScheme": "com.googleusercontent.apps.484104164369-6g5m6omo00mlg4cr047uh62ttpbo284m"

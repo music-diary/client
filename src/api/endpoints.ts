@@ -6,6 +6,9 @@ export const API_ENDPOINTS = {
     PHONE: '/auth/phone',
     PHONE_VERIFICATION: '/auth/phone/verification',
     LOGIN: '/auth/login',
+    GOOGLE: '/auth/login/oauth/google',
+    APPLE: '/auth/login/oauth/apple',
+    OAUTH_SIGN_UP: '/auth/login/sign-up',
   },
   USERS: {
     SELF: '/users/self',

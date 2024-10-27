@@ -21,6 +21,24 @@ export const tempLogin = async () => {
   }
 };
 
+export const googleLogin = async (idToken: string) => {
+  try {
+    const { headers, data } = await apiClient.post(AUTH.GOOGLE, {
+      idToken,
+    });
+
+    console.log('Google Login Data:', data);
+
+    if (data?.user?.id) {
+      await handleLogin(headers);
+    }
+
+    return data.data;
+  } catch (error) {
+    handleError(error, 'Google Login error');
+  }
+};
+
 const requestPhoneVerification = async (phoneNumber: string) => {
   try {
     const { data } = await apiClient.post(AUTH.PHONE, {
@@ -52,6 +70,7 @@ const verifyPhone = async (verificationData: VerifyPhoneSchema) => {
 const signUp = async (userData: SignUpSchema) => {
   try {
     const { headers, data } = await apiClient.post(AUTH.SIGN_UP, userData);
+
     await handleLogin(headers);
     return data;
   } catch (error) {
@@ -59,8 +78,27 @@ const signUp = async (userData: SignUpSchema) => {
   }
 };
 
+const oAuthSignUp = async (userData: SignUpSchema) => {
+  console.log('User Data:', userData);
+
+  try {
+    const { headers, data } = await apiClient.post(
+      AUTH.OAUTH_SIGN_UP,
+      userData,
+    );
+    await handleLogin(headers);
+    return data;
+  } catch (error) {
+    handleError(error, 'OAuth Sign Up error');
+  }
+};
+
 export const useTempLogin = () => {
   return useMutation({ mutationFn: tempLogin });
+};
+
+export const useGoogleLogin = () => {
+  return useMutation({ mutationFn: googleLogin });
 };
 
 export const useRequestPhoneVerification = () => {
@@ -73,4 +111,8 @@ export const useVerifyPhone = () => {
 
 export const useSignUp = () => {
   return useMutation({ mutationFn: signUp });
+};
+
+export const useOAuthSignUp = () => {
+  return useMutation({ mutationFn: oAuthSignUp });
 };

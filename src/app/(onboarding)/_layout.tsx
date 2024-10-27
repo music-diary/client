@@ -30,6 +30,7 @@ const LoginLayout = () => {
         }}
       />
       <Stack.Screen name="genre" />
+      <Stack.Screen name="terms" />
       <Stack.Screen name="complete" />
     </Stack>
   );
