@@ -66,8 +66,6 @@ const TermsScreen = () => {
       idToken: idToken as string,
     };
 
-    console.log('User Data:', userData);
-
     signUp(userData, {
       onSuccess: (data) => {
         trackEvent('SignUp Completed', userData);

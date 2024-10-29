@@ -9,9 +9,10 @@ import {
 } from 'react-native';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { router } from 'expo-router';
+import * as AppleAuthentication from 'expo-apple-authentication';
 import { COLORS, FONTS } from '@/constants';
 import { AppleLogoSvg, GoogleLogoSvg, MainIconSvg } from 'assets/images/common';
-import { useGoogleLogin } from '@/api/hooks/useAuth';
+import { useAppleLogin, useGoogleLogin } from '@/api/hooks/useAuth';
 import TermsModal from '@/components/onboarding/TermsModal';
 import { useDimStore } from '@/store/useDimStore';
 
@@ -31,19 +32,18 @@ const SignInScreen = () => {
   });
 
   const { mutate: googleLogin } = useGoogleLogin();
+  const { mutate: appleLogin } = useAppleLogin();
 
-  const signIn = async () => {
+  const googleSignIn = async () => {
     try {
       const userInfo = await GoogleSignin.signIn();
-      console.log('userInfo:', userInfo);
       if (userInfo && userInfo.type === 'success' && userInfo.data.idToken) {
         googleLogin(userInfo.data.idToken, {
           onSuccess: (data) => {
-            console.log('data:', data);
-            if (data?.user?.id) return;
+            if (data?.id) return;
             router.push({
               pathname: '/user-info',
-              params: { idToken: data.providerId },
+              params: { idToken: userInfo.data.user.id },
             });
           },
           onError: (error) => {
@@ -55,6 +55,35 @@ const SignInScreen = () => {
       }
     } catch (error) {
       console.error('Google Sign-In 에러:', error);
+    }
+  };
+
+  const appleSignIn = async () => {
+    try {
+      const userInfo = await AppleAuthentication.signInAsync({
+        requestedScopes: [
+          AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+          AppleAuthentication.AppleAuthenticationScope.EMAIL,
+        ],
+      });
+      if (userInfo?.identityToken) {
+        appleLogin(userInfo.identityToken, {
+          onSuccess: (data) => {
+            if (data?.id) return;
+            router.push({
+              pathname: '/user-info',
+              params: { idToken: userInfo.user },
+            });
+          },
+          onError: (error) => {
+            console.warn('애플 로그인 에러 :', error);
+          },
+        });
+      } else {
+        console.warn('ID Token을 가져오지 못했습니다.');
+      }
+    } catch (error) {
+      console.warn('Apple Sign-In 에러:', error);
     }
   };
 
@@ -76,7 +105,7 @@ const SignInScreen = () => {
       <View style={styles.buttonView}>
         <TouchableOpacity
           onPress={() => {
-            signIn();
+            googleSignIn();
           }}
           style={[styles.signInButton, { backgroundColor: COLORS.WHITE }]}
         >
@@ -86,6 +115,9 @@ const SignInScreen = () => {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
+          onPress={() => {
+            appleSignIn();
+          }}
           style={[styles.signInButton, { backgroundColor: COLORS.BLACK }]}
         >
           <AppleLogoSvg />

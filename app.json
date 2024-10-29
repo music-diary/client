@@ -12,13 +12,12 @@
       "resizeMode": "contain",
       "backgroundColor": "#7850F8"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.seongsoo96.musicdiary",
       "buildNumber": "1",
+      "usesAppleSignIn": true,
       "infoPlist": {
         "NSCameraUsageDescription": "This app uses the camera to take a photo of the album cover.",
         "NSPhotoLibraryAddUsageDescription": "This app uses the photo library to save a photo of the album cover.",
@@ -34,12 +33,10 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/common/splash.png",
         "backgroundColor": "#ffffff"
       },
-      "permissions": [
-        "com.google.android.gms.permission.AD_ID"
-      ],
+      "permissions": ["com.google.android.gms.permission.AD_ID"],
       "package": "com.seongsoo96.musicdiary"
     },
     "web": {
@@ -50,6 +47,7 @@
     "plugins": [
       "expo-router",
       "expo-font",
+      "expo-apple-authentication",
       [
         "expo-tracking-transparency",
         {

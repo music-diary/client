@@ -27,15 +27,29 @@ export const googleLogin = async (idToken: string) => {
       idToken,
     });
 
-    console.log('Google Login Data:', data);
-
-    if (data?.user?.id) {
+    if (data?.data?.id) {
       await handleLogin(headers);
     }
 
     return data.data;
   } catch (error) {
     handleError(error, 'Google Login error');
+  }
+};
+
+export const appleLogin = async (idToken: string) => {
+  try {
+    const { headers, data } = await apiClient.post(AUTH.APPLE, {
+      idToken,
+    });
+
+    if (data?.data?.id) {
+      await handleLogin(headers);
+    }
+
+    return data.data;
+  } catch (error) {
+    handleError(error, 'Apple Login error');
   }
 };
 
@@ -79,13 +93,12 @@ const signUp = async (userData: SignUpSchema) => {
 };
 
 const oAuthSignUp = async (userData: SignUpSchema) => {
-  console.log('User Data:', userData);
-
   try {
     const { headers, data } = await apiClient.post(
       AUTH.OAUTH_SIGN_UP,
       userData,
     );
+
     await handleLogin(headers);
     return data;
   } catch (error) {
@@ -99,6 +112,10 @@ export const useTempLogin = () => {
 
 export const useGoogleLogin = () => {
   return useMutation({ mutationFn: googleLogin });
+};
+
+export const useAppleLogin = () => {
+  return useMutation({ mutationFn: appleLogin });
 };
 
 export const useRequestPhoneVerification = () => {
