@@ -4,12 +4,17 @@ import { Foundation, Feather, FontAwesome6 } from '@expo/vector-icons';
 import { useClientOnlyValue } from '@/hooks/useClientOnlyValue';
 import { COLORS } from '@/constants';
 import BottomBarIcon from '@/components/common/BottomBarIcon';
+import { usePushNotifications } from '@/hooks/usePushNotifications';
+import useTrackingPermission from '@/hooks/useTrackingPermission';
 
 const ratio = 435 / 375;
 const currentWidth = Dimensions.get('window').width * ratio;
 const currentHeight = (137 / 435) * currentWidth;
 
 export default function TabLayout() {
+  usePushNotifications();
+  useTrackingPermission();
+
   return (
     <Tabs
       screenOptions={{
