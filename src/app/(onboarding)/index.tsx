@@ -1,144 +1,174 @@
-import { useEffect, useState } from 'react';
-import { router } from 'expo-router';
+import React, { useEffect, useState } from 'react';
 import {
-  InputAccessoryView,
-  KeyboardAvoidingView,
-  Platform,
+  SafeAreaView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
+  Dimensions,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useRequestPhoneVerification } from '@/api/hooks/useAuth';
-import Header from '@/components/onboarding/Header';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { router } from 'expo-router';
+import * as AppleAuthentication from 'expo-apple-authentication';
 import { COLORS, FONTS } from '@/constants';
-import { trackEvent } from '@/utils/amplitude-utils';
+import { AppleLogoSvg, GoogleLogoSvg, MainIconSvg } from 'assets/images/common';
+import { useAppleLogin, useGoogleLogin } from '@/api/hooks/useAuth';
+import TermsModal from '@/components/onboarding/TermsModal';
+import { useDimStore } from '@/store/useDimStore';
 
-const SignUpScreen = () => {
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+const SignInScreen = () => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const { toggleDim } = useDimStore();
 
-  const { mutate: requestPhoneVerification } = useRequestPhoneVerification();
+  const configureGoogleSignIn = () => {
+    GoogleSignin.configure({
+      iosClientId:
+        '484104164369-6g5m6omo00mlg4cr047uh62ttpbo284m.apps.googleusercontent.com',
+    });
+  };
 
-  // amplitude -> signUp_start Event Tracking
   useEffect(() => {
-    trackEvent('SignUp Start');
-  }, []);
+    configureGoogleSignIn();
+  });
 
-  const validatePhoneNumber = (number: string) => {
-    const phoneNumberPattern = /^\d{10,11}$/;
-    return phoneNumberPattern.test(number);
-  };
+  const { mutate: googleLogin } = useGoogleLogin();
+  const { mutate: appleLogin } = useAppleLogin();
 
-  const handlePhoneNumberChange = (number: string) => {
-    setPhoneNumber(number);
-    setIsButtonDisabled(!validatePhoneNumber(number));
-  };
-
-  const handleVerifyPhoneNumber = () => {
-    const phone = '+82' + phoneNumber;
-    requestPhoneVerification(phone, {
-      onSuccess: () => {
-        router.push({
-          pathname: '/phone-verify',
-          params: { phoneNumber: phone },
+  const googleSignIn = async () => {
+    try {
+      const userInfo = await GoogleSignin.signIn();
+      if (userInfo && userInfo.type === 'success' && userInfo.data.idToken) {
+        googleLogin(userInfo.data.idToken, {
+          onSuccess: (data) => {
+            if (data?.id) return;
+            router.push({
+              pathname: '/user-info',
+              params: { idToken: userInfo.data.user.id },
+            });
+          },
+          onError: (error) => {
+            console.warn('구글 로그인 에러 :', error);
+          },
         });
-      },
-      onError: (error) => {
-        console.warn('Phone Verification Request Error:', error);
-      },
+      } else {
+        console.warn('ID Token을 가져오지 못했습니다.');
+      }
+    } catch (error) {
+      console.error('Google Sign-In 에러:', error);
+    }
+  };
+
+  const appleSignIn = async () => {
+    try {
+      const userInfo = await AppleAuthentication.signInAsync({
+        requestedScopes: [
+          AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+          AppleAuthentication.AppleAuthenticationScope.EMAIL,
+        ],
+      });
+      if (userInfo?.identityToken) {
+        appleLogin(userInfo.identityToken, {
+          onSuccess: (data) => {
+            if (data?.id) return;
+            router.push({
+              pathname: '/user-info',
+              params: { idToken: userInfo.user },
+            });
+          },
+          onError: (error) => {
+            console.warn('애플 로그인 에러 :', error);
+          },
+        });
+      } else {
+        console.warn('ID Token을 가져오지 못했습니다.');
+      }
+    } catch (error) {
+      console.warn('Apple Sign-In 에러:', error);
+    }
+  };
+
+  const handleNext = (isAgreedMarketing: boolean) => {
+    toggleDim();
+    setModalVisible(false);
+    router.push({
+      pathname: '/user-info',
+      params: { isAgreedMarketing: isAgreedMarketing.toString() },
     });
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header
-        title="전화번호 가입"
-        description="뮤다를 시작하기 위해 전화번호 인증이 필요해요"
-      />
-      <KeyboardAvoidingView
-        style={styles.keyboardAvoidingContainer}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={Platform.OS === 'android' ? 78 : 0}
-      >
-        <View style={styles.inputContainer}>
-          <Text style={styles.inputLabel}>전화번호</Text>
-          <TextInput
-            style={styles.inputPhoneNumber}
-            autoFocus={true}
-            placeholder="-를 제외한 번호를 입력해주세요."
-            placeholderTextColor={COLORS.CONTENTS_LIGHT}
-            value={phoneNumber}
-            onChangeText={handlePhoneNumberChange}
-            keyboardType="phone-pad"
-            inputAccessoryViewID="phoneNumber"
-          />
-        </View>
-        <InputAccessoryView
-          nativeID="phoneNumber"
-          backgroundColor={isButtonDisabled ? COLORS.BG_LIGHT : COLORS.PURPLE}
+      <View style={styles.centerView}>
+        <MainIconSvg />
+        <Text style={styles.description}>내 하루의 OST, 뮤다</Text>
+      </View>
+      <View style={styles.buttonView}>
+        <TouchableOpacity
+          onPress={() => {
+            googleSignIn();
+          }}
+          style={[styles.signInButton, { backgroundColor: COLORS.WHITE }]}
         >
-          <TouchableOpacity
-            style={styles.verifyButton}
-            onPress={handleVerifyPhoneNumber}
-            disabled={isButtonDisabled}
-          >
-            <Text
-              style={[
-                styles.verifyText,
-                {
-                  color: isButtonDisabled
-                    ? COLORS.CONTENTS_LIGHT
-                    : COLORS.WHITE,
-                },
-              ]}
-            >
-              인증번호 받기
-            </Text>
-          </TouchableOpacity>
-        </InputAccessoryView>
-      </KeyboardAvoidingView>
+          <GoogleLogoSvg />
+          <Text style={[styles.buttonDescription, { color: COLORS.GREY2 }]}>
+            Google로 로그인하기
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            appleSignIn();
+          }}
+          style={[styles.signInButton, { backgroundColor: COLORS.BLACK }]}
+        >
+          <AppleLogoSvg />
+          <Text style={[styles.buttonDescription, { color: COLORS.WHITE }]}>
+            Apple로 로그인하기
+          </Text>
+        </TouchableOpacity>
+      </View>
+      <TermsModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        onPress={handleNext}
+      />
     </SafeAreaView>
   );
 };
 
-export default SignUpScreen;
+export default SignInScreen;
 
 const styles = StyleSheet.create({
   container: {
-    display: 'flex',
-    gap: 60,
-    backgroundColor: COLORS.BLACK,
     flex: 1,
-  },
-  keyboardAvoidingContainer: {
-    flex: 1,
-    justifyContent: 'space-between',
-  },
-  inputContainer: {
-    display: 'flex',
-    gap: 12,
+    backgroundColor: COLORS.PURPLE,
     paddingHorizontal: 16,
+    paddingVertical: 32,
   },
-  inputLabel: {
-    color: COLORS.WHITE,
-    ...FONTS.B2_SB,
-  },
-  inputPhoneNumber: {
-    color: COLORS.WHITE,
-    borderBottomColor: COLORS.GREY1,
-    borderBottomWidth: 1,
-    paddingBottom: 8,
-    ...FONTS.B2_LINE2,
-  },
-  verifyButton: {
-    alignItems: 'center',
-    height: 60,
+  centerView: {
+    flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
   },
-  verifyText: {
-    ...FONTS.B1_SB,
+  description: {
+    marginTop: 16,
+    color: COLORS.WHITE,
+    ...FONTS.T1,
+  },
+  buttonView: {
+    gap: 14,
+    paddingBottom: 60,
+    alignItems: 'center',
+  },
+  signInButton: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 8.88,
+    width: Dimensions.get('screen').width - 48,
+    paddingVertical: 16,
+  },
+  buttonDescription: {
+    ...FONTS.T1,
+    marginLeft: 8,
   },
 });

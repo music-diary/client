@@ -1,24 +1,22 @@
 import React, { useEffect, useState } from 'react';
+import * as amplitude from '@amplitude/analytics-react-native';
 import {
   DarkTheme,
   DefaultTheme,
   ThemeProvider,
 } from '@react-navigation/native';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useFonts } from 'expo-font';
 import { Stack, router } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import * as amplitude from '@amplitude/analytics-react-native';
-import DImOverlay from '@/components/common/DImOverlay';
-import { useColorScheme } from '@/hooks/useColorScheme';
-import { useAppStore } from '@/store/useAppStore';
-import { COLORS } from '@/constants';
-import { usePushNotifications } from '@/hooks/usePushNotifications';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { trackEvent } from '@/utils/amplitude-utils';
-import useTrackingPermission from '@/hooks/useTrackingPermission';
+import { useAppStore } from '@/store/useAppStore';
+import { useColorScheme } from '@/hooks/useColorScheme';
+import { COLORS } from '@/constants';
+import DImOverlay from '@/components/common/DImOverlay';
 const key = process.env.EXPO_PUBLIC_AMPLITUDE_KEY;
 
 export {
@@ -35,9 +33,6 @@ export const unstable_settings = {
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  usePushNotifications();
-  useTrackingPermission();
-
   const [loaded, error] = useFonts({
     'pret-r': require(`assets/fonts/Pretendard-Regular.otf`),
     'pret-m': require(`assets/fonts/Pretendard-Medium.otf`),
@@ -45,7 +40,6 @@ export default function RootLayout() {
     'pret-b': require(`assets/fonts/Pretendard-Bold.otf`),
   });
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
     if (error) throw error;
   }, [error]);
@@ -65,9 +59,7 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const [queryClient] = useState(() => new QueryClient());
-
   const { isFirstLaunch, isAuthenticated } = useAppStore();
-
   const colorScheme = useColorScheme();
 
   useEffect(() => {
@@ -85,14 +77,16 @@ function RootLayoutNav() {
 
   useEffect(() => {
     queryClient.clear();
-    if (isFirstLaunch) {
-      router.replace('/(tutorial)');
-    } else if (!isAuthenticated) {
+    if (!isAuthenticated) {
       router.replace('/(onboarding)');
     } else {
-      router.replace('/(main)');
+      if (isFirstLaunch) {
+        router.replace('/(tutorial)');
+      } else {
+        router.replace('/(main)');
+      }
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, isFirstLaunch]);
 
   return (
     <QueryClientProvider client={queryClient}>

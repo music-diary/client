@@ -28,7 +28,6 @@ apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
     if (error.response && error.response.status === 401) {
-      console.warn('Unauthorized, logging out...');
       useAppStore.getState().logout();
     }
     return await Promise.reject(error);
