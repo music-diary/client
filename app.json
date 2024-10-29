@@ -2,7 +2,7 @@
   "expo": {
     "name": "뮤다",
     "slug": "music-diary",
-    "version": "0.0.9",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/images/common/muda-icon.png",
     "scheme": "muda",
@@ -18,6 +18,9 @@
       "bundleIdentifier": "com.seongsoo96.musicdiary",
       "buildNumber": "1",
       "usesAppleSignIn": true,
+      "config": {
+        "usesNonExemptEncryption": false
+      },
       "infoPlist": {
         "NSCameraUsageDescription": "This app uses the camera to take a photo of the album cover.",
         "NSPhotoLibraryAddUsageDescription": "This app uses the photo library to save a photo of the album cover.",
