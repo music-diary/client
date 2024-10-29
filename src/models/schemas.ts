@@ -21,13 +21,13 @@ export interface VerifyPhoneSchema {
 }
 
 export interface SignUpSchema {
-  phoneNumber: string;
   name: string;
   birthDay: Date | null;
   gender: Gender;
   genres: IGenre[];
   isGenreSuggested: boolean;
   isAgreedMarketing: boolean;
+  idToken: string;
 }
 
 export interface PatchDiarySchema {

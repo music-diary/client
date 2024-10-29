@@ -45,3 +45,6 @@ expo-env.d.ts
 
 # eas.json
 eas.json
+
+ios
+android
