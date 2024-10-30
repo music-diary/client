@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useLocalSearchParams } from 'expo-router';
+import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { useOAuthSignUp } from '@/api/hooks/useAuth';
 import CustomBottomButton from '@/components/common/CustomBottomButton';
 import TermsCheckbox from '@/components/onboarding/TermsCheckbox';
 import { COLORS, FONTS } from '@/constants';
 import { terms } from '@/constants/data';
-import { colorWithOpacity } from '@/utils/color-utils';
+import { type IGenre } from '@/models/interfaces';
 import { type SignUpSchema } from '@/models/schemas';
 import { type Gender } from '@/models/types';
-import { trackEvent } from '@/utils/amplitude-utils';
-import { useOAuthSignUp, useSignUp } from '@/api/hooks/useAuth';
 import { useSplashStore } from '@/store/useSplashStore';
-import { type IGenre } from '@/models/interfaces';
+import { trackEvent } from '@/utils/amplitude-utils';
+import { colorWithOpacity } from '@/utils/color-utils';
 
 const TermsScreen = () => {
-  const { name, gender, birth, selectedGenre, isGenreSuggested, idToken } =
+  const { name, gender, birth, selectedGenre, isGenreSuggested, oauthUserId } =
     useLocalSearchParams();
 
   const genres: IGenre[] = JSON.parse(selectedGenre as string);
@@ -63,7 +63,7 @@ const TermsScreen = () => {
       genres,
       isGenreSuggested: isGenreSuggested === 'true',
       isAgreedMarketing,
-      idToken: idToken as string,
+      oauthUserId: oauthUserId as string,
     };
 
     signUp(userData, {
@@ -92,7 +92,7 @@ const TermsScreen = () => {
 
   return (
     <SafeAreaProvider>
-      <View style={styles.modalContainer}>
+      <View style={styles.container}>
         <View style={styles.termsContainer}>
           <View style={styles.termsTitleContainer}>
             <Text style={styles.termsTitleText}>
@@ -134,7 +134,7 @@ const TermsScreen = () => {
 export default TermsScreen;
 
 const styles = StyleSheet.create({
-  modalContainer: {
+  container: {
     display: 'flex',
     flex: 1,
     backgroundColor: COLORS.BLACK,
