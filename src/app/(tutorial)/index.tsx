@@ -8,7 +8,7 @@ import {
   Pressable,
   Animated,
 } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { COLORS } from '@/constants';
 import { colorWithOpacity } from '@/utils/color-utils';
 import TutorialContentTemplate from '@/components/template/TutorialContentTemplate';
@@ -22,6 +22,7 @@ import {
 import { useAppStore } from '@/store/useAppStore';
 
 const Tutorial = () => {
+  const { idToken } = useLocalSearchParams();
   const [currentStep, setCurrentStep] = useState(1);
   const [isModalVisible, setIsModalVisible] = useState(true);
   const fadeAnim = useRef(new Animated.Value(1)).current;
@@ -31,7 +32,10 @@ const Tutorial = () => {
   const handleScreenPress = () => {
     if (currentStep === 5) {
       setFirstLaunch(false);
-      router.replace('(onboarding)');
+      router.push({
+        pathname: '/user-info',
+        params: { idToken },
+      });
       setIsModalVisible(false);
     } else {
       Animated.timing(fadeAnim, {
