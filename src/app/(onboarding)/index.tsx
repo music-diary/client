@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -13,13 +13,8 @@ import * as AppleAuthentication from 'expo-apple-authentication';
 import { COLORS, FONTS } from '@/constants';
 import { AppleLogoSvg, GoogleLogoSvg, MainIconSvg } from 'assets/images/common';
 import { useAppleLogin, useGoogleLogin } from '@/api/hooks/useAuth';
-import TermsModal from '@/components/onboarding/TermsModal';
-import { useDimStore } from '@/store/useDimStore';
 
 const SignInScreen = () => {
-  const [modalVisible, setModalVisible] = useState(false);
-  const { toggleDim } = useDimStore();
-
   const configureGoogleSignIn = () => {
     GoogleSignin.configure({
       iosClientId:
@@ -42,8 +37,8 @@ const SignInScreen = () => {
           onSuccess: (data) => {
             if (data?.id) return;
             router.push({
-              pathname: '/user-info',
-              params: { idToken: userInfo.data.user.id },
+              pathname: '/(tutorial)',
+              params: { oauthUserId: userInfo.data.user.id },
             });
           },
           onError: (error) => {
@@ -54,7 +49,7 @@ const SignInScreen = () => {
         console.warn('ID Token을 가져오지 못했습니다.');
       }
     } catch (error) {
-      console.error('Google Sign-In 에러:', error);
+      console.warn('Google Sign-In 에러:', error);
     }
   };
 
@@ -71,8 +66,8 @@ const SignInScreen = () => {
           onSuccess: (data) => {
             if (data?.id) return;
             router.push({
-              pathname: '/user-info',
-              params: { idToken: userInfo.user },
+              pathname: '/(tutorial)',
+              params: { oauthUserId: userInfo.user },
             });
           },
           onError: (error) => {
@@ -85,15 +80,6 @@ const SignInScreen = () => {
     } catch (error) {
       console.warn('Apple Sign-In 에러:', error);
     }
-  };
-
-  const handleNext = (isAgreedMarketing: boolean) => {
-    toggleDim();
-    setModalVisible(false);
-    router.push({
-      pathname: '/user-info',
-      params: { isAgreedMarketing: isAgreedMarketing.toString() },
-    });
   };
 
   return (
@@ -126,11 +112,6 @@ const SignInScreen = () => {
           </Text>
         </TouchableOpacity>
       </View>
-      <TermsModal
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-        onPress={handleNext}
-      />
     </SafeAreaView>
   );
 };

@@ -80,13 +80,9 @@ function RootLayoutNav() {
     if (!isAuthenticated) {
       router.replace('/(onboarding)');
     } else {
-      if (isFirstLaunch) {
-        router.replace('/(tutorial)');
-      } else {
-        router.replace('/(main)');
-      }
+      router.replace('/(main)');
     }
-  }, [isAuthenticated, isFirstLaunch]);
+  }, [isAuthenticated]);
 
   return (
     <QueryClientProvider client={queryClient}>
