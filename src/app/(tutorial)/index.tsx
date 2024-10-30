@@ -22,7 +22,7 @@ import {
 import { useAppStore } from '@/store/useAppStore';
 
 const Tutorial = () => {
-  const { idToken } = useLocalSearchParams();
+  const { oauthUserId } = useLocalSearchParams();
   const [currentStep, setCurrentStep] = useState(1);
   const [isModalVisible, setIsModalVisible] = useState(true);
   const fadeAnim = useRef(new Animated.Value(1)).current;
@@ -34,7 +34,7 @@ const Tutorial = () => {
       setFirstLaunch(false);
       router.push({
         pathname: '/user-info',
-        params: { idToken },
+        params: { oauthUserId },
       });
       setIsModalVisible(false);
     } else {

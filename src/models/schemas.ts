@@ -27,7 +27,7 @@ export interface SignUpSchema {
   genres: IGenre[];
   isGenreSuggested: boolean;
   isAgreedMarketing: boolean;
-  idToken: string;
+  oauthUserId: string;
 }
 
 export interface PatchDiarySchema {

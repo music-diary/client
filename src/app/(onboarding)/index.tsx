@@ -38,7 +38,7 @@ const SignInScreen = () => {
             if (data?.id) return;
             router.push({
               pathname: '/(tutorial)',
-              params: { idToken: userInfo.data.user.id },
+              params: { oauthUserId: userInfo.data.user.id },
             });
           },
           onError: (error) => {
@@ -67,7 +67,7 @@ const SignInScreen = () => {
             if (data?.id) return;
             router.push({
               pathname: '/(tutorial)',
-              params: { idToken: userInfo.user },
+              params: { oauthUserId: userInfo.user },
             });
           },
           onError: (error) => {
